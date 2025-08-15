@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import Link from "next/link";
 import { Calendar, Tag, ArrowRight } from "lucide-react";
 
@@ -54,7 +54,6 @@ const mockNews = [
 
 export default async function NewsPage() {
   const locale = await getLocale();
-  const t = await getTranslations("news");
   const isJa = locale === "ja";
 
   return (

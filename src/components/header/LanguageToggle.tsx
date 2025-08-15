@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { setLocale } from "@/app/actions/locale";
 
 export function LanguageToggle() {

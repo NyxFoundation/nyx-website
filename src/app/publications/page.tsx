@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import Link from "next/link";
 import { FileText, Calendar, Tag } from "lucide-react";
 
@@ -44,7 +44,6 @@ const mockPublications = [
 
 export default async function PublicationsPage() {
   const locale = await getLocale();
-  const t = await getTranslations("publications");
   const isJa = locale === "ja";
 
   return (

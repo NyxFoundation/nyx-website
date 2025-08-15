@@ -64,16 +64,6 @@ const config: Config = {
     },
   },
   plugins: [],
-  safelist: [
-    'md:hidden',
-    'md:flex',
-    'md:block',
-    'hidden',
-    'block',
-    'flex',
-    { pattern: /^(block|hidden|flex)$/ },
-    { pattern: /^md:(block|hidden|flex)$/ },
-  ],
 };
 
 export default config;

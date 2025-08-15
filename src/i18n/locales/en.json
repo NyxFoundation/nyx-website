@@ -6,7 +6,10 @@
     "news": "News",
     "job": "Job",
     "language": "Language",
-    "contact": "Contact"
+    "contact": "Contact",
+    "Research": "Research",
+    "About": "About",
+    "Connect": "Connect"
   },
   "hero": {
     "title": "Nyx Foundation",

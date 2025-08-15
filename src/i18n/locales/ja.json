@@ -1,22 +1,25 @@
 {
   "nav": {
-    "publications": "Publication",
-    "member": "Member",
-    "funding": "Funding",
-    "news": "News",
-    "job": "Job",
+    "publications": "出版物",
+    "member": "メンバー",
+    "funding": "資金提供",
+    "news": "ニュース",
+    "job": "仕事",
     "language": "言語",
-    "contact": "Contact"
+    "contact": "お問い合わせ",
+    "Research": "研究",
+    "About": "Nyxについて",
+    "Connect": "つながる"
   },
   "hero": {
     "title": "Nyx Foundation",
-    "subtitle": "Building humanity's coordination space securely for open innovation",
-    "btnPublications": "Publications",
-    "btnNews": "News",
-    "contact": "Contact"
+    "subtitle": "人類の協調空間を安全に構築し、オープンイノベーションを促進する",
+    "btnPublications": "出版物",
+    "btnNews": "ニュース",
+    "contact": "お問い合わせ"
   },
   "activity": {
-    "title": "Activity",
+    "title": "活動",
     "items": {
       "research": {
         "title": "研究",

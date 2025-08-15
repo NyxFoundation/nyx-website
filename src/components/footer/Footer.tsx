@@ -6,6 +6,7 @@ import { Mail, Github, Twitter } from "lucide-react";
 
 export function Footer() {
   const t = useTranslations("nav");
+  const tHero = useTranslations("hero");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -18,7 +19,7 @@ export function Footer() {
               <span className="text-xl font-semibold">Nyx</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Building humanity&apos;s coordination space securely for open innovation
+              {tHero("subtitle")}
             </p>
           </div>
 
@@ -26,7 +27,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h3 className="font-semibold mb-3">Research</h3>
+                <h3 className="font-semibold mb-3">{t("Research")}</h3>
                 <ul className="space-y-2 text-sm">
                   <li>
                     <Link href="/publications" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -41,7 +42,7 @@ export function Footer() {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-3">About</h3>
+                <h3 className="font-semibold mb-3">{t("About")}</h3>
                 <ul className="space-y-2 text-sm">
                   <li>
                     <Link href="/member" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -70,7 +71,7 @@ export function Footer() {
 
           {/* コンタクト情報 */}
           <div className="md:col-span-1">
-            <h3 className="font-semibold mb-3">Connect</h3>
+            <h3 className="font-semibold mb-3">{t("Connect")}</h3>
             <div className="flex space-x-4">
               <a
                 href="mailto:contact@nyx.foundation"
@@ -102,18 +103,10 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-border">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex">
             <p className="text-sm text-muted-foreground">
               © {currentYear} Nyx Foundation. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Service
-              </Link>
-            </div>
           </div>
         </div>
       </div>

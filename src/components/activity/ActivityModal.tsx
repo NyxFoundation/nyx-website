@@ -34,7 +34,7 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
             "fixed left-[50%] top-[50%] z-50",
             "w-[90vw] max-w-2xl max-h-[85vh]",
             "translate-x-[-50%] translate-y-[-50%]",
-            "bg-background border border-border rounded-lg shadow-lg",
+            "bg-white border border-border rounded-lg shadow-lg",
             "animate-in fade-in-0 zoom-in-95",
             "overflow-y-auto"
           )}
@@ -43,7 +43,7 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
             <Dialog.Title className="text-2xl font-bold mb-4">
               {t(`items.${activityId}.title`)}
             </Dialog.Title>
-            
+
             <Dialog.Description className="text-base leading-relaxed text-muted-foreground">
               {t(`items.${activityId}.description`)}
             </Dialog.Description>

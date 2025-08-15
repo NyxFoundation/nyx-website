@@ -10,7 +10,6 @@ import { LanguageToggle } from "./LanguageToggle";
 export function Header() {
   const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   const navItems = [
     { href: "/publications", label: t("publications") },
@@ -19,11 +18,6 @@ export function Header() {
     { href: "/news", label: t("news") },
     { href: "/job", label: t("job") },
   ];
-
-  // コンポーネントがマウントされたことを検知
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   // モバイルメニューが開いているときはスクロールを防ぐ
   useEffect(() => {
@@ -50,7 +44,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-background">
+      <header className="sticky top-0 z-50 w-full border-b border-border bg-white">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo - 左側 */}
@@ -60,7 +54,7 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation - 中央 */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -102,7 +96,7 @@ export function Header() {
         {/* Sidebar - モバイルのみ表示 */}
         <aside
           className={cn(
-            "fixed top-0 right-0 h-full w-64 z-50 bg-background",
+            "fixed top-0 right-0 h-full w-64 z-50 bg-white",
             "transition-transform duration-300 ease-in-out",
             "border-l border-border shadow-lg",
             "block md:hidden" // デスクトップでは完全に非表示
@@ -112,7 +106,7 @@ export function Header() {
           }}
         >
           <div className="flex items-center justify-between p-4 border-b border-border">
-            <span className="text-lg font-semibold">Menu</span>
+            <span className="text-lg font-semibold"></span>
             <button
               onClick={() => setIsOpen(false)}
               className="p-2"
@@ -121,7 +115,7 @@ export function Header() {
               <X className="h-6 w-6" />
             </button>
           </div>
-          
+
           <nav className="flex flex-col p-4 space-y-2">
             {navItems.map((item) => (
               <Link

@@ -14,8 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* ロゴと説明 */}
           <div className="md:col-span-1">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="h-8 w-8 rounded-full bg-foreground"></div>
+            <Link href="/" className="flex items-center space-x-2 mb-3">
               <span className="text-xl font-semibold">Nyx</span>
             </Link>
             <p className="text-sm text-muted-foreground">

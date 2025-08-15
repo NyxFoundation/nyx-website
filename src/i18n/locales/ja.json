@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "publications": "Publication",
+    "member": "Member",
+    "funding": "Funding",
+    "news": "News",
+    "job": "Job",
+    "language": "言語",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Nyx Foundation",
+    "subtitle": "Building humanity's coordination space securely for open innovation",
+    "btnPublications": "Publications",
+    "btnNews": "News",
+    "contact": "Contact →"
+  },
+  "activity": {
+    "title": "Activity",
+    "items": {
+      "research": {
+        "title": "研究",
+        "description": "最先端の分散システムと暗号技術の研究開発を行っています。ブロックチェーン、ゼロ知識証明、マルチパーティ計算などの基礎研究から実装まで幅広く取り組んでいます。"
+      },
+      "whitehat": {
+        "title": "ホワイトハットハッキング",
+        "description": "セキュリティ脆弱性の発見と責任ある開示を通じて、デジタルインフラストラクチャの安全性向上に貢献しています。バグバウンティプログラムへの参加と独自の脆弱性研究を行っています。"
+      },
+      "verification": {
+        "title": "形式検証",
+        "description": "数学的手法を用いてシステムの正確性と安全性を証明します。スマートコントラクト、プロトコル、暗号アルゴリズムの形式検証サービスを提供しています。"
+      },
+      "education": {
+        "title": "教育",
+        "description": "次世代の研究者とエンジニアの育成に取り組んでいます。ワークショップ、セミナー、オンラインコースを通じて、最新の技術知識を共有しています。"
+      },
+      "house": {
+        "title": "ハウス",
+        "description": "研究者とイノベーターのためのコミュニティスペースを運営しています。アイデアの交換、コラボレーション、実験のための物理的な拠点を提供しています。"
+      }
+    }
+  },
+  "common": {
+    "readMore": "続きを読む",
+    "close": "閉じる",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "notFound": "ページが見つかりません"
+  }
+}

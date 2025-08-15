@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "publications": "Publication",
+    "member": "Member",
+    "funding": "Funding",
+    "news": "News",
+    "job": "Job",
+    "language": "Language",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Nyx Foundation",
+    "subtitle": "Building humanity's coordination space securely for open innovation",
+    "btnPublications": "Publications",
+    "btnNews": "News",
+    "contact": "Contact →"
+  },
+  "activity": {
+    "title": "Activity",
+    "items": {
+      "research": {
+        "title": "Research",
+        "description": "We conduct cutting-edge research and development in distributed systems and cryptographic technologies. Our work spans from fundamental research to implementation in blockchain, zero-knowledge proofs, and multi-party computation."
+      },
+      "whitehat": {
+        "title": "Whitehat Hacking",
+        "description": "Contributing to the improvement of digital infrastructure security through discovery and responsible disclosure of security vulnerabilities. We participate in bug bounty programs and conduct independent vulnerability research."
+      },
+      "verification": {
+        "title": "Formal Verification",
+        "description": "Using mathematical methods to prove the correctness and security of systems. We provide formal verification services for smart contracts, protocols, and cryptographic algorithms."
+      },
+      "education": {
+        "title": "Education",
+        "description": "Committed to nurturing the next generation of researchers and engineers. We share cutting-edge technical knowledge through workshops, seminars, and online courses."
+      },
+      "house": {
+        "title": "House",
+        "description": "Operating a community space for researchers and innovators. We provide a physical hub for idea exchange, collaboration, and experimentation."
+      }
+    }
+  },
+  "common": {
+    "readMore": "Read More",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Page not found"
+  }
+}

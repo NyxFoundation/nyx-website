@@ -33,11 +33,24 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     alternateLocale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/ogp.png",
+        width: 1200,
+        height: 630,
+        alt: "Nyx Foundation",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nyx Foundation",
     description: "Building humanity's coordination space securely for open innovation",
+    images: ["/ogp.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 };
 

@@ -5,6 +5,17 @@ import { DollarSign, Target, Users, FileText } from "lucide-react";
 export const metadata: Metadata = {
   title: "Funding | Nyx Foundation",
   description: "Research grants and funding opportunities from Nyx Foundation",
+  openGraph: {
+    title: "Funding | Nyx Foundation",
+    description: "Research grants and funding opportunities from Nyx Foundation",
+    images: ["/ogp.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Funding | Nyx Foundation",
+    description: "Research grants and funding opportunities from Nyx Foundation",
+    images: ["/ogp.png"],
+  },
 };
 
 export default async function FundingPage() {

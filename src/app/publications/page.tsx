@@ -1,50 +1,33 @@
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import Link from "next/link";
-import { FileText, Calendar, Tag } from "lucide-react";
+import { FileText, Calendar, Tag, ExternalLink } from "lucide-react";
+import { getPublications } from "@/lib/notion";
+
+// Dynamic rendering for publications list
+export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Publications | Nyx Foundation",
   description: "Research papers and publications from Nyx Foundation",
+  openGraph: {
+    title: "Publications | Nyx Foundation",
+    description: "Research papers and publications from Nyx Foundation",
+    images: ["/ogp.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Publications | Nyx Foundation",
+    description: "Research papers and publications from Nyx Foundation",
+    images: ["/ogp.png"],
+  },
 };
-
-// スタブデータ（将来的にはNotion APIから取得）
-const mockPublications = [
-  {
-    id: "1",
-    slug: "distributed-systems-2024",
-    title: "分散システムにおける形式検証の新手法",
-    titleEn: "New Approaches to Formal Verification in Distributed Systems",
-    date: "2024-12-15",
-    tags: ["Research", "Formal Verification", "Distributed Systems"],
-    summary: "本論文では、分散システムの形式検証における新しいアプローチを提案します。",
-    summaryEn: "This paper presents novel approaches to formal verification in distributed systems.",
-  },
-  {
-    id: "2",
-    slug: "zero-knowledge-proofs",
-    title: "ゼロ知識証明の実装最適化",
-    titleEn: "Optimizing Zero-Knowledge Proof Implementations",
-    date: "2024-11-20",
-    tags: ["Cryptography", "ZKP", "Performance"],
-    summary: "ゼロ知識証明の実装における性能最適化手法について論じます。",
-    summaryEn: "This paper discusses performance optimization techniques for zero-knowledge proof implementations.",
-  },
-  {
-    id: "3",
-    slug: "blockchain-security-audit",
-    title: "ブロックチェーンセキュリティ監査の自動化",
-    titleEn: "Automating Blockchain Security Audits",
-    date: "2024-10-10",
-    tags: ["Security", "Blockchain", "Automation"],
-    summary: "スマートコントラクトの自動セキュリティ監査ツールの開発について報告します。",
-    summaryEn: "We report on the development of automated security audit tools for smart contracts.",
-  },
-];
 
 export default async function PublicationsPage() {
   const locale = await getLocale();
   const isJa = locale === "ja";
+  const publications = await getPublications();
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -57,55 +40,78 @@ export default async function PublicationsPage() {
         </p>
 
         <div className="grid gap-6">
-          {mockPublications.map((pub) => (
-            <article
-              key={pub.id}
-              className="bg-white border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
-            >
-              <Link
-                href={`/publications/${pub.slug}`}
-                className="block group"
-              >
-                <h2 className="text-2xl font-semibold mb-3 group-hover:text-muted-foreground transition-colors">
-                  {isJa ? pub.title : pub.titleEn}
-                </h2>
+          {publications.map((pub) => {
+            const isExternal = !!pub.redirectTo;
+            const href = pub.redirectTo || `/publications/${pub.slug}`;
+            
+            const content = (
+              <>
+                <div className="flex justify-between items-start mb-3">
+                  <h2 className="text-2xl font-semibold group-hover:text-muted-foreground transition-colors">
+                    {isJa ? pub.title : pub.titleEn}
+                  </h2>
+                  {isExternal ? (
+                    <ExternalLink className="w-5 h-5 text-muted-foreground" />
+                  ) : (
+                    <FileText className="w-5 h-5 text-muted-foreground" />
+                  )}
+                </div>
                 
                 <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
                   <span className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
-                    {new Date(pub.date).toLocaleDateString(locale, {
+                    {pub.date && new Date(pub.date).toLocaleDateString(locale, {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <FileText className="w-4 h-4" />
-                    Research Paper
-                  </span>
                 </div>
 
-                <p className="text-base mb-4 line-clamp-2">
-                  {isJa ? pub.summary : pub.summaryEn}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {pub.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full"
-                    >
-                      <Tag className="w-3 h-3" />
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </Link>
-            </article>
-          ))}
+                {pub.labels.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {pub.labels.map((label) => (
+                      <span
+                        key={label}
+                        className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full"
+                      >
+                        <Tag className="w-3 h-3" />
+                        {label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </>
+            );
+            
+            return (
+              <article
+                key={pub.id}
+                className="bg-white border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
+              >
+                {isExternal ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block group"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <Link
+                    href={href}
+                    className="block group"
+                  >
+                    {content}
+                  </Link>
+                )}
+              </article>
+            );
+          })}
         </div>
 
-        {mockPublications.length === 0 && (
+        {publications.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
               {isJa ? "現在、出版物はありません。" : "No publications available at the moment."}

@@ -5,6 +5,17 @@ import { Mail, MapPin, Phone, Globe } from "lucide-react";
 export const metadata: Metadata = {
   title: "Contact | Nyx Foundation",
   description: "Get in touch with Nyx Foundation",
+  openGraph: {
+    title: "Contact | Nyx Foundation",
+    description: "Get in touch with Nyx Foundation",
+    images: ["/ogp.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact | Nyx Foundation",
+    description: "Get in touch with Nyx Foundation",
+    images: ["/ogp.png"],
+  },
 };
 
 export default async function ContactPage() {

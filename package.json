@@ -12,6 +12,7 @@
     "smoke": "playwright test --config=playwright.config.ts --project=chromium --grep @smoke"
   },
   "dependencies": {
+    "@notionhq/client": "^4.0.2",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "class-variance-authority": "^0.7.1",

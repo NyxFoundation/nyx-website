@@ -5,6 +5,17 @@ import { Briefcase, MapPin, Clock, ArrowRight } from "lucide-react";
 export const metadata: Metadata = {
   title: "Job | Nyx Foundation",
   description: "Career opportunities at Nyx Foundation",
+  openGraph: {
+    title: "Job | Nyx Foundation",
+    description: "Career opportunities at Nyx Foundation",
+    images: ["/ogp.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Job | Nyx Foundation",
+    description: "Career opportunities at Nyx Foundation",
+    images: ["/ogp.png"],
+  },
 };
 
 // スタブデータ

@@ -2,7 +2,7 @@
   "nav": {
     "publications": "Publication",
     "member": "Member",
-    "funding": "Funding",
+    "support": "Support",
     "news": "News",
     "job": "Job",
     "language": "Language",
@@ -49,5 +49,61 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "notFound": "Page not found"
+  },
+  "support": {
+    "title": "Support Nyx",
+    "subtitle": "We seek partners who share our mission to build humanity's coordination space securely.",
+    "supportMethods": {
+      "donation": {
+        "title": "Donation",
+        "description": "Support our research directly through crypto or traditional methods.",
+        "viewMethods": "View donation methods →"
+      },
+      "collaboration": {
+        "title": "Collaborative Research",
+        "description": "Partnership opportunities in formal verification, security, and distributed systems.",
+        "viewDetails": "Partnership details →"
+      }
+    },
+    "supporters": {
+      "title": "Our Supporters"
+    },
+    "howToDonate": {
+      "title": "How to Donate",
+      "erc20": {
+        "title": "ERC-20 Address",
+        "description": "Donations in ETH, USDC, and other ERC-20 tokens"
+      },
+      "wishList": {
+        "title": "Amazon Wish List",
+        "description": "Support our research with equipment and books",
+        "button": "View Wish List"
+      },
+      "thankYouNote": "When you donate, we'll thank you with a tweet like this:"
+    },
+    "collaboration": {
+      "title": "Collaborative Research",
+      "intro": "We actively seek collaborative partners in the following areas:",
+      "areas": {
+        "formalVerification": {
+          "title": "Formal Verification",
+          "description": "Mathematical proofs for smart contracts and protocols"
+        },
+        "zkProofs": {
+          "title": "Zero-Knowledge Proofs",
+          "description": "Privacy-preserving technologies and scalability solutions"
+        },
+        "distributedSystems": {
+          "title": "Distributed Systems",
+          "description": "Consensus algorithms and P2P networks"
+        },
+        "cryptoeconomics": {
+          "title": "Cryptoeconomics",
+          "description": "Incentive design and mechanism design"
+        }
+      },
+      "contact": "Research proposals can be sent to"
+    },
+    "taxInfo": "Nyx Foundation is a 501(c)(3) nonprofit organization. Donations may be tax-deductible in the United States."
   }
 }

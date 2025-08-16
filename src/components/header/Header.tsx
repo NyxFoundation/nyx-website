@@ -14,9 +14,9 @@ export function Header() {
   const navItems = [
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
-    { href: "/funding", label: t("funding") },
+    { href: "/support", label: t("support") },
     { href: "/news", label: t("news") },
-    { href: "/job", label: t("job") },
+    { href: "https://www.notion.so/grandchildrice/Nyx-Foundation-Job-251d05af0d5a805ca9c4e75f40cb5b81", label: t("job"), external: true },
   ];
 
   // モバイルメニューが開いているときはスクロールを防ぐ
@@ -55,15 +55,27 @@ export function Header() {
 
             {/* Desktop Navigation - 中央 */}
             <nav className="hidden md:flex items-center space-x-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-sm font-medium transition-colors hover:text-muted-foreground"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium transition-colors hover:text-muted-foreground"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-sm font-medium transition-colors hover:text-muted-foreground"
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
               <LanguageToggle />
             </nav>
 
@@ -117,16 +129,29 @@ export function Header() {
           </div>
 
           <nav className="flex flex-col p-4 space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="text-base font-medium py-2 px-3 rounded-md transition-colors hover:bg-muted"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="text-base font-medium py-2 px-3 rounded-md transition-colors hover:bg-muted"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-base font-medium py-2 px-3 rounded-md transition-colors hover:bg-muted"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
             <div className="pt-4 mt-4 border-t border-border">
               <LanguageToggle />
             </div>

@@ -19,7 +19,7 @@ test.describe('smoke @smoke', () => {
     const header = page.locator('header')
     await expect(header.getByRole('link', { name: 'Publication' })).toBeVisible()
     await expect(header.getByRole('link', { name: 'Member' })).toBeVisible()
-    await expect(header.getByRole('link', { name: 'Funding' })).toBeVisible()
+    await expect(header.getByRole('link', { name: 'Support' })).toBeVisible()
     await expect(header.getByRole('link', { name: 'News' })).toBeVisible()
     await expect(header.getByRole('link', { name: 'Job' })).toBeVisible()
   })

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
-import { Users, Mail, Globe } from "lucide-react";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Member | Nyx Foundation",
@@ -18,38 +18,42 @@ export const metadata: Metadata = {
   },
 };
 
-// スタブデータ
-const mockMembers = [
+export const members = [
   {
-    id: "1",
-    name: "山田 太郎",
-    nameEn: "Taro Yamada",
-    role: "代表理事",
-    roleEn: "Executive Director",
-    bio: "分散システムと暗号技術の研究者。20年以上の研究経験を持つ。",
-    bioEn: "Researcher in distributed systems and cryptography with over 20 years of experience.",
-    email: "yamada@nyx.foundation",
-    website: "https://example.com/yamada",
+    name: "vita",
+    logo: "/residents/vita.jpeg",
+    social: "https://x.com/keccak255",
+    topics: ["Consensus", "MEV"],
   },
   {
-    id: "2",
-    name: "鈴木 花子",
-    nameEn: "Hanako Suzuki",
-    role: "主任研究員",
-    roleEn: "Principal Researcher",
-    bio: "形式検証とセキュリティ監査の専門家。",
-    bioEn: "Expert in formal verification and security auditing.",
-    email: "suzuki@nyx.foundation",
+    name: "gohan",
+    logo: "/residents/gohan.jpg",
+    social: "https://x.com/grandchildrice",
+    topics: ["zkVM", "Whitehat Hacking"],
   },
   {
-    id: "3",
-    name: "佐藤 次郎",
-    nameEn: "Jiro Sato",
-    role: "教育プログラムディレクター",
-    roleEn: "Education Program Director",
-    bio: "次世代の研究者育成プログラムを統括。",
-    bioEn: "Oversees next-generation researcher development programs.",
-    email: "sato@nyx.foundation",
+    name: "Alphaist",
+    logo: "/residents/alpha.jpeg",
+    social: "https://x.com/0xAlphaist",
+    topics: ["MEV", "DeFi", "Market Microstructure"],
+  },
+  {
+    name: "banri",
+    logo: "/residents/banri.jpeg",
+    social: "https://x.com/banr1_",
+    topics: ["Formal Verification"],
+  },
+  {
+    name: "adust",
+    logo: "/residents/adust.jpg",
+    social: "https://x.com/adust09",
+    topics: ["VOLE", "MPC"],
+  },
+  {
+    name: "Hiro",
+    logo: "/residents/tei.jpeg",
+    social: "https://x.com/82y31",
+    topics: ["MEV", "PBS", "Mechanism Design"],
   },
 ];
 
@@ -62,53 +66,57 @@ export default async function MemberPage() {
       <div className="container mx-auto max-w-6xl">
         <h1 className="text-4xl md:text-5xl font-bold mb-8">Member</h1>
         <p className="text-xl text-muted-foreground mb-12">
-          {isJa 
-            ? "Nyx Foundationのメンバー紹介" 
+          {isJa
+            ? "Nyx Foundationのメンバー紹介"
             : "Meet the team behind Nyx Foundation"}
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockMembers.map((member) => (
+          {members.map((member) => (
             <div
-              key={member.id}
+              key={member.name}
               className="bg-white border border-border rounded-lg p-6"
             >
-              <div className="flex items-center justify-center w-20 h-20 bg-muted rounded-full mb-4 mx-auto">
-                <Users className="w-10 h-10 text-muted-foreground" />
+              <div className="relative w-24 h-24 mb-4 mx-auto">
+                <Image
+                  src={member.logo}
+                  alt={member.name}
+                  fill
+                  className="object-cover rounded-full"
+                />
               </div>
-              
-              <h3 className="text-xl font-semibold text-center mb-1">
-                {isJa ? member.name : member.nameEn}
+
+              <h3 className="text-xl font-semibold text-center mb-3">
+                {member.name}
               </h3>
-              
-              <p className="text-sm text-muted-foreground text-center mb-4">
-                {isJa ? member.role : member.roleEn}
-              </p>
-              
-              <p className="text-sm mb-4">
-                {isJa ? member.bio : member.bioEn}
-              </p>
-              
-              <div className="space-y-2 text-sm">
+
+              <div className="flex flex-wrap gap-2 justify-center mb-4">
+                {member.topics.map((topic) => (
+                  <span
+                    key={topic}
+                    className="px-3 py-1 text-xs border border-border rounded-full"
+                  >
+                    {topic}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex justify-center">
                 <a
-                  href={`mailto:${member.email}`}
+                  href={member.social}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <Mail className="w-4 h-4" />
-                  {member.email}
-                </a>
-                
-                {member.website && (
-                  <a
-                    href={member.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <Globe className="w-4 h-4" />
-                    Website
-                  </a>
-                )}
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
               </div>
             </div>
           ))}

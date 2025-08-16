@@ -9,8 +9,8 @@ export function Hero() {
   const t = useTranslations("hero");
 
   return (
-    <section className="relative min-h-[600px] flex items-center py-20">
-      <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
+    <section className="relative min-h-[600px] flex items-center py-20 px-8 md:px-12 lg:px-16">
+      <div className="max-w-6xl">
         <div className="text-left space-y-8">
           {/* Title */}
           <h1 className="w-[60%] text-5xl md:text-7xl font-bold tracking-tight">

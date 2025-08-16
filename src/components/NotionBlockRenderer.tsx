@@ -1,7 +1,11 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import { Tweet } from "react-tweet";
+import { ExternalLink } from "lucide-react";
 
 interface NotionBlockRendererProps {
   blocks: BlockObjectResponse[];
@@ -74,6 +78,9 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
           </pre>
         );
 
+      case "equation":
+        return <MathBlock key={key} latex={block.equation.expression} />;
+
       case "divider":
         return <hr key={key} className="my-8 border-gray-300" />;
 
@@ -92,6 +99,131 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
           </figure>
         );
 
+      case "embed":
+        const embedUrl = block.embed.url;
+        
+        // Check if it's a Twitter/X embed
+        if (embedUrl.includes('twitter.com') || embedUrl.includes('x.com')) {
+          const tweetId = extractTweetId(embedUrl);
+          if (tweetId) {
+            return (
+              <div key={key} className="my-6 flex justify-center">
+                <Tweet id={tweetId} />
+              </div>
+            );
+          }
+        }
+        
+        // Default embed as iframe
+        return (
+          <div key={key} className="my-6">
+            <iframe
+              src={embedUrl}
+              className="w-full h-96 rounded border"
+              title="Embedded content"
+              loading="lazy"
+            />
+          </div>
+        );
+
+      case "bookmark":
+        const bookmarkUrl = block.bookmark.url;
+        const bookmarkCaption = block.bookmark.caption;
+        
+        return (
+          <a
+            key={key}
+            href={bookmarkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block my-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="font-medium text-blue-600 hover:underline">
+                  {bookmarkCaption && bookmarkCaption.length > 0 
+                    ? renderRichText(bookmarkCaption) 
+                    : bookmarkUrl}
+                </div>
+                <div className="text-sm text-gray-500 mt-1">{new URL(bookmarkUrl).hostname}</div>
+              </div>
+              <ExternalLink className="w-4 h-4 text-gray-400 ml-2 flex-shrink-0" />
+            </div>
+          </a>
+        );
+
+      case "callout":
+        const calloutIcon = block.callout.icon;
+        const calloutContent = block.callout.rich_text;
+        
+        return (
+          <div key={key} className="my-4 p-4 bg-gray-50 border-l-4 border-blue-500 rounded">
+            <div className="flex items-start">
+              {calloutIcon && (
+                <span className="mr-2 text-xl">
+                  {calloutIcon.type === 'emoji' ? calloutIcon.emoji : '💡'}
+                </span>
+              )}
+              <div className="flex-1">
+                {renderRichText(calloutContent)}
+              </div>
+            </div>
+          </div>
+        );
+
+      case "toggle":
+        return (
+          <details key={key} className="my-4">
+            <summary className="cursor-pointer font-medium hover:text-gray-600">
+              {renderRichText(block.toggle.rich_text)}
+            </summary>
+            <div className="mt-2 ml-4">
+              {/* Children blocks would be rendered here if available */}
+            </div>
+          </details>
+        );
+
+      case "table":
+        const table = block.table;
+        return (
+          <div key={key} className="my-6 overflow-x-auto">
+            <table className="min-w-full border-collapse border border-gray-300">
+              <tbody>
+                {/* Table rows would be rendered here - need child blocks */}
+              </tbody>
+            </table>
+          </div>
+        );
+
+      case "video":
+        const videoUrl = block.video.type === 'external'
+          ? block.video.external.url
+          : block.video.file.url;
+        
+        // Check if it's a YouTube video
+        if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+          const videoId = extractYouTubeId(videoUrl);
+          if (videoId) {
+            return (
+              <div key={key} className="my-6 aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  className="w-full h-full rounded"
+                  title="YouTube video"
+                  allowFullScreen
+                />
+              </div>
+            );
+          }
+        }
+        
+        return (
+          <video key={key} controls className="w-full my-6 rounded">
+            <source src={videoUrl} />
+            Your browser does not support the video tag.
+          </video>
+        );
+
       default:
         console.log(`Unsupported block type: ${block.type}`);
         return null;
@@ -99,35 +231,87 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
   };
 
   const renderRichText = (richTexts: any[]): JSX.Element[] => {
-    return richTexts.map((text, index) => {
-      const { annotations } = text;
-      let element = <span key={index}>{text.plain_text}</span>;
-
-      if (annotations.bold) {
-        element = <strong key={index}>{text.plain_text}</strong>;
+    const result: JSX.Element[] = [];
+    
+    richTexts.forEach((item, index) => {
+      // Check if this is an equation type
+      if (item.type === 'equation') {
+        result.push(<InlineMath key={`equation-${index}`} latex={item.equation.expression} />);
+        return;
       }
-      if (annotations.italic) {
-        element = <em key={index}>{text.plain_text}</em>;
+      
+      // Handle regular text
+      const { annotations } = item;
+      let textContent = item.plain_text;
+      
+      // Process inline math - look for $...$ patterns in the text (for backwards compatibility)
+      const mathRegex = /\$([^\$]+)\$/g;
+      let lastIndex = 0;
+      let match;
+      const segments: (string | JSX.Element)[] = [];
+      
+      while ((match = mathRegex.exec(textContent)) !== null) {
+        // Add text before the math expression
+        if (match.index > lastIndex) {
+          segments.push(textContent.substring(lastIndex, match.index));
+        }
+        // Add the math expression
+        segments.push(<InlineMath key={`math-${index}-${match.index}`} latex={match[1]} />);
+        lastIndex = match.index + match[0].length;
       }
-      if (annotations.underline) {
-        element = <u key={index}>{text.plain_text}</u>;
+      
+      // Add any remaining text after the last math expression
+      if (lastIndex < textContent.length) {
+        segments.push(textContent.substring(lastIndex));
       }
-      if (annotations.strikethrough) {
-        element = <s key={index}>{text.plain_text}</s>;
+      
+      // If no math was found, treat the entire text as a single segment
+      if (segments.length === 0) {
+        segments.push(textContent);
       }
-      if (annotations.code) {
-        element = <code key={index} className="bg-gray-100 px-1 rounded">{text.plain_text}</code>;
-      }
-      if (text.href) {
-        element = (
-          <a key={index} href={text.href} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
-            {element}
-          </a>
-        );
-      }
-
-      return element;
+      
+      // Apply text formatting to each segment
+      segments.forEach((segment, segIndex) => {
+        if (typeof segment !== 'string') {
+          // It's already a math component, just add it
+          result.push(segment);
+          return;
+        }
+        
+        let content: any = segment;
+        
+        if (annotations.bold) {
+          content = <strong>{content}</strong>;
+        }
+        if (annotations.italic) {
+          content = <em>{content}</em>;
+        }
+        if (annotations.underline) {
+          content = <u>{content}</u>;
+        }
+        if (annotations.strikethrough) {
+          content = <s>{content}</s>;
+        }
+        if (annotations.code) {
+          // Don't process math in code blocks
+          content = <code className="bg-gray-100 px-1 rounded text-sm">{segment}</code>;
+        }
+        
+        let element = <span key={`${index}-${segIndex}`}>{content}</span>;
+        
+        if (item.href) {
+          element = (
+            <a key={`${index}-${segIndex}`} href={item.href} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+              {content}
+            </a>
+          );
+        }
+        
+        result.push(element);
+      });
     });
+    
+    return result;
   };
 
   // Group consecutive list items
@@ -178,3 +362,61 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
     </div>
   );
 };
+
+// Helper component for math blocks
+const MathBlock: FC<{ latex: string }> = ({ latex }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      try {
+        katex.render(latex, ref.current, {
+          displayMode: true,
+          throwOnError: false,
+        });
+      } catch (error) {
+        console.error("KaTeX error:", error);
+        if (ref.current) {
+          ref.current.innerHTML = `<pre>${latex}</pre>`;
+        }
+      }
+    }
+  }, [latex]);
+
+  return <div ref={ref} className="my-4 overflow-x-auto" />;
+};
+
+// Helper component for inline math
+const InlineMath: FC<{ latex: string }> = ({ latex }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      try {
+        katex.render(latex, ref.current, {
+          displayMode: false,
+          throwOnError: false,
+        });
+      } catch (error) {
+        console.error("KaTeX error:", error);
+        if (ref.current) {
+          ref.current.innerHTML = latex;
+        }
+      }
+    }
+  }, [latex]);
+
+  return <span ref={ref} className="inline-block mx-1" />;
+};
+
+// Helper function to extract tweet ID from URL
+function extractTweetId(url: string): string | null {
+  const match = url.match(/(?:twitter|x)\.com\/(?:#!\/)?(?:\w+)\/status(?:es)?\/(\d+)/);
+  return match ? match[1] : null;
+}
+
+// Helper function to extract YouTube video ID
+function extractYouTubeId(url: string): string | null {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  return match ? match[1] : null;
+}

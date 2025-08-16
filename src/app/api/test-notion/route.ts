@@ -11,12 +11,14 @@ export async function GET() {
       newsCount: news.length,
       publicationsCount: publications.length,
       news: news.map(n => ({
+        id: n.id,
         slug: n.slug,
         title: n.title,
         titleEn: n.titleEn,
         type: n.type
       })),
       publications: publications.map(p => ({
+        id: p.id,
         slug: p.slug,
         title: p.title,
         titleEn: p.titleEn,

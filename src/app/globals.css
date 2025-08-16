@@ -44,3 +44,18 @@ a:hover {
     text-wrap: balance;
   }
 }
+
+/* Twitter embed styles */
+[data-theme="light"] {
+  --tweet-bg-color: white;
+  --tweet-border-color: rgb(239, 243, 244);
+  --tweet-text-color: rgb(15, 20, 25);
+  --tweet-text-color-secondary: rgb(83, 100, 113);
+}
+
+[data-theme="dark"] {
+  --tweet-bg-color: black;
+  --tweet-border-color: rgb(47, 51, 54);
+  --tweet-text-color: rgb(247, 249, 249);
+  --tweet-text-color-secondary: rgb(139, 152, 165);
+}

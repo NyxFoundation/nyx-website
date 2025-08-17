@@ -61,12 +61,18 @@
       },
       "collaboration": {
         "title": "共同研究",
-        "description": "形式検証、セキュリティ、分散システムの共同研究パートナーシップ。",
-        "viewDetails": "パートナーシップ詳細 →"
+        "description": "形式検証、セキュリティ、分散システム等の分野について共同研究できます。",
+        "viewDetails": "詳細を見る →"
+      },
+      "sponsor": {
+        "title": "スポンサー",
+        "description": "長期的な研究支援を通じてNyx Foundationの活動に貢献できます。",
+        "viewDetails": "スポンサーを見る →"
       }
     },
-    "contributors": {
-      "title": "貢献者"
+    "sponsors": {
+      "title": "スポンサー",
+      "contact": "スポンサーについて興味のある方はご気軽にお問い合わせください："
     },
     "howToDonate": {
       "title": "寄付方法",

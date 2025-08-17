@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { Users, Gift, Package, Wallet } from "lucide-react";
+import { Users, Gift, Package, Wallet, Heart } from "lucide-react";
 import { Tweet } from "react-tweet";
 import Image from "next/image";
 
@@ -37,7 +37,7 @@ export default function ContributionPage() {
         </div>
 
         {/* Contribution Methods */}
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
           <div className="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <Gift className="w-10 h-10 mb-4 text-blue-600" />
             <h3 className="text-xl font-semibold mb-3">
@@ -64,12 +64,25 @@ export default function ContributionPage() {
             </a>
           </div>
 
+          <div className="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <Heart className="w-10 h-10 mb-4 text-purple-600" />
+            <h3 className="text-xl font-semibold mb-3">
+              {t("contributionMethods.sponsor.title")}
+            </h3>
+            <p className="text-muted-foreground mb-4">
+              {t("contributionMethods.sponsor.description")}
+            </p>
+            <a href="#sponsors" className="text-blue-600 hover:underline">
+              {t("contributionMethods.sponsor.viewDetails")}
+            </a>
+          </div>
+
         </div>
 
-        {/* Current Supporters */}
-        <section className="mb-16">
+        {/* Current Sponsors */}
+        <section id="sponsors" className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-8">
-            {t("contributors.title")}
+            {t("sponsors.title")}
           </h2>
 
           {/* Horizontal scrolling container */}
@@ -101,6 +114,16 @@ export default function ContributionPage() {
                 </div>
               ))}
             </div>
+          </div>
+          
+          {/* Sponsor Contact Info */}
+          <div className="text-center mt-8">
+            <p className="text-muted-foreground">
+              {t("sponsors.contact")} 
+              <a href="mailto:kingmasatojames@gmail.com" className="text-blue-600 hover:underline ml-1">
+                kingmasatojames(at)gmail.com
+              </a>
+            </p>
           </div>
         </section>
 

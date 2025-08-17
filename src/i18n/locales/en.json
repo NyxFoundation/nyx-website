@@ -61,12 +61,18 @@
       },
       "collaboration": {
         "title": "Collaborative Research",
-        "description": "Partnership opportunities in formal verification, security, and distributed systems.",
-        "viewDetails": "Partnership details →"
+        "description": "Research in formal verification, security, and distributed systems.",
+        "viewDetails": "View details →"
+      },
+      "sponsor": {
+        "title": "Sponsorship",
+        "description": "Contribute to Nyx's activities through long-term research funding.",
+        "viewDetails": "View sponsors →"
       }
     },
-    "contributors": {
-      "title": "Our Contributors"
+    "sponsors": {
+      "title": "Our Sponsors",
+      "contact": "To become a sponsor, please contact:"
     },
     "howToDonate": {
       "title": "How to Donate",

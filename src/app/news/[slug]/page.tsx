@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Calendar, Tag, ArrowLeft } from "lucide-react";
 import { getNews, getNewsItem, getPageBlocks } from "@/lib/notion";
 import { NotionBlockRenderer } from "@/components/NotionBlockRenderer";
-import { ShareButton } from "@/components/ShareButton";
 
 // Dynamic rendering for news pages
 export const dynamic = 'force-dynamic';
@@ -120,49 +119,7 @@ export default async function NewsDetailPage({
           <section className="mb-8">
             <NotionBlockRenderer blocks={blocks} />
           </section>
-
-          <footer className="border-t border-border pt-6">
-            <div className="flex items-center justify-end">
-              <ShareButton 
-                title={isJa ? news.title : news.titleEn}
-                label={isJa ? "共有" : "Share"}
-              />
-            </div>
-          </footer>
         </article>
-
-        <section className="mt-12 pt-8 border-t border-border">
-          <h2 className="text-2xl font-semibold mb-6">
-            {isJa ? "関連ニュース" : "Related News"}
-          </h2>
-          <div className="grid gap-4">
-            {(await getNews())
-              .filter((n) => n.slug !== news.slug)
-              .slice(0, 3)
-              .map((relatedNews) => (
-                <Link
-                  key={relatedNews.id}
-                  href={relatedNews.redirectTo || `/news/${relatedNews.slug}`}
-                  className="block p-4 border border-border rounded-lg hover:bg-muted transition-colors"
-                  {...(relatedNews.redirectTo && {
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                  })}
-                >
-                  <h3 className="font-semibold mb-2">
-                    {isJa ? relatedNews.title : relatedNews.titleEn}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {relatedNews.date && new Date(relatedNews.date).toLocaleDateString(locale, {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                </Link>
-              ))}
-          </div>
-        </section>
       </div>
     </div>
   );

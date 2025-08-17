@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ActivityModal } from "./ActivityModal";
-import { 
+import {
   Search,
   Shield,
   CheckCircle,
@@ -53,7 +53,7 @@ export function ActivityGrid() {
   return (
     <section className="py-20">
       <div className="w-full max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">
           {t("title")}
         </h2>
 

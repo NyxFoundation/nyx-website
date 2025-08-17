@@ -9,8 +9,19 @@ export function Hero() {
   const t = useTranslations("hero");
 
   return (
-    <section className="relative min-h-[600px] flex items-center py-20 px-8 md:px-12 lg:px-16">
-      <div className="max-w-6xl">
+    <section 
+      className="relative min-h-[600px] flex items-center py-20 px-8 md:px-12 lg:px-16"
+      style={{
+        backgroundImage: "url('/hero.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
+    >
+      {/* オーバーレイで背景を少し暗くして文字を読みやすくする */}
+      <div className="absolute inset-0 bg-white/80" />
+      
+      <div className="relative z-10 max-w-6xl">
         <div className="text-left space-y-8">
           {/* Title */}
           <h1 className="w-[60%] text-5xl md:text-7xl font-bold tracking-tight">

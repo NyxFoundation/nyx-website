@@ -49,12 +49,11 @@ export function Header() {
           <div className="flex h-16 items-center justify-between">
             {/* Logo - 左側 */}
             <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-full bg-foreground" />
               <span className="text-xl font-semibold">Nyx</span>
             </Link>
 
             {/* Desktop Navigation - 中央 */}
-            <nav className="hidden md:flex items-center space-x-4">
+            <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) =>
                 item.external ? (
                   <a
@@ -76,11 +75,12 @@ export function Header() {
                   </Link>
                 )
               )}
-              <LanguageToggle />
             </nav>
 
-            {/* Spacer for desktop to center nav */}
-            <div className="hidden md:block w-[120px]" />
+            {/* Language Toggle - 右端 */}
+            <div className="hidden md:block">
+              <LanguageToggle />
+            </div>
 
             {/* Mobile Menu Button - モバイルのみ表示 */}
             <button

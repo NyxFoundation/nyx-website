@@ -123,9 +123,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border">
+        <div className="mt-8 border-t border-border">
           <div className="flex">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm mx-auto text-muted-foreground">
               © {currentYear} Nyx Foundation. All rights reserved.
             </p>
           </div>

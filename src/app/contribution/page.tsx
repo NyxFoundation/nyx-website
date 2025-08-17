@@ -5,12 +5,12 @@ import { Users, Gift, Package, Wallet } from "lucide-react";
 import { Tweet } from "react-tweet";
 import Image from "next/image";
 
-export default function SupportPage() {
-  const t = useTranslations("support");
+export default function ContributionPage() {
+  const t = useTranslations("contribution");
   const locale = useLocale();
 
-  // Supporter data - all supporters in a flat list
-  const supporters = [
+  // Contributor data - all contributors in a flat list
+  const contributors = [
     { name: "Ethereum Foundation", jpname: "イーサリアム財団", logo: "/sponsors/ef.jpg" },
     { name: "Geodework", jpname: "ジオデワーク", logo: "/sponsors/geodework.jpg" },
     { name: "Polygon", jpname: "ポリゴン", logo: "/sponsors/polygon.jpeg" },
@@ -36,31 +36,31 @@ export default function SupportPage() {
           </p>
         </div>
 
-        {/* Support Methods */}
+        {/* Contribution Methods */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <Gift className="w-10 h-10 mb-4 text-blue-600" />
             <h3 className="text-xl font-semibold mb-3">
-              {t("supportMethods.donation.title")}
+              {t("contributionMethods.donation.title")}
             </h3>
             <p className="text-muted-foreground mb-4">
-              {t("supportMethods.donation.description")}
+              {t("contributionMethods.donation.description")}
             </p>
             <a href="#donation" className="text-blue-600 hover:underline">
-              {t("supportMethods.donation.viewMethods")}
+              {t("contributionMethods.donation.viewMethods")}
             </a>
           </div>
 
           <div className="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <Users className="w-10 h-10 mb-4 text-green-600" />
             <h3 className="text-xl font-semibold mb-3">
-              {t("supportMethods.collaboration.title")}
+              {t("contributionMethods.collaboration.title")}
             </h3>
             <p className="text-muted-foreground mb-4">
-              {t("supportMethods.collaboration.description")}
+              {t("contributionMethods.collaboration.description")}
             </p>
             <a href="#collaboration" className="text-blue-600 hover:underline">
-              {t("supportMethods.collaboration.viewDetails")}
+              {t("contributionMethods.collaboration.viewDetails")}
             </a>
           </div>
 
@@ -69,24 +69,24 @@ export default function SupportPage() {
         {/* Current Supporters */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-8">
-            {t("supporters.title")}
+            {t("contributors.title")}
           </h2>
 
           {/* Horizontal scrolling container */}
           <div className="overflow-x-auto pb-4">
             <div className="flex gap-4 min-w-max">
-              {supporters.map((supporter) => (
+              {contributors.map((contributor) => (
                 <div
-                  key={supporter.name}
+                  key={contributor.name}
                   className="flex-shrink-0 border border-border rounded-lg p-6 text-center hover:bg-muted/50 transition-colors"
                   style={{ minWidth: "180px" }}
                 >
                   <div className="mb-3 flex justify-center">
-                    {supporter.logo ? (
+                    {contributor.logo ? (
                       <div className="relative w-16 h-16">
                         <Image
-                          src={supporter.logo}
-                          alt={supporter.name}
+                          src={contributor.logo}
+                          alt={contributor.name}
                           fill
                           className="object-cover rounded-full"
                         />
@@ -97,7 +97,7 @@ export default function SupportPage() {
                       </div>
                     )}
                   </div>
-                  <h4 className="font-semibold text-sm">{locale === "ja" ? supporter.jpname : supporter.name}</h4>
+                  <h4 className="font-semibold text-sm">{locale === "ja" ? contributor.jpname : contributor.name}</h4>
                 </div>
               ))}
             </div>

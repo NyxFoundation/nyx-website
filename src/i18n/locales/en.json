@@ -2,18 +2,18 @@
   "nav": {
     "publications": "Publication",
     "member": "Member",
-    "support": "Support",
+    "contribution": "Contribution",
     "news": "News",
     "job": "Job",
     "language": "Language",
     "contact": "Contact",
     "Research": "Research",
     "About": "About",
-    "Connect": "Connect"
+    "Connect": "Social"
   },
   "hero": {
     "title": "Nyx Foundation",
-    "subtitle": "Building humanity's coordination space securely for open innovation",
+    "subtitle": "Build a Verifiable Future for Open Innovation",
     "btnPublications": "Publications",
     "btnNews": "News",
     "contact": "Contact"
@@ -50,13 +50,13 @@
     "error": "An error occurred",
     "notFound": "Page not found"
   },
-  "support": {
-    "title": "Support Nyx",
-    "subtitle": "We seek partners who share our mission to build humanity's coordination space securely.",
-    "supportMethods": {
+  "contribution": {
+    "title": "Contribute to Nyx",
+    "subtitle": "Contribute to our research and development.",
+    "contributionMethods": {
       "donation": {
         "title": "Donation",
-        "description": "Support our research directly through crypto or traditional methods.",
+        "description": "Contribute to our research directly through crypto or traditional methods.",
         "viewMethods": "View donation methods →"
       },
       "collaboration": {
@@ -65,8 +65,8 @@
         "viewDetails": "Partnership details →"
       }
     },
-    "supporters": {
-      "title": "Our Supporters"
+    "contributors": {
+      "title": "Our Contributors"
     },
     "howToDonate": {
       "title": "How to Donate",
@@ -76,7 +76,7 @@
       },
       "wishList": {
         "title": "Amazon Wish List",
-        "description": "Support our research with equipment and books",
+        "description": "Contribute with equipment and books for our research",
         "button": "View Wish List"
       },
       "thankYouNote": "When you donate, we'll thank you with a tweet like this:"

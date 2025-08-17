@@ -22,12 +22,12 @@ const notoSerifJP = Noto_Serif_JP({
 
 export const metadata: Metadata = {
   title: "Nyx Foundation",
-  description: "Building humanity's coordination space securely for open innovation",
+  description: "Build a Verifiable Future for Open Innovation",
   keywords: ["research", "foundation", "innovation", "security", "formal verification"],
   authors: [{ name: "Nyx Foundation" }],
   openGraph: {
     title: "Nyx Foundation",
-    description: "Building humanity's coordination space securely for open innovation",
+    description: "Build a Verifiable Future for Open Innovation",
     url: "https://nyx.foundation",
     siteName: "Nyx Foundation",
     locale: "ja_JP",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Nyx Foundation",
-    description: "Building humanity's coordination space securely for open innovation",
+    description: "Build a Verifiable Future for Open Innovation",
     images: ["/ogp.png"],
   },
   icons: {

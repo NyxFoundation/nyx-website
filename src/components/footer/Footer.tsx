@@ -16,7 +16,7 @@ export function Footer() {
           {/* ロゴと説明 */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center space-x-2 mb-3">
-              <span className="text-xl font-semibold">Nyx</span>
+              <span className="text-xl font-semibold">Nyx Foundation</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               {tHero("subtitle")}
@@ -50,8 +50,8 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors">
-                      {t("support")}
+                    <Link href="/contribution" className="text-muted-foreground hover:text-foreground transition-colors">
+                      {t("contribution")}
                     </Link>
                   </li>
                   <li>

@@ -15,7 +15,7 @@ export function Header() {
   const navItems = [
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
-    { href: "/support", label: t("support") },
+    { href: "/contribution", label: t("contribution") },
     { href: "/news", label: t("news") },
     { href: "https://www.notion.so/grandchildrice/Nyx-Foundation-Job-251d05af0d5a805ca9c4e75f40cb5b81", label: t("job"), external: true },
   ];

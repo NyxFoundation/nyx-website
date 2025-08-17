@@ -10,7 +10,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-[600px] flex items-center py-20 px-8 md:px-12 lg:px-16"
+      className="relative min-h-[500px] flex items-center px-8 md:px-12 lg:px-16"
       style={{
         backgroundImage: "url('/hero.svg')",
         backgroundSize: "cover",
@@ -34,7 +34,7 @@ export function Hero() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-row gap-4 items-center flex-wrap pt-4">
+          <div className="flex flex-row gap-x-4 gap-y-6 items-center flex-wrap pt-4">
             <Link
               href="/publications"
               className={cn(
@@ -64,7 +64,7 @@ export function Hero() {
             <Link
               href="/contact"
               className={cn(
-                "inline-flex items-center gap-2",
+                "inline-flex items-center gap-3",
                 "text-lg hover:underline",
                 "transition-colors"
               )}

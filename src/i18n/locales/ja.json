@@ -2,18 +2,18 @@
   "nav": {
     "publications": "出版物",
     "member": "メンバー",
-    "support": "サポート",
+    "contribution": "貢献",
     "news": "ニュース",
-    "job": "仕事",
+    "job": "採用",
     "language": "言語",
     "contact": "お問い合わせ",
     "Research": "研究",
-    "About": "Nyxについて",
-    "Connect": "つながる"
+    "About": "組織",
+    "Connect": "ソーシャル"
   },
   "hero": {
     "title": "Nyx Foundation",
-    "subtitle": "人類の協調空間を安全に構築し、オープンイノベーションを促進する",
+    "subtitle": "オープンイノベーションのための検証可能な未来を築く",
     "btnPublications": "出版物",
     "btnNews": "ニュース",
     "contact": "お問い合わせ"
@@ -26,7 +26,7 @@
         "description": "最先端の分散システムと暗号技術の研究開発を行っています。ブロックチェーン、ゼロ知識証明、マルチパーティ計算などの基礎研究から実装まで幅広く取り組んでいます。"
       },
       "whitehat": {
-        "title": "ホワイトハットハッキング",
+        "title": "ホワイトハッキング",
         "description": "セキュリティ脆弱性の発見と責任ある開示を通じて、デジタルインフラストラクチャの安全性向上に貢献しています。バグバウンティプログラムへの参加と独自の脆弱性研究を行っています。"
       },
       "verification": {
@@ -50,13 +50,13 @@
     "error": "エラーが発生しました",
     "notFound": "ページが見つかりません"
   },
-  "support": {
-    "title": "Nyxを支援する",
-    "subtitle": "私たちは、人類の協調空間を安全に構築するという使命を共有するパートナーを求めています。",
-    "supportMethods": {
+  "contribution": {
+    "title": "Nyxへの貢献",
+    "subtitle": "私たちの研究と開発に貢献できます。",
+    "contributionMethods": {
       "donation": {
         "title": "寄付",
-        "description": "暗号通貨または従来の方法で研究活動を直接支援できます。",
+        "description": "暗号通貨または従来の方法で研究活動に直接貢献できます。",
         "viewMethods": "寄付方法を見る →"
       },
       "collaboration": {
@@ -65,8 +65,8 @@
         "viewDetails": "パートナーシップ詳細 →"
       }
     },
-    "supporters": {
-      "title": "支援者"
+    "contributors": {
+      "title": "貢献者"
     },
     "howToDonate": {
       "title": "寄付方法",
@@ -76,7 +76,7 @@
       },
       "wishList": {
         "title": "Amazon ウィッシュリスト",
-        "description": "研究活動に必要な機器や書籍を直接支援",
+        "description": "研究活動に必要な機器や書籍で貢献",
         "button": "ウィッシュリストを見る"
       },
       "thankYouNote": "ご寄付いただいた際は、感謝の気持ちを込めてツイートさせていただきます："

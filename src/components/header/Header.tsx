@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -48,8 +49,14 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo - 左側 */}
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-xl font-semibold">Nyx</span>
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/icon.svg" 
+                alt="Nyx Foundation" 
+                width={32} 
+                height={32}
+                className="w-8 h-8"
+              />
             </Link>
 
             {/* Desktop Navigation - 中央 */}

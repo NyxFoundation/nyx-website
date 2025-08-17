@@ -30,8 +30,8 @@ const activities: ActivityItem[] = [
     gridClass: "md:col-span-1 md:row-span-1",
   },
   {
-    id: "verification",
-    icon: <CheckCircle className="w-8 h-8" />,
+    id: "house",
+    icon: <Home className="w-8 h-8" />,
     gridClass: "md:col-span-1 md:row-span-2",
   },
   {
@@ -40,8 +40,8 @@ const activities: ActivityItem[] = [
     gridClass: "md:col-span-1 md:row-span-1",
   },
   {
-    id: "house",
-    icon: <Home className="w-8 h-8" />,
+    id: "verification",
+    icon: <CheckCircle className="w-8 h-8" />,
     gridClass: "md:col-span-1 md:row-span-1",
   },
 ];
@@ -64,7 +64,7 @@ export function ActivityGrid() {
               onClick={() => setSelectedActivity(activity.id)}
               className={cn(
                 "group relative overflow-hidden",
-                "bg-white border-2 border-border rounded-lg",
+                "bg-white border-2 border-border border-gray-400 rounded-lg",
                 "p-6 text-left transition-all duration-300",
                 "hover:shadow-lg hover:-translate-y-1",
                 "focus:outline-none focus:ring-2 focus:ring-offset-2",

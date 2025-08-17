@@ -142,7 +142,7 @@ export default function SupportPage() {
                 href="https://www.amazon.jp/hz/wishlist/ls/16QCGM9CJ1NL5?ref_=wl_share"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors text-sm"
+                className="inline-flex items-center px-4 py-2 bg-purple-600 !text-white font-semibold rounded-md hover:bg-purple-700 hover:!text-white transition-colors text-sm hover:no-underline"
               >
                 {t("howToDonate.wishList.button")}
                 <span className="ml-2">→</span>

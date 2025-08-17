@@ -10,7 +10,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="border-t border-border bg-background border-gray-200">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* ロゴと説明 */}
@@ -123,7 +123,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-border">
+        <div className="mt-8 border-t border-border border-gray-200">
           <div className="flex">
             <p className="text-sm mx-auto text-muted-foreground">
               © {currentYear} Nyx Foundation. All rights reserved.

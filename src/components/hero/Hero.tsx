@@ -9,10 +9,10 @@ export function Hero() {
   const t = useTranslations("hero");
 
   return (
-    <section 
+    <section
       className="relative min-h-[600px] flex items-center py-20 px-8 md:px-12 lg:px-16"
       style={{
-        backgroundImage: "url('/hero.png')",
+        backgroundImage: "url('/hero.svg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"
@@ -20,7 +20,7 @@ export function Hero() {
     >
       {/* オーバーレイで背景を少し暗くして文字を読みやすくする */}
       <div className="absolute inset-0 bg-white/80" />
-      
+
       <div className="relative z-10 max-w-6xl">
         <div className="text-left space-y-8">
           {/* Title */}

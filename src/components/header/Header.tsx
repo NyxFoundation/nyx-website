@@ -45,15 +45,15 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-white">
+      <header className="sticky top-0 z-50 w-full border-b border-border border-gray-200 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo - 左側 */}
             <Link href="/" className="flex items-center">
-              <Image 
-                src="/icon.svg" 
-                alt="Nyx Foundation" 
-                width={32} 
+              <Image
+                src="/icon.svg"
+                alt="Nyx Foundation"
+                width={32}
                 height={32}
                 className="w-8 h-8"
               />

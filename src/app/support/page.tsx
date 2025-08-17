@@ -7,7 +7,6 @@ import Image from "next/image";
 
 export default function SupportPage() {
   const t = useTranslations("support");
-  const tCommon = useTranslations("common");
   const locale = useLocale();
 
   // Supporter data - all supporters in a flat list

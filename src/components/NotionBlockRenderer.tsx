@@ -1,18 +1,19 @@
 "use client";
 
 import { FC, useEffect, useRef } from "react";
-import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { BlockObjectResponse, RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import { Tweet } from "react-tweet";
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 interface NotionBlockRendererProps {
   blocks: BlockObjectResponse[];
 }
 
 export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) => {
-  const renderBlock = (block: BlockObjectResponse): JSX.Element | null => {
+  const renderBlock = (block: BlockObjectResponse): React.ReactElement | null => {
     const key = block.id;
 
     switch (block.type) {
@@ -90,7 +91,7 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
           : block.image.file.url;
         return (
           <figure key={key} className="my-6">
-            <img src={imageUrl} alt="" className="w-full rounded" />
+            <Image src={imageUrl} alt="" width={800} height={400} className="w-full rounded object-cover" />
             {block.image.caption && block.image.caption.length > 0 && (
               <figcaption className="text-center text-sm text-gray-600 mt-2">
                 {renderRichText(block.image.caption)}
@@ -184,7 +185,6 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
         );
 
       case "table":
-        const table = block.table;
         return (
           <div key={key} className="my-6 overflow-x-auto">
             <table className="min-w-full border-collapse border border-gray-300">
@@ -230,8 +230,8 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
     }
   };
 
-  const renderRichText = (richTexts: any[]): JSX.Element[] => {
-    const result: JSX.Element[] = [];
+  const renderRichText = (richTexts: RichTextItemResponse[]): React.ReactElement[] => {
+    const result: React.ReactElement[] = [];
     
     richTexts.forEach((item, index) => {
       // Check if this is an equation type
@@ -242,13 +242,13 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
       
       // Handle regular text
       const { annotations } = item;
-      let textContent = item.plain_text;
+      const textContent = item.plain_text;
       
       // Process inline math - look for $...$ patterns in the text (for backwards compatibility)
       const mathRegex = /\$([^\$]+)\$/g;
       let lastIndex = 0;
       let match;
-      const segments: (string | JSX.Element)[] = [];
+      const segments: (string | React.ReactElement)[] = [];
       
       while ((match = mathRegex.exec(textContent)) !== null) {
         // Add text before the math expression
@@ -278,7 +278,7 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
           return;
         }
         
-        let content: any = segment;
+        let content: React.ReactNode = segment;
         
         if (annotations.bold) {
           content = <strong>{content}</strong>;

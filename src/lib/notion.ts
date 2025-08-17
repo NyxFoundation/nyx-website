@@ -25,7 +25,8 @@ export interface NotionPage {
   blocks?: BlockObjectResponse[];
 }
 
-function getPropertyValue(property: Record<string, unknown>): unknown {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getPropertyValue(property: Record<string, any>): unknown {
   switch (property.type) {
     case "title":
       return property.title[0]?.plain_text || "";
@@ -40,7 +41,7 @@ function getPropertyValue(property: Record<string, unknown>): unknown {
     case "select":
       return property.select?.name || "";
     case "multi_select":
-      return property.multi_select.map((item: any) => item.name);
+      return property.multi_select.map((item: { name: string }) => item.name);
     default:
       return "";
   }
@@ -106,12 +107,12 @@ export async function getPublications(): Promise<NotionPage[]> {
         
         return {
           id: page.id,
-          slug: getPropertyValue(properties.Slug) || page.id,
-          title: getPropertyValue(properties.Title),
-          titleEn: getPropertyValue(properties.Title_EN) || getPropertyValue(properties.Title),
-          date: getPropertyValue(properties.Date),
-          labels: getPropertyValue(properties.Label) || [],
-          redirectTo: getPropertyValue(properties.RedirectTo),
+          slug: String(getPropertyValue(properties.Slug) || page.id),
+          title: String(getPropertyValue(properties.Title) || ""),
+          titleEn: String(getPropertyValue(properties.Title_EN) || getPropertyValue(properties.Title) || ""),
+          date: String(getPropertyValue(properties.Date) || ""),
+          labels: Array.isArray(getPropertyValue(properties.Label)) ? getPropertyValue(properties.Label) as string[] : [],
+          redirectTo: getPropertyValue(properties.RedirectTo) ? String(getPropertyValue(properties.RedirectTo)) : undefined,
           type: "Publication" as const,
         };
       });
@@ -169,12 +170,12 @@ export async function getNews(): Promise<NotionPage[]> {
         
         return {
           id: page.id,
-          slug: getPropertyValue(properties.Slug) || page.id,
-          title: getPropertyValue(properties.Title),
-          titleEn: getPropertyValue(properties.Title_EN) || getPropertyValue(properties.Title),
-          date: getPropertyValue(properties.Date),
-          labels: getPropertyValue(properties.Label) || [],
-          redirectTo: getPropertyValue(properties.RedirectTo),
+          slug: String(getPropertyValue(properties.Slug) || page.id),
+          title: String(getPropertyValue(properties.Title) || ""),
+          titleEn: String(getPropertyValue(properties.Title_EN) || getPropertyValue(properties.Title) || ""),
+          date: String(getPropertyValue(properties.Date) || ""),
+          labels: Array.isArray(getPropertyValue(properties.Label)) ? getPropertyValue(properties.Label) as string[] : [],
+          redirectTo: getPropertyValue(properties.RedirectTo) ? String(getPropertyValue(properties.RedirectTo)) : undefined,
           type: "News" as const,
         };
       });

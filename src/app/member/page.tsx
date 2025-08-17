@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const members = [
+const members = [
   {
     name: "vita",
     logo: "/residents/vita.jpeg",

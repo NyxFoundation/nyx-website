@@ -1,16 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ActivityModal } from "./ActivityModal";
-import {
-  Search,
-  Shield,
-  CheckCircle,
-  GraduationCap,
-  Home
-} from "lucide-react";
 
 type ActivityItem = {
   id: string;
@@ -21,41 +15,92 @@ type ActivityItem = {
 const activities: ActivityItem[] = [
   {
     id: "research",
-    icon: <Search className="w-8 h-8" />,
+    icon: (
+      <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-md">
+        <Image
+          src="/presentation.jpg"
+          alt="Research Presentation"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover"
+        />
+      </div>
+    ),
     gridClass: "md:col-span-2 md:row-span-2",
   },
   {
     id: "whitehat",
-    icon: <Shield className="w-8 h-8" />,
+    icon: (
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+        <Image
+          src="/code.png"
+          alt="Whitehat Hacking"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-contain"
+        />
+      </div>
+    ),
     gridClass: "md:col-span-1 md:row-span-1",
   },
   {
     id: "house",
-    icon: <Home className="w-8 h-8" />,
+    icon: (
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+        <Image
+          src="/house.png"
+          alt="House"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-contain"
+        />
+      </div>
+    ),
     gridClass: "md:col-span-1 md:row-span-2",
   },
   {
     id: "education",
-    icon: <GraduationCap className="w-8 h-8" />,
+    icon: (
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+        <Image
+          src="/education.png"
+          alt="Education"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-contain"
+        />
+      </div>
+    ),
     gridClass: "md:col-span-1 md:row-span-1",
   },
   {
     id: "verification",
-    icon: <CheckCircle className="w-8 h-8" />,
+    icon: (
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+        <Image
+          src="/math.png"
+          alt="Formal Verification"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-contain"
+        />
+      </div>
+    ),
     gridClass: "md:col-span-1 md:row-span-1",
   },
 ];
 
+import { getActivityText, type LocaleKey } from "@/content/activities";
+
 export function ActivityGrid() {
+  const locale = (useLocale() as LocaleKey) || "en";
   const t = useTranslations("activity");
   const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
 
   return (
     <section className="py-10">
       <div className="w-full max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">
-          {t("title")}
-        </h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">{t("title")}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:auto-rows-[minmax(150px,auto)]">
           {activities.map((activity) => (
@@ -75,10 +120,10 @@ export function ActivityGrid() {
                 <div className="mb-4">{activity.icon}</div>
                 <div>
                   <h3 className="text-xl font-semibold mb-2">
-                    {t(`items.${activity.id}.title`)}
+                    {getActivityText(activity.id, locale).title}
                   </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {t(`items.${activity.id}.description`)}
+                  <p className="text-sm text-muted-foreground">
+                    {getActivityText(activity.id, locale).description}
                   </p>
                 </div>
               </div>

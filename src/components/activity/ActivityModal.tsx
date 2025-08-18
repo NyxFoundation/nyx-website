@@ -1,10 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  getActivityDetails,
+  getActivityText,
+  type LocaleKey,
+} from "@/content/activities";
 
 interface ActivityModalProps {
   activityId: string;
@@ -14,6 +20,7 @@ interface ActivityModalProps {
 export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
   const t = useTranslations("activity");
   const tCommon = useTranslations("common");
+  const locale = (useLocale() as LocaleKey) || "en";
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -32,21 +39,46 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
         <Dialog.Content
           className={cn(
             "fixed left-[50%] top-[50%] z-50",
-            "w-[90vw] max-w-2xl max-h-[85vh]",
+            // Wider modal while keeping good mobile fit
+            "w-[92vw] sm:w-[90vw] max-w-3xl lg:max-w-5xl max-h-[85vh]",
             "translate-x-[-50%] translate-y-[-50%]",
             "bg-white border border-border rounded-lg shadow-lg",
             "animate-in fade-in-0 zoom-in-95",
             "overflow-y-auto"
           )}
         >
-          <div className="p-6">
-            <Dialog.Title className="text-2xl font-bold mb-4">
-              {t(`items.${activityId}.title`)}
+          <div className="p-6 md:p-8">
+            <Dialog.Title className="text-3xl md:text-4xl font-bold mb-3">
+              {getActivityText(activityId, locale).title}
             </Dialog.Title>
 
-            <Dialog.Description className="text-base leading-relaxed text-muted-foreground">
-              {t(`items.${activityId}.description`)}
+            <Dialog.Description className="text-base md:text-lg leading-relaxed text-muted-foreground mb-6">
+              {getActivityText(activityId, locale).description}
             </Dialog.Description>
+
+            <div className="space-y-6">
+              {getActivityDetails(activityId, locale).map((item, idx) => (
+                <div key={idx} className="flex gap-4 md:gap-6">
+                  <div className="relative w-32 h-24 md:w-48 md:h-36 lg:w-56 lg:h-40 flex-none overflow-hidden rounded-md border">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 320px, 360px"
+                      className="object-contain object-center"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-semibold text-xl mb-1 truncate">
+                      {item.title}
+                    </h4>
+                    <p className="text-[15px] md:text-base text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <div className="mt-8 flex justify-end">
               <Dialog.Close asChild>

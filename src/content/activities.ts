@@ -6,6 +6,12 @@ export type ActivityText = {
   description: Record<LocaleKey, string>;
 };
 
+export type ActivityDetailItem = {
+  image: string; // path under public/
+  title: Record<LocaleKey, string>;
+  description: Record<LocaleKey, string>;
+};
+
 export const activitiesText: ActivityText[] = [
   {
     id: "research",
@@ -83,3 +89,124 @@ export function getActivityText(id: string, locale: LocaleKey) {
   };
 }
 
+// Optional per-activity rich details to show in the modal
+export const activitiesDetails: Record<string, ActivityDetailItem[]> = {
+  research: [
+    {
+      image: "/activity/zkvm.png",
+      title: {
+        en: "Benchmarking zkVM",
+        ja: "zkVMのベンチマーク",
+      },
+      description: {
+        en: "Benchmarked the performance of zkVM and presented at ZKProof7.",
+        ja: "zkVMの性能を評価するためのベンチマークを行い、ZKProof7で発表しました。",
+      },
+    },
+  ],
+  whitehat: [
+    {
+      image: "/activity/reth.png",
+      title: {
+        en: "Reth",
+        ja: "Reth",
+      },
+      description: {
+        en: "Contributed to the Reth Ethereum client with three implementation improvements.",
+        ja: "イーサリアムクライアント「Reth」の実装を改善しました。",
+      },
+    },
+    {
+      image: "/activity/geth.png",
+      title: {
+        en: "Geth",
+        ja: "Geth",
+      },
+      description: {
+        en: "Contributed to fixing a DoS attack vector in the Geth Ethereum client GraphQL endpoint.",
+        ja: "イーサリアムクライアント「Geth」のGraphQLエンドポイントに残っていたDoS攻撃ベクタを修正しました。",
+      },
+    },
+    {
+      image: "/activity/erigon.png",
+      title: {
+        en: "Erigon",
+        ja: "Erigon",
+      },
+      description: {
+        en: "Contributed to fixing a DoS attack vector in the Erigon Ethereum client WebSocket endpoint.",
+        ja: "イーサリアムクライアント「Erigon」のWebSocketエンドポイントに残っていたDoS攻撃ベクタを修正しました。",
+      },
+    },
+    {
+      image: "/activity/intmax.png",
+      title: {
+        en: "Intmax",
+        ja: "Intmax",
+      },
+      description: {
+        en: "Discovered a copy-paste bug in zkRollup's Intmax zero-knowledge proof implementation and reported it through ImmuneFi.",
+        ja: "zkRollupのIntmaxのゼロ知識証明実装にあったコピーペーストバグを発見し、ImmuneFiを通じて報告しました。",
+      },
+    },
+  ],
+  verification: [
+    {
+      image: "/math.png",
+      title: {
+        en: "Coming soon",
+        ja: "近日公開予定",
+      },
+      description: {
+        en: "",
+        ja: "",
+      },
+    },
+  ],
+  education: [
+    {
+      image: "/ogp.png",
+      title: {
+        en: "YouTube",
+        ja: "YouTube",
+      },
+      description: {
+        en: "We publish educational videos on Ethereum on our official Nyx YouTube channel.",
+        ja: "Nyx公式YouTubeチャンネルでイーサリアムに関する勉強会の動画を公開しています。",
+      },
+    },
+    {
+      image: "/activity/zktokyo.png",
+      title: {
+        en: "ZK Tokyo",
+        ja: "ZK Tokyo",
+      },
+      description: {
+        en: "We organize the periodic event 'ZK Tokyo' focused on zero-knowledge proofs and the educational program 'ZK Core Program' for implementing zero-knowledge proofs.",
+        ja: "不定期でゼロ知識証明に関するイベント「ZK Tokyo」やゼロ知識証明実装に関する教育プログラム「ZK Core Program」を運営しています。",
+      },
+    },
+  ],
+  house: [
+    {
+      image: "/house.png",
+      title: {
+        en: "Nyx House",
+        ja: "Nyxハウス",
+      },
+      description: {
+        en: "A share house for researchers in Tokyo, serving as a hub for companies and researchers. Open to the public after 7pm daily.",
+        ja: "東京にある研究者のためのシェアハウスで、企業や研究者のハブとなる場所です。毎日7pm以降は一般開放しています。",
+      },
+    },
+  ],
+};
+
+export function getActivityDetails(id: string, locale: LocaleKey) {
+  const items = activitiesDetails[id] || [];
+  return items.map((it) => ({
+    image: it.image,
+    title: it.title[locale],
+    description: it.description[locale],
+  }));
+}

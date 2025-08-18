@@ -21,15 +21,15 @@ export function Hero() {
       {/* オーバーレイで背景を少し暗くして文字を読みやすくする */}
       <div className="absolute inset-0 bg-white/86.5" />
 
-      <div className="relative z-10 max-w-6xl">
+      <div className="relative z-10 w-full max-w-6xl mx-auto">
         <div className="text-left space-y-8">
           {/* Title */}
-          <h1 className="w-[60%] text-5xl md:text-7xl font-bold tracking-tight">
+          <h1 className="max-w-md text-5xl md:text-7xl font-bold tracking-tight">
             {t("title")}
           </h1>
 
           {/* Subtitle */}
-          <p className="w-[60%] text-xl md:text-2xl text-muted-foreground max-w-3xl leading-relaxed">
+          <p className="max-w-[360px] text-xl md:text-2xl text-muted-foreground max-w-3xl leading-relaxed">
             {t("subtitle")}
           </p>
 

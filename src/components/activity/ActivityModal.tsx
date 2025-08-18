@@ -56,10 +56,10 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
               {getActivityText(activityId, locale).description}
             </Dialog.Description>
 
-            <div className="space-y-6">
+            <div className="space-y-6 border-t pt-4">
               {getActivityDetails(activityId, locale).map((item, idx) => (
-                <div key={idx} className="flex gap-4 md:gap-6">
-                  <div className="relative w-32 h-24 md:w-48 md:h-36 lg:w-56 lg:h-40 flex-none overflow-hidden rounded-md border">
+                <div key={idx} className="flex gap-4 md:gap-6 border-b pb-4">
+                  <div className="relative w-32 h-24 md:w-48 md:h-36 lg:w-56 lg:h-40 flex-none overflow-hidden rounded-md">
                     <Image
                       src={item.image}
                       alt={item.title}

@@ -16,13 +16,13 @@ const activities: ActivityItem[] = [
   {
     id: "research",
     icon: (
-      <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-md">
+      <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-lg">
         <Image
           src="/presentation.jpg"
           alt="Research Presentation"
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover"
+          className="object-cover rounded-lg"
         />
       </div>
     ),
@@ -31,13 +31,13 @@ const activities: ActivityItem[] = [
   {
     id: "whitehat",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
         <Image
           src="/code.png"
           alt="Whitehat Hacking"
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain"
+          className="object-cover rounded-lg"
         />
       </div>
     ),
@@ -46,13 +46,13 @@ const activities: ActivityItem[] = [
   {
     id: "house",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
         <Image
           src="/house.png"
           alt="House"
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain"
+          className="object-contain rounded-lg"
         />
       </div>
     ),
@@ -61,13 +61,13 @@ const activities: ActivityItem[] = [
   {
     id: "education",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
         <Image
           src="/education.png"
           alt="Education"
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain"
+          className="object-cover rounded-lg"
         />
       </div>
     ),
@@ -76,13 +76,13 @@ const activities: ActivityItem[] = [
   {
     id: "verification",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-md">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
         <Image
           src="/math.png"
           alt="Formal Verification"
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain"
+          className="object-cover rounded-lg"
         />
       </div>
     ),

@@ -116,7 +116,7 @@ export function ActivityGrid() {
                 activity.gridClass
               )}
             >
-              <div className="flex flex-col h-full justify-between">
+              <div className="flex flex-col h-full justify-start">
                 <div className="mb-4">{activity.icon}</div>
                 <div>
                   <h3 className="text-xl font-semibold mb-2">

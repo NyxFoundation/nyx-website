@@ -56,20 +56,20 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
               {getActivityText(activityId, locale).description}
             </Dialog.Description>
 
-            <div className="space-y-6 border-t pt-4">
+            <div className="grid grid-cols-1 gap-6 border-t pt-4 border-gray-400">
               {getActivityDetails(activityId, locale).map((item, idx) => (
-                <div key={idx} className="flex gap-4 md:gap-6 border-b pb-4">
-                  <div className="relative w-32 h-24 md:w-48 md:h-36 lg:w-56 lg:h-40 flex-none overflow-hidden rounded-lg">
+                <div key={idx} className="flex flex-col md:flex-row gap-4 md:gap-6 border-b border-gray-400 pb-4">
+                  <div className="relative w-full md:w-48 lg:w-56 h-40 md:h-36 lg:h-40 flex-none overflow-hidden rounded-lg">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 320px, 360px"
-                      className="object-contain object-center rounded-lg"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 360px"
+                      className="object-cover object-center rounded-lg"
                     />
                   </div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold text-xl mb-1 truncate">
+                  <div className="flex flex-col flex-1 min-w-0">
+                    <h4 className="font-semibold text-xl mb-2">
                       {item.title}
                     </h4>
                     <p className="text-[15px] md:text-base text-muted-foreground">

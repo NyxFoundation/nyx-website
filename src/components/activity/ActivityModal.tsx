@@ -65,7 +65,7 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
                       alt={item.title}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 360px"
-                      className="object-cover object-center rounded-lg"
+                      className="object-contain object-center rounded-lg"
                     />
                   </div>
                   <div className="flex flex-col flex-1 min-w-0">

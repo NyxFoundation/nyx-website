@@ -13,7 +13,6 @@ export function Hero() {
       className="relative min-h-[500px] flex items-center px-8 md:px-12 lg:px-16"
       style={{
         backgroundImage: "url('/hero.svg')",
-        backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"
       }}

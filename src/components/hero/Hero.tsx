@@ -10,7 +10,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-[500px] flex items-center px-8 md:px-12 lg:px-16"
+      className="relative min-h-[500px] flex items-center px-8 md:px-12 lg:px-16 bg-auto lg:bg-cover"
       style={{
         backgroundImage: "url('/hero.svg')",
         backgroundPosition: "center",

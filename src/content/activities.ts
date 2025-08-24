@@ -47,9 +47,9 @@ export const activitiesText: ActivityText[] = [
     },
     description: {
       en:
-        "Using mathematical methods to prove the correctness and security of systems. We provide formal verification services for smart contracts, protocols, and cryptographic algorithms.",
+        "Using mathematical methods to prove the correctness and security of smart contracts, protocols, and cryptographic algorithms.",
       ja:
-        "数学的手法を用いてシステムの正確性と安全性を証明します。スマートコントラクト、プロトコル、暗号アルゴリズムの形式検証サービスを提供しています。",
+        "数学的手法を用いてスマートコントラクト、プロトコル、暗号アルゴリズムの正確性と安全性を証明します。",
     },
   },
   {
@@ -99,8 +99,19 @@ export const activitiesDetails: Record<string, ActivityDetailItem[]> = {
         ja: "zkVMのベンチマーク",
       },
       description: {
-        en: "Benchmarked the performance of zkVM and presented at ZKProof7.",
-        ja: "zkVMの性能を評価するためのベンチマークを行い、ZKProof7で発表しました。",
+        en: "This study conducted benchmarks to evaluate the performance of zkVMs, revealing their performance characteristics and bottlenecks.",
+        ja: "zkVMの性能を評価するためのベンチマークを行い、性能特性やボトルネックを明らかにしました。",
+      },
+    },
+    {
+      image: "/activity/uniswap.png",
+      title: {
+        en: "An Empirical Analysis of Internalization on the Uniswap Protocol",
+        ja: "Uniswapプロトコルにおける内部化の実証分析",
+      },
+      description: {
+        en: "This study empirically analyzes how internalization by professional market makers on Uniswap affects transaction costs and overall market quality.",
+        ja: "Uniswapにおけるプロフェッショナル・マーケットメイカーの内部化が取引コストや市場の健全性に与える影響を実証的に分析しました。",
       },
     },
   ],

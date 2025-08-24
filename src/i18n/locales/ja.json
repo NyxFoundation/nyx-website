@@ -31,7 +31,7 @@
       },
       "verification": {
         "title": "形式検証",
-        "description": "数学的手法を用いてシステムの正確性と安全性を証明します。スマートコントラクト、プロトコル、暗号アルゴリズムの形式検証サービスを提供しています。"
+        "description": "数学的手法を用いてスマートコントラクト、プロトコル、暗号アルゴリズムの正確性と安全性を証明します。"
       },
       "education": {
         "title": "教育",
@@ -84,6 +84,15 @@
         "title": "Amazon ウィッシュリスト",
         "description": "研究活動に必要な機器や書籍で貢献",
         "button": "ウィッシュリストを見る"
+      },
+      "bankTransfer": {
+        "title": "銀行振込",
+        "description": "日本国内の銀行口座への振込",
+        "bankName": "PayPay銀行",
+        "branchName": "かわせみ支店（007）",
+        "accountNumber": "普通 7551963",
+        "accountName": "ツツミマサト",
+        "corporateNote": "法人様からのご寄付については、kingmasatojames@gmail.comまでお問い合わせください。"
       },
       "thankYouNote": "ご寄付いただいた際は、感謝の気持ちを込めてツイートさせていただきます："
     },

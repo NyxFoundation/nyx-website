@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { Users, Gift, Package, Wallet, Heart } from "lucide-react";
+import { Users, Gift, Package, Wallet, Heart, Building } from "lucide-react";
 import { Tweet } from "react-tweet";
 import Image from "next/image";
 
@@ -133,7 +133,7 @@ export default function ContributionPage() {
             {t("howToDonate.title")}
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* ERC20 Address */}
             <div className="border border-border rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
@@ -148,6 +148,28 @@ export default function ContributionPage() {
               <code className="block p-3 bg-muted rounded text-xs break-all">
                 0xa1a8d76A0044ce9d8aeF7c5279111a3029f58a6a
               </code>
+            </div>
+
+            {/* Bank Transfer */}
+            <div className="border border-border rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Building className="w-5 h-5" />
+                <h3 className="font-semibold">
+                  {t("howToDonate.bankTransfer.title")}
+                </h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                {t("howToDonate.bankTransfer.description")}
+              </p>
+              <div className="space-y-1 text-xs">
+                <p><span className="font-medium">{t("howToDonate.bankTransfer.bankName")}</span></p>
+                <p>{t("howToDonate.bankTransfer.branchName")}</p>
+                <p>{t("howToDonate.bankTransfer.accountNumber")}</p>
+                <p className="font-medium">{t("howToDonate.bankTransfer.accountName")}</p>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3 pt-3 border-t">
+                {t("howToDonate.bankTransfer.corporateNote")}
+              </p>
             </div>
 
             {/* Amazon Wish List */}

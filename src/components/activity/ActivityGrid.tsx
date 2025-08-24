@@ -16,75 +16,65 @@ const activities: ActivityItem[] = [
   {
     id: "research",
     icon: (
-      <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-lg">
-        <Image
-          src="/presentation.jpg"
-          alt="Research Presentation"
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover rounded-lg"
-        />
-      </div>
+      <Image
+        src="/presentation.jpg"
+        alt="Research Presentation"
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        className="object-cover rounded-lg"
+      />
     ),
     gridClass: "md:col-span-2 md:row-span-2",
   },
   {
     id: "whitehat",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
-        <Image
-          src="/code.png"
-          alt="Whitehat Hacking"
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover rounded-lg"
-        />
-      </div>
+      <Image
+        src="/code.png"
+        alt="Whitehat Hacking"
+        fill
+        sizes="(max-width: 768px) 100vw, 33vw"
+        className="object-cover rounded-lg"
+      />
     ),
     gridClass: "md:col-span-1 md:row-span-1",
   },
   {
     id: "house",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
-        <Image
-          src="/house.png"
-          alt="House"
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-contain rounded-lg"
-        />
-      </div>
+      <Image
+        src="/house.png"
+        alt="House"
+        fill
+        sizes="(max-width: 768px) 100vw, 33vw"
+        className="object-cover rounded-lg"
+      />
     ),
     gridClass: "md:col-span-1 md:row-span-2",
   },
   {
     id: "education",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
-        <Image
-          src="/education.png"
-          alt="Education"
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover rounded-lg"
-        />
-      </div>
+      <Image
+        src="/education.png"
+        alt="Education"
+        fill
+        sizes="(max-width: 768px) 100vw, 33vw"
+        className="object-cover rounded-lg"
+      />
     ),
     gridClass: "md:col-span-1 md:row-span-1",
   },
   {
     id: "verification",
     icon: (
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
-        <Image
-          src="/math.png"
-          alt="Formal Verification"
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover rounded-lg"
-        />
-      </div>
+      <Image
+        src="/math.png"
+        alt="Formal Verification"
+        fill
+        sizes="(max-width: 768px) 100vw, 33vw"
+        className="object-cover rounded-lg"
+      />
     ),
     gridClass: "md:col-span-1 md:row-span-1",
   },
@@ -98,28 +88,30 @@ export function ActivityGrid() {
   const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
 
   return (
-    <section className="py-10">
+    <section className="py-25">
       <div className="w-full max-w-6xl mx-auto px-8 md:px-12 lg:px-16">
         <h2 className="text-3xl md:text-4xl font-bold mb-12">{t("title")}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:auto-rows-[minmax(150px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:auto-rows-auto">
           {activities.map((activity) => (
             <button
               key={activity.id}
               onClick={() => setSelectedActivity(activity.id)}
               className={cn(
                 "group relative overflow-hidden",
-                "bg-white border-2 border-border border-gray-400 rounded-lg",
+                "bg-white border-2 border-border border-gray-300 rounded-lg",
                 "p-6 text-left transition-all duration-300",
                 "hover:shadow-lg hover:-translate-y-1",
                 "focus:outline-none focus:ring-2 focus:ring-offset-2",
                 activity.gridClass
               )}
             >
-              <div className="flex flex-col h-full justify-start">
-                <div className="mb-4">{activity.icon}</div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">
+              <div className="flex flex-col h-full">
+                <div className="relative flex-grow aspect-[4/3] mb-4 overflow-hidden rounded-lg">
+                  {activity.icon}
+                </div>
+                <div className="flex-shrink-0">
+                  <h3 className="text-lg font-semibold mb-1">
                     {getActivityText(activity.id, locale).title}
                   </h3>
                   <p className="text-sm text-muted-foreground">

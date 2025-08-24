@@ -80,8 +80,8 @@ export default function ContributionPage() {
         </div>
 
         {/* Current Sponsors */}
-        <section id="sponsors" className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">
+        <section className="mb-16">
+          <h2 id="sponsors" className="text-3xl font-bold text-center mb-8 scroll-mt-20">
             {t("sponsors.title")}
           </h2>
 
@@ -128,8 +128,8 @@ export default function ContributionPage() {
         </section>
 
         {/* Donation Section */}
-        <section id="donation" className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">
+        <section className="mb-16">
+          <h2 id="donation" className="text-2xl font-bold mb-6 scroll-mt-20">
             {t("howToDonate.title")}
           </h2>
 
@@ -207,8 +207,8 @@ export default function ContributionPage() {
         </section>
 
         {/* Collaboration Section */}
-        <section id="collaboration" className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">
+        <section className="mb-16">
+          <h2 id="collaboration" className="text-2xl font-bold mb-6 scroll-mt-20">
             {t("collaboration.title")}
           </h2>
           <div className="prose prose-lg max-w-none">

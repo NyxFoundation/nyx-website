@@ -4,6 +4,8 @@ import { getLocale, getMessages } from "next-intl/server";
 import { I18nProvider } from "@/i18n/provider";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { GOOGLE_SITE_VERIFICATION } from "@/lib/constants";
 import "./globals.css";
 
 const bizUDPMincho = BIZ_UDPMincho({
@@ -25,6 +27,9 @@ export const metadata: Metadata = {
   description: "Build a Verifiable Future for Open Innovation",
   keywords: ["research", "foundation", "innovation", "security", "formal verification"],
   authors: [{ name: "Nyx Foundation" }],
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
+  },
   openGraph: {
     title: "Nyx Foundation",
     description: "Build a Verifiable Future for Open Innovation",
@@ -65,6 +70,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${bizUDPMincho.variable} ${notoSerifJP.variable}`}>
       <body className="antialiased font-serif">
+        <GoogleAnalytics />
         <I18nProvider locale={locale} messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>

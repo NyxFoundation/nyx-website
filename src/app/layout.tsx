@@ -4,6 +4,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { I18nProvider } from "@/i18n/provider";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const bizUDPMincho = BIZ_UDPMincho({
@@ -65,6 +66,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${bizUDPMincho.variable} ${notoSerifJP.variable}`}>
       <body className="antialiased font-serif">
+        <GoogleAnalytics />
         <I18nProvider locale={locale} messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>

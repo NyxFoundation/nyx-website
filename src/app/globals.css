@@ -23,7 +23,8 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  line-height: 1.7;
+  line-height: 1.85;
+  font-variant-numeric: lining-nums proportional-nums;
   font-feature-settings: "liga" 1, "kern" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -43,6 +44,43 @@ a:hover {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Marquee animation for scrolling chips */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee {
+  display: flex;
+  width: 200%;
+}
+.marquee-content {
+  display: flex;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+/* Base typography rhythm */
+@layer base {
+  p {
+    margin-block: 0.75rem 0;
+  }
+  p + p {
+    margin-top: 0.75rem;
+  }
+  h1, h2, h3, h4 {
+    line-height: 1.25;
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  h1 { letter-spacing: -0.01em; }
+  h2, h3 { letter-spacing: -0.005em; }
+  ul, ol {
+    margin: 0.75rem 0;
+    padding-left: 1.25rem;
+  }
+  li { margin: 0.25rem 0; }
+  section { margin-block: 4rem; }
 }
 
 /* Twitter embed styles */

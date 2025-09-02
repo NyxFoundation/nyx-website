@@ -1,6 +1,5 @@
 import Script from 'next/script'
-
-const GA_MEASUREMENT_ID = 'G-RV0B4N84DZ'
+import { GA_MEASUREMENT_ID } from '@/lib/constants'
 
 export const GoogleAnalytics = () => {
   return (

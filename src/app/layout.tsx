@@ -5,6 +5,7 @@ import { I18nProvider } from "@/i18n/provider";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { GOOGLE_SITE_VERIFICATION } from "@/lib/constants";
 import "./globals.css";
 
 const bizUDPMincho = BIZ_UDPMincho({
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   keywords: ["research", "foundation", "innovation", "security", "formal verification"],
   authors: [{ name: "Nyx Foundation" }],
   verification: {
-    google: "HaLRjtUtIQZCp4YQz7K0IIvA0EkZksTVtXm5MuXZ6wI",
+    google: GOOGLE_SITE_VERIFICATION,
   },
   openGraph: {
     title: "Nyx Foundation",

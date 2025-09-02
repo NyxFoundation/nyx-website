@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   description: "Build a Verifiable Future for Open Innovation",
   keywords: ["research", "foundation", "innovation", "security", "formal verification"],
   authors: [{ name: "Nyx Foundation" }],
+  verification: {
+    google: "HaLRjtUtIQZCp4YQz7K0IIvA0EkZksTVtXm5MuXZ6wI",
+  },
   openGraph: {
     title: "Nyx Foundation",
     description: "Build a Verifiable Future for Open Innovation",

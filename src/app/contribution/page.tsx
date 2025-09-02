@@ -11,7 +11,7 @@ export default function ContributionPage() {
   const locale = useLocale();
 
   // Donation UI state (JP default)
-  const [selectedAmount, setSelectedAmount] = useState("3300");
+  const [selectedAmount, setSelectedAmount] = useState("3000");
   const [customAmount, setCustomAmount] = useState("");
   const [donationType, setDonationType] = useState<"onetime" | "monthly" | "yearly">("monthly");
   const [currency, setCurrency] = useState<"JPY" | "ETH">("JPY");
@@ -33,12 +33,12 @@ export default function ContributionPage() {
       { value: "0.1", label: "0.1 ETH" },
     ],
     JPY: [
-      { value: "1100", label: "1,100円" },
-      { value: "2200", label: "2,200円" },
-      { value: "3300", label: "3,300円" },
-      { value: "5500", label: "5,500円" },
-      { value: "11000", label: "11,000円" },
-      { value: "22000", label: "22,000円" },
+      { value: "1000", label: "1,000円" },
+      { value: "2000", label: "2,000円" },
+      { value: "3000", label: "3,000円" },
+      { value: "5000", label: "5,000円" },
+      { value: "10000", label: "10,000円" },
+      { value: "20000", label: "20,000円" },
     ],
   } as const;
 
@@ -131,7 +131,7 @@ export default function ContributionPage() {
   const handleCurrencyChange = (newCurrency: "JPY" | "ETH") => {
     setCurrency(newCurrency);
     if (newCurrency === "JPY") {
-      setSelectedAmount("3300");
+      setSelectedAmount("3000");
       setPaymentMethod("credit");
       setDonationType("monthly");
     } else {
@@ -470,7 +470,7 @@ export default function ContributionPage() {
         {/* Impact */}
         <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-20">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold mb-3">あなたの1000円で、Ethereumをもっと使いやすく安全に</h2>
+            <h2 className="text-3xl font-bold mb-3">あなたの1,000円で、Ethereumをもっと使いやすく安全に</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6 md:gap-7">
             {impactCards.map((card, i) => (

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BIZ_UDPMincho, Noto_Serif_JP } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 import { getLocale, getMessages } from "next-intl/server";
 import { I18nProvider } from "@/i18n/provider";
 import { Header } from "@/components/header/Header";
@@ -8,18 +8,11 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GOOGLE_SITE_VERIFICATION } from "@/lib/constants";
 import "./globals.css";
 
-const bizUDPMincho = BIZ_UDPMincho({
-  weight: "400",
+const notoSansJP = Noto_Sans_JP({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-biz-udp-mincho",
-});
-
-const notoSerifJP = Noto_Serif_JP({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-noto-serif-jp",
+  variable: "--font-noto-sans-jp",
 });
 
 export const metadata: Metadata = {
@@ -68,8 +61,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${bizUDPMincho.variable} ${notoSerifJP.variable}`}>
-      <body className="antialiased font-serif">
+    <html lang={locale} className={`${notoSansJP.variable}`}>
+      <body className="antialiased font-sans">
         <GoogleAnalytics />
         <I18nProvider locale={locale} messages={messages}>
           <Header />

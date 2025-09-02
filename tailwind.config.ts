@@ -36,6 +36,7 @@ const config: Config = {
       fontFamily: {
         serif: ["var(--font-biz-udp-mincho)", "var(--font-noto-serif-jp)", '"BIZ UDPMincho"', '"Noto Serif JP"', "serif"],
         sans: [
+          "var(--font-noto-sans-jp)",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",

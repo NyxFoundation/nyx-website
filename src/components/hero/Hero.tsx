@@ -17,8 +17,8 @@ export function Hero() {
         backgroundRepeat: "no-repeat"
       }}
     >
-      {/* オーバーレイで背景を少し暗くして文字を読みやすくする */}
-      <div className="absolute inset-0 bg-white/86.5" />
+      {/* オーバーレイで背景を少し明るくして文字を読みやすくする */}
+      <div className="absolute inset-0 bg-white/80" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto">
         <div className="text-left space-y-8">

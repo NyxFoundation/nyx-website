@@ -99,9 +99,9 @@ export function ActivityGrid() {
               onClick={() => setSelectedActivity(activity.id)}
               className={cn(
                 "group relative overflow-hidden",
-                "bg-white border-2 border-border border-gray-300 rounded-lg",
+                "bg-white rounded-xl shadow-sm ring-1 ring-gray-100",
                 "p-6 text-left transition-all duration-300",
-                "hover:shadow-lg hover:-translate-y-1",
+                "hover:shadow-md hover:-translate-y-0.5",
                 "focus:outline-none focus:ring-2 focus:ring-offset-2",
                 activity.gridClass
               )}

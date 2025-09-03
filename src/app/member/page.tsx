@@ -64,7 +64,7 @@ export default async function MemberPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8">Member</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-8">{isJa ? "メンバー" : "Member"}</h1>
         <p className="text-xl text-muted-foreground mb-12">
           {isJa
             ? "Nyx Foundationのメンバー紹介"
@@ -75,7 +75,7 @@ export default async function MemberPage() {
           {members.map((member) => (
             <div
               key={member.name}
-              className="bg-white border border-border rounded-lg p-6"
+              className="bg-white rounded-xl p-6 shadow-sm ring-1 ring-gray-100 hover:shadow-md transition-shadow"
             >
               <div className="relative w-24 h-24 mb-4 mx-auto">
                 <Image

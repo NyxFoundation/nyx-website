@@ -5,19 +5,20 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LanguageToggle } from "./LanguageToggle";
 
 export function Header() {
   const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const navItems = [
     { href: "/publications", label: t("publications") },
-    { href: "/member", label: t("member") },
-    { href: "/contribution", label: t("contribution") },
     { href: "/news", label: t("news") },
-    { href: "https://www.notion.so/grandchildrice/Nyx-Foundation-Job-251d05af0d5a805ca9c4e75f40cb5b81", label: t("job"), external: true },
+    { href: "/contribution", label: t("contribution") },
+    { href: "/member", label: t("member") },
   ];
 
   // モバイルメニューが開いているときはスクロールを防ぐ
@@ -61,14 +62,18 @@ export function Header() {
 
             {/* Desktop Navigation - 中央 */}
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) =>
-                item.external ? (
+              {navItems.map((item) => {
+                const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                const base = "text-sm font-medium transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-300";
+                const active = isActive ? "underline underline-offset-4" : "";
+                return item.external ? (
                   <a
                     key={item.href}
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium transition-colors hover:text-muted-foreground"
+                    className={`${base} ${active}`}
+                    aria-current={isActive ? "page" : undefined}
                   >
                     {item.label}
                   </a>
@@ -76,12 +81,13 @@ export function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="text-sm font-medium transition-colors hover:text-muted-foreground"
+                    className={`${base} ${active}`}
+                    aria-current={isActive ? "page" : undefined}
                   >
                     {item.label}
                   </Link>
-                )
-              )}
+                );
+              })}
             </nav>
 
             {/* Language Toggle - 右端 */}
@@ -153,7 +159,8 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-base font-medium py-2 px-3 rounded-md transition-colors hover:bg-muted"
+                  className="text-base font-medium py-2 px-3 rounded-md transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-300"
+                  aria-current={(pathname === item.href || pathname.startsWith(item.href + "/")) ? "page" : undefined}
                 >
                   {item.label}
                 </Link>

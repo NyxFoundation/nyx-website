@@ -60,6 +60,12 @@ a:hover {
   animation: marquee-scroll 30s linear infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .marquee-content {
+    animation: none;
+  }
+}
+
 /* Base typography rhythm */
 @layer base {
   p {

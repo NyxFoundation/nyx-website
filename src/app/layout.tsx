@@ -15,6 +15,7 @@ const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
 });
 
+
 export const metadata: Metadata = {
   title: "Nyx Foundation",
   description: "Build a Verifiable Future for Open Innovation",

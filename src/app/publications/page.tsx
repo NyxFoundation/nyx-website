@@ -87,7 +87,7 @@ export default async function PublicationsPage() {
             return (
               <article
                 key={pub.id}
-                className="bg-white border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
+                className="bg-white rounded-xl p-6 shadow-sm ring-1 ring-gray-100 hover:shadow-md transition-shadow"
               >
                 {isExternal ? (
                   <a

@@ -117,7 +117,7 @@ export default async function ContactPage() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent"
+                  className="w-full px-3 py-2 rounded-xl ring-1 ring-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
                   required
                 />
               </div>
@@ -130,7 +130,7 @@ export default async function ContactPage() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent"
+                  className="w-full px-3 py-2 rounded-xl ring-1 ring-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
                   required
                 />
               </div>
@@ -143,7 +143,7 @@ export default async function ContactPage() {
                   type="text"
                   id="subject"
                   name="subject"
-                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent"
+                  className="w-full px-3 py-2 rounded-xl ring-1 ring-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
                   required
                 />
               </div>
@@ -156,14 +156,14 @@ export default async function ContactPage() {
                   id="message"
                   name="message"
                   rows={6}
-                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent resize-none"
+                  className="w-full px-3 py-2 rounded-xl ring-1 ring-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 resize-none"
                   required
                 ></textarea>
               </div>
               
               <button
                 type="submit"
-                className="w-full px-4 py-2 bg-foreground text-background rounded-md hover:bg-opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground"
+                className="w-full px-4 py-2 bg-foreground text-background rounded-xl shadow-sm hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
               >
                 {isJa ? "送信" : "Send"}
               </button>

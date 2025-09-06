@@ -1,78 +1,127 @@
-import { Metadata } from "next";
-import { getLocale } from "next-intl/server";
-import Image from "next/image";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Member | Nyx Foundation",
-  description: "Meet the team behind Nyx Foundation",
-  openGraph: {
-    title: "Member | Nyx Foundation",
-    description: "Meet the team behind Nyx Foundation",
-    images: ["/ogp.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Member | Nyx Foundation",
-    description: "Meet the team behind Nyx Foundation",
-    images: ["/ogp.png"],
-  },
+import Image from "next/image";
+import { useState } from "react";
+
+
+const membersByCategory = {
+  All: [
+    {
+      name: "vita",
+      logo: "/residents/vita.jpeg",
+      social: "https://x.com/keccak255",
+      topics: ["Consensus", "Institutional Economics"],
+    },
+    {
+      name: "gohan",
+      logo: "/residents/gohan.jpg",
+      social: "https://x.com/grandchildrice",
+      topics: ["zkVM", "Whitehat Hacking"],
+    },
+    {
+      name: "Alphaist",
+      logo: "/residents/alpha.jpeg",
+      social: "https://x.com/0xAlphaist",
+      topics: ["MEV", "DeFi", "Market Microstructure"],
+    },
+    {
+      name: "banri",
+      logo: "/residents/banri.jpeg",
+      social: "https://x.com/banr1_",
+      topics: ["Formal Verification"],
+    },
+    {
+      name: "adust",
+      logo: "/residents/adust.jpg",
+      social: "https://x.com/adust09",
+      topics: ["VOLE", "MPC"],
+    },
+    {
+      name: "Hiro",
+      logo: "/residents/tei.jpeg",
+      social: "https://x.com/82y31",
+      topics: ["MEV", "PBS", "Mechanism Design"],
+    },
+    {
+      name: "tomo",
+      logo: "/residents/tomo.jpg",
+      social: "https://x.com/adachi_tomoki3",
+      topics: ["CrossChain", "Interoperability"],
+    },
+  ],
+  CrossChain: [
+    {
+      name: "tomo",
+      logo: "/residents/tomo.jpg",
+      social: "https://x.com/adachi_tomoki3",
+      topics: ["CrossChain", "Interoperability"],
+    },
+  ],
+  MEV: [
+    {
+      name: "Alphaist",
+      logo: "/residents/alpha.jpeg",
+      social: "https://x.com/0xAlphaist",
+      topics: ["MEV", "DeFi", "Market Microstructure"],
+    },
+    {
+      name: "Hiro",
+      logo: "/residents/tei.jpeg",
+      social: "https://x.com/82y31",
+      topics: ["MEV", "PBS", "Mechanism Design"],
+    },
+  ],
+  ZK: [
+    {
+      name: "gohan",
+      logo: "/residents/gohan.jpg",
+      social: "https://x.com/grandchildrice",
+      topics: ["zkVM", "Whitehat Hacking"],
+    },
+    {
+      name: "banri",
+      logo: "/residents/banri.jpeg",
+      social: "https://x.com/banr1_",
+      topics: ["Formal Verification"],
+    },
+    {
+      name: "adust",
+      logo: "/residents/adust.jpg",
+      social: "https://x.com/adust09",
+      topics: ["VOLE", "MPC"],
+    },
+  ],
 };
 
-const members = [
-  {
-    name: "vita",
-    logo: "/residents/vita.jpeg",
-    social: "https://x.com/keccak255",
-    topics: ["Consensus", "MEV"],
-  },
-  {
-    name: "gohan",
-    logo: "/residents/gohan.jpg",
-    social: "https://x.com/grandchildrice",
-    topics: ["zkVM", "Whitehat Hacking"],
-  },
-  {
-    name: "Alphaist",
-    logo: "/residents/alpha.jpeg",
-    social: "https://x.com/0xAlphaist",
-    topics: ["MEV", "DeFi", "Market Microstructure"],
-  },
-  {
-    name: "banri",
-    logo: "/residents/banri.jpeg",
-    social: "https://x.com/banr1_",
-    topics: ["Formal Verification"],
-  },
-  {
-    name: "adust",
-    logo: "/residents/adust.jpg",
-    social: "https://x.com/adust09",
-    topics: ["VOLE", "MPC"],
-  },
-  {
-    name: "Hiro",
-    logo: "/residents/tei.jpeg",
-    social: "https://x.com/82y31",
-    topics: ["MEV", "PBS", "Mechanism Design"],
-  },
-];
-
-export default async function MemberPage() {
-  const locale = await getLocale();
-  const isJa = locale === "ja";
+export default function MemberPage() {
+  const [activeTab, setActiveTab] = useState<keyof typeof membersByCategory>("All");
 
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
         <h1 className="text-4xl md:text-5xl font-bold mb-8">Member</h1>
         <p className="text-xl text-muted-foreground mb-12">
-          {isJa
-            ? "Nyx Foundationのメンバー紹介"
-            : "Meet the team behind Nyx Foundation"}
+          Meet the team behind Nyx Foundation
         </p>
 
+        <div className="flex gap-2 mb-8 overflow-x-auto">
+          {Object.keys(membersByCategory).map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveTab(category as keyof typeof membersByCategory)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap ${
+                activeTab === category
+                  ? "bg-black text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {members.map((member) => (
+          {membersByCategory[activeTab].map((member) => (
             <div
               key={member.name}
               className="bg-white border border-border rounded-lg p-6"

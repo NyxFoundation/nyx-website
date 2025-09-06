@@ -35,7 +35,7 @@ const members = [
     name: "banri",
     logo: "/residents/banri.jpeg",
     social: "https://x.com/banr1_",
-    topics: ["Formal Verification", "Foundation of Math", "LLM"],
+    topics: ["Formal Verification", "Math", "LLM"],
   },
   {
     name: "adust",

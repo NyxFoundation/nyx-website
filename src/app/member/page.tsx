@@ -23,7 +23,7 @@ const members = [
     name: "vita",
     logo: "/residents/vita.jpeg",
     social: "https://x.com/keccak255",
-    topics: ["Consensus", "MEV"],
+    topics: ["Consensus", "Institutional Economics"],
   },
   {
     name: "gohan",
@@ -32,16 +32,10 @@ const members = [
     topics: ["zkVM", "Whitehat Hacking"],
   },
   {
-    name: "Alphaist",
-    logo: "/residents/alpha.jpeg",
-    social: "https://x.com/0xAlphaist",
-    topics: ["MEV", "DeFi", "Market Microstructure"],
-  },
-  {
     name: "banri",
     logo: "/residents/banri.jpeg",
     social: "https://x.com/banr1_",
-    topics: ["Formal Verification"],
+    topics: ["Formal Verification", "Math", "LLM"],
   },
   {
     name: "adust",
@@ -50,9 +44,21 @@ const members = [
     topics: ["VOLE", "MPC"],
   },
   {
+    name: "Alphaist",
+    logo: "/residents/alpha.jpeg",
+    social: "https://x.com/0xAlphaist",
+    topics: ["MEV", "DeFi", "Market Microstructure"],
+  },
+  {
+    name: "tomo",
+    logo: "/residents/tomo.jpg",
+    social: "https://x.com/adachi_tomoki3",
+    topics: ["CrossChain", "Interoperability"],
+  },
+  {
     name: "Hiro",
     logo: "/residents/tei.jpeg",
-    social: "https://x.com/82y31",
+    social: "https://x.com/164zheng",
     topics: ["MEV", "PBS", "Mechanism Design"],
   },
 ];

@@ -10,20 +10,36 @@ export function Hero() {
 
   return (
     <section
-      className="relative my-0 min-h-[500px] flex items-center px-8 md:px-12 lg:px-16 bg-auto lg:bg-cover"
+      className="relative my-0 min-h-[500px] flex items-center px-8 md:px-12 lg:px-16 bg-contain lg:bg-contain"
       style={{
-        backgroundImage: "url('/hero.svg')",
+        backgroundImage: "url('/icon.svg')",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"
       }}
     >
-      {/* オーバーレイで背景を少し暗くして文字を読みやすくする */}
-      <div className="absolute inset-0 bg-white/86.5" />
+      {/* オーバーレイで背景を少し明るくして文字を読みやすくする */}
+      <div className="absolute inset-0 bg-white/86.5 z-0" />
+
+      {/* Nyx ロゴのウォーターマーク（薄く、タイトル付近に重ねる） */}
+      <div className="absolute inset-0 z-[5] pointer-events-none select-none">
+        <img
+          src="/favicon.ico"
+          alt=""
+          aria-hidden="true"
+          className="absolute opacity-15 md:opacity-20"
+          style={{
+            top: "0.75rem",
+            left: "1rem",
+            width: "72px",
+            filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.06))",
+          }}
+        />
+      </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto">
         <div className="text-left space-y-8">
           {/* Title */}
-          <h1 className="max-w-md text-5xl md:text-7xl font-bold tracking-tight">
+          <h1 className="text-4xl md:text-7xl font-bold tracking-tight whitespace-nowrap">
             {t("title")}
           </h1>
 

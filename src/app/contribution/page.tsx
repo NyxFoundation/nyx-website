@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { ExternalLink, Heart, PieChart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, BookOpen, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck } from "lucide-react";
+import { ExternalLink, Heart, PieChart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, BookOpen, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -43,9 +43,10 @@ export default function ContributionPage() {
   const teamMembers = [
     { id: "vita", name: "vita", role: "Consensus / MEV", avatar: "/residents/vita.jpeg", bio: "Consensus and MEV research, protocol direction." },
     { id: "gohan", name: "gohan", role: "zkVM / Whitehat", avatar: "/residents/gohan.jpg", bio: "zkVM research and whitehat security contributions." },
-    { id: "alpha", name: "Alphaist", role: "MEV / DeFi", avatar: "/residents/alpha.jpeg", bio: "MEV, DeFi, and market microstructure." },
     { id: "banri", name: "banri", role: "Formal Verification", avatar: "/residents/banri.jpeg", bio: "Specs, proofs, and verification tooling." },
     { id: "adust", name: "adust", role: "VOLE / MPC", avatar: "/residents/adust.jpg", bio: "MPC and VOLE implementations." },
+    { id: "tomo", name: "tomo", role: "CrossChain / Interoperability", avatar: "/residents/tomo.jpg", bio: "CrossChain protocols and interoperability research." },
+    { id: "alpha", name: "Alphaist", role: "MEV / DeFi", avatar: "/residents/alpha.jpeg", bio: "MEV, DeFi, and market microstructure." },
     { id: "hiro", name: "Hiro", role: "MEV / PBS", avatar: "/residents/tei.jpeg", bio: "MEV, PBS, and mechanism design." },
   ];
 
@@ -57,9 +58,9 @@ export default function ContributionPage() {
     { name: "DeSci Tokyo", jpname: "デサイ東京", logo: "/sponsors/desci.jpg" },
   ];
   const individualSupporters = [
-    { name: "chikeo", jpname: "チケ男", logo: "/sponsors/ticket.jpg" },
-    { name: "KIMINORI JAPAN", jpname: "キミノリ・ジャパン", logo: "/sponsors/kiminorijapan.jpg" },
     { name: "Hiro Shimo", jpname: "志茂 博", logo: "/sponsors/shimo.jpg" },
+    { name: "chikeo", jpname: "ちけみーくん", logo: "/sponsors/ticket.jpg" },
+    { name: "KIMINORI JAPAN", jpname: "キミノリ・ジャパン", logo: "/sponsors/kiminorijapan.jpg" },
     { name: "Anonymous", jpname: "匿名希望", logo: null },
   ];
 
@@ -85,16 +86,25 @@ export default function ContributionPage() {
 
   // testimonials セクションは削除（要望）
 
-  const recentUpdates = [
-    { title: "Gethに貢献しました", date: "2025/8/20" },
-    { title: "耐量子署名の実装", date: "2025/8/18" },
-    { title: "共同研究開始：香港科技大 川口康平氏", date: "2025/8/7" },
-    { title: "zkSNARKsライブラリの最適化", date: "2025/7/25" },
-    { title: "分散システム論文がACM採択", date: "2025/7/15" },
-    { title: "Ethereum Core Dev会議参加", date: "2025/7/10" },
+  const recentUpdatesJa = [
+    { title: "leanConsensus会議参加", date: "2025年9月6日" },
+    { title: "Gethに貢献しました", date: "2025年8月20日" },
+    { title: "lean Consensusにおける耐量子署名のスキームを実装しました", date: "2025年8月18日" },
+    { title: "コロンビアビジネススクールで論文を発表しました", date: "2025年5月15日" },
+    { title: "ZKProof7国際ワークショップにアクセプトされました", date: "2025年8月7日" },
+    { title: "ZKProof7国際ワークショップにアクセプトされました", date: "2025年2月11日" },
   ];
 
-  const faqData = [
+  const recentUpdatesEn = [
+    { title: "Attended the leanConsensus meeting", date: "2025-09-06" },
+    { title: "Contributed to Geth", date: "2025-08-20" },
+    { title: "Implemented a post-quantum signature scheme in leanConsensus", date: "2025-08-18" },
+    { title: "Presented a paper at Columbia Business School", date: "2025-05-15" },
+    { title: "Accepted to the ZKProof7 international workshop", date: "2025-08-07" },
+    { title: "Accepted to the ZKProof7 international workshop", date: "2025-02-11" },
+  ];
+
+  const faqJa = [
     {
       question: "Nyx Foundationは非営利法人ですか？",
       answer:
@@ -127,7 +137,40 @@ export default function ContributionPage() {
     },
   ];
 
+  const faqEn = [
+    {
+      question: "Is Nyx Foundation a nonprofit?",
+      answer: "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is reinvested into research, formal verification, and community contributions. No dividends are paid to directors or members.",
+    },
+    {
+      question: "How is my donation used?",
+      answer:
+        "We fund research and formal verification, vulnerability research and fixes, applied work on MEV and mechanism design, and the operational base. Even small PRs and single proofs help prevent incidents over time and raise reliability.",
+    },
+    {
+      question: "Can I get a receipt?",
+      answer:
+        "Yes, on request. We don’t issue receipts automatically for every donation. If you need one, please contact us via the form or at contact@nyx.foundation. For bank transfers or crypto, we issue after confirming receipt.",
+    },
+    {
+      question: "How do I donate in JPY (bank transfer)?",
+      answer:
+        "Please transfer to PayPay Bank, Kawasemi branch (007), ordinary 7551963, name: ツツミマサト. We may email you to confirm the payer name and amount if needed.",
+    },
+    {
+      question: "Can companies sponsor or donate?",
+      answer:
+        "Yes. We offer research partnerships and sponsorship programs. Please contact us to discuss details.",
+    },
+    {
+      question: "When do I receive supporter benefits?",
+      answer:
+        "Logo placement within one week after confirmation, goods shipped the following month (monthly batch), event access announced about one month prior, and Nyx Mate badge provided upon confirmation.",
+    },
+  ];
+
   const isFiatJPY = selectedMethod === "JPY";
+  const faqs = locale === "ja" ? faqJa : faqEn;
 
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 
@@ -165,22 +208,36 @@ export default function ContributionPage() {
   };
 
   return (
-    <div className="min-h-screen px-4 pt-10 md:pt-12 pb-20 md:pb-24">
+    <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-20 md:pb-24">
       <div className="container mx-auto max-w-6xl">
         {/* Hero with Donation Card */}
-        <section className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 md:gap-14 items-center mb-20">
-          <div className="space-y-4 md:space-y-5">
+        <section className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-12 md:gap-14 items-center mb-20 overflow-hidden pt-24 sm:pt-28 md:pt-0">
+          <div className="relative z-10 space-y-4 md:space-y-5">
+            {/* subtle background icon anchored to heading for consistent mobile/desktop positioning */}
+            <img
+              src="/icon.svg"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[200px] md:w-[260px] opacity-10"
+            />
             <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
               {locale === "ja" ? (
-                <>Ethereumをもっと安全に。</>
+                <span className="whitespace-nowrap">Ethereumをもっと安全に。</span>
               ) : (
-                <>
-                  Make Ethereum safer.
-                </>
+                <>Make Ethereum safer.</>
               )}
             </h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              <span className="font-semibold">「オープンイノベーションのための検証可能な未来を築く」</span>というビジョンの下、分散システムや暗号技術の研究開発を行っています。寄付を通じて我々の活動を支援することができます。寄付額は自由です。
+              {locale === "ja" ? (
+                <>
+                  <span className="font-semibold">「オープンイノベーションのための検証可能な未来を築く」</span>
+                  というビジョンの下、分散システムや暗号技術の研究開発を行っています。寄付を通じて我々の活動を支援することができます。寄付額は自由です。
+                </>
+              ) : (
+                <>
+                  Under the vision <span className="font-semibold">“Build a verifiable future for open innovation”</span>, we research and develop distributed systems and cryptography. You can support our work with a one‑time donation of any amount.
+                </>
+              )}
             </p>
             {/* サブスク文言は削除（今回のみの寄付に統一） */}
             <div className="pt-2">
@@ -188,22 +245,29 @@ export default function ContributionPage() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
               >
-                <Users className="w-4 h-4" /> 法人の方はこちら
+                <Users className="w-4 h-4" /> {locale === "ja" ? "法人の方はこちら" : "For organizations"}
               </Link>
-            </div>
+              </div>
           </div>
 
-          <div className="rounded-xl px-7 pt-5 pb-5 bg-white shadow-sm ring-1 ring-gray-100">
+          <div className="relative z-10 rounded-xl px-7 pt-5 pb-5 bg-white shadow-sm ring-1 ring-gray-100">
             <div className="space-y-4 md:space-y-5">
               {/* 支払い方法 */}
               <div className="space-y-2">
-                <div className="text-sm font-medium">支払い方法</div>
+                <div className="text-sm font-medium">{locale === "ja" ? "支払い方法" : "Payment method"}</div>
                 <div className="relative">
                   <button
                     onClick={() => setShowPaymentOptions((s) => !s)}
                     className="w-full p-4 text-left border rounded-lg bg-white flex items-center justify-between hover:bg-muted/50"
                   >
-                    <span className="font-medium">{paymentOptions.find(o => o.value === selectedMethod)?.label || "選択してください"}</span>
+                    <span className="font-medium">
+                      {(() => {
+                        const opt = paymentOptions.find(o => o.value === selectedMethod);
+                        if (!opt) return locale === "ja" ? "選択してください" : "Select";
+                        if (opt.value === "JPY") return locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)";
+                        return opt.label;
+                      })()}
+                    </span>
                     <span className="text-xs text-muted-foreground">{showPaymentOptions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}</span>
                   </button>
                   {showPaymentOptions && (
@@ -218,7 +282,7 @@ export default function ContributionPage() {
                           }}
                           className={`w-full p-3 text-left hover:bg-muted/50 ${selectedMethod === opt.value ? "bg-muted" : ""}`}
                         >
-                          <div className="font-medium">{opt.label}</div>
+                          <div className="font-medium">{opt.value === "JPY" ? (locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)") : opt.label}</div>
                           {opt.type === "crypto" && <div className="text-xs text-muted-foreground">{opt.chain}</div>}
                         </button>
                       ))}
@@ -229,7 +293,7 @@ export default function ContributionPage() {
 
               {/* 金額を選択 */}
               <div className="space-y-3 md:space-y-4">
-                <div className="text-sm font-medium">金額を選択</div>
+                <div className="text-sm font-medium">{locale === "ja" ? "金額を選択" : "Select amount"}</div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-3.5">
                   {(selectedMethod === "JPY" ? jpyAmountValues : cryptoAmountValues).map((val) => (
                     <button
@@ -247,21 +311,25 @@ export default function ContributionPage() {
                   ))}
                 </div>
                 <button
-                  onClick={() => setSelectedAmount("custom")}
+                  onClick={() => {
+                    setSelectedAmount("custom");
+                    if (selectedMethod !== "JPY") {
+                      setCustomAmount("10eth");
+                    }
+                  }}
                   className={`w-full py-3 px-3 text-center border rounded-lg transition-all ${
                     selectedAmount === "custom" ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <div className="font-medium text-base">カスタム</div>
+                  <div className="font-medium text-base">{locale === "ja" ? "カスタム" : "Custom"}</div>
                   {selectedAmount === "custom" && (
                     <input
-                      type="number"
-                      placeholder={selectedMethod === "JPY" ? "50000" : "0.1"}
+                      type={selectedMethod === "JPY" ? "number" : "text"}
+                      placeholder={selectedMethod === "JPY" ? "50000" : "10eth"}
                       value={customAmount}
                       onChange={(e) => setCustomAmount(e.target.value)}
                       className="mt-2 w-full border border-gray-300 rounded px-3 py-2 text-center"
-                      min={selectedMethod === "JPY" ? 500 : 0.001}
-                      step={selectedMethod === "JPY" ? 100 : 0.001}
+                      {...(selectedMethod === "JPY" ? { min: 500, step: 100 } : {})}
                       onClick={(e) => e.stopPropagation()}
                     />
                   )}
@@ -275,26 +343,26 @@ export default function ContributionPage() {
                     <div className="flex justify-between items-center">
                       <span className="font-medium">PayPay銀行</span>
                       <button onClick={() => copyToClipboard("PayPay銀行")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                        <Copy className="w-3 h-3" /> コピー
+                        <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
                       </button>
                     </div>
                     <div className="flex justify-between items-center">
                       <span>かわせみ支店(007) 普通</span>
                       <button onClick={() => copyToClipboard("007")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                        <Copy className="w-3 h-3" /> コピー
+                        <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
                       </button>
                     </div>
                     <div className="flex justify-between items-center">
                       <span>7551963 ツツミマサト</span>
                       <button onClick={() => copyToClipboard("7551963")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                        <Copy className="w-3 h-3" /> コピー
+                        <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
                       </button>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <div className="text-sm font-medium">チェーン</div>
+                  <div className="text-sm font-medium">{locale === "ja" ? "チェーン" : "Chain"}</div>
                   <div className="grid grid-cols-2 gap-3">
                     {cryptoChains.map((chain) => (
                       <button
@@ -313,16 +381,16 @@ export default function ContributionPage() {
               )}
 
               <button onClick={handlePayment} className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 inline-flex items-center justify-center gap-2">
-                <Heart className="w-4 h-4" /> 寄付する {getDisplayAmount()}
+                <Heart className="w-4 h-4" /> {locale === "ja" ? "寄付する" : "Donate"} {getDisplayAmount()}
               </button>
             </div>
           </div>
         </section>
 
         {/* Story - Part 1: 安全なEthereumがもたらす世界 */}
-        <section className="bg-muted/50 rounded-2xl p-8 md:p-10 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">安全なEthereumがもたらす世界</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
@@ -341,10 +409,10 @@ export default function ContributionPage() {
               </div>
             </div>
           ) : (
-            <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">How a safer Ethereum changes the world</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
-                <div className="order-2 md:order-1 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
+                <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
                   <p>
                     Smart contracts shift trust away from institutions to code and verifiable procedure. A safer Ethereum means specs and implementations in alignment, with state transitions and value transfers behaving as intended. This is not merely technical; it lifts social coordination and economic activity toward transparency and reproducibility. Fewer vulnerabilities, better gas efficiency, and stronger verification tools raise predictability for users and structurally reduce losses from scams and bugs.
                   </p>
@@ -352,7 +420,7 @@ export default function ContributionPage() {
                     Bringing “code keeps promises” closer to reality is the core of safety. Verifiability lets anyone build, compose, and extend under the same rules. Safety is the foundation of creativity.
                   </p>
                 </div>
-                <div className="order-1 md:order-2 lg:col-span-5">
+                <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
                     <img
                       src="https://ethereum.org/_next/static/media/learn-hub-hero.bc4653ed.png"
@@ -384,34 +452,33 @@ export default function ContributionPage() {
                     <div className="text-xs text-muted-foreground">{selectedMember.role}</div>
                   </div>
                 </div>
-                <button onClick={() => setSelectedMember(null)} className="text-sm text-muted-foreground hover:text-foreground">閉じる</button>
+                <button onClick={() => setSelectedMember(null)} className="text-sm text-muted-foreground hover:text-foreground">{locale === "ja" ? "閉じる" : "Close"}</button>
               </div>
               <div className="p-5">
-                <p className="text-sm leading-relaxed text-foreground/80">{selectedMember.bio || "プロフィール情報は準備中です。"}</p>
+                <p className="text-sm leading-relaxed text-foreground/80">{selectedMember.bio || (locale === "ja" ? "プロフィール情報は準備中です。" : "Profile information is coming soon.")}</p>
               </div>
             </div>
           </div>
         )}
 
         {/* Roadmap: 何をするか（タイトルのみ変更） */}
-        <section className="bg-muted/50 rounded-2xl p-8 md:p-10 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="max-w-6xl mx-auto space-y-10">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">何をするか</h3>
 
               {/* Stepper */}
               <div className="relative">
-                <div className="absolute left-0 right-0 top-4 h-[2px] bg-gray-200" />
+                <div className="absolute left-0 right-0 top-[7px] h-[2px] bg-gray-200" />
                 <ol className="relative z-10 grid grid-cols-3 gap-4">
                   {[
-                    { label: "Now", desc: "着手中", color: "bg-emerald-500" },
+                    { label: "Ongoing", desc: "着手中", color: "bg-emerald-500" },
                     { label: "Next", desc: "次に着手", color: "bg-amber-500" },
                     { label: "Future", desc: "将来", color: "bg-gray-400" },
                   ].map((s) => (
                     <li key={s.label} className="flex flex-col items-center text-center">
                       <span className={`w-3.5 h-3.5 rounded-full ring-4 ring-white ${s.color}`} />
                       <span className="mt-2 text-sm font-medium">{s.label}</span>
-                      <span className="text-xs text-muted-foreground">{s.desc}</span>
                     </li>
                   ))}
                 </ol>
@@ -422,7 +489,7 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-emerald-50 text-emerald-700"><ShieldCheck className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Now: 安全性と実装整合</h4>
+                    <h4 className="font-semibold">Ongoing: 安全性と実装整合</h4>
                   </div>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                     <li>クライアント・アプリケーションへのバグ修正・性能改善</li>
@@ -444,7 +511,7 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Future: 検証が前提のエコシステムへ</h4>
+                    <h4 className="font-semibold whitespace-nowrap">Future: 検証が前提のエコシステムへ</h4>
                   </div>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                     <li>暗号学的なクライアントの確立</li>
@@ -455,14 +522,14 @@ export default function ContributionPage() {
               </div>
             </div>
           ) : (
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="max-w-6xl mx-auto space-y-10">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">What We Will Do</h3>
 
               <div className="relative">
-                <div className="absolute left-0 right-0 top-4 h-[2px] bg-gray-200" />
+                <div className="absolute left-0 right-0 top-[7px] h-[2px] bg-gray-200" />
                 <ol className="relative z-10 grid grid-cols-3 gap-4">
                   {[
-                    { label: "Now", desc: "In progress", color: "bg-emerald-500" },
+                    { label: "Ongoing", desc: "In progress", color: "bg-emerald-500" },
                     { label: "Next", desc: "Up next", color: "bg-amber-500" },
                     { label: "Future", desc: "Future", color: "bg-gray-400" },
                   ].map((s) => (
@@ -479,34 +546,34 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-emerald-50 text-emerald-700"><ShieldCheck className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Now: Safety & Spec Alignment</h4>
+                    <h4 className="font-semibold">Ongoing: Safety & Spec Alignment</h4>
                   </div>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>Bug fixes and perf improvements in clients</li>
-                    <li>Spec reviews, test additions, and regression guards</li>
-                    <li>Verification tooling (properties/fuzzing) hardening</li>
+                    <li>Bug fixes and performance improvements for clients and apps</li>
+                    <li>Research and formal verification for leanConsensus</li>
+                    <li>PoC for automated formal proof tooling</li>
                   </ul>
                 </div>
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-amber-50 text-amber-700"><FunctionSquare className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Next: Formal Methods & Tooling</h4>
+                    <h4 className="font-semibold">Next: Automation and Expansion</h4>
                   </div>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>Property definitions and proof sketches for key parts</li>
-                    <li>Model checking and differential verification pipelines</li>
-                    <li>Auditing checklist and automation scripts (open)</li>
+                    <li>Build or contribute to new clients</li>
+                    <li>Broader research and formal verification for leanConsensus</li>
+                    <li>Expand and refine the formal-proof agent's scope</li>
                   </ul>
                 </div>
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Future: Verification-first ecosystem</h4>
+                    <h4 className="font-semibold whitespace-nowrap">Future: Verification-first ecosystem</h4>
                   </div>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>Experiments and proposals around MEV and PBS</li>
-                    <li>Ongoing notes, videos, and workshops</li>
-                    <li>Broader collaborations and grants</li>
+                    <li>Establish cryptographic clients</li>
+                    <li>Implement and contribute to leanEthereum</li>
+                    <li>Standardize Spec≡Impl by embedding formal specs in EIPs</li>
                   </ul>
                 </div>
               </div>
@@ -517,21 +584,21 @@ export default function ContributionPage() {
         </section>
 
         {/* Team & Achievements section */}
-        <section className="bg-muted/50 rounded-2xl p-8 md:p-10 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">チームと実績</h3>
               <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-3">チーム</h4>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {teamMembers.map((m) => (
                       <button key={m.id} onClick={() => setSelectedMember(m)} className="flex flex-col items-center gap-2 group">
-                        <div className="relative w-16 h-16">
+                        <div className="relative w-20 h-20">
                           {m.avatar ? (
-                            <img src={m.avatar} alt={m.name} className="w-16 h-16 object-cover rounded-full ring-1 ring-gray-200" />
+                            <img src={m.avatar} alt={m.name} className="w-20 h-20 object-cover rounded-full ring-1 ring-gray-200" />
                           ) : (
-                            <div className="w-16 h-16 rounded-full bg-muted ring-1 ring-gray-200" />
+                            <div className="w-20 h-20 rounded-full bg-muted ring-1 ring-gray-200" />
                           )}
                         </div>
                         <span className="text-sm font-medium group-hover:underline">{m.name}</span>
@@ -542,30 +609,34 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-3">実績</h4>
                   <div className="space-y-2">
-                    {recentUpdates.slice(0,5).map((u, i) => (
-                      <div key={i} className="flex justify-between items-center py-2 border-b last:border-b-0">
+                    {recentUpdatesJa.slice(0,5).map((u, i) => (
+                      <div key={i} className="py-2 border-b last:border-b-0">
                         <span className="text-sm font-medium">{u.title}</span>
-                        <span className="text-xs text-muted-foreground">{u.date}</span>
                       </div>
                     ))}
+                  </div>
+                  <div className="text-center mt-4">
+                    <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
+                      もっと見る
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Team & Achievements</h3>
               <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-2">Team</h4>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {teamMembers.map((m) => (
                       <button key={m.id} onClick={() => setSelectedMember(m)} className="flex flex-col items-center gap-2 group">
-                        <div className="relative w-16 h-16">
+                        <div className="relative w-20 h-20">
                           {m.avatar ? (
-                            <img src={m.avatar} alt={m.name} className="w-16 h-16 object-cover rounded-full ring-1 ring-gray-200" />
+                            <img src={m.avatar} alt={m.name} className="w-20 h-20 object-cover rounded-full ring-1 ring-gray-200" />
                           ) : (
-                            <div className="w-16 h-16 rounded-full bg-muted ring-1 ring-gray-200" />
+                            <div className="w-20 h-20 rounded-full bg-muted ring-1 ring-gray-200" />
                           )}
                         </div>
                         <span className="text-sm font-medium group-hover:underline">{m.name}</span>
@@ -576,12 +647,16 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-2">Achievements</h4>
                   <div className="space-y-2">
-                    {recentUpdates.slice(0,5).map((u, i) => (
-                      <div key={i} className="flex justify-between items-center py-2 border-b last:border-b-0">
+                    {recentUpdatesEn.slice(0,5).map((u, i) => (
+                      <div key={i} className="py-2 border-b last:border-b-0">
                         <span className="text-sm font-medium">{u.title}</span>
-                        <span className="text-xs text-muted-foreground">{u.date}</span>
                       </div>
                     ))}
+                  </div>
+                  <div className="text-center mt-4">
+                    <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
+                      View more
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -590,7 +665,7 @@ export default function ContributionPage() {
         </section>
 
         {/* Story - Part 2: 私たちがやる理由 */}
-        <section className="bg-muted/50 rounded-2xl p-8 md:p-10 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちがやる理由</h3>
@@ -628,10 +703,10 @@ export default function ContributionPage() {
         </section>
 
         {/* Story - Part 3: Nyx Mateについて */}
-        <section className="bg-muted/50 rounded-2xl p-8 md:p-10 mb-12">
+        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-12">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-6">
-              <div className="max-w-6xl mx-auto space-y-3">
+            <div className="max-w-6xl mx-auto space-y-8">
+              <div className="max-w-6xl mx-auto space-y-4">
                 <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Nyx Mateについて</h3>
                 <p className="text-base text-muted-foreground leading-relaxed">Nyx Foundationの価値観に共感し、Nyxの活動を前に進めるお手伝いをしてくださる方々をNyx Mateと呼んでいます。Nyx Mateからのご支援は、「検証が前提」のエコシステムと、公平なルールの上で価値が広がる世界への一歩になります。</p>
               </div>
@@ -670,12 +745,10 @@ export default function ContributionPage() {
               </div>
             </div>
           ) : (
-            <div className="max-w-6xl mx-auto space-y-6">
-              <div className="max-w-6xl mx-auto space-y-3">
-                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">How your support is used</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  Your gift funds client and protocol contributions, vulnerability research and fixes, gas optimizations, formal verification (specs, proofs, tooling), and applied research in mechanism design. Small PRs and single proofs prevent incidents over time and raise reliability across the ecosystem.
-                </p>
+            <div className="max-w-6xl mx-auto space-y-8">
+              <div className="max-w-6xl mx-auto space-y-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">About Nyx Mate</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">We call those who share Nyx Foundation’s values and help move our work forward “Nyx Mates”. Support from Nyx Mates is a step toward a verification‑first ecosystem and a world where value grows on fair rules.</p>
               </div>
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-6">
@@ -729,41 +802,51 @@ export default function ContributionPage() {
         <section className="mb-24 md:mb-28">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">多くのメイトがNyxの活動を支えています。</h2>
+              <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">{locale === "ja" ? "多くのMateがNyxの活動を支えています。" : "Many mates support Nyx's work."}</h2>
             </div>
             {/* 法人・個人メイトを単一コンテナに統合 */}
-            <div className="rounded-xl p-10 bg-white shadow-sm ring-1 ring-gray-100">
-              <div className="grid grid-cols-1 gap-12">
+            <div className="rounded-xl p-8 bg-white shadow-sm ring-1 ring-gray-100">
+              <div className="grid grid-cols-1 gap-10">
                 <div>
-                  <h3 className="text-2xl font-bold text-center mb-8">法人メイト</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-center mb-6">{locale === "ja" ? "法人Mate" : "Corporate Mates"}</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
                   {corporateSponsors.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
-                      <div className="relative w-20 h-20">
+                      <div className="relative w-16 h-16 md:w-16 md:h-16">
                         {c.logo ? (
                           <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
                         ) : (
                           <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200" />
                         )}
                       </div>
-                      <div className="text-sm text-center text-foreground/80">{locale === "ja" ? c.jpname : c.name}</div>
+                      <div className="text-xs md:text-sm text-center text-foreground/80">
+                        {locale === "ja"
+                          ? (c.name === "KIRIFUDA Inc." ? c.jpname : c.name)
+                          : c.name}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-center mb-8">個人メイト</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+                <h3 className="text-xl md:text-2xl font-bold text-center mb-6">{locale === "ja" ? "個人Mate" : "Individual Mates"}</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
                   {individualSupporters.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
-                      <div className="relative w-20 h-20">
+                      <div className="relative w-16 h-16 md:w-16 md:h-16">
                         {c.logo ? (
                           <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
                         ) : (
-                          <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200" />
+                          <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200 flex items-center justify-center">
+                            <HelpCircle className="w-6 h-6 text-muted-foreground" />
+                          </div>
                         )}
                       </div>
-                      <div className="text-sm text-center text-foreground/80">{locale === "ja" ? c.jpname : c.name}</div>
+                      <div className="text-xs md:text-sm text-center text-foreground/80">
+                        {locale === "ja"
+                          ? (c.name === "Hiro Shimo" || c.name === "KIMINORI JAPAN" ? c.name : c.jpname)
+                          : c.name}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -778,14 +861,14 @@ export default function ContributionPage() {
         {/* Research Partnership section removed */}
 
         {/* FAQ */}
-        <section className="mt-10 md:mt-12 mb-24 md:mb-28">
+        <section className="mt-10 md:mt-12 mb-16 md:mb-20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">よくある質問</h2>
-              <p className="text-muted-foreground">寄付に関するご質問にお答えします</p>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">{locale === "ja" ? "よくある質問" : "FAQ"}</h2>
+              <p className="text-muted-foreground">{locale === "ja" ? "寄付に関するご質問にお答えします" : "Answers to common donation questions"}</p>
             </div>
             <div className="grid md:grid-cols-2 gap-5">
-              {faqData.map((faq, idx) => (
+              {faqs.map((faq, idx) => (
                 <div key={idx} className="rounded-md bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <button onClick={() => toggleFAQ(idx)} className="w-full p-5 text-left hover:bg-muted/40">
                     <div className="flex items-center justify-between">
@@ -799,10 +882,10 @@ export default function ContributionPage() {
                 </div>
               ))}
             </div>
-            <div className="text-center mt-8">
-              <p className="text-muted-foreground mb-6 md:mb-8">その他のご質問がございましたら、お気軽にお問い合わせください。</p>
-              <a href="mailto:contact@nyx.foundation" className="inline-flex items-center gap-2 h-12 px-6 border border-border rounded-md hover:bg-muted/50">
-                <ExternalLink className="w-4 h-4" /> お問い合わせフォーム
+            <div className="text-center mt-10 md:mt-12">
+              <p className="text-muted-foreground mb-3 md:mb-4">{locale === "ja" ? "その他のご質問がございましたら、お気軽にお問い合わせください。" : "For other questions, feel free to contact us."}</p>
+              <a href="mailto:contact@nyx.foundation" className="inline-flex items-center gap-2 h-10 px-5 text-sm border border-border rounded-md hover:bg-muted/50">
+                <ExternalLink className="w-4 h-4" /> {locale === "ja" ? "お問い合わせフォーム" : "Contact us"}
               </a>
             </div>
           </div>

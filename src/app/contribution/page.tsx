@@ -218,7 +218,7 @@ export default function ContributionPage() {
               src="/icon.svg"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[200px] md:w-[260px] opacity-10"
+              className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[180px] md:w-[260px] opacity-10"
             />
             <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
               {locale === "ja" ? (
@@ -511,7 +511,7 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold whitespace-nowrap">Future: 検証が前提のエコシステムへ</h4>
+                    <h4 className="font-semibold whitespace-nowrap">Future: 検証を前提に</h4>
                   </div>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                     <li>暗号学的なクライアントの確立</li>

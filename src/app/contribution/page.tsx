@@ -63,6 +63,9 @@ export default function ContributionPage() {
     { name: "KIMINORI JAPAN", jpname: "キミノリ・ジャパン", logo: "/sponsors/kiminorijapan.jpg" },
     { name: "Anonymous", jpname: "匿名希望", logo: null },
   ];
+  const communityPartners: { name: string; jpname?: string; logo: string | null }[] = [
+    // 例: { name: "Community XYZ", jpname: "コミュニティXYZ", logo: null }
+  ];
 
   const impactCards = [
     {
@@ -208,11 +211,11 @@ export default function ContributionPage() {
   };
 
   return (
-    <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-20 md:pb-24">
+    <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
       <div className="container mx-auto max-w-6xl">
-        {/* Hero with Donation Card */}
-        <section className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-12 md:gap-14 items-center mb-20 overflow-hidden pt-24 sm:pt-28 md:pt-0">
-          <div className="relative z-10 space-y-4 md:space-y-5">
+        {/* Hero (donation card moved below) */}
+        <section className="relative grid grid-cols-1 items-start mb-24 md:mb-28 overflow-hidden pt-24 sm:pt-28 md:pt-40">
+          <div className="relative z-10 space-y-5 md:space-y-6">
             {/* subtle background icon anchored to heading for consistent mobile/desktop positioning */}
             <img
               src="/icon.svg"
@@ -230,8 +233,7 @@ export default function ContributionPage() {
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               {locale === "ja" ? (
                 <>
-                  <span className="font-semibold">「オープンイノベーションのための検証可能な未来を築く」</span>
-                  というビジョンの下、分散システムや暗号技術の研究開発を行っています。寄付を通じて我々の活動を支援することができます。寄付額は自由です。
+                  我々はビジョン主導の非営利法人です。<span className="font-semibold">「オープンイノベーションのための検証可能な未来を築く」</span>を掲げ、分散システムや暗号技術の研究開発に取り組んでいます。寄付を通じて我々の活動を支援することができます。
                 </>
               ) : (
                 <>
@@ -240,157 +242,13 @@ export default function ContributionPage() {
               )}
             </p>
             {/* サブスク文言は削除（今回のみの寄付に統一） */}
-            <div className="pt-2">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
-              >
-                <Users className="w-4 h-4" /> {locale === "ja" ? "法人の方はこちら" : "For organizations"}
-              </Link>
-              </div>
-          </div>
-
-          <div className="relative z-10 rounded-xl px-7 pt-5 pb-5 bg-white shadow-sm ring-1 ring-gray-100">
-            <div className="space-y-4 md:space-y-5">
-              {/* 支払い方法 */}
-              <div className="space-y-2">
-                <div className="text-sm font-medium">{locale === "ja" ? "支払い方法" : "Payment method"}</div>
-                <div className="relative">
-                  <button
-                    onClick={() => setShowPaymentOptions((s) => !s)}
-                    className="w-full p-4 text-left border rounded-lg bg-white flex items-center justify-between hover:bg-muted/50"
-                  >
-                    <span className="font-medium">
-                      {(() => {
-                        const opt = paymentOptions.find(o => o.value === selectedMethod);
-                        if (!opt) return locale === "ja" ? "選択してください" : "Select";
-                        if (opt.value === "JPY") return locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)";
-                        return opt.label;
-                      })()}
-                    </span>
-                    <span className="text-xs text-muted-foreground">{showPaymentOptions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}</span>
-                  </button>
-                  {showPaymentOptions && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-border rounded-lg shadow z-20">
-                      {paymentOptions.map((opt) => (
-                        <button
-                          key={opt.value}
-                          onClick={() => {
-                            setSelectedMethod(opt.value);
-                            setSelectedAmount(opt.value === "JPY" ? "3000" : "0.1");
-                            setShowPaymentOptions(false);
-                          }}
-                          className={`w-full p-3 text-left hover:bg-muted/50 ${selectedMethod === opt.value ? "bg-muted" : ""}`}
-                        >
-                          <div className="font-medium">{opt.value === "JPY" ? (locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)") : opt.label}</div>
-                          {opt.type === "crypto" && <div className="text-xs text-muted-foreground">{opt.chain}</div>}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* 金額を選択 */}
-              <div className="space-y-3 md:space-y-4">
-                <div className="text-sm font-medium">{locale === "ja" ? "金額を選択" : "Select amount"}</div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-3.5">
-                  {(selectedMethod === "JPY" ? jpyAmountValues : cryptoAmountValues).map((val) => (
-                    <button
-                      key={val}
-                      onClick={() => {
-                        setSelectedAmount(val);
-                        setCustomAmount("");
-                      }}
-                      className={`py-3 px-3 text-center border rounded-lg transition-all ${
-                        selectedAmount === val ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
-                      }`}
-                    >
-                      <div className="font-medium text-sm md:text-base">{selectedMethod === "JPY" ? `${Number.parseInt(val).toLocaleString()}円` : `${val} ${selectedMethod}`}</div>
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={() => {
-                    setSelectedAmount("custom");
-                    if (selectedMethod !== "JPY") {
-                      setCustomAmount("10eth");
-                    }
-                  }}
-                  className={`w-full py-3 px-3 text-center border rounded-lg transition-all ${
-                    selectedAmount === "custom" ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
-                  }`}
-                >
-                  <div className="font-medium text-base">{locale === "ja" ? "カスタム" : "Custom"}</div>
-                  {selectedAmount === "custom" && (
-                    <input
-                      type={selectedMethod === "JPY" ? "number" : "text"}
-                      placeholder={selectedMethod === "JPY" ? "50000" : "10eth"}
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                      className="mt-2 w-full border border-gray-300 rounded px-3 py-2 text-center"
-                      {...(selectedMethod === "JPY" ? { min: 500, step: 100 } : {})}
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                  )}
-                </button>
-              </div>
-
-              {/* 銀行振込（JPY） or チェーン選択（暗号資産） */}
-              {selectedMethod === "JPY" ? (
-                <div className="border border-border rounded-lg p-4 bg-muted/50">
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">PayPay銀行</span>
-                      <button onClick={() => copyToClipboard("PayPay銀行")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                        <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                      </button>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>かわせみ支店(007) 普通</span>
-                      <button onClick={() => copyToClipboard("007")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                        <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                      </button>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>7551963 ツツミマサト</span>
-                      <button onClick={() => copyToClipboard("7551963")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                        <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <div className="text-sm font-medium">{locale === "ja" ? "チェーン" : "Chain"}</div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {cryptoChains.map((chain) => (
-                      <button
-                        key={chain.value}
-                        onClick={() => setSelectedChain(chain.value)}
-                        className={`p-3 text-left border rounded-lg flex items-center gap-3 ${
-                          selectedChain === chain.value ? "bg-muted border-foreground/40" : "hover:bg-muted/50"
-                        }`}
-                      >
-                        <span className={`w-3 h-3 rounded-full ${chain.color}`} />
-                        <span className="font-medium text-sm">{chain.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <button onClick={handlePayment} className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 inline-flex items-center justify-center gap-2">
-                <Heart className="w-4 h-4" /> {locale === "ja" ? "寄付する" : "Donate"} {getDisplayAmount()}
-              </button>
-            </div>
           </div>
         </section>
 
         {/* Story - Part 1: 安全なEthereumがもたらす世界 */}
-        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
+            <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">安全なEthereumがもたらす世界</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
@@ -409,7 +267,7 @@ export default function ContributionPage() {
               </div>
             </div>
           ) : (
-            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
+            <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">How a safer Ethereum changes the world</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
@@ -462,9 +320,9 @@ export default function ContributionPage() {
         )}
 
         {/* Roadmap: 何をするか（タイトルのみ変更） */}
-        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-10">
+            <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">何をするか</h3>
 
               {/* Stepper */}
@@ -584,9 +442,9 @@ export default function ContributionPage() {
         </section>
 
         {/* Team & Achievements section */}
-        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
+            <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">チームと実績</h3>
               <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
@@ -665,7 +523,7 @@ export default function ContributionPage() {
         </section>
 
         {/* Story - Part 2: 私たちがやる理由 */}
-        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-6">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちがやる理由</h3>
@@ -703,9 +561,10 @@ export default function ContributionPage() {
         </section>
 
         {/* Story - Part 3: Nyx Mateについて */}
-        <section className="bg-muted/50 rounded-2xl p-10 md:p-12 mb-12">
+        {false && (
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <div className="max-w-6xl mx-auto space-y-4">
                 <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Nyx Mateについて</h3>
                 <p className="text-base text-muted-foreground leading-relaxed">Nyx Foundationの価値観に共感し、Nyxの活動を前に進めるお手伝いをしてくださる方々をNyx Mateと呼んでいます。Nyx Mateからのご支援は、「検証が前提」のエコシステムと、公平なルールの上で価値が広がる世界への一歩になります。</p>
@@ -789,6 +648,7 @@ export default function ContributionPage() {
             </div>
           )}
         </section>
+        )}
 
         {/* Impact section removed; merged conceptually into reasons */}
 
@@ -799,17 +659,17 @@ export default function ContributionPage() {
         {/* Benefits section moved into “ご支援の使い道” */}
 
         {/* Sponsors: Corporate & Individual（グリッド、非スクロール、ロゴ貼り付け） */}
-        <section className="mb-24 md:mb-28">
+        <section className="mb-20 md:mb-28">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8">
+            <div className="text-center mb-10 md:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">{locale === "ja" ? "多くのMateがNyxの活動を支えています。" : "Many mates support Nyx's work."}</h2>
             </div>
             {/* 法人・個人メイトを単一コンテナに統合 */}
-            <div className="rounded-xl p-8 bg-white shadow-sm ring-1 ring-gray-100">
-              <div className="grid grid-cols-1 gap-10">
+            <div className="rounded-xl p-12 md:p-14 bg-white shadow-sm ring-1 ring-gray-100">
+              <div className="grid grid-cols-1 gap-12 md:gap-14">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-center mb-6">{locale === "ja" ? "法人Mate" : "Corporate Mates"}</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{locale === "ja" ? "法人" : "Corporate"}</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                   {corporateSponsors.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
                       <div className="relative w-16 h-16 md:w-16 md:h-16">
@@ -829,8 +689,8 @@ export default function ContributionPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-center mb-6">{locale === "ja" ? "個人Mate" : "Individual Mates"}</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+                <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{locale === "ja" ? "個人" : "Individuals"}</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                   {individualSupporters.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
                       <div className="relative w-16 h-16 md:w-16 md:h-16">
@@ -850,7 +710,33 @@ export default function ContributionPage() {
                     </div>
                   ))}
                 </div>
+                {/* Community Partners */}
+                <div className="mt-12">
+                  <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{locale === "ja" ? "コミュニティパートナー" : "Community Partners"}</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+                    {communityPartners.length === 0 ? (
+                      <p className="col-span-full text-center text-sm text-muted-foreground">
+                        {locale === "ja" ? "準備中です。" : "Coming soon."}
+                      </p>
+                    ) : (
+                      communityPartners.map((c) => (
+                        <div key={c.name} className="flex flex-col items-center gap-3">
+                          <div className="relative w-16 h-16 md:w-16 md:h-16">
+                            {c.logo ? (
+                              <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
+                            ) : (
+                              <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200 flex items-center justify-center" />
+                            )}
+                          </div>
+                          <div className="text-xs md:text-sm text-center text-foreground/80">
+                            {locale === "ja" ? (c.jpname ?? c.name) : c.name}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -860,33 +746,193 @@ export default function ContributionPage() {
 
         {/* Research Partnership section removed */}
 
+        {/* Support Nyx section (donation card relocated here) */}
+        <section className="mb-20 md:mb-28">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
+            <div className="space-y-5 md:space-y-6">
+              <h2 className="text-2xl md:text-3xl font-bold">{locale === "ja" ? "Nyxに支援をする" : "Support Nyx"}</h2>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {locale === "ja" ? (
+                  <>Nyx Foundationは、皆さまからのご支援をお願いしています。研究には資金が不可欠ですが、資金の出どころに依存すると、優先順位や評価が歪むおそれがあります。お預かりしたご寄付は、分散システムと暗号技術の研究開発、形式検証、オープンソース化やコミュニティへの還元に大切に活用します。剰余は当団体の目的に再投資し、理事・社員への配当は行いません。寄付額は任意です。</>
+                ) : (
+                <>Support Nyx Foundation's research and development with a one‑time donation of any amount. Organizations can contact us to discuss details.</>
+                )}
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+              >
+                <Users className="w-4 h-4" /> {locale === "ja" ? "法人の方はこちら" : "For organizations"}
+              </Link>
+            </div>
+            <div className="relative z-10 rounded-xl p-6 md:p-8 bg-white shadow-sm ring-1 ring-gray-100">
+              <div className="space-y-5 md:space-y-6">
+                {/* 支払い方法 */}
+                <div className="space-y-2">
+                  <div className="text-sm font-medium">{locale === "ja" ? "支払い方法" : "Payment method"}</div>
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowPaymentOptions((s) => !s)}
+                      className="w-full p-4 text-left border rounded-lg bg-white flex items-center justify-between hover:bg-muted/50"
+                    >
+                      <span className="font-medium">
+                        {(() => {
+                          const opt = paymentOptions.find(o => o.value === selectedMethod);
+                          if (!opt) return locale === "ja" ? "選択してください" : "Select";
+                          if (opt.value === "JPY") return locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)";
+                          return opt.label;
+                        })()}
+                      </span>
+                      <span className="text-xs text-muted-foreground">{showPaymentOptions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}</span>
+                    </button>
+                    {showPaymentOptions && (
+                      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-border rounded-lg shadow z-20">
+                        {paymentOptions.map((opt) => (
+                          <button
+                            key={opt.value}
+                            onClick={() => {
+                              setSelectedMethod(opt.value);
+                              setSelectedAmount(opt.value === "JPY" ? "3000" : "0.1");
+                              setShowPaymentOptions(false);
+                            }}
+                            className={`w-full p-3 text-left hover:bg-muted/50 ${selectedMethod === opt.value ? "bg-muted" : ""}`}
+                          >
+                            <div className="font-medium">{opt.value === "JPY" ? (locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)") : opt.label}</div>
+                            {opt.type === "crypto" && <div className="text-xs text-muted-foreground">{opt.chain}</div>}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 金額を選択 */}
+                <div className="space-y-3 md:space-y-4">
+                  <div className="text-sm font-medium">{locale === "ja" ? "金額を選択" : "Select amount"}</div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-3.5">
+                    {(selectedMethod === "JPY" ? jpyAmountValues : cryptoAmountValues).map((val) => (
+                      <button
+                        key={val}
+                        onClick={() => {
+                          setSelectedAmount(val);
+                          setCustomAmount("");
+                        }}
+                        className={`py-3 px-3 text-center border rounded-lg transition-all ${
+                          selectedAmount === val ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
+                        }`}
+                      >
+                        <div className="font-medium text-sm md:text-base">{selectedMethod === "JPY" ? `${Number.parseInt(val).toLocaleString()}円` : `${val} ${selectedMethod}`}</div>
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedAmount("custom");
+                      if (selectedMethod !== "JPY") {
+                        setCustomAmount("10eth");
+                      }
+                    }}
+                    className={`w-full py-3 px-3 text-center border rounded-lg transition-all ${
+                      selectedAmount === "custom" ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
+                    }`}
+                  >
+                    <div className="font-medium text-base">{locale === "ja" ? "カスタム" : "Custom"}</div>
+                    {selectedAmount === "custom" && (
+                      <input
+                        type={selectedMethod === "JPY" ? "number" : "text"}
+                        placeholder={selectedMethod === "JPY" ? "50000" : "10eth"}
+                        value={customAmount}
+                        onChange={(e) => setCustomAmount(e.target.value)}
+                        className="mt-2 w-full border border-gray-300 rounded px-3 py-2 text-center"
+                        {...(selectedMethod === "JPY" ? { min: 500, step: 100 } : {})}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    )}
+                  </button>
+                </div>
+
+                {/* 銀行振込（JPY） or チェーン選択（暗号資産） */}
+                {selectedMethod === "JPY" ? (
+                  <div className="border border-border rounded-lg p-4 bg-muted/50">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium">PayPay銀行</span>
+                        <button onClick={() => copyToClipboard("PayPay銀行")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                          <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
+                        </button>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>かわせみ支店(007) 普通</span>
+                        <button onClick={() => copyToClipboard("007")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                          <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
+                        </button>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>7551963 ツツミマサト</span>
+                        <button onClick={() => copyToClipboard("7551963")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                          <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium">{locale === "ja" ? "チェーン" : "Chain"}</div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {cryptoChains.map((chain) => (
+                        <button
+                          key={chain.value}
+                          onClick={() => setSelectedChain(chain.value)}
+                          className={`p-3 text-left border rounded-lg flex items-center gap-3 ${
+                            selectedChain === chain.value ? "bg-muted border-foreground/40" : "hover:bg-muted/50"
+                          }`}
+                        >
+                          <span className={`w-3 h-3 rounded-full ${chain.color}`} />
+                          <span className="font-medium text-sm">{chain.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <button onClick={handlePayment} className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 inline-flex items-center justify-center gap-2">
+                  <Heart className="w-4 h-4" /> {locale === "ja" ? "寄付する" : "Donate"} {getDisplayAmount()}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
-        <section className="mt-10 md:mt-12 mb-16 md:mb-20">
+        <section className="mb-20 md:mb-28">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8">
+            <div className="text-center mb-12 md:mb-14">
               <h2 className="text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">{locale === "ja" ? "よくある質問" : "FAQ"}</h2>
               <p className="text-muted-foreground">{locale === "ja" ? "寄付に関するご質問にお答えします" : "Answers to common donation questions"}</p>
             </div>
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-10">
               {faqs.map((faq, idx) => (
                 <div key={idx} className="rounded-md bg-white/90 shadow-sm ring-1 ring-gray-100">
-                  <button onClick={() => toggleFAQ(idx)} className="w-full p-5 text-left hover:bg-muted/40">
+                  <button onClick={() => toggleFAQ(idx)} className="w-full p-6 text-left hover:bg-muted/40">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold pr-4 tracking-tight">{faq.question}</h3>
                       {openFAQ === idx ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
                     </div>
                   </button>
                   {openFAQ === idx && (
-                    <div className="px-5 pb-5 border-t border-gray-100"><p className="text-muted-foreground leading-relaxed">{faq.answer}</p></div>
+                    <div className="px-6 pb-6 border-t border-gray-100"><p className="text-muted-foreground leading-relaxed">{faq.answer}</p></div>
                   )}
                 </div>
               ))}
             </div>
             <div className="text-center mt-10 md:mt-12">
-              <p className="text-muted-foreground mb-3 md:mb-4">{locale === "ja" ? "その他のご質問がございましたら、お気軽にお問い合わせください。" : "For other questions, feel free to contact us."}</p>
-              <a href="mailto:contact@nyx.foundation" className="inline-flex items-center gap-2 h-10 px-5 text-sm border border-border rounded-md hover:bg-muted/50">
-                <ExternalLink className="w-4 h-4" /> {locale === "ja" ? "お問い合わせフォーム" : "Contact us"}
-              </a>
+              <p className="text-muted-foreground">
+                {locale === "ja" ? (
+                  <>その他のご質問がございましたら、お気軽に <Link href="/contact" className="underline">お問い合わせ</Link> ください。</>
+                ) : (
+                  <>For other questions, feel free to <Link href="/contact" className="underline">contact us</Link>.</>
+                )}
+              </p>
             </div>
           </div>
         </section>

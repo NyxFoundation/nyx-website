@@ -225,7 +225,7 @@ export default function ContributionPage() {
             />
             <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
               {locale === "ja" ? (
-                <span className="whitespace-nowrap">Ethereumをもっと安全に。</span>
+                <span className="whitespace-nowrap">NyxはEthereumを信頼できる社会基盤に。</span>
               ) : (
                 <>Make Ethereum safer.</>
               )}
@@ -245,21 +245,21 @@ export default function ContributionPage() {
           </div>
         </section>
 
-        {/* Story - Part 1: 安全なEthereumがもたらす世界 */}
+        {/* Story - Part 1: 信頼できる社会基盤としてのEthereum */}
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">安全なEthereumがもたらす世界</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">信頼できる社会基盤としてのEthereum</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
-                  <p>仕様と実装が整合し、状態遷移と資産移転が期待どおりに一貫して実行され、第三者が検証できる——私たちのいう「安全」は、そんな土台から始まります。</p>
-                  <p>この基盤の上で動くスマートコントラクトは、信頼を特定の主体に預けず、約束をコード化し、履行まで検証可能にします。だからこそ、過剰な仲介は最小化され、市場支配が生む非効率は抑えられ、参入障壁は下がる。結果として、世界中の誰もが、公平なルールの上で新しい価値を試し、組み合わせ、広げていける——私たちはそのための基盤に貢献します。</p>
+                  <p>仕様と実装が整合し、状態遷移と資産移転が期待どおりに一貫して実行され、第三者が検証できる——それが「信頼できる社会基盤」としての条件です。</p>
+                  <p>この基盤の上で動くスマートコントラクトは、信頼を特定の主体に預けず、約束をコード化し、履行まで検証可能にします。だからこそ、過剰な仲介は最小化され、市場支配が生む非効率は抑えられ、参入障壁は下がる。結果として、世界中の誰もが、公平なルールの上で新しい価値を試し、組み合わせ、広げていける——私たちはそのための社会基盤づくりに貢献します。</p>
                 </div>
                 <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
                     <img
                       src="https://ethereum.org/_next/static/media/learn-hub-hero.bc4653ed.png"
-                      alt="安全なEthereumのビジュアル"
+                      alt="信頼できる社会基盤としてのEthereumのビジュアル"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -330,9 +330,9 @@ export default function ContributionPage() {
                 <div className="absolute left-0 right-0 top-[7px] h-[2px] bg-gray-200" />
                 <ol className="relative z-10 grid grid-cols-3 gap-4">
                   {[
-                    { label: "Ongoing", desc: "着手中", color: "bg-emerald-500" },
-                    { label: "Next", desc: "次に着手", color: "bg-amber-500" },
-                    { label: "Future", desc: "将来", color: "bg-gray-400" },
+                    { label: "安全にする", desc: "", color: "bg-emerald-500" },
+                    { label: "使いやすくする", desc: "", color: "bg-amber-500" },
+                    { label: "広げる", desc: "", color: "bg-sky-500" },
                   ].map((s) => (
                     <li key={s.label} className="flex flex-col items-center text-center">
                       <span className={`w-3.5 h-3.5 rounded-full ring-4 ring-white ${s.color}`} />
@@ -345,36 +345,39 @@ export default function ContributionPage() {
               {/* Phase Cards */}
               <div className="grid md:grid-cols-3 gap-4 md:gap-6">
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 rounded-md bg-emerald-50 text-emerald-700"><ShieldCheck className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Ongoing: 安全性と実装整合</h4>
+                    <h4 className="font-semibold">安全にする</h4>
                   </div>
+                  <p className="text-xs text-muted-foreground mb-2">仕様と実装の一致を前提に</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>クライアント・アプリケーションへのバグ修正・性能改善</li>
-                    <li>leanConsensusの研究開発・形式検証</li>
-                    <li>形式検証の自動証明ツールのPoC開発</li>
+                    <li>クライアントのバグ修正・性能最適化</li>
+                    <li>leanConsensusやzkVの研究開発</li>
+                    <li>検証自動化ツールの開発</li>
                   </ul>
                 </div>
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 rounded-md bg-amber-50 text-amber-700"><FunctionSquare className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Next: 検証の自動化と拡張</h4>
+                    <h4 className="font-semibold">使いやすくする</h4>
                   </div>
+                  <p className="text-xs text-muted-foreground mb-2">アプリケーションの体験と効率を高める</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>新規クライアントの開発や貢献</li>
-                    <li>leanConsensusのより広い研究開発・形式検証</li>
-                    <li>形式証明エージェントのスコープ拡大と洗練</li>
+                    <li>DeFiのバグ報告及び性能改善</li>
+                    <li>MEVを最適化する研究とその実装</li>
+                    <li>新規アプリケーションの開発</li>
                   </ul>
                 </div>
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold whitespace-nowrap">Future: 検証を前提に</h4>
+                    <h4 className="font-semibold whitespace-nowrap">広げる</h4>
                   </div>
+                  <p className="text-xs text-muted-foreground mb-2">学術と産業をオープンに橋渡しする</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>暗号学的なクライアントの確立</li>
-                    <li>leanEthereumの実装とその貢献</li>
-                    <li>EIPに形式仕様を組み込み、Spec≡Implを標準化</li>
+                    <li>Research Houseの運営</li>
+                    <li>教育プログラムの実施</li>
+                    <li>Ethereumの制度的応用研究</li>
                   </ul>
                 </div>
               </div>
@@ -473,7 +476,7 @@ export default function ContributionPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="text-center mt-4">
+                  <div className="mt-4">
                     <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
                       もっと見る
                     </Link>
@@ -511,7 +514,7 @@ export default function ContributionPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="text-center mt-4">
+                  <div className="mt-4">
                     <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
                       View more
                     </Link>
@@ -668,7 +671,7 @@ export default function ContributionPage() {
             <div className="rounded-xl p-12 md:p-14 bg-white shadow-sm ring-1 ring-gray-100">
               <div className="grid grid-cols-1 gap-12 md:gap-14">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{locale === "ja" ? "法人" : "Corporate"}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-8">{locale === "ja" ? "法人" : "Corporate"}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                   {corporateSponsors.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
@@ -689,7 +692,7 @@ export default function ContributionPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{locale === "ja" ? "個人" : "Individuals"}</h3>
+                <h3 className="text-xl md:text-2xl font-bold mb-8">{locale === "ja" ? "個人" : "Individuals"}</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                   {individualSupporters.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
@@ -712,7 +715,7 @@ export default function ContributionPage() {
                 </div>
                 {/* Community Partners */}
                 <div className="mt-12">
-                  <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{locale === "ja" ? "コミュニティパートナー" : "Community Partners"}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-8">{locale === "ja" ? "コミュニティパートナー" : "Community Partners"}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                     {communityPartners.length === 0 ? (
                       <p className="col-span-full text-center text-sm text-muted-foreground">
@@ -751,13 +754,26 @@ export default function ContributionPage() {
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
             <div className="space-y-5 md:space-y-6">
               <h2 className="text-2xl md:text-3xl font-bold">{locale === "ja" ? "Nyxに支援をする" : "Support Nyx"}</h2>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                {locale === "ja" ? (
-                  <>Nyx Foundationは、皆さまからのご支援をお願いしています。研究には資金が不可欠ですが、資金の出どころに依存すると、優先順位や評価が歪むおそれがあります。お預かりしたご寄付は、分散システムと暗号技術の研究開発、形式検証、オープンソース化やコミュニティへの還元に大切に活用します。剰余は当団体の目的に再投資し、理事・社員への配当は行いません。寄付額は任意です。</>
-                ) : (
-                <>Support Nyx Foundation's research and development with a one‑time donation of any amount. Organizations can contact us to discuss details.</>
-                )}
-              </p>
+              {locale === "ja" ? (
+                <div className="space-y-3">
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                    Nyx Foundationは、皆さまからのご支援をお願いしています。研究には資金が不可欠ですが、資金の出どころに依存すると、優先順位や評価が歪むおそれがあります。
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 分散システムと暗号技術の研究開発</li>
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 形式検証</li>
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 自動検証ツールの独自開発</li>
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> コミュニティへの還元</li>
+                  </ul>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    ※ 剰余は当団体の目的に再投資し、理事・社員への配当は行いません。寄付額は任意です。
+                  </p>
+                </div>
+              ) : (
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  Support Nyx Foundation's research and development with a one‑time donation of any amount. Organizations can contact us to discuss details.
+                </p>
+              )}
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"

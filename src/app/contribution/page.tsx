@@ -20,6 +20,7 @@ export default function ContributionPage() {
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
   const [selectedMember, setSelectedMember] = useState<null | { id: string; name: string; role: string; avatar?: string; bio?: string }>(null);
+  const [newsMap, setNewsMap] = useState<Record<string, { href: string; external: boolean }>>({});
 
   const cryptoAmountValues = ["0.01", "0.1", "1", "3", "5", "10"] as const;
   const jpyAmountValues = ["1000", "2000", "3000", "5000", "10000", "20000"] as const;
@@ -88,6 +89,29 @@ export default function ContributionPage() {
   ];
 
   // testimonials セクションは削除（要望）
+
+  useEffect(() => {
+    // Build a quick index of News items to link achievements to the same targets
+    fetch('/api/test-notion')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data?.news) return;
+        const countsJa: Record<string, number> = {};
+        const countsEn: Record<string, number> = {};
+        for (const n of data.news) {
+          countsJa[n.title] = (countsJa[n.title] || 0) + 1;
+          countsEn[n.titleEn] = (countsEn[n.titleEn] || 0) + 1;
+        }
+        const map: Record<string, { href: string; external: boolean }> = {};
+        for (const n of data.news) {
+          const href = n.redirectTo || `/news/${n.slug}`;
+          if (countsJa[n.title] === 1) map[n.title] = { href, external: Boolean(n.redirectTo) };
+          if (countsEn[n.titleEn] === 1) map[n.titleEn] = { href, external: Boolean(n.redirectTo) };
+        }
+        setNewsMap(map);
+      })
+      .catch(() => void 0);
+  }, []);
 
   const recentUpdatesJa = [
     { title: "leanConsensus会議参加", date: "2025年9月6日" },
@@ -227,7 +251,7 @@ export default function ContributionPage() {
               {locale === "ja" ? (
                 <span className="whitespace-nowrap">NyxはEthereumを信頼できる社会基盤に。</span>
               ) : (
-                <>Make Ethereum safer.</>
+                <>Nyx makes Ethereum a trustworthy social infrastructure.</>
               )}
             </h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -268,21 +292,17 @@ export default function ContributionPage() {
             </div>
           ) : (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">How a safer Ethereum changes the world</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Ethereum as trustworthy social infrastructure</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
-                  <p>
-                    Smart contracts shift trust away from institutions to code and verifiable procedure. A safer Ethereum means specs and implementations in alignment, with state transitions and value transfers behaving as intended. This is not merely technical; it lifts social coordination and economic activity toward transparency and reproducibility. Fewer vulnerabilities, better gas efficiency, and stronger verification tools raise predictability for users and structurally reduce losses from scams and bugs.
-                  </p>
-                  <p>
-                    Bringing “code keeps promises” closer to reality is the core of safety. Verifiability lets anyone build, compose, and extend under the same rules. Safety is the foundation of creativity.
-                  </p>
+                  <p>Alignment between specs and implementations, predictable state transitions and value transfers, and third‑party verifiability—these are the conditions for a trustworthy social infrastructure.</p>
+                  <p>On such a foundation, smart contracts don’t rely on specific intermediaries: they codify promises and keep them verifiably. Excessive intermediation shrinks, inefficiencies from market dominance are curbed, and barriers to entry drop. As a result, anyone, anywhere can experiment, compose, and scale new value under fair rules—and we contribute to building that foundation.</p>
                 </div>
                 <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
                     <img
                       src="https://ethereum.org/_next/static/media/learn-hub-hero.bc4653ed.png"
-                      alt="Safer Ethereum visual"
+                      alt="Ethereum as trustworthy social infrastructure"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -323,7 +343,7 @@ export default function ContributionPage() {
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">何をするか</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちの3つの柱</h3>
 
               {/* Stepper */}
               <div className="relative">
@@ -384,20 +404,19 @@ export default function ContributionPage() {
             </div>
           ) : (
             <div className="max-w-6xl mx-auto space-y-10">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">What We Will Do</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Our Three Pillars</h3>
 
               <div className="relative">
                 <div className="absolute left-0 right-0 top-[7px] h-[2px] bg-gray-200" />
                 <ol className="relative z-10 grid grid-cols-3 gap-4">
                   {[
-                    { label: "Ongoing", desc: "In progress", color: "bg-emerald-500" },
-                    { label: "Next", desc: "Up next", color: "bg-amber-500" },
-                    { label: "Future", desc: "Future", color: "bg-gray-400" },
+                    { label: "Secure", desc: "", color: "bg-emerald-500" },
+                    { label: "Make usable", desc: "", color: "bg-amber-500" },
+                    { label: "Expand", desc: "", color: "bg-sky-500" },
                   ].map((s) => (
                     <li key={s.label} className="flex flex-col items-center text-center">
                       <span className={`w-3.5 h-3.5 rounded-full ring-4 ring-white ${s.color}`} />
                       <span className="mt-2 text-sm font-medium">{s.label}</span>
-                      <span className="text-xs text-muted-foreground">{s.desc}</span>
                     </li>
                   ))}
                 </ol>
@@ -407,39 +426,42 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-emerald-50 text-emerald-700"><ShieldCheck className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Ongoing: Safety & Spec Alignment</h4>
+                    <h4 className="font-semibold">Secure</h4>
                   </div>
+                  <p className="text-xs text-muted-foreground mb-2">Assumes spec–implementation alignment</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>Bug fixes and performance improvements for clients and apps</li>
-                    <li>Research and formal verification for leanConsensus</li>
-                    <li>PoC for automated formal proof tooling</li>
+                    <li>Bug fixes and performance optimization for clients</li>
+                    <li>R&D on leanConsensus and zkV</li>
+                    <li>Build automated verification tools</li>
                   </ul>
                 </div>
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-amber-50 text-amber-700"><FunctionSquare className="w-5 h-5" /></div>
-                    <h4 className="font-semibold">Next: Automation and Expansion</h4>
+                    <h4 className="font-semibold">Make usable</h4>
                   </div>
+                  <p className="text-xs text-muted-foreground mb-2">Improve application experience and efficiency</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>Build or contribute to new clients</li>
-                    <li>Broader research and formal verification for leanConsensus</li>
-                    <li>Expand and refine the formal-proof agent's scope</li>
+                    <li>Report DeFi bugs and improve performance</li>
+                    <li>Research and implement MEV optimization</li>
+                    <li>Develop new applications</li>
                   </ul>
                 </div>
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold whitespace-nowrap">Future: Verification-first ecosystem</h4>
+                    <h4 className="font-semibold whitespace-nowrap">Expand</h4>
                   </div>
+                  <p className="text-xs text-muted-foreground mb-2">Bridge academia and industry openly</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-                    <li>Establish cryptographic clients</li>
-                    <li>Implement and contribute to leanEthereum</li>
-                    <li>Standardize Spec≡Impl by embedding formal specs in EIPs</li>
+                    <li>Operate the Research House</li>
+                    <li>Run education programs</li>
+                    <li>Research institutional applications of Ethereum</li>
                   </ul>
                 </div>
               </div>
 
-              <p className="text-xs text-center text-muted-foreground">Roadmap is reviewed and updated quarterly.</p>
+              {/* Removed quarterly roadmap note per request */}
             </div>
           )}
         </section>
@@ -470,11 +492,24 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-3">実績</h4>
                   <div className="space-y-2">
-                    {recentUpdatesJa.slice(0,5).map((u, i) => (
-                      <div key={i} className="py-2 border-b last:border-b-0">
-                        <span className="text-sm font-medium">{u.title}</span>
-                      </div>
-                    ))}
+                    {recentUpdatesJa.slice(0,5).map((u, i) => {
+                      const m = newsMap[u.title];
+                      const href = m?.href || "/news";
+                      const isExternal = m?.external;
+                      return (
+                        <div key={i} className="py-2 border-b last:border-b-0">
+                          {isExternal ? (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
+                              {u.title}
+                            </a>
+                          ) : (
+                            <Link href={href} className="text-sm font-medium hover:underline">
+                              {u.title}
+                            </Link>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="mt-4">
                     <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
@@ -508,11 +543,24 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-2">Achievements</h4>
                   <div className="space-y-2">
-                    {recentUpdatesEn.slice(0,5).map((u, i) => (
-                      <div key={i} className="py-2 border-b last:border-b-0">
-                        <span className="text-sm font-medium">{u.title}</span>
-                      </div>
-                    ))}
+                    {recentUpdatesEn.slice(0,5).map((u, i) => {
+                      const m = newsMap[u.title];
+                      const href = m?.href || "/news";
+                      const isExternal = m?.external;
+                      return (
+                        <div key={i} className="py-2 border-b last:border-b-0">
+                          {isExternal ? (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
+                              {u.title}
+                            </a>
+                          ) : (
+                            <Link href={href} className="text-sm font-medium hover:underline">
+                              {u.title}
+                            </Link>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="mt-4">
                     <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
@@ -770,9 +818,20 @@ export default function ContributionPage() {
                   </p>
                 </div>
               ) : (
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  Support Nyx Foundation's research and development with a one‑time donation of any amount. Organizations can contact us to discuss details.
-                </p>
+                <div className="space-y-3">
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                    We ask for your support. Research needs funding, but relying on specific sources can distort priorities and evaluation.
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Distributed systems & cryptography R&D</li>
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Formal verification</li>
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> In‑house automated verification tools</li>
+                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Giving back to the community</li>
+                  </ul>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Note: Any surplus is reinvested toward our mission. We do not distribute dividends to directors or members. Donations are voluntary.
+                  </p>
+                </div>
               )}
               <Link
                 href="/contact"

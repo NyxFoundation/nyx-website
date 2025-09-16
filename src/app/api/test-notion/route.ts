@@ -15,6 +15,8 @@ export async function GET() {
         slug: n.slug,
         title: n.title,
         titleEn: n.titleEn,
+        date: n.date,
+        redirectTo: n.redirectTo || null,
         type: n.type
       })),
       publications: publications.map(p => ({

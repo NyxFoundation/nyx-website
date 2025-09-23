@@ -67,6 +67,28 @@ const formatMethodAmount = (amount: number, method: PaymentMethod, locale: strin
   })} ${method}`;
 };
 
+const roundToNearest = (value: number, step: number) => Math.round(value / step) * step;
+
+const formatAmountMarkLabel = (ethAmount: number, method: PaymentMethod, locale: string) => {
+  if (method === "ETH") {
+    const options =
+      ethAmount >= 1
+        ? { minimumFractionDigits: 0, maximumFractionDigits: 2 }
+        : { minimumFractionDigits: 2, maximumFractionDigits: 4 };
+    return ethAmount.toLocaleString(locale, options);
+  }
+
+  if (method === "JPY") {
+    const amountInJpy = convertEthToMethod(ethAmount, method);
+    const niceAmount = roundToNearest(amountInJpy, 500);
+    return niceAmount.toLocaleString(locale);
+  }
+
+  const amountInUsd = convertEthToMethod(ethAmount, method);
+  const niceAmount = roundToNearest(amountInUsd, 5);
+  return niceAmount.toLocaleString(locale === "ja" ? "en-US" : locale, { maximumFractionDigits: 0 });
+};
+
 export default function ContributionPage() {
   const t = useTranslations("contribution");
   const locale = useLocale();
@@ -264,9 +286,39 @@ export default function ContributionPage() {
   const safePaymentSliderValue = paymentSliderValue === -1 ? 0 : paymentSliderValue;
   const chainSliderValue = cryptoChains.findIndex((chain) => chain.value === selectedChain);
   const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
+
+  const lastPresetIndex = amountPresetEth.length - 1;
+  const presetVisualSpacing = variableSteps + 2; // stretch preset donation marks across most of the track
+  const amountSliderPositions = Array.from({ length: AMOUNT_SLIDER_MAX + 1 }, (_, idx) => {
+    if (idx <= lastPresetIndex) {
+      return idx * presetVisualSpacing;
+    }
+    const extraIdx = idx - lastPresetIndex;
+    return lastPresetIndex * presetVisualSpacing + extraIdx;
+  });
+  const amountSliderMaxValue = amountSliderPositions[amountSliderPositions.length - 1];
+  const safeAmountSliderValue = amountSliderPositions[safeAmountIndex];
+
+  const findClosestAmountIndex = (sliderValue: number) => {
+    let closestIndex = 0;
+    let smallestDiff = Number.POSITIVE_INFINITY;
+    amountSliderPositions.forEach((position, idx) => {
+      const diff = Math.abs(position - sliderValue);
+      if (diff < smallestDiff) {
+        smallestDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    return closestIndex;
+  };
+
+  const handleAmountSliderChange = (sliderValue: number) => {
+    setAmountSliderIndex(findClosestAmountIndex(sliderValue));
+  };
+
   const amountMarks = amountPresetEth.map((eth, index) => ({
-    value: index,
-    label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
+    value: amountSliderPositions[index],
+    label: formatAmountMarkLabel(eth, selectedMethod, locale),
   }));
   const distributionDataBase = amountPresetEth.map((eth, idx) => ({
     label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
@@ -284,7 +336,6 @@ export default function ContributionPage() {
   const amountSliderMarks = amountMarks.map((mark, idx) => ({
     ...mark,
     isActive: idx === activeTickIndex,
-    onSelect: () => setAmountSliderIndex(mark.value),
   }));
   const methodSliderMarks = methodMarks.map((mark, idx) => ({
     ...mark,
@@ -931,22 +982,6 @@ export default function ContributionPage() {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm font-medium">
-                    <span>{supportAmountLabel}</span>
-                    <span>{formattedAmount}</span>
-                  </div>
-                  <SliderWithMarks
-                    min={0}
-                    max={AMOUNT_SLIDER_MAX}
-                    value={safeAmountIndex}
-                    onChange={setAmountSliderIndex}
-                    marks={amountSliderMarks}
-                    ariaLabel={supportAmountLabel}
-                    ariaValueText={formattedAmount}
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm font-medium">
                     <span>{supportMethodLabel}</span>
                     <span>{paymentOptions[safePaymentSliderValue]?.label ?? ""}</span>
                   </div>
@@ -978,6 +1013,22 @@ export default function ContributionPage() {
                     />
                   </div>
                 )}
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm font-medium">
+                    <span>{supportAmountLabel}</span>
+                    <span>{formattedAmount}</span>
+                  </div>
+                  <SliderWithMarks
+                    min={0}
+                    max={amountSliderMaxValue}
+                    value={safeAmountSliderValue}
+                    onChange={handleAmountSliderChange}
+                    marks={amountSliderMarks}
+                    ariaLabel={supportAmountLabel}
+                    ariaValueText={formattedAmount}
+                  />
+                </div>
 
                 {isFiatJPY && (
                   <div className="border border-border rounded-lg p-4 bg-muted/50">

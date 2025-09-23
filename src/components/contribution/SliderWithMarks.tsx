@@ -62,7 +62,7 @@ export function SliderWithMarks({
       </Slider.Root>
 
       {marks.length > 0 && (
-        <div className="relative mt-2 h-6 text-[11px] text-muted-foreground">
+        <div className="relative mt-3 h-7 text-[11px] leading-tight text-muted-foreground">
           {marks.map((mark, idx) => (
             <button
               key={`${mark.label}-${idx}`}
@@ -72,7 +72,7 @@ export function SliderWithMarks({
                 mark.onSelect?.();
               }}
               className={cn(
-                "absolute top-0 px-1 py-0.5 text-center transition-colors",
+                "absolute top-0 px-1.5 py-0.5 text-center transition-colors whitespace-nowrap",
                 mark.isActive ? "text-foreground font-semibold" : "hover:text-foreground"
               )}
               style={getAlignStyles(mark.value)}

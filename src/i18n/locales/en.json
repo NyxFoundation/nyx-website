@@ -141,6 +141,18 @@
         "Giving back to the community"
       ],
       "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
+      "useCasesHeading": "Where your support goes",
+      "benefitsHeading": "Supporter perks",
+      "benefits": [
+        {
+          "title": "Sponsor access",
+          "description": "Sponsors are welcome to visit the Nyx House anytime."
+        },
+        {
+          "title": "Recognition",
+          "description": "Supporters and Sponsors are featured on our website."
+        }
+      ],
       "note": "Note: Any surplus is reinvested toward our mission. Donations are voluntary.",
       "organizationsCta": "For organizations",
       "selectionStep": {

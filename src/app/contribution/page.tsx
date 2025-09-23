@@ -14,6 +14,7 @@ import {
   Shirt,
   Calendar,
   BadgeCheck,
+  Sparkles,
   HelpCircle,
   RefreshCcw,
   CheckCircle2,
@@ -32,6 +33,7 @@ import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
 type PaymentMethod = "ETH" | "USDC" | "USDT" | "DAI" | "JPY";
 type CryptoChain = "ethereum" | "optimism" | "arbitrum" | "base";
 type TokenPaymentMethod = Exclude<PaymentMethod, "ETH" | "JPY">;
+type SupportBenefit = { title: string; description: string };
 
 const DONATION_ADDRESS = "0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a";
 const CHAIN_ID_MAP: Record<CryptoChain, number> = {
@@ -322,6 +324,10 @@ export default function ContributionPage() {
 
   const supportBulletsRaw = t.raw("supportSection.bullets");
   const supportBullets = Array.isArray(supportBulletsRaw) ? (supportBulletsRaw as string[]) : [];
+  const supportBenefitsRaw = t.raw("supportSection.benefits");
+  const supportBenefits = Array.isArray(supportBenefitsRaw) ? (supportBenefitsRaw as SupportBenefit[]) : [];
+  const supportBenefitsHeading = t("supportSection.benefitsHeading");
+  const supportUseCasesHeading = t("supportSection.useCasesHeading");
   const supportersHeading = t("supportersSection.heading");
   const sponsorTitle = t("supportersSection.sponsorTitle");
   const supporterTitle = t("supportersSection.supporterTitle");
@@ -1460,21 +1466,56 @@ export default function ContributionPage() {
 
         {/* Support Nyx section (donation card relocated here) */}
         <section className="mb-28 md:mb-36">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 gap-10 md:gap-14 items-start">
-            <div className="space-y-5 md:space-y-6 text-center">
-              <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
-              <div className="space-y-3">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.05fr),minmax(0,1fr)] lg:items-start">
+            <div className="space-y-8 md:space-y-10 text-left">
+              <div className="space-y-3 text-center md:text-left">
+                <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm justify-items-center">
-                  {supportBullets.map((item, idx) => (
-                    <li key={`${item}-${idx}`} className="flex items-center justify-center gap-2">
-                      <BadgeCheck className="w-4 h-4 text-emerald-600" /> {item}
-                    </li>
-                  ))}
-                </ul>
                 <p className="text-sm text-muted-foreground">{supportTiers}</p>
-                <p className="mt-2 text-xs text-muted-foreground">{supportNote}</p>
               </div>
+
+              {supportBullets.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                    {supportUseCasesHeading}
+                  </h3>
+                  <ul className="grid gap-3 sm:grid-cols-2">
+                    {supportBullets.map((item, idx) => (
+                      <li
+                        key={`${item}-${idx}`}
+                        className="flex w-full items-start gap-3 rounded-lg border border-emerald-100 bg-emerald-50/70 p-4 shadow-sm"
+                      >
+                        <BadgeCheck className="h-5 w-5 shrink-0 text-emerald-600" />
+                        <span className="text-sm text-emerald-900">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-muted-foreground">{supportNote}</p>
+                </div>
+              )}
+
+              {supportBenefits.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                    {supportBenefitsHeading}
+                  </h3>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {supportBenefits.map((benefit) => (
+                      <div
+                        key={benefit.title}
+                        className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4"
+                      >
+                        <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
+                        <div className="space-y-1">
+                          <div className="text-sm font-semibold text-emerald-900">{benefit.title}</div>
+                          <p className="text-sm text-emerald-800">{benefit.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"

@@ -13,6 +13,7 @@ import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
 
 type PaymentMethod = "ETH" | "USDC" | "USDT" | "DAI" | "JPY";
 type CryptoChain = "ethereum" | "optimism" | "arbitrum" | "base";
+type TokenPaymentMethod = Exclude<PaymentMethod, "ETH" | "JPY">;
 
 const DONATION_ADDRESS = "0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a";
 const CHAIN_ID_MAP: Record<CryptoChain, number> = {
@@ -34,7 +35,36 @@ const WALLETCONNECT_METADATA = {
 const WALLETCONNECT_RELAY_URL = "wss://relay.walletconnect.com";
 const WALLETCONNECT_METHODS = ["eth_sendTransaction"] as const;
 const WALLETCONNECT_EVENTS = ["accountsChanged", "chainChanged"] as const;
-const DEFAULT_GAS_HEX = "0x5208"; // 21000 gas
+const DEFAULT_GAS_HEX = "0x5208"; // 21000 gas for native transfers
+const TOKEN_TRANSFER_GAS_HEX = "0x186a0"; // 100000 gas for ERC-20 transfers
+
+const ERC20_METADATA: Record<TokenPaymentMethod, { decimals: number; contracts: Partial<Record<CryptoChain, `0x${string}`>> }> = {
+  USDC: {
+    decimals: 6,
+    contracts: {
+      ethereum: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      optimism: "0x0b2c639c533813f4aa9d7837caf62653d097ff85",
+      arbitrum: "0xAf88d065e77c8cC2239327C5EDb3A432268e5831",
+      base: "0x833589fCD6eDb6E08f4c7c32D4f71b54bDa02913",
+    },
+  },
+  USDT: {
+    decimals: 6,
+    contracts: {
+      ethereum: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      optimism: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+      arbitrum: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    },
+  },
+  DAI: {
+    decimals: 18,
+    contracts: {
+      ethereum: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      optimism: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      arbitrum: "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+    },
+  },
+};
 
 const toWei = (amount: number) => {
   const sanitized = Number.isFinite(amount) ? Math.max(amount, 0) : 0;
@@ -73,6 +103,26 @@ const isUserRejectedRequest = (error: unknown) => {
 };
 
 const toHexChainId = (chainId: number) => `0x${chainId.toString(16)}`;
+
+const toBaseUnits = (amount: number, decimals: number) => {
+  const sanitized = Number.isFinite(amount) ? Math.max(amount, 0) : 0;
+  if (sanitized === 0) {
+    return 0n;
+  }
+  const decimal = DECIMAL_FORMATTER.format(sanitized);
+  const [integerPart, fractionPart = ""] = decimal.split(".");
+  const fraction = fractionPart.padEnd(decimals, "0").slice(0, decimals);
+  const digits = `${integerPart}${fraction}`.replace(/^0+/, "");
+  const normalized = digits.length > 0 ? digits : "0";
+  return BigInt(normalized);
+};
+
+const encodeErc20Transfer = (recipient: string, amount: bigint) => {
+  const selector = "a9059cbb"; // transfer(address,uint256)
+  const addressPart = recipient.toLowerCase().replace(/^0x/, "").padStart(64, "0");
+  const amountPart = amount.toString(16).padStart(64, "0");
+  return `0x${selector}${addressPart}${amountPart}`;
+};
 
 const shortenAddress = (address: string) => {
   if (!address) return "";
@@ -377,16 +427,48 @@ export default function ContributionPage() {
   const presetEthAmounts = getPresetEthAmounts(selectedMethod);
   const amountSliderMaxIndex = presetEthAmounts.length + VARIABLE_STEPS - 1;
   const isFiatJPY = selectedMethod === "JPY";
+  const selectedTokenMeta =
+    selectedMethod === "ETH" || selectedMethod === "JPY"
+      ? null
+      : ERC20_METADATA[selectedMethod as TokenPaymentMethod];
+  const availableCryptoChains = useMemo(() => {
+    if (isFiatJPY || selectedMethod === "ETH") {
+      return cryptoChains;
+    }
+    const tokenMeta = selectedTokenMeta;
+    if (!tokenMeta) {
+      return cryptoChains;
+    }
+    const filtered = cryptoChains.filter((chain) => Boolean(tokenMeta.contracts[chain.value]));
+    return filtered.length > 0 ? filtered : cryptoChains;
+  }, [cryptoChains, isFiatJPY, selectedMethod, selectedTokenMeta]);
+  const availableChainValues = availableCryptoChains.map((chain) => chain.value);
   const safeAmountIndex = clampAmountIndex(amountSliderIndex, amountSliderMaxIndex);
   const currentEthAmount = getEthAmountFromSlider(safeAmountIndex, presetEthAmounts);
   const currentAmount = convertEthToMethod(currentEthAmount, selectedMethod);
   const formattedAmount = formatMethodAmount(currentAmount, selectedMethod, locale);
   const paymentSliderValue = paymentOptions.findIndex((opt) => opt.value === selectedMethod);
   const safePaymentSliderValue = paymentSliderValue === -1 ? 0 : paymentSliderValue;
-  const chainSliderValue = cryptoChains.findIndex((chain) => chain.value === selectedChain);
+  const chainSliderValue = availableCryptoChains.findIndex((chain) => chain.value === selectedChain);
   const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
+
+  useEffect(() => {
+    if (isFiatJPY) {
+      return;
+    }
+    if (availableChainValues.length === 0) {
+      return;
+    }
+    if (!availableChainValues.includes(selectedChain)) {
+      setSelectedChain(availableChainValues[0]);
+    }
+  }, [availableChainValues, isFiatJPY, selectedChain]);
+  const selectedTokenContract = selectedTokenMeta?.contracts[selectedChain] ?? null;
+  const selectedTokenDecimals = selectedTokenMeta?.decimals ?? 0;
+  const isTokenPayment = Boolean(selectedTokenMeta);
+
   const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "";
-  const isWalletConnectEligible = !isFiatJPY && selectedMethod === "ETH";
+  const isWalletConnectEligible = !isFiatJPY && (selectedMethod === "ETH" || Boolean(selectedTokenContract));
   const targetChainId = CHAIN_ID_MAP[selectedChain] ?? CHAIN_ID_MAP.ethereum;
   const targetChainIdString = String(targetChainId);
   const targetChainIdHex = toHexChainId(targetChainId);
@@ -466,7 +548,7 @@ export default function ContributionPage() {
   const activeBucketIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : distributionData.length - 1;
   const activeTickIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : amountMarks.length - 1;
   const methodMarks = paymentOptions.map((option, idx) => ({ value: idx, label: option.label }));
-  const chainMarks = cryptoChains.map((chain, idx) => ({ value: idx, label: chain.label }));
+  const chainMarks = availableCryptoChains.map((chain, idx) => ({ value: idx, label: chain.label }));
   const amountSliderMarks = amountMarks.map((mark, idx) => ({
     ...mark,
     isActive: idx === activeTickIndex,
@@ -637,7 +719,7 @@ export default function ContributionPage() {
   };
 
   const handleChainSliderChange = (index: number) => {
-    const target = cryptoChains[index]?.value;
+    const target = availableCryptoChains[index]?.value;
     if (target) {
       setSelectedChain(target);
     }
@@ -665,27 +747,45 @@ export default function ContributionPage() {
       if (!walletConnectAddressForTarget) {
         alert(
           t("supportSection.wcChainMismatch", {
-            chain: cryptoChains[safeChainSliderValue]?.label ?? "",
+            chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
           })
         );
         return;
       }
       try {
+        const txParams = (() => {
+          if (isTokenPayment) {
+            if (!selectedTokenContract) {
+              throw new Error("Token contract unavailable for selected chain.");
+            }
+            const baseUnits = toBaseUnits(currentAmount, selectedTokenDecimals);
+            if (baseUnits === 0n) {
+              throw new Error("Amount must be greater than zero.");
+            }
+            return {
+              from: walletConnectAddressForTarget,
+              to: selectedTokenContract,
+              value: "0x0",
+              gas: TOKEN_TRANSFER_GAS_HEX,
+              chainId: targetChainIdHex,
+              data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits),
+            } as const;
+          }
+          return {
+            from: walletConnectAddressForTarget,
+            to: DONATION_ADDRESS,
+            value: toHexWei(currentEthAmount),
+            gas: DEFAULT_GAS_HEX,
+            chainId: targetChainIdHex,
+            data: "0x",
+          } as const;
+        })();
         await signClient.request({
           topic: walletConnectSession.topic,
           chainId: targetNamespace,
           request: {
             method: "eth_sendTransaction",
-            params: [
-              {
-                from: walletConnectAddressForTarget,
-                to: DONATION_ADDRESS,
-                value: toHexWei(currentEthAmount),
-                gas: DEFAULT_GAS_HEX,
-                chainId: targetChainIdHex,
-                data: "0x",
-              },
-            ],
+            params: [txParams],
           },
         });
         alert(t("supportSection.wcRequestSent"));
@@ -703,15 +803,20 @@ export default function ContributionPage() {
 
     alert(`支払いページに移動します: ${getDisplayAmount()} 今回のみ`);
   }, [
+    availableCryptoChains,
     currentEthAmount,
-    cryptoChains,
+    currentAmount,
     getDisplayAmount,
     isWalletConnectEligible,
+    isTokenPayment,
     safeChainSliderValue,
     signClient,
     startWalletConnect,
     t,
     targetNamespace,
+    targetChainIdHex,
+    selectedTokenContract,
+    selectedTokenDecimals,
     walletConnectAddressForTarget,
     walletConnectProjectId,
     walletConnectSession,
@@ -1339,16 +1444,16 @@ export default function ContributionPage() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-sm font-medium">
                       <span>{supportChainLabel}</span>
-                      <span>{cryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                      <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
                     </div>
                     <SliderWithMarks
                       min={0}
-                      max={Math.max(cryptoChains.length - 1, 0)}
+                    max={Math.max(availableCryptoChains.length - 1, 0)}
                       value={safeChainSliderValue}
                       onChange={handleChainSliderChange}
                       marks={chainSliderMarks}
                       ariaLabel={supportChainLabel}
-                      ariaValueText={cryptoChains[safeChainSliderValue]?.label ?? undefined}
+                    ariaValueText={availableCryptoChains[safeChainSliderValue]?.label ?? undefined}
                     />
                   </div>
                 )}
@@ -1415,7 +1520,7 @@ export default function ContributionPage() {
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="font-medium">{supportChainLabel}</span>
-                          <span>{cryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                          <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="font-medium">{supportAmountLabel}</span>
@@ -1424,7 +1529,7 @@ export default function ContributionPage() {
                         {!walletConnectSupportsTargetChain && (
                           <p className="text-amber-600">
                             {t("supportSection.wcSwitchHint", {
-                              chain: cryptoChains[safeChainSliderValue]?.label ?? "",
+                              chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
                             })}
                           </p>
                         )}

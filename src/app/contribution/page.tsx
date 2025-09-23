@@ -1517,18 +1517,17 @@ export default function ContributionPage() {
                     </div>
                   )}
 
-                  <SupportDistributionChart
-                    data={distributionData}
-                    activeIndex={activeBucketIndex}
-                    peopleSuffix={distributionPeopleSuffix}
-                    hideLabels
-                  />
-
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="flex items-center justify-between text-sm font-medium">
                       <span>{supportAmountLabel}</span>
                       <span>{formattedAmount}</span>
                     </div>
+                    <SupportDistributionChart
+                      data={distributionData}
+                      activeIndex={activeBucketIndex}
+                      peopleSuffix={distributionPeopleSuffix}
+                      hideLabels
+                    />
                     <SliderWithMarks
                       min={0}
                       max={amountSliderMaxValue}

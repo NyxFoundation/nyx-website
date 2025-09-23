@@ -1,13 +1,15 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { Heart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle, QrCode } from "lucide-react";
+import { Heart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle, QrCode, RefreshCcw } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SliderWithMarks } from "@/components/contribution/SliderWithMarks";
 import { SupportDistributionChart } from "@/components/contribution/SupportDistributionChart";
 import QRCode from "react-qr-code";
+import SignClient from "@walletconnect/sign-client";
+import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
 
 type PaymentMethod = "ETH" | "USDC" | "USDT" | "DAI" | "JPY";
 type CryptoChain = "ethereum" | "optimism" | "arbitrum" | "base";
@@ -22,17 +24,59 @@ const CHAIN_ID_MAP: Record<CryptoChain, number> = {
 const WEI_FACTOR = 10n ** 18n;
 const DECIMAL_FORMATTER = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 21, useGrouping: false });
 
-const toWeiString = (amount: number) => {
+const WALLETCONNECT_METADATA = {
+  name: "Nyx Foundation",
+  description: "Nyx Foundation donations",
+  url: "https://nyx.foundation",
+  icons: ["https://nyx.foundation/icon.png"],
+};
+
+const WALLETCONNECT_RELAY_URL = "wss://relay.walletconnect.com";
+const WALLETCONNECT_METHODS = ["eth_sendTransaction"] as const;
+const WALLETCONNECT_EVENTS = ["accountsChanged", "chainChanged"] as const;
+const DEFAULT_GAS_HEX = "0x5208"; // 21000 gas
+
+const toWei = (amount: number) => {
   const sanitized = Number.isFinite(amount) ? Math.max(amount, 0) : 0;
   if (sanitized === 0) {
-    return "0";
+    return 0n;
   }
   const decimal = DECIMAL_FORMATTER.format(sanitized);
   const [integerPart, fractionPart = ""] = decimal.split(".");
   const fraction = fractionPart.padEnd(18, "0").slice(0, 18);
   const integerWei = BigInt(integerPart) * WEI_FACTOR;
   const fractionalWei = fraction ? BigInt(fraction) : 0n;
-  return (integerWei + fractionalWei).toString();
+  return integerWei + fractionalWei;
+};
+
+const toHexWei = (amount: number) => {
+  const wei = toWei(amount);
+  if (wei === 0n) {
+    return "0x0";
+  }
+  return `0x${wei.toString(16)}`;
+};
+
+const isUserRejectedRequest = (error: unknown) => {
+  if (!error || typeof error !== "object") {
+    return false;
+  }
+  const maybe = error as { code?: number; message?: string };
+  if (typeof maybe.code === "number" && (maybe.code === 4001 || maybe.code === 5000)) {
+    return true;
+  }
+  if (typeof maybe.message === "string") {
+    const lower = maybe.message.toLowerCase();
+    return lower.includes("user rejected") || lower.includes("rejected by user") || lower.includes("user cancelled");
+  }
+  return false;
+};
+
+const toHexChainId = (chainId: number) => `0x${chainId.toString(16)}`;
+
+const shortenAddress = (address: string) => {
+  if (!address) return "";
+  return `${address.slice(0, 6)}…${address.slice(-4)}`;
 };
 
 const ETH_TO_USD = 4500;
@@ -158,6 +202,11 @@ export default function ContributionPage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<null | { id: string; name: string; role: string; avatar?: string; bio?: string }>(null);
   const [newsMap, setNewsMap] = useState<Record<string, { href: string; external: boolean }>>({});
+  const [signClient, setSignClient] = useState<SignClient | null>(null);
+  const [walletConnectSession, setWalletConnectSession] = useState<SessionTypes.Struct | null>(null);
+  const [walletConnectUri, setWalletConnectUri] = useState<string>("");
+  const [walletConnectLoading, setWalletConnectLoading] = useState(false);
+  const [walletConnectErrorKey, setWalletConnectErrorKey] = useState<string | null>(null);
 
   const paymentOptions: { value: PaymentMethod; label: string; type: "crypto" | "fiat" }[] = [
     { value: "ETH", label: t("supportSection.paymentOptions.ETH"), type: "crypto" },
@@ -336,24 +385,41 @@ export default function ContributionPage() {
   const safePaymentSliderValue = paymentSliderValue === -1 ? 0 : paymentSliderValue;
   const chainSliderValue = cryptoChains.findIndex((chain) => chain.value === selectedChain);
   const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
+  const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "";
+  const isWalletConnectEligible = !isFiatJPY && selectedMethod === "ETH";
+  const targetChainId = CHAIN_ID_MAP[selectedChain] ?? CHAIN_ID_MAP.ethereum;
+  const targetChainIdString = String(targetChainId);
+  const targetChainIdHex = toHexChainId(targetChainId);
+  const targetNamespace = `eip155:${targetChainIdString}`;
 
-  const eip681Uri = useMemo(() => {
-    if (isFiatJPY || selectedMethod !== "ETH" || currentEthAmount <= 0) {
-      return "";
+  const walletConnectAccounts = useMemo(() => {
+    if (!walletConnectSession) {
+      return [] as string[];
     }
-    const chainId = CHAIN_ID_MAP[selectedChain] ?? CHAIN_ID_MAP.ethereum;
-    const weiValue = toWeiString(currentEthAmount);
-    if (!weiValue || weiValue === "0") {
-      return "";
-    }
-    const params = new URLSearchParams();
-    params.set("value", weiValue);
-    params.set("chainId", String(chainId));
-    params.set("label", "Nyx Donation");
-    return `ethereum:${DONATION_ADDRESS}@${chainId}?${params.toString()}`;
-  }, [currentEthAmount, isFiatJPY, selectedChain, selectedMethod]);
-  const showQrBlock = !isFiatJPY && selectedMethod === "ETH";
-  const hasQrValue = Boolean(eip681Uri);
+    return walletConnectSession.namespaces.eip155?.accounts ?? [];
+  }, [walletConnectSession]);
+
+  const walletConnectAccountForTarget = useMemo(() => {
+    return walletConnectAccounts.find((account) => account.startsWith(`${targetNamespace}:`)) ?? null;
+  }, [walletConnectAccounts, targetNamespace]);
+
+  const walletConnectPrimaryAccount = walletConnectAccounts[0] ?? null;
+
+  const walletConnectAddressForTarget = useMemo(() => {
+    if (!walletConnectAccountForTarget) return null;
+    const parts = walletConnectAccountForTarget.split(":");
+    return parts[2] ?? null;
+  }, [walletConnectAccountForTarget]);
+
+  const walletConnectPrimaryAddress = useMemo(() => {
+    if (!walletConnectPrimaryAccount) return null;
+    const parts = walletConnectPrimaryAccount.split(":");
+    return parts[2] ?? null;
+  }, [walletConnectPrimaryAccount]);
+
+  const walletConnectSupportsTargetChain = Boolean(walletConnectAccountForTarget);
+
+  const walletConnectError = walletConnectErrorKey ? t(`supportSection.${walletConnectErrorKey}` as any) : null;
 
   const lastPresetIndex = Math.max(presetEthAmounts.length - 1, 0);
   const presetVisualSpacing = VARIABLE_STEPS + 2; // stretch preset donation marks across most of the track
@@ -417,6 +483,143 @@ export default function ContributionPage() {
   }));
   const faqs = locale === "ja" ? faqJa : faqEn;
 
+  useEffect(() => {
+    if (signClient) {
+      return;
+    }
+    if (!walletConnectProjectId) {
+      setWalletConnectErrorKey("wcUnavailable");
+      return undefined;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const client = await SignClient.init({
+          projectId: walletConnectProjectId,
+          relayUrl: WALLETCONNECT_RELAY_URL,
+          metadata: WALLETCONNECT_METADATA,
+        });
+        if (!cancelled) {
+          setWalletConnectErrorKey(null);
+          setSignClient(client);
+        }
+      } catch (error) {
+        console.error(error);
+        if (!cancelled) {
+          setWalletConnectErrorKey("wcInitError");
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [signClient, t, walletConnectProjectId]);
+
+  useEffect(() => {
+    if (!signClient) return;
+
+    const handleDelete = (event: SignClientTypes.EventArguments["session_delete"]) => {
+      setWalletConnectSession((prev) => (prev?.topic === event.topic ? null : prev));
+      setWalletConnectUri("");
+    };
+
+    const handleUpdate = (event: SignClientTypes.EventArguments["session_update"]) => {
+      setWalletConnectSession((prev) => {
+        if (!prev || prev.topic !== event.topic) {
+          return prev;
+        }
+        return { ...prev, namespaces: event.params.namespaces };
+      });
+    };
+
+    signClient.on("session_delete", handleDelete);
+    signClient.on("session_update", handleUpdate);
+
+    return () => {
+      signClient.off("session_delete", handleDelete);
+      signClient.off("session_update", handleUpdate);
+    };
+  }, [signClient]);
+
+  const startWalletConnect = useCallback(async () => {
+    if (!signClient || !isWalletConnectEligible || walletConnectLoading) {
+      return;
+    }
+    setWalletConnectLoading(true);
+    setWalletConnectErrorKey(null);
+    try {
+      if (walletConnectSession) {
+        await signClient.disconnect({
+          topic: walletConnectSession.topic,
+          reason: { code: 6000, message: "Session replaced" },
+        });
+        setWalletConnectSession(null);
+      }
+      const { uri, approval } = await signClient.connect({
+        requiredNamespaces: {
+          eip155: {
+            chains: [targetNamespace],
+            methods: [...WALLETCONNECT_METHODS],
+            events: [...WALLETCONNECT_EVENTS],
+          },
+        },
+      });
+      if (uri) {
+        setWalletConnectUri(uri);
+      }
+      const session = await approval();
+      setWalletConnectSession(session);
+      setWalletConnectUri("");
+    } catch (error) {
+      console.error(error);
+      setWalletConnectErrorKey("wcConnectError");
+    } finally {
+      setWalletConnectLoading(false);
+    }
+  }, [signClient, isWalletConnectEligible, targetNamespace, walletConnectLoading, walletConnectSession]);
+
+  useEffect(() => {
+    if (!signClient || !isWalletConnectEligible) {
+      return;
+    }
+    const hasActiveSession = Boolean(walletConnectSession);
+    if (!hasActiveSession && !walletConnectUri && !walletConnectLoading) {
+      void startWalletConnect();
+    }
+  }, [signClient, isWalletConnectEligible, walletConnectSession, walletConnectUri, walletConnectLoading, startWalletConnect]);
+
+  useEffect(() => {
+    if (!isWalletConnectEligible) {
+      setWalletConnectErrorKey(null);
+    }
+    if (!isWalletConnectEligible && walletConnectSession && signClient) {
+      signClient
+        .disconnect({ topic: walletConnectSession.topic, reason: { code: 6001, message: "Donation method changed" } })
+        .catch((error) => console.error(error));
+      setWalletConnectSession(null);
+      setWalletConnectUri("");
+    }
+  }, [isWalletConnectEligible, signClient, walletConnectSession]);
+
+  const resetWalletConnect = useCallback(async () => {
+    setWalletConnectErrorKey(null);
+    setWalletConnectUri("");
+    if (walletConnectSession && signClient) {
+      try {
+        await signClient.disconnect({
+          topic: walletConnectSession.topic,
+          reason: { code: 6002, message: "Reset by user" },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    setWalletConnectSession(null);
+    if (isWalletConnectEligible) {
+      void startWalletConnect();
+    }
+  }, [isWalletConnectEligible, signClient, startWalletConnect, walletConnectSession]);
+
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 
   const handleMethodChange = (method: PaymentMethod) => {
@@ -444,9 +647,75 @@ export default function ContributionPage() {
 
   const toggleFAQ = (idx: number) => setOpenFAQ(openFAQ === idx ? null : idx);
 
-  const handlePayment = () => {
+  const handlePayment = useCallback(async () => {
+    if (isWalletConnectEligible) {
+      if (!walletConnectProjectId) {
+        alert(t("supportSection.wcNeedsProject"));
+        return;
+      }
+      if (!signClient) {
+        alert(t("supportSection.wcInitPending"));
+        return;
+      }
+      if (!walletConnectSession) {
+        alert(t("supportSection.wcConnectPrompt"));
+        void startWalletConnect();
+        return;
+      }
+      if (!walletConnectAddressForTarget) {
+        alert(
+          t("supportSection.wcChainMismatch", {
+            chain: cryptoChains[safeChainSliderValue]?.label ?? "",
+          })
+        );
+        return;
+      }
+      try {
+        await signClient.request({
+          topic: walletConnectSession.topic,
+          chainId: targetNamespace,
+          request: {
+            method: "eth_sendTransaction",
+            params: [
+              {
+                from: walletConnectAddressForTarget,
+                to: DONATION_ADDRESS,
+                value: toHexWei(currentEthAmount),
+                gas: DEFAULT_GAS_HEX,
+                chainId: targetChainIdHex,
+                data: "0x",
+              },
+            ],
+          },
+        });
+        alert(t("supportSection.wcRequestSent"));
+      } catch (error) {
+        console.error(error);
+        if (isUserRejectedRequest(error)) {
+          alert(t("supportSection.wcRequestRejected"));
+        } else {
+          const message = error instanceof Error ? error.message : String(error);
+          alert(`${t("supportSection.wcRequestError")}\n${message}`);
+        }
+      }
+      return;
+    }
+
     alert(`支払いページに移動します: ${getDisplayAmount()} 今回のみ`);
-  };
+  }, [
+    currentEthAmount,
+    cryptoChains,
+    getDisplayAmount,
+    isWalletConnectEligible,
+    safeChainSliderValue,
+    signClient,
+    startWalletConnect,
+    t,
+    targetNamespace,
+    walletConnectAddressForTarget,
+    walletConnectProjectId,
+    walletConnectSession,
+  ]);
 
   return (
     <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
@@ -1100,28 +1369,31 @@ export default function ContributionPage() {
                   />
                 </div>
 
-                {showQrBlock && (
+                {isWalletConnectEligible && (
                   <div className="border border-border rounded-lg p-4 bg-muted/40 space-y-4">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                         <QrCode className="w-4 h-4 text-muted-foreground" />
-                        {t("supportSection.qrTitle")}
+                        {t("supportSection.wcTitle")}
                       </div>
                       <button
                         type="button"
-                        onClick={() => eip681Uri && copyToClipboard(eip681Uri)}
-                        disabled={!hasQrValue}
+                        onClick={() => void resetWalletConnect()}
+                        disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
                         className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
                       >
-                        <Copy className="w-3 h-3" /> {t("supportSection.copyUri")}
+                        <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
                       </button>
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{t("supportSection.qrDescription")}</p>
-                    {hasQrValue && (
+                    <p className="text-xs text-muted-foreground leading-relaxed">{t("supportSection.wcDescription")}</p>
+                    {walletConnectError && (
+                      <p className="text-xs text-red-600">{walletConnectError}</p>
+                    )}
+                    {walletConnectUri && (
                       <div className="flex justify-center">
                         <div className="rounded-lg bg-white p-4 shadow-sm">
                           <QRCode
-                            value={eip681Uri}
+                            value={walletConnectUri}
                             size={168}
                             bgColor="#ffffff"
                             fgColor="#111827"
@@ -1130,16 +1402,34 @@ export default function ContributionPage() {
                         </div>
                       </div>
                     )}
-                    <div className="space-y-2 text-xs text-muted-foreground">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">{supportChainLabel}</span>
-                        <span>{cryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                    {!walletConnectUri && walletConnectLoading && (
+                      <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>
+                    )}
+                    {walletConnectSession && (
+                      <div className="space-y-2 text-xs text-muted-foreground">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">{t("supportSection.wcConnected")}</span>
+                          <span className="font-mono text-foreground/90">
+                            {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">{supportChainLabel}</span>
+                          <span>{cryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">{supportAmountLabel}</span>
+                          <span>{formattedAmount}</span>
+                        </div>
+                        {!walletConnectSupportsTargetChain && (
+                          <p className="text-amber-600">
+                            {t("supportSection.wcSwitchHint", {
+                              chain: cryptoChains[safeChainSliderValue]?.label ?? "",
+                            })}
+                          </p>
+                        )}
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">{supportAmountLabel}</span>
-                        <span>{formattedAmount}</span>
-                      </div>
-                    </div>
+                    )}
                     <div className="flex items-center justify-between gap-3 rounded-md border border-dashed border-border bg-white/70 px-3 py-2">
                       <code className="font-mono text-xs break-all text-foreground/90">{DONATION_ADDRESS}</code>
                       <button
@@ -1153,9 +1443,9 @@ export default function ContributionPage() {
                   </div>
                 )}
 
-                {!showQrBlock && !isFiatJPY && (
+                {!isWalletConnectEligible && !isFiatJPY && (
                   <div className="border border-dashed border-border rounded-lg p-3 bg-muted/30 text-xs text-muted-foreground">
-                    {t("supportSection.qrUnavailable")}
+                    {t("supportSection.wcDisabled")}
                   </div>
                 )}
 

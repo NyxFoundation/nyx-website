@@ -16,12 +16,12 @@ const USD_TO_JPY = 145;
 const ETH_TO_JPY = ETH_TO_USD * USD_TO_JPY;
 
 const VARIABLE_STEPS = 6;
-const DISTRIBUTION_COUNTS = [12, 22, 30, 16, 9, 5];
+const DISTRIBUTION_COUNTS = [10, 18, 34, 20, 12, 6];
 const DISTRIBUTION_MORE_COUNT = 4;
 
-const PRESET_ETH_AMOUNTS = [0.01, 0.1, 1, 10] as const;
-const PRESET_USD_AMOUNTS = [70, 700, 7_000, 33_000] as const;
-const PRESET_JPY_AMOUNTS = [10_000, 100_000, 1_000_000, 5_000_000] as const;
+const PRESET_ETH_AMOUNTS = [0.01, 0.1, 1, 3, 5, 10] as const;
+const PRESET_USD_AMOUNTS = [70, 700, 7_000, 15_000, 20_000, 35_000] as const;
+const PRESET_JPY_AMOUNTS = [10_000, 100_000, 1_000_000, 2_000_000, 3_000_000, 5_000_000] as const;
 
 const PRESET_METHOD_AMOUNTS: Record<PaymentMethod, readonly number[]> = {
   ETH: PRESET_ETH_AMOUNTS,

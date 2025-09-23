@@ -22,8 +22,8 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _p
   const maxCount = useMemo(() => Math.max(...data.map((d) => d.count), 1), [data]);
   const labelAreaHeight = hideLabels ? 0 : 26;
 
-  const step = data.length > 1 ? chartWidth / (data.length - 1) : 0;
-  const baseBarWidth = data.length > 1 ? Math.max(step * 0.45, 6) : chartWidth * 0.3;
+  const stepSpacing = data.length > 0 ? chartWidth / data.length : chartWidth;
+  const baseBarWidth = data.length > 0 ? Math.max(stepSpacing * 0.55, 6) : chartWidth * 0.3;
 
   const yScale = useMemo(
     () =>
@@ -40,10 +40,9 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _p
       <svg viewBox={`0 0 ${chartWidth} ${chartHeight + labelAreaHeight}`} className="h-auto w-full">
         <g>
           {data.map((bucket, idx) => {
-            const centerX = data.length > 1 ? idx * step : chartWidth / 2;
-            const adjustedWidth = Math.max(2, Math.min(baseBarWidth, chartWidth));
-            const maxX = Math.max(0, chartWidth - adjustedWidth);
-            const barX = Math.min(maxX, Math.max(0, centerX - adjustedWidth / 2));
+            const centerX = data.length > 0 ? (idx + 0.5) * stepSpacing : chartWidth / 2;
+            const adjustedWidth = Math.min(baseBarWidth, stepSpacing * 0.85);
+            const barX = centerX - adjustedWidth / 2;
             const barHeight = chartHeight - yScale(bucket.count);
             const barY = yScale(bucket.count);
             const isActive = idx === activeIndex;

@@ -1488,15 +1488,17 @@ export default function ContributionPage() {
                       <span>{supportMethodLabel}</span>
                       <span>{paymentOptions[safePaymentSliderValue]?.label ?? ""}</span>
                     </div>
-                    <SliderWithMarks
-                      min={0}
-                      max={Math.max(paymentOptions.length - 1, 0)}
-                      value={safePaymentSliderValue}
-                      onChange={handlePaymentSliderChange}
-                      marks={methodSliderMarks}
-                      ariaLabel={supportMethodLabel}
-                      ariaValueText={paymentOptions[safePaymentSliderValue]?.label ?? undefined}
-                    />
+                    <div className="px-4 md:px-6">
+                      <SliderWithMarks
+                        min={0}
+                        max={Math.max(paymentOptions.length - 1, 0)}
+                        value={safePaymentSliderValue}
+                        onChange={handlePaymentSliderChange}
+                        marks={methodSliderMarks}
+                        ariaLabel={supportMethodLabel}
+                        ariaValueText={paymentOptions[safePaymentSliderValue]?.label ?? undefined}
+                      />
+                    </div>
                   </div>
 
                   {!isFiatJPY && (
@@ -1505,15 +1507,17 @@ export default function ContributionPage() {
                         <span>{supportChainLabel}</span>
                         <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
                       </div>
-                      <SliderWithMarks
-                        min={0}
-                        max={Math.max(availableCryptoChains.length - 1, 0)}
-                        value={safeChainSliderValue}
-                        onChange={handleChainSliderChange}
-                        marks={chainSliderMarks}
-                        ariaLabel={supportChainLabel}
-                        ariaValueText={availableCryptoChains[safeChainSliderValue]?.label ?? undefined}
-                      />
+                      <div className="px-4 md:px-6">
+                        <SliderWithMarks
+                          min={0}
+                          max={Math.max(availableCryptoChains.length - 1, 0)}
+                          value={safeChainSliderValue}
+                          onChange={handleChainSliderChange}
+                          marks={chainSliderMarks}
+                          ariaLabel={supportChainLabel}
+                          ariaValueText={availableCryptoChains[safeChainSliderValue]?.label ?? undefined}
+                        />
+                      </div>
                     </div>
                   )}
 
@@ -1528,15 +1532,17 @@ export default function ContributionPage() {
                       peopleSuffix={distributionPeopleSuffix}
                       hideLabels
                     />
-                    <SliderWithMarks
-                      min={0}
-                      max={amountSliderMaxValue}
-                      value={safeAmountSliderValue}
-                      onChange={handleAmountSliderChange}
-                      marks={amountSliderMarks}
-                      ariaLabel={supportAmountLabel}
-                      ariaValueText={formattedAmount}
-                    />
+                    <div className="px-4 md:px-6">
+                      <SliderWithMarks
+                        min={0}
+                        max={amountSliderMaxValue}
+                        value={safeAmountSliderValue}
+                        onChange={handleAmountSliderChange}
+                        marks={amountSliderMarks}
+                        ariaLabel={supportAmountLabel}
+                        ariaValueText={formattedAmount}
+                      />
+                    </div>
                   </div>
                 </div>
 

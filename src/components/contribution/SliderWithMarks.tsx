@@ -72,7 +72,7 @@ export function SliderWithMarks({
                 mark.onSelect?.();
               }}
               className={cn(
-                "absolute top-0 px-1.5 py-0.5 text-center transition-colors whitespace-nowrap",
+                "absolute top-0 text-center transition-colors whitespace-nowrap",
                 mark.isActive ? "text-foreground font-semibold" : "hover:text-foreground"
               )}
               style={getAlignStyles(mark.value)}

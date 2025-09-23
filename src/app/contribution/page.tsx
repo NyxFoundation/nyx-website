@@ -948,6 +948,12 @@ export default function ContributionPage() {
                 </>
               )}
             </p>
+            <Link
+              href="#support-nyx"
+              className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            >
+              {supportHeading}
+            </Link>
             {/* サブスク文言は削除（今回のみの寄付に統一） */}
           </div>
         </section>
@@ -1509,7 +1515,7 @@ export default function ContributionPage() {
         {/* Research Partnership section removed */}
 
         {/* Support Nyx section (donation card relocated here) */}
-        <section className="mb-28 md:mb-36">
+        <section id="support-nyx" className="mb-28 md:mb-36">
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.05fr),minmax(0,1fr)] lg:items-start">
             <div className="space-y-8 md:space-y-10 text-left">
               <div className="space-y-3 text-center md:text-left">

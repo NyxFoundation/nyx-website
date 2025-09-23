@@ -17,7 +17,7 @@ interface SupportDistributionChartProps {
 const chartHeight = 140;
 const labelAreaHeight = 26;
 
-function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix }: SupportDistributionChartProps) {
+function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _peopleSuffix }: SupportDistributionChartProps) {
   const maxCount = useMemo(() => Math.max(...data.map((d) => d.count), 1), [data]);
   const width = Math.max(data.length * 56, 320);
 
@@ -62,14 +62,6 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix }: 
                   rx={4}
                   className={isActive ? "fill-emerald-500" : "fill-emerald-200"}
                 />
-                <text
-                  x={bandX + barWidth / 2}
-                  y={barY - 6}
-                  textAnchor="middle"
-                  className={isActive ? "fill-foreground text-[10px]" : "fill-foreground/80 text-[10px]"}
-                >
-                  {`${bucket.count}${peopleSuffix}`}
-                </text>
                 <text
                   x={bandX + barWidth / 2}
                   y={chartHeight + 18}

@@ -15,21 +15,54 @@ const ETH_TO_USD = 4500;
 const USD_TO_JPY = 145;
 const ETH_TO_JPY = ETH_TO_USD * USD_TO_JPY;
 
-const amountPresetEth = [0.01, 0.1, 1, 3, 5, 10] as const;
-const variableSteps = 6;
-const AMOUNT_SLIDER_MAX = amountPresetEth.length + variableSteps - 1;
+const VARIABLE_STEPS = 6;
 const DISTRIBUTION_COUNTS = [12, 22, 30, 16, 9, 5];
 const DISTRIBUTION_MORE_COUNT = 4;
 
-const clampAmountIndex = (index: number) => Math.min(Math.max(index, 0), AMOUNT_SLIDER_MAX);
+const PRESET_ETH_AMOUNTS = [0.01, 0.1, 1, 10] as const;
+const PRESET_USD_AMOUNTS = [70, 700, 7_000, 33_000] as const;
+const PRESET_JPY_AMOUNTS = [10_000, 100_000, 1_000_000, 5_000_000] as const;
 
-const getEthAmountFromSlider = (index: number) => {
-  const clamped = clampAmountIndex(index);
-  if (clamped < amountPresetEth.length) {
-    return amountPresetEth[clamped];
+const PRESET_METHOD_AMOUNTS: Record<PaymentMethod, readonly number[]> = {
+  ETH: PRESET_ETH_AMOUNTS,
+  USDC: PRESET_USD_AMOUNTS,
+  USDT: PRESET_USD_AMOUNTS,
+  DAI: PRESET_USD_AMOUNTS,
+  JPY: PRESET_JPY_AMOUNTS,
+};
+
+const clampAmountIndex = (index: number, max: number) => Math.min(Math.max(index, 0), max);
+
+const convertMethodAmountToEth = (amount: number, method: PaymentMethod) => {
+  switch (method) {
+    case "JPY":
+      return amount / ETH_TO_JPY;
+    case "ETH":
+      return amount;
+    case "USDC":
+    case "USDT":
+    case "DAI":
+    default:
+      return amount / ETH_TO_USD;
   }
-  const extraIndex = clamped - amountPresetEth.length + 1;
-  const base = amountPresetEth[amountPresetEth.length - 1];
+};
+
+const getPresetEthAmounts = (method: PaymentMethod) => {
+  const presets = PRESET_METHOD_AMOUNTS[method] ?? PRESET_METHOD_AMOUNTS.ETH;
+  if (method === "ETH") {
+    return [...presets];
+  }
+  return presets.map((value) => convertMethodAmountToEth(value, method));
+};
+
+const getEthAmountFromSlider = (index: number, presets: readonly number[]) => {
+  const maxIndex = presets.length + VARIABLE_STEPS - 1;
+  const clamped = clampAmountIndex(index, maxIndex);
+  if (clamped < presets.length) {
+    return presets[clamped];
+  }
+  const extraIndex = clamped - presets.length + 1;
+  const base = presets[presets.length - 1];
   return Number((base * Math.pow(1.6, extraIndex)).toFixed(4));
 };
 
@@ -60,10 +93,11 @@ const formatMethodAmount = (amount: number, method: PaymentMethod, locale: strin
     return `${amount.toLocaleString(locale, options)} ETH`;
   }
 
-  const digits = amount < 10 ? 2 : amount < 100 ? 1 : 0;
+  const fractionDigits = amount < 10 ? 2 : amount < 100 ? 1 : 0;
+  const isWhole = Math.abs(amount - Math.round(amount)) < 1e-6;
   return `${amount.toLocaleString(locale === "ja" ? "en-US" : locale, {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: isWhole ? 0 : fractionDigits,
+    maximumFractionDigits: fractionDigits === 0 ? (isWhole ? 0 : 2) : 2,
   })} ${method}`;
 };
 
@@ -115,8 +149,6 @@ export default function ContributionPage() {
     { value: "arbitrum" as const, label: t("supportSection.chainOptions.arbitrum"), color: "bg-blue-500" },
     { value: "base" as const, label: t("supportSection.chainOptions.base"), color: "bg-sky-500" },
   ];
-
-  const amountSliderMax = AMOUNT_SLIDER_MAX;
 
   // Team members (fill with real data and avatars under public/team)
   const teamMembers = [
@@ -277,9 +309,11 @@ export default function ContributionPage() {
     },
   ];
 
+  const presetEthAmounts = getPresetEthAmounts(selectedMethod);
+  const amountSliderMaxIndex = presetEthAmounts.length + VARIABLE_STEPS - 1;
   const isFiatJPY = selectedMethod === "JPY";
-  const safeAmountIndex = clampAmountIndex(amountSliderIndex);
-  const currentEthAmount = getEthAmountFromSlider(safeAmountIndex);
+  const safeAmountIndex = clampAmountIndex(amountSliderIndex, amountSliderMaxIndex);
+  const currentEthAmount = getEthAmountFromSlider(safeAmountIndex, presetEthAmounts);
   const currentAmount = convertEthToMethod(currentEthAmount, selectedMethod);
   const formattedAmount = formatMethodAmount(currentAmount, selectedMethod, locale);
   const paymentSliderValue = paymentOptions.findIndex((opt) => opt.value === selectedMethod);
@@ -287,17 +321,17 @@ export default function ContributionPage() {
   const chainSliderValue = cryptoChains.findIndex((chain) => chain.value === selectedChain);
   const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
 
-  const lastPresetIndex = amountPresetEth.length - 1;
-  const presetVisualSpacing = variableSteps + 2; // stretch preset donation marks across most of the track
-  const amountSliderPositions = Array.from({ length: AMOUNT_SLIDER_MAX + 1 }, (_, idx) => {
+  const lastPresetIndex = Math.max(presetEthAmounts.length - 1, 0);
+  const presetVisualSpacing = VARIABLE_STEPS + 2; // stretch preset donation marks across most of the track
+  const amountSliderPositions = Array.from({ length: amountSliderMaxIndex + 1 }, (_, idx) => {
     if (idx <= lastPresetIndex) {
       return idx * presetVisualSpacing;
     }
     const extraIdx = idx - lastPresetIndex;
     return lastPresetIndex * presetVisualSpacing + extraIdx;
   });
-  const amountSliderMaxValue = amountSliderPositions[amountSliderPositions.length - 1];
-  const safeAmountSliderValue = amountSliderPositions[safeAmountIndex];
+  const amountSliderMaxValue = amountSliderPositions[amountSliderPositions.length - 1] ?? 0;
+  const safeAmountSliderValue = amountSliderPositions[safeAmountIndex] ?? 0;
 
   const findClosestAmountIndex = (sliderValue: number) => {
     let closestIndex = 0;
@@ -316,11 +350,11 @@ export default function ContributionPage() {
     setAmountSliderIndex(findClosestAmountIndex(sliderValue));
   };
 
-  const amountMarks = amountPresetEth.map((eth, index) => ({
+  const amountMarks = presetEthAmounts.map((eth, index) => ({
     value: amountSliderPositions[index],
     label: formatAmountMarkLabel(eth, selectedMethod, locale),
   }));
-  const distributionDataBase = amountPresetEth.map((eth, idx) => ({
+  const distributionDataBase = presetEthAmounts.map((eth, idx) => ({
     label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
     count: DISTRIBUTION_COUNTS[idx] ?? 0,
   }));
@@ -329,8 +363,8 @@ export default function ContributionPage() {
     { label: "", count: DISTRIBUTION_MORE_COUNT },
   ];
   const maxDistributionCount = Math.max(...distributionData.map((d) => d.count), 1);
-  const activeBucketIndex = safeAmountIndex < amountPresetEth.length ? safeAmountIndex : distributionData.length - 1;
-  const activeTickIndex = safeAmountIndex < amountPresetEth.length ? safeAmountIndex : amountMarks.length - 1;
+  const activeBucketIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : distributionData.length - 1;
+  const activeTickIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : amountMarks.length - 1;
   const methodMarks = paymentOptions.map((option, idx) => ({ value: idx, label: option.label }));
   const chainMarks = cryptoChains.map((chain, idx) => ({ value: idx, label: chain.label }));
   const amountSliderMarks = amountMarks.map((mark, idx) => ({
@@ -353,7 +387,9 @@ export default function ContributionPage() {
 
   const handleMethodChange = (method: PaymentMethod) => {
     setSelectedMethod(method);
-    setAmountSliderIndex((idx) => clampAmountIndex(idx));
+    const nextPresets = getPresetEthAmounts(method);
+    const nextMaxIndex = nextPresets.length + VARIABLE_STEPS - 1;
+    setAmountSliderIndex((idx) => clampAmountIndex(idx, nextMaxIndex));
   };
 
   const handlePaymentSliderChange = (index: number) => {

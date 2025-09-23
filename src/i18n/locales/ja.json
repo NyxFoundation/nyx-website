@@ -143,17 +143,21 @@
       "tiers": "累計寄付額10万円以上でサポーター、100万円以上でスポンサー、32 ETH以上でプレミアムスポンサーとしてご案内します。",
       "note": "※ 剰余は当団体の目的に再投資します。寄付額は任意です。",
       "organizationsCta": "法人の方はこちら",
+      "selectionStep": {
+        "label": "手順1",
+        "title": "寄付方法を選択"
+      },
       "amountLabel": "寄付額",
       "methodLabel": "支払い方法",
       "chainLabel": "チェーン",
       "steps": {
         "step1": {
-          "label": "手順①",
+          "label": "手順2",
           "title": "WalletConnectで接続",
           "description": "対応ウォレットでQRコードを読み取り、ウォレットを接続してください。接続が完了するとチェックマークが緑色になります。"
         },
         "step2": {
-          "label": "手順②",
+          "label": "手順3",
           "title": "寄付を送信",
           "description": "「寄付する」を押してトランザクションを送信します。完了後にthankyou-donationページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。"
         },

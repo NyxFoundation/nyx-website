@@ -12,14 +12,15 @@ interface SupportDistributionChartProps {
   data: DistributionDatum[];
   activeIndex: number;
   peopleSuffix: string;
+  hideLabels?: boolean;
 }
 
 const chartHeight = 140;
-const labelAreaHeight = 26;
 
-function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _peopleSuffix }: SupportDistributionChartProps) {
+function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _peopleSuffix, hideLabels }: SupportDistributionChartProps) {
   const maxCount = useMemo(() => Math.max(...data.map((d) => d.count), 1), [data]);
   const width = Math.max(data.length * 56, 320);
+  const labelAreaHeight = hideLabels ? 0 : 26;
 
   const xScale = useMemo(
     () =>
@@ -62,14 +63,16 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _p
                   rx={4}
                   className={isActive ? "fill-emerald-500" : "fill-emerald-200"}
                 />
-                <text
-                  x={bandX + barWidth / 2}
-                  y={chartHeight + 18}
-                  textAnchor="middle"
-                  className="fill-muted-foreground text-[10px]"
-                >
-                  {bucket.label}
-                </text>
+                {!hideLabels && (
+                  <text
+                    x={bandX + barWidth / 2}
+                    y={chartHeight + 18}
+                    textAnchor="middle"
+                    className="fill-muted-foreground text-[10px]"
+                  >
+                    {bucket.label}
+                  </text>
+                )}
               </g>
             );
           })}

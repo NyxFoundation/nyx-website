@@ -143,17 +143,21 @@
       "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
       "note": "Note: Any surplus is reinvested toward our mission. Donations are voluntary.",
       "organizationsCta": "For organizations",
+      "selectionStep": {
+        "label": "Step 1",
+        "title": "Choose your donation details"
+      },
       "amountLabel": "Contribution amount",
       "methodLabel": "Payment method",
       "chainLabel": "Chain",
       "steps": {
         "step1": {
-          "label": "Step 1",
+          "label": "Step 2",
           "title": "Connect your wallet",
           "description": "Scan the QR code with a WalletConnect-compatible wallet to link your address. Once you're connected, the check mark will turn green."
         },
         "step2": {
-          "label": "Step 2",
+          "label": "Step 3",
           "title": "Send your donation",
           "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thank-you page to register your leaderboard name and icon."
         },

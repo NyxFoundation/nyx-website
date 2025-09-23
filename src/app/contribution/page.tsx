@@ -15,7 +15,6 @@ import {
   Calendar,
   BadgeCheck,
   HelpCircle,
-  QrCode,
   RefreshCcw,
   CheckCircle2,
   Circle,
@@ -334,6 +333,8 @@ export default function ContributionPage() {
   const supportNote = t("supportSection.note");
   const supportOrganizationsCta = t("supportSection.organizationsCta");
   const supportAmountLabel = t("supportSection.amountLabel");
+  const selectionStepLabel = t("supportSection.selectionStep.label");
+  const selectionStepTitle = t("supportSection.selectionStep.title");
   const supportMethodLabel = t("supportSection.methodLabel");
   const supportChainLabel = t("supportSection.chainLabel");
   const stepOneLabel = t("supportSection.steps.step1.label");
@@ -346,9 +347,6 @@ export default function ContributionPage() {
   const stepTwoLabel = t("supportSection.steps.step2.label");
   const stepTwoTitle = t("supportSection.steps.step2.title");
   const stepTwoDescription = t("supportSection.steps.step2.description");
-  const distributionTitle = t("supportSection.distributionTitle");
-  const distributionSubtitle = t("supportSection.distributionSubtitle");
-  const distributionMoreLabel = t("supportSection.moreLabel");
   const distributionPeopleSuffix = t("supportSection.peopleSuffix");
   const faqCorporateAnswer = t.rich("faq.corporateAnswer", {
     contactLink: (chunks) => (
@@ -1455,14 +1453,14 @@ export default function ContributionPage() {
 
         {/* Support Nyx section (donation card relocated here) */}
         <section className="mb-28 md:mb-36">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
-            <div className="space-y-5 md:space-y-6">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 gap-10 md:gap-14 items-start">
+            <div className="space-y-5 md:space-y-6 text-center">
               <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
               <div className="space-y-3">
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm justify-items-center">
                   {supportBullets.map((item, idx) => (
-                    <li key={`${item}-${idx}`} className="flex items-center gap-2">
+                    <li key={`${item}-${idx}`} className="flex items-center justify-center gap-2">
                       <BadgeCheck className="w-4 h-4 text-emerald-600" /> {item}
                     </li>
                   ))}
@@ -1478,158 +1476,155 @@ export default function ContributionPage() {
               </Link>
             </div>
             <div className="relative z-10 rounded-xl p-6 md:p-8 bg-white shadow-sm ring-1 ring-gray-100">
-              <div className="space-y-6 md:space-y-7">
-                <div className="space-y-4">
-                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2">
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{distributionTitle}</div>
-                      <p className="text-xs text-muted-foreground">{distributionSubtitle}</p>
-                    </div>
-                    <div className="text-lg font-semibold text-foreground">{formattedAmount}</div>
+              <div className="grid grid-cols-1 gap-6 md:gap-7 md:grid-cols-2 lg:gap-8 lg:grid-cols-[1.15fr,1fr]">
+                <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-5 md:space-y-6">
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{selectionStepLabel}</div>
+                    <h3 className="text-sm font-semibold text-foreground mt-1">{selectionStepTitle}</h3>
                   </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm font-medium">
+                      <span>{supportMethodLabel}</span>
+                      <span>{paymentOptions[safePaymentSliderValue]?.label ?? ""}</span>
+                    </div>
+                    <SliderWithMarks
+                      min={0}
+                      max={Math.max(paymentOptions.length - 1, 0)}
+                      value={safePaymentSliderValue}
+                      onChange={handlePaymentSliderChange}
+                      marks={methodSliderMarks}
+                      ariaLabel={supportMethodLabel}
+                      ariaValueText={paymentOptions[safePaymentSliderValue]?.label ?? undefined}
+                    />
+                  </div>
+
+                  {!isFiatJPY && (
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-sm font-medium">
+                        <span>{supportChainLabel}</span>
+                        <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                      </div>
+                      <SliderWithMarks
+                        min={0}
+                        max={Math.max(availableCryptoChains.length - 1, 0)}
+                        value={safeChainSliderValue}
+                        onChange={handleChainSliderChange}
+                        marks={chainSliderMarks}
+                        ariaLabel={supportChainLabel}
+                        ariaValueText={availableCryptoChains[safeChainSliderValue]?.label ?? undefined}
+                      />
+                    </div>
+                  )}
+
                   <SupportDistributionChart
                     data={distributionData}
                     activeIndex={activeBucketIndex}
                     peopleSuffix={distributionPeopleSuffix}
+                    hideLabels
                   />
-                </div>
 
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm font-medium">
-                    <span>{supportMethodLabel}</span>
-                    <span>{paymentOptions[safePaymentSliderValue]?.label ?? ""}</span>
-                  </div>
-                  <SliderWithMarks
-                    min={0}
-                    max={Math.max(paymentOptions.length - 1, 0)}
-                    value={safePaymentSliderValue}
-                    onChange={handlePaymentSliderChange}
-                    marks={methodSliderMarks}
-                    ariaLabel={supportMethodLabel}
-                    ariaValueText={paymentOptions[safePaymentSliderValue]?.label ?? undefined}
-                  />
-                </div>
-
-                {!isFiatJPY && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-sm font-medium">
-                      <span>{supportChainLabel}</span>
-                      <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                      <span>{supportAmountLabel}</span>
+                      <span>{formattedAmount}</span>
                     </div>
                     <SliderWithMarks
                       min={0}
-                    max={Math.max(availableCryptoChains.length - 1, 0)}
-                      value={safeChainSliderValue}
-                      onChange={handleChainSliderChange}
-                      marks={chainSliderMarks}
-                      ariaLabel={supportChainLabel}
-                    ariaValueText={availableCryptoChains[safeChainSliderValue]?.label ?? undefined}
+                      max={amountSliderMaxValue}
+                      value={safeAmountSliderValue}
+                      onChange={handleAmountSliderChange}
+                      marks={amountSliderMarks}
+                      ariaLabel={supportAmountLabel}
+                      ariaValueText={formattedAmount}
                     />
                   </div>
-                )}
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm font-medium">
-                    <span>{supportAmountLabel}</span>
-                    <span>{formattedAmount}</span>
-                  </div>
-                  <SliderWithMarks
-                    min={0}
-                    max={amountSliderMaxValue}
-                    value={safeAmountSliderValue}
-                    onChange={handleAmountSliderChange}
-                    marks={amountSliderMarks}
-                    ariaLabel={supportAmountLabel}
-                    ariaValueText={formattedAmount}
-                  />
                 </div>
 
-                <div className="space-y-4">
-                  {isWalletConnectEligible ? (
-                    <div className="border border-border rounded-lg p-4 bg-muted/40 space-y-4">
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
-                          <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
-                        </div>
-                        <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
-                          {isStepOneComplete ? (
-                            <CheckCircle2 className="w-4 h-4" />
-                          ) : (
-                            <Circle className="w-4 h-4" />
-                          )}
-                          <span>{stepOneStatusLabel}</span>
-                        </div>
+                <div className="space-y-6 md:space-y-7">
+                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
+                        <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{stepOneDescription}</p>
-                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
-                          <QrCode className="w-4 h-4 text-muted-foreground" />
-                          {t("supportSection.wcTitle")}
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => void resetWalletConnect()}
-                          disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
-                          className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
-                        >
-                          <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
-                        </button>
+                      <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
+                        {isStepOneComplete ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : (
+                          <Circle className="w-4 h-4" />
+                        )}
+                        <span>{stepOneStatusLabel}</span>
                       </div>
-                      {walletConnectError && (
-                        <p className="text-xs text-red-600">{walletConnectError}</p>
-                      )}
-                      {walletConnectUri && (
-                        <div className="flex justify-center">
-                          <div className="rounded-lg bg-white p-4 shadow-sm">
-                            <QRCode
-                              value={walletConnectUri}
-                              size={168}
-                              bgColor="#ffffff"
-                              fgColor="#111827"
-                              style={{ height: "168px", width: "168px" }}
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {!walletConnectUri && walletConnectLoading && (
-                        <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>
-                      )}
-                      {walletConnectSession && (
-                        <div className="space-y-2 text-xs text-muted-foreground">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{t("supportSection.wcConnected")}</span>
-                            <span className="font-mono text-foreground/90">
-                              {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{supportChainLabel}</span>
-                            <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{supportAmountLabel}</span>
-                            <span>{formattedAmount}</span>
-                          </div>
-                          {!walletConnectSupportsTargetChain && (
-                            <p className="text-amber-600">
-                              {t("supportSection.wcSwitchHint", {
-                                chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
-                              })}
-                            </p>
-                          )}
-                        </div>
-                      )}
                     </div>
-                  ) : (
-                    !isFiatJPY && (
-                      <div className="border border-dashed border-border rounded-lg p-4 bg-muted/30 text-xs text-muted-foreground">
-                        {t("supportSection.wcDisabled")}
+                    <p className="text-xs text-muted-foreground leading-relaxed">{stepOneDescription}</p>
+                    {isWalletConnectEligible ? (
+                      <div className="space-y-4">
+                        <div className="flex justify-end">
+                          <button
+                            type="button"
+                            onClick={() => void resetWalletConnect()}
+                            disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
+                            className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                          >
+                            <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
+                          </button>
+                        </div>
+                        {walletConnectError && (
+                          <p className="text-xs text-red-600">{walletConnectError}</p>
+                        )}
+                        {walletConnectUri && (
+                          <div className="flex justify-center">
+                            <div className="rounded-lg bg-white p-4 shadow-sm">
+                              <QRCode
+                                value={walletConnectUri}
+                                size={168}
+                                bgColor="#ffffff"
+                                fgColor="#111827"
+                                style={{ height: "168px", width: "168px" }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                        {!walletConnectUri && walletConnectLoading && (
+                          <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>
+                        )}
+                        {walletConnectSession && (
+                          <div className="space-y-2 text-xs text-muted-foreground">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{t("supportSection.wcConnected")}</span>
+                              <span className="font-mono text-foreground/90">
+                                {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{supportChainLabel}</span>
+                              <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{supportAmountLabel}</span>
+                              <span>{formattedAmount}</span>
+                            </div>
+                            {!walletConnectSupportsTargetChain && (
+                              <p className="text-amber-600">
+                                {t("supportSection.wcSwitchHint", {
+                                  chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
+                                })}
+                              </p>
+                            )}
+                          </div>
+                        )}
                       </div>
-                    )
-                  )}
+                    ) : (
+                      !isFiatJPY && (
+                        <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
+                          {t("supportSection.wcDisabled")}
+                        </div>
+                      )
+                    )}
+                  </div>
 
-                  <div className="border border-border rounded-lg p-4 bg-muted/20 space-y-4">
+                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
@@ -1647,18 +1642,6 @@ export default function ContributionPage() {
                     <p className="text-xs text-muted-foreground leading-relaxed">{stepTwoDescription}</p>
                     {isWalletConnectEligible && !canSendDonation && (
                       <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
-                    )}
-                    {isWalletConnectEligible && (
-                      <div className="flex items-center justify-between gap-3 rounded-md border border-dashed border-border bg-white/70 px-3 py-2">
-                        <code className="font-mono text-xs break-all text-foreground/90">{DONATION_ADDRESS}</code>
-                        <button
-                          type="button"
-                          onClick={() => copyToClipboard(DONATION_ADDRESS)}
-                          className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
-                        >
-                          <Copy className="w-3 h-3" /> {t("supportSection.copyAddress")}
-                        </button>
-                      </div>
                     )}
                     {isFiatJPY && (
                       <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">

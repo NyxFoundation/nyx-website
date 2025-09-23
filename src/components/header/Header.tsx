@@ -12,7 +12,9 @@ export function Header() {
   const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
 
-  const navItems = [
+  type NavItem = { href: string; label: string; external?: boolean };
+
+  const navItems: NavItem[] = [
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
     { href: "/contribution", label: t("contribution") },

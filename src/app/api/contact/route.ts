@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 
-const notionToken = process.env.NOTION_TOKEN;
-const contactDatabaseId = process.env.NOTION_CONTACT_DATABASE_ID;
+const getEnvOrThrow = (name: string): string => {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`${name} is not defined`);
+  }
+  return value;
+};
 
-if (!notionToken) {
-  throw new Error("NOTION_TOKEN is not defined");
-}
-
-if (!contactDatabaseId) {
-  throw new Error("NOTION_CONTACT_DATABASE_ID is not defined");
-}
+const notionToken = getEnvOrThrow("NOTION_TOKEN");
+const contactDatabaseId = getEnvOrThrow("NOTION_CONTACT_DATABASE_ID");
 
 const notion = new Client({ auth: notionToken });
 

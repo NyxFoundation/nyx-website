@@ -42,7 +42,7 @@ const CHAIN_ID_MAP: Record<CryptoChain, number> = {
   arbitrum: 42161,
   base: 8453,
 };
-const WEI_FACTOR = 10n ** 18n;
+const WEI_FACTOR = BigInt("1000000000000000000");
 const DECIMAL_FORMATTER = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 21, useGrouping: false });
 
 const WALLETCONNECT_METADATA = {
@@ -89,19 +89,19 @@ const ERC20_METADATA: Record<TokenPaymentMethod, { decimals: number; contracts: 
 const toWei = (amount: number) => {
   const sanitized = Number.isFinite(amount) ? Math.max(amount, 0) : 0;
   if (sanitized === 0) {
-    return 0n;
+    return BigInt(0);
   }
   const decimal = DECIMAL_FORMATTER.format(sanitized);
   const [integerPart, fractionPart = ""] = decimal.split(".");
   const fraction = fractionPart.padEnd(18, "0").slice(0, 18);
   const integerWei = BigInt(integerPart) * WEI_FACTOR;
-  const fractionalWei = fraction ? BigInt(fraction) : 0n;
+  const fractionalWei = fraction ? BigInt(fraction) : BigInt(0);
   return integerWei + fractionalWei;
 };
 
 const toHexWei = (amount: number) => {
   const wei = toWei(amount);
-  if (wei === 0n) {
+  if (wei === BigInt(0)) {
     return "0x0";
   }
   return `0x${wei.toString(16)}`;
@@ -127,7 +127,7 @@ const toHexChainId = (chainId: number) => `0x${chainId.toString(16)}`;
 const toBaseUnits = (amount: number, decimals: number) => {
   const sanitized = Number.isFinite(amount) ? Math.max(amount, 0) : 0;
   if (sanitized === 0) {
-    return 0n;
+    return BigInt(0);
   }
   const decimal = DECIMAL_FORMATTER.format(sanitized);
   const [integerPart, fractionPart = ""] = decimal.split(".");
@@ -287,12 +287,15 @@ export default function ContributionPage() {
     { value: "JPY", label: t("supportSection.paymentOptions.JPY"), type: "fiat" },
   ];
 
-  const cryptoChains = [
-    { value: "ethereum" as const, label: t("supportSection.chainOptions.ethereum"), color: "bg-gray-500" },
-    { value: "optimism" as const, label: t("supportSection.chainOptions.optimism"), color: "bg-red-500" },
-    { value: "arbitrum" as const, label: t("supportSection.chainOptions.arbitrum"), color: "bg-blue-500" },
-    { value: "base" as const, label: t("supportSection.chainOptions.base"), color: "bg-sky-500" },
-  ];
+  const cryptoChains = useMemo(
+    () => [
+      { value: "ethereum" as const, label: t("supportSection.chainOptions.ethereum"), color: "bg-gray-500" },
+      { value: "optimism" as const, label: t("supportSection.chainOptions.optimism"), color: "bg-red-500" },
+      { value: "arbitrum" as const, label: t("supportSection.chainOptions.arbitrum"), color: "bg-blue-500" },
+      { value: "base" as const, label: t("supportSection.chainOptions.base"), color: "bg-sky-500" },
+    ],
+    [t]
+  );
 
   // Team members (fill with real data and avatars under public/team)
   const teamMembers = [
@@ -366,7 +369,6 @@ export default function ContributionPage() {
       </Link>
     ),
   });
-  const faqBenefitsAnswer = t("faq.benefitsAnswer");
 
   useEffect(() => {
     // Build a quick index of News items to link achievements to the same targets
@@ -598,7 +600,6 @@ export default function ContributionPage() {
     ...distributionDataBase,
     { label: "", count: DISTRIBUTION_MORE_COUNT },
   ];
-  const maxDistributionCount = Math.max(...distributionData.map((d) => d.count), 1);
   const activeBucketIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : distributionData.length - 1;
   const activeTickIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : amountMarks.length - 1;
   const methodMarks = paymentOptions.map((option, idx) => ({ value: idx, label: option.label }));
@@ -813,7 +814,7 @@ export default function ContributionPage() {
               throw new Error("Token contract unavailable for selected chain.");
             }
             const baseUnits = toBaseUnits(currentAmount, selectedTokenDecimals);
-            if (baseUnits === 0n) {
+            if (baseUnits === BigInt(0)) {
               throw new Error("Amount must be greater than zero.");
             }
             return {
@@ -910,12 +911,17 @@ export default function ContributionPage() {
         <section className="relative grid grid-cols-1 items-start mb-28 md:mb-36 overflow-hidden pt-24 sm:pt-28 md:pt-40">
           <div className="relative z-10 space-y-5 md:space-y-6">
             {/* subtle background icon anchored to heading for consistent mobile/desktop positioning */}
-            <img
-              src="/icon.svg"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[180px] md:w-[260px] opacity-10"
-            />
+            <div className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[180px] md:w-[260px] opacity-10">
+              <Image
+                src="/icon.svg"
+                alt=""
+                aria-hidden
+                fill
+                sizes="(min-width: 768px) 260px, 180px"
+                className="object-contain"
+                priority
+              />
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
               {locale === "ja" ? (
                 <span className="whitespace-nowrap">NyxはEthereumを信頼できる社会基盤に。</span>
@@ -950,10 +956,12 @@ export default function ContributionPage() {
                 </div>
                 <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
-                    <img
+                    <Image
                       src="/ethereum-community.png"
                       alt="信頼できる社会基盤としてのEthereumのビジュアル"
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 400px"
+                      className="object-cover"
                     />
                   </div>
                 </div>
@@ -969,10 +977,12 @@ export default function ContributionPage() {
                 </div>
                 <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
-                    <img
+                    <Image
                       src="/ethereum-community.png"
                       alt="Ethereum as trustworthy social infrastructure"
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 400px"
+                      className="object-cover"
                     />
                   </div>
                 </div>
@@ -989,7 +999,13 @@ export default function ContributionPage() {
                 <div className="flex items-center gap-3">
                   <div className="relative w-10 h-10">
                     {selectedMember.avatar ? (
-                      <img src={selectedMember.avatar} alt={selectedMember.name} className="w-10 h-10 object-cover rounded-full ring-1 ring-gray-200" />
+                      <Image
+                        src={selectedMember.avatar}
+                        alt={selectedMember.name}
+                        fill
+                        sizes="40px"
+                        className="object-cover rounded-full ring-1 ring-gray-200"
+                      />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-muted ring-1 ring-gray-200" />
                     )}
@@ -1148,7 +1164,13 @@ export default function ContributionPage() {
                       <button key={m.id} onClick={() => setSelectedMember(m)} className="flex flex-col items-center gap-2 group">
                         <div className="relative w-20 h-20">
                           {m.avatar ? (
-                            <img src={m.avatar} alt={m.name} className="w-20 h-20 object-cover rounded-full ring-1 ring-gray-200" />
+                            <Image
+                              src={m.avatar}
+                              alt={m.name}
+                              fill
+                              sizes="80px"
+                              className="object-cover rounded-full ring-1 ring-gray-200"
+                            />
                           ) : (
                             <div className="w-20 h-20 rounded-full bg-muted ring-1 ring-gray-200" />
                           )}
@@ -1199,7 +1221,13 @@ export default function ContributionPage() {
                       <button key={m.id} onClick={() => setSelectedMember(m)} className="flex flex-col items-center gap-2 group">
                         <div className="relative w-20 h-20">
                           {m.avatar ? (
-                            <img src={m.avatar} alt={m.name} className="w-20 h-20 object-cover rounded-full ring-1 ring-gray-200" />
+                            <Image
+                              src={m.avatar}
+                              alt={m.name}
+                              fill
+                              sizes="80px"
+                              className="object-cover rounded-full ring-1 ring-gray-200"
+                            />
                           ) : (
                             <div className="w-20 h-20 rounded-full bg-muted ring-1 ring-gray-200" />
                           )}
@@ -1254,7 +1282,13 @@ export default function ContributionPage() {
                 </div>
                 <div className="order-2 md:order-2 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
-                    <img src="/gallery/activities-hero.jpg" alt="私たちの活動の様子" className="w-full h-full object-cover" />
+                    <Image
+                      src="/gallery/activities-hero.jpg"
+                      alt="私たちの活動の様子"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 400px"
+                      className="object-cover"
+                    />
                   </div>
                 </div>
               </div>
@@ -1271,7 +1305,13 @@ export default function ContributionPage() {
                 </div>
                 <div className="order-1 md:order-2 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
-                    <img src="/gallery/activities-hero.jpg" alt="Our team and work" className="w-full h-full object-cover" />
+                    <Image
+                      src="/gallery/activities-hero.jpg"
+                      alt="Our team and work"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 400px"
+                      className="object-cover"
+                    />
                   </div>
                 </div>
               </div>

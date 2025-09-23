@@ -18,7 +18,7 @@ interface SupportDistributionChartProps {
 const chartHeight = 36;
 const chartWidth = 100;
 
-function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _peopleSuffix, hideLabels }: SupportDistributionChartProps) {
+function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix, hideLabels }: SupportDistributionChartProps) {
   const maxCount = useMemo(() => Math.max(...data.map((d) => d.count), 1), [data]);
   const labelAreaHeight = hideLabels ? 0 : 26;
 
@@ -46,6 +46,7 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _p
             const barHeight = chartHeight - yScale(bucket.count);
             const barY = yScale(bucket.count);
             const isActive = idx === activeIndex;
+            const countLabel = `${bucket.count}${peopleSuffix}`;
 
             return (
               <g key={`${bucket.label}-${idx}`}>
@@ -55,7 +56,9 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix: _p
                   width={adjustedWidth}
                   height={Math.max(barHeight, 4)}
                   className={isActive ? "fill-emerald-500" : "fill-emerald-200"}
-                />
+                >
+                  <title>{countLabel}</title>
+                </rect>
                 {!hideLabels && (
                   <text
                     x={centerX}

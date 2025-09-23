@@ -18,7 +18,6 @@ interface ActivityModalProps {
 }
 
 export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
-  const t = useTranslations("activity");
   const tCommon = useTranslations("common");
   const locale = (useLocale() as LocaleKey) || "en";
 

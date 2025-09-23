@@ -1,15 +1,15 @@
 import { Client } from "@notionhq/client";
 
-const notionToken = process.env.NOTION_TOKEN;
-const donationDatabaseId = process.env.NOTION_DONATIONS_DATABASE_ID;
+const getEnvOrThrow = (name: string): string => {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`${name} is not defined`);
+  }
+  return value;
+};
 
-if (!notionToken) {
-  throw new Error("NOTION_TOKEN is not defined");
-}
-
-if (!donationDatabaseId) {
-  throw new Error("NOTION_DONATIONS_DATABASE_ID is not defined");
-}
+const notionToken = getEnvOrThrow("NOTION_TOKEN");
+const donationDatabaseId = getEnvOrThrow("NOTION_DONATIONS_DATABASE_ID");
 
 const notion = new Client({
   auth: notionToken,
@@ -51,7 +51,7 @@ export async function createDonationSubmission(submission: DonationSubmission) {
   const currencyText = currency ? truncate(currency, 2000) : null;
   const iconUrl = icon && /^https?:\/\//i.test(icon) ? icon : null;
 
-  const properties: Record<string, unknown> = {
+  const properties = {
     Name: {
       title: [
         {
@@ -94,16 +94,10 @@ export async function createDonationSubmission(submission: DonationSubmission) {
     },
   };
 
-  Object.keys(properties).forEach((key) => {
-    if (properties[key] === undefined) {
-      Reflect.deleteProperty(properties, key);
-    }
-  });
-
   await notion.pages.create({
     parent: {
       database_id: donationDatabaseId,
     },
-    properties,
+    properties: properties as Parameters<typeof notion.pages.create>[0]["properties"],
   });
 }

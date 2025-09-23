@@ -142,7 +142,28 @@
       ],
       "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
       "note": "Note: Any surplus is reinvested toward our mission. Donations are voluntary.",
-      "organizationsCta": "For organizations"
+      "organizationsCta": "For organizations",
+      "amountLabel": "Contribution amount",
+      "methodLabel": "Payment method",
+      "chainLabel": "Chain",
+      "distributionTitle": "Donation distribution",
+      "distributionSubtitle": "Supporters at each amount tier",
+      "moreLabel": "More",
+      "peopleSuffix": " supporters",
+      "donateCta": "Donate",
+      "paymentOptions": {
+        "ETH": "ETH",
+        "USDC": "USDC",
+        "USDT": "USDT",
+        "DAI": "DAI",
+        "JPY": "JPY"
+      },
+      "chainOptions": {
+        "ethereum": "Ethereum",
+        "optimism": "Optimism",
+        "arbitrum": "Arbitrum",
+        "base": "Base"
+      }
     }
   }
 }

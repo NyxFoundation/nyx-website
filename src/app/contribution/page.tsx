@@ -1,44 +1,100 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { ExternalLink, Heart, PieChart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, BookOpen, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle } from "lucide-react";
+import { Heart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ActivityModal } from "@/components/activity/ActivityModal";
+import { SliderWithMarks } from "@/components/contribution/SliderWithMarks";
+import { SupportDistributionChart } from "@/components/contribution/SupportDistributionChart";
+
+type PaymentMethod = "ETH" | "USDC" | "USDT" | "DAI" | "JPY";
+type CryptoChain = "ethereum" | "optimism" | "arbitrum" | "base";
+
+const ETH_TO_USD = 4500;
+const USD_TO_JPY = 145;
+const ETH_TO_JPY = ETH_TO_USD * USD_TO_JPY;
+
+const amountPresetEth = [0.01, 0.1, 1, 3, 5, 10] as const;
+const variableSteps = 6;
+const AMOUNT_SLIDER_MAX = amountPresetEth.length + variableSteps - 1;
+const DISTRIBUTION_COUNTS = [12, 22, 30, 16, 9, 5];
+const DISTRIBUTION_MORE_COUNT = 4;
+
+const clampAmountIndex = (index: number) => Math.min(Math.max(index, 0), AMOUNT_SLIDER_MAX);
+
+const getEthAmountFromSlider = (index: number) => {
+  const clamped = clampAmountIndex(index);
+  if (clamped < amountPresetEth.length) {
+    return amountPresetEth[clamped];
+  }
+  const extraIndex = clamped - amountPresetEth.length + 1;
+  const base = amountPresetEth[amountPresetEth.length - 1];
+  return Number((base * Math.pow(1.6, extraIndex)).toFixed(4));
+};
+
+const convertEthToMethod = (ethAmount: number, method: PaymentMethod) => {
+  switch (method) {
+    case "JPY":
+      return ethAmount * ETH_TO_JPY;
+    case "ETH":
+      return ethAmount;
+    case "USDC":
+    case "USDT":
+    case "DAI":
+    default:
+      return ethAmount * ETH_TO_USD;
+  }
+};
+
+const formatMethodAmount = (amount: number, method: PaymentMethod, locale: string) => {
+  if (method === "JPY") {
+    return `${Math.round(amount).toLocaleString(locale)}円`;
+  }
+
+  if (method === "ETH") {
+    const options =
+      amount >= 1
+        ? { minimumFractionDigits: 0, maximumFractionDigits: 2 }
+        : { minimumFractionDigits: 2, maximumFractionDigits: 4 };
+    return `${amount.toLocaleString(locale, options)} ETH`;
+  }
+
+  const digits = amount < 10 ? 2 : amount < 100 ? 1 : 0;
+  return `${amount.toLocaleString(locale === "ja" ? "en-US" : locale, {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: 2,
+  })} ${method}`;
+};
 
 export default function ContributionPage() {
   const t = useTranslations("contribution");
   const locale = useLocale();
 
   // Donation UI state (one-time only, default crypto)
-  const [selectedAmount, setSelectedAmount] = useState("0.1");
-  const [customAmount, setCustomAmount] = useState("");
-  const [selectedChain, setSelectedChain] = useState("ethereum");
-  const [selectedMethod, setSelectedMethod] = useState<"ETH" | "USDC" | "USDT" | "DAI" | "JPY">("ETH");
+  const [selectedChain, setSelectedChain] = useState<CryptoChain>("ethereum");
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("ETH");
+  const [amountSliderIndex, setAmountSliderIndex] = useState(1);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
-  const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
   const [selectedMember, setSelectedMember] = useState<null | { id: string; name: string; role: string; avatar?: string; bio?: string }>(null);
   const [newsMap, setNewsMap] = useState<Record<string, { href: string; external: boolean }>>({});
 
-  const cryptoAmountValues = ["0.01", "0.1", "1", "3", "5", "10"] as const;
-  const jpyAmountValues = ["1000", "2000", "3000", "5000", "10000", "20000"] as const;
+  const paymentOptions: { value: PaymentMethod; label: string; type: "crypto" | "fiat" }[] = [
+    { value: "ETH", label: t("supportSection.paymentOptions.ETH"), type: "crypto" },
+    { value: "USDC", label: t("supportSection.paymentOptions.USDC"), type: "crypto" },
+    { value: "USDT", label: t("supportSection.paymentOptions.USDT"), type: "crypto" },
+    { value: "DAI", label: t("supportSection.paymentOptions.DAI"), type: "crypto" },
+    { value: "JPY", label: t("supportSection.paymentOptions.JPY"), type: "fiat" },
+  ];
 
   const cryptoChains = [
-    { value: "ethereum", label: "Ethereum", color: "bg-gray-500" },
-    { value: "optimism", label: "Optimism", color: "bg-red-500" },
-    { value: "arbitrum", label: "Arbitrum", color: "bg-blue-500" },
-    { value: "base", label: "Base", color: "bg-sky-500" },
+    { value: "ethereum" as const, label: t("supportSection.chainOptions.ethereum"), color: "bg-gray-500" },
+    { value: "optimism" as const, label: t("supportSection.chainOptions.optimism"), color: "bg-red-500" },
+    { value: "arbitrum" as const, label: t("supportSection.chainOptions.arbitrum"), color: "bg-blue-500" },
+    { value: "base" as const, label: t("supportSection.chainOptions.base"), color: "bg-sky-500" },
   ];
 
-  const paymentOptions = [
-    { value: "ETH", label: "ETH", type: "crypto" as const, chain: "Ethereum" },
-    { value: "USDC", label: "USDC", type: "crypto" as const, chain: "Multi-chain" },
-    { value: "USDT", label: "USDT", type: "crypto" as const, chain: "Multi-chain" },
-    { value: "DAI", label: "DAI", type: "crypto" as const, chain: "Ethereum" },
-    { value: "JPY", label: "JPY (銀行振込)", type: "fiat" as const },
-  ];
+  const amountSliderMax = AMOUNT_SLIDER_MAX;
 
   // Team members (fill with real data and avatars under public/team)
   const teamMembers = [
@@ -68,7 +124,8 @@ export default function ContributionPage() {
     // 例: { name: "Community XYZ", jpname: "コミュニティXYZ", logo: null }
   ];
 
-  const supportBullets = t.raw("supportSection.bullets") as string[];
+  const supportBulletsRaw = t.raw("supportSection.bullets");
+  const supportBullets = Array.isArray(supportBulletsRaw) ? (supportBulletsRaw as string[]) : [];
   const supportersHeading = t("supportersSection.heading");
   const sponsorTitle = t("supportersSection.sponsorTitle");
   const supporterTitle = t("supportersSection.supporterTitle");
@@ -79,6 +136,13 @@ export default function ContributionPage() {
   const supportTiers = t("supportSection.tiers");
   const supportNote = t("supportSection.note");
   const supportOrganizationsCta = t("supportSection.organizationsCta");
+  const supportAmountLabel = t("supportSection.amountLabel");
+  const supportMethodLabel = t("supportSection.methodLabel");
+  const supportChainLabel = t("supportSection.chainLabel");
+  const distributionTitle = t("supportSection.distributionTitle");
+  const distributionSubtitle = t("supportSection.distributionSubtitle");
+  const distributionMoreLabel = t("supportSection.moreLabel");
+  const distributionPeopleSuffix = t("supportSection.peopleSuffix");
   const faqCorporateAnswer = t.rich("faq.corporateAnswer", {
     contactLink: (chunks) => (
       <Link href="/contact" className="underline underline-offset-2">
@@ -87,28 +151,6 @@ export default function ContributionPage() {
     ),
   });
   const faqBenefitsAnswer = t("faq.benefitsAnswer");
-
-  const impactCards = [
-    {
-      title: "研究",
-      // 活動の説明文から引用
-      desc: "最先端の分散システムと暗号技術の研究開発を行っています。ブロックチェーン、ゼロ知識証明、マルチパーティ計算などの基礎研究から実装まで幅広く取り組んでいます。",
-      icon: <BookOpen className="w-6 h-6" />,
-    },
-    {
-      title: "ホワイトハッキング",
-      desc: "クライアントやインフラの脆弱性調査・負荷試験を行い、バグを修正・報告することで安全性を高めます。",
-      icon: <ShieldCheck className="w-6 h-6" />,
-    },
-    {
-      title: "形式検証",
-      // 活動の説明文から引用
-      desc: "数学的手法を用いてスマートコントラクト、プロトコル、暗号アルゴリズムの正確性と安全性を証明します。",
-      icon: <FunctionSquare className="w-6 h-6" />,
-    },
-  ];
-
-  // testimonials セクションは削除（要望）
 
   useEffect(() => {
     // Build a quick index of News items to link achievements to the same targets
@@ -214,36 +256,70 @@ export default function ContributionPage() {
   ];
 
   const isFiatJPY = selectedMethod === "JPY";
+  const safeAmountIndex = clampAmountIndex(amountSliderIndex);
+  const currentEthAmount = getEthAmountFromSlider(safeAmountIndex);
+  const currentAmount = convertEthToMethod(currentEthAmount, selectedMethod);
+  const formattedAmount = formatMethodAmount(currentAmount, selectedMethod, locale);
+  const paymentSliderValue = paymentOptions.findIndex((opt) => opt.value === selectedMethod);
+  const safePaymentSliderValue = paymentSliderValue === -1 ? 0 : paymentSliderValue;
+  const chainSliderValue = cryptoChains.findIndex((chain) => chain.value === selectedChain);
+  const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
+  const amountMarks = amountPresetEth.map((eth, index) => ({
+    value: index,
+    label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
+  }));
+  const distributionDataBase = amountPresetEth.map((eth, idx) => ({
+    label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
+    count: DISTRIBUTION_COUNTS[idx] ?? 0,
+  }));
+  const distributionData = [
+    ...distributionDataBase,
+    { label: "", count: DISTRIBUTION_MORE_COUNT },
+  ];
+  const maxDistributionCount = Math.max(...distributionData.map((d) => d.count), 1);
+  const activeBucketIndex = safeAmountIndex < amountPresetEth.length ? safeAmountIndex : distributionData.length - 1;
+  const activeTickIndex = safeAmountIndex < amountPresetEth.length ? safeAmountIndex : amountMarks.length - 1;
+  const methodMarks = paymentOptions.map((option, idx) => ({ value: idx, label: option.label }));
+  const chainMarks = cryptoChains.map((chain, idx) => ({ value: idx, label: chain.label }));
+  const amountSliderMarks = amountMarks.map((mark, idx) => ({
+    ...mark,
+    isActive: idx === activeTickIndex,
+    onSelect: () => setAmountSliderIndex(mark.value),
+  }));
+  const methodSliderMarks = methodMarks.map((mark, idx) => ({
+    ...mark,
+    isActive: idx === safePaymentSliderValue,
+    onSelect: () => handlePaymentSliderChange(mark.value),
+  }));
+  const chainSliderMarks = chainMarks.map((mark, idx) => ({
+    ...mark,
+    isActive: idx === safeChainSliderValue,
+    onSelect: () => handleChainSliderChange(idx),
+  }));
   const faqs = locale === "ja" ? faqJa : faqEn;
 
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 
-  const handleMethodChange = (method: "ETH" | "USDC" | "USDT" | "DAI" | "JPY") => {
+  const handleMethodChange = (method: PaymentMethod) => {
     setSelectedMethod(method);
-    if (method === "JPY") {
-      setSelectedAmount("3000");
-    } else {
-      setSelectedAmount("0.1");
-    }
-    setCustomAmount("");
+    setAmountSliderIndex((idx) => clampAmountIndex(idx));
   };
 
-  // method drives UI; no side-effects required
-  useEffect(() => {}, []);
-
-  const getDisplayAmount = () => {
-    if (selectedAmount === "custom") {
-      if (!isFiatJPY) return customAmount ? `${customAmount} ${selectedMethod}` : `0 ${selectedMethod}`;
-      return customAmount ? `${Number.parseInt(customAmount).toLocaleString()}円` : "0円";
-    }
-    if (!isFiatJPY) {
-      const val = cryptoAmountValues.find(v => v === (selectedAmount as any));
-      return val ? `${val} ${selectedMethod}` : `0 ${selectedMethod}`;
-    } else {
-      const val = jpyAmountValues.find(v => v === (selectedAmount as any));
-      return val ? `${Number.parseInt(val).toLocaleString()}円` : "0円";
+  const handlePaymentSliderChange = (index: number) => {
+    const option = paymentOptions[index];
+    if (option) {
+      handleMethodChange(option.value);
     }
   };
+
+  const handleChainSliderChange = (index: number) => {
+    const target = cryptoChains[index]?.value;
+    if (target) {
+      setSelectedChain(target);
+    }
+  };
+
+  const getDisplayAmount = () => formattedAmount;
 
   const toggleFAQ = (idx: number) => setOpenFAQ(openFAQ === idx ? null : idx);
 
@@ -837,93 +913,73 @@ export default function ContributionPage() {
               </Link>
             </div>
             <div className="relative z-10 rounded-xl p-6 md:p-8 bg-white shadow-sm ring-1 ring-gray-100">
-              <div className="space-y-5 md:space-y-6">
-                {/* 支払い方法 */}
-                <div className="space-y-2">
-                  <div className="text-sm font-medium">{locale === "ja" ? "支払い方法" : "Payment method"}</div>
-                  <div className="relative">
-                    <button
-                      onClick={() => setShowPaymentOptions((s) => !s)}
-                      className="w-full p-4 text-left border rounded-lg bg-white flex items-center justify-between hover:bg-muted/50"
-                    >
-                      <span className="font-medium">
-                        {(() => {
-                          const opt = paymentOptions.find(o => o.value === selectedMethod);
-                          if (!opt) return locale === "ja" ? "選択してください" : "Select";
-                          if (opt.value === "JPY") return locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)";
-                          return opt.label;
-                        })()}
-                      </span>
-                      <span className="text-xs text-muted-foreground">{showPaymentOptions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}</span>
-                    </button>
-                    {showPaymentOptions && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-border rounded-lg shadow z-20">
-                        {paymentOptions.map((opt) => (
-                          <button
-                            key={opt.value}
-                            onClick={() => {
-                              setSelectedMethod(opt.value);
-                              setSelectedAmount(opt.value === "JPY" ? "3000" : "0.1");
-                              setShowPaymentOptions(false);
-                            }}
-                            className={`w-full p-3 text-left hover:bg-muted/50 ${selectedMethod === opt.value ? "bg-muted" : ""}`}
-                          >
-                            <div className="font-medium">{opt.value === "JPY" ? (locale === "ja" ? "JPY (銀行振込)" : "JPY (Bank transfer)") : opt.label}</div>
-                            {opt.type === "crypto" && <div className="text-xs text-muted-foreground">{opt.chain}</div>}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+              <div className="space-y-6 md:space-y-7">
+                <div className="space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2">
+                    <div>
+                      <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{distributionTitle}</div>
+                      <p className="text-xs text-muted-foreground">{distributionSubtitle}</p>
+                    </div>
+                    <div className="text-lg font-semibold text-foreground">{formattedAmount}</div>
                   </div>
+                  <SupportDistributionChart
+                    data={distributionData}
+                    activeIndex={activeBucketIndex}
+                    peopleSuffix={distributionPeopleSuffix}
+                  />
                 </div>
 
-                {/* 金額を選択 */}
-                <div className="space-y-3 md:space-y-4">
-                  <div className="text-sm font-medium">{locale === "ja" ? "金額を選択" : "Select amount"}</div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-3.5">
-                    {(selectedMethod === "JPY" ? jpyAmountValues : cryptoAmountValues).map((val) => (
-                      <button
-                        key={val}
-                        onClick={() => {
-                          setSelectedAmount(val);
-                          setCustomAmount("");
-                        }}
-                        className={`py-3 px-3 text-center border rounded-lg transition-all ${
-                          selectedAmount === val ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
-                        }`}
-                      >
-                        <div className="font-medium text-sm md:text-base">{selectedMethod === "JPY" ? `${Number.parseInt(val).toLocaleString()}円` : `${val} ${selectedMethod}`}</div>
-                      </button>
-                    ))}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm font-medium">
+                    <span>{supportAmountLabel}</span>
+                    <span>{formattedAmount}</span>
                   </div>
-                  <button
-                    onClick={() => {
-                      setSelectedAmount("custom");
-                      if (selectedMethod !== "JPY") {
-                        setCustomAmount("10eth");
-                      }
-                    }}
-                    className={`w-full py-3 px-3 text-center border rounded-lg transition-all ${
-                      selectedAmount === "custom" ? "border-gray-400 bg-gray-50" : "border-gray-200 hover:border-gray-300 bg-white"
-                    }`}
-                  >
-                    <div className="font-medium text-base">{locale === "ja" ? "カスタム" : "Custom"}</div>
-                    {selectedAmount === "custom" && (
-                      <input
-                        type={selectedMethod === "JPY" ? "number" : "text"}
-                        placeholder={selectedMethod === "JPY" ? "50000" : "10eth"}
-                        value={customAmount}
-                        onChange={(e) => setCustomAmount(e.target.value)}
-                        className="mt-2 w-full border border-gray-300 rounded px-3 py-2 text-center"
-                        {...(selectedMethod === "JPY" ? { min: 500, step: 100 } : {})}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    )}
-                  </button>
+                  <SliderWithMarks
+                    min={0}
+                    max={AMOUNT_SLIDER_MAX}
+                    value={safeAmountIndex}
+                    onChange={setAmountSliderIndex}
+                    marks={amountSliderMarks}
+                    ariaLabel={supportAmountLabel}
+                    ariaValueText={formattedAmount}
+                  />
                 </div>
 
-                {/* 銀行振込（JPY） or チェーン選択（暗号資産） */}
-                {selectedMethod === "JPY" ? (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm font-medium">
+                    <span>{supportMethodLabel}</span>
+                    <span>{paymentOptions[safePaymentSliderValue]?.label ?? ""}</span>
+                  </div>
+                  <SliderWithMarks
+                    min={0}
+                    max={Math.max(paymentOptions.length - 1, 0)}
+                    value={safePaymentSliderValue}
+                    onChange={handlePaymentSliderChange}
+                    marks={methodSliderMarks}
+                    ariaLabel={supportMethodLabel}
+                    ariaValueText={paymentOptions[safePaymentSliderValue]?.label ?? undefined}
+                  />
+                </div>
+
+                {!isFiatJPY && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm font-medium">
+                      <span>{supportChainLabel}</span>
+                      <span>{cryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                    </div>
+                    <SliderWithMarks
+                      min={0}
+                      max={Math.max(cryptoChains.length - 1, 0)}
+                      value={safeChainSliderValue}
+                      onChange={handleChainSliderChange}
+                      marks={chainSliderMarks}
+                      ariaLabel={supportChainLabel}
+                      ariaValueText={cryptoChains[safeChainSliderValue]?.label ?? undefined}
+                    />
+                  </div>
+                )}
+
+                {isFiatJPY && (
                   <div className="border border-border rounded-lg p-4 bg-muted/50">
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between items-center">
@@ -946,28 +1002,10 @@ export default function ContributionPage() {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium">{locale === "ja" ? "チェーン" : "Chain"}</div>
-                    <div className="grid grid-cols-2 gap-3">
-                      {cryptoChains.map((chain) => (
-                        <button
-                          key={chain.value}
-                          onClick={() => setSelectedChain(chain.value)}
-                          className={`p-3 text-left border rounded-lg flex items-center gap-3 ${
-                            selectedChain === chain.value ? "bg-muted border-foreground/40" : "hover:bg-muted/50"
-                          }`}
-                        >
-                          <span className={`w-3 h-3 rounded-full ${chain.color}`} />
-                          <span className="font-medium text-sm">{chain.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
                 )}
 
                 <button onClick={handlePayment} className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 inline-flex items-center justify-center gap-2">
-                  <Heart className="w-4 h-4" /> {locale === "ja" ? "寄付する" : "Donate"} {getDisplayAmount()}
+                  <Heart className="w-4 h-4" /> {t("supportSection.donateCta")}{" "}{getDisplayAmount()}
                 </button>
               </div>
             </div>

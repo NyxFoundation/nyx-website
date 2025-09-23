@@ -142,7 +142,28 @@
       ],
       "tiers": "累計寄付額10万円以上でサポーター、100万円以上でスポンサー、32 ETH以上でプレミアムスポンサーとしてご案内します。",
       "note": "※ 剰余は当団体の目的に再投資します。寄付額は任意です。",
-      "organizationsCta": "法人の方はこちら"
+      "organizationsCta": "法人の方はこちら",
+      "amountLabel": "寄付額",
+      "methodLabel": "支払い方法",
+      "chainLabel": "チェーン",
+      "distributionTitle": "寄付額の分布",
+      "distributionSubtitle": "支援額ごとの人数",
+      "moreLabel": "それ以上",
+      "peopleSuffix": "人",
+      "donateCta": "寄付する",
+      "paymentOptions": {
+        "ETH": "ETH",
+        "USDC": "USDC",
+        "USDT": "USDT",
+        "DAI": "DAI",
+        "JPY": "JPY"
+      },
+      "chainOptions": {
+        "ethereum": "Ethereum",
+        "optimism": "Optimism",
+        "arbitrum": "Arbitrum",
+        "base": "Base"
+      }
     }
   }
 }

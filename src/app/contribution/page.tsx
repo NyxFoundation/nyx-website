@@ -135,7 +135,7 @@ export default function ContributionPage() {
     {
       question: "Nyx Foundationは非営利法人ですか？",
       answer:
-        "はい、Nyx Foundationは非営利型の一般社団法人という法人格を有しています。利益分配を目的とせず、剰余金は研究開発・形式検証・コミュニティへの貢献など当団体の目的に再投資されます。理事・社員への配当は行いません。",
+        "はい、Nyx Foundationは非営利型の一般社団法人という法人格を有しています。利益分配を目的とせず、剰余金は研究開発・形式検証・コミュニティへの貢献など当団体の目的に再投資されます。",
     },
     {
       question: "寄付金はどのように使われますか？",
@@ -155,7 +155,15 @@ export default function ContributionPage() {
     {
       question: "法人での寄付や協賛は可能ですか？",
       answer:
-        "可能です。研究パートナーシップやスポンサーシップのプログラムをご用意しています。まずはお問い合わせフォームからご相談ください。",
+        (
+          <>
+            可能です。研究パートナーシップやスポンサーシップのプログラムをご用意しています。まずは
+            <Link href="/contact" className="underline underline-offset-2">
+              お問い合わせフォーム
+            </Link>
+            からご相談ください。
+          </>
+        ),
     },
     {
       question: "寄付者特典はいつ受け取れますか？",
@@ -167,7 +175,8 @@ export default function ContributionPage() {
   const faqEn = [
     {
       question: "Is Nyx Foundation a nonprofit?",
-      answer: "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is reinvested into research, formal verification, and community contributions. No dividends are paid to directors or members.",
+      answer:
+        "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is reinvested into research, formal verification, and community contributions.",
     },
     {
       question: "How is my donation used?",
@@ -187,7 +196,15 @@ export default function ContributionPage() {
     {
       question: "Can companies sponsor or donate?",
       answer:
-        "Yes. We offer research partnerships and sponsorship programs. Please contact us to discuss details.",
+        (
+          <>
+            Yes. We offer research partnerships and sponsorship programs. Please{' '}
+            <Link href="/contact" className="underline underline-offset-2">
+              contact us
+            </Link>{' '}
+            to discuss details.
+          </>
+        ),
     },
     {
       question: "When do I receive supporter benefits?",
@@ -282,7 +299,7 @@ export default function ContributionPage() {
                 <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
                     <img
-                      src="https://ethereum.org/_next/static/media/learn-hub-hero.bc4653ed.png"
+                      src="/ethereum-community.png"
                       alt="信頼できる社会基盤としてのEthereumのビジュアル"
                       className="w-full h-full object-cover"
                     />
@@ -301,7 +318,7 @@ export default function ContributionPage() {
                 <div className="order-1 md:order-1 lg:col-span-5">
                   <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-gray-200 shadow-sm">
                     <img
-                      src="https://ethereum.org/_next/static/media/learn-hub-hero.bc4653ed.png"
+                      src="/ethereum-community.png"
                       alt="Ethereum as trustworthy social infrastructure"
                       className="w-full h-full object-cover"
                     />
@@ -372,7 +389,7 @@ export default function ContributionPage() {
                   <p className="text-xs text-muted-foreground mb-2">仕様と実装の一致を前提に</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                     <li>クライアントのバグ修正・性能最適化</li>
-                    <li>leanConsensusやzkVの研究開発</li>
+                    <li>leanConsensusやzkVMの研究開発</li>
                     <li>検証自動化ツールの開発</li>
                   </ul>
                 </div>
@@ -431,7 +448,7 @@ export default function ContributionPage() {
                   <p className="text-xs text-muted-foreground mb-2">Assumes spec–implementation alignment</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
                     <li>Bug fixes and performance optimization for clients</li>
-                    <li>R&D on leanConsensus and zkV</li>
+                    <li>R&D on leanConsensus and zkVM</li>
                     <li>Build automated verification tools</li>
                   </ul>
                 </div>
@@ -805,7 +822,7 @@ export default function ContributionPage() {
               {locale === "ja" ? (
                 <div className="space-y-3">
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    Nyx Foundationは、皆さまからのご支援をお願いしています。研究には資金が不可欠ですが、資金の出どころに依存すると、優先順位や評価が歪むおそれがあります。
+                    Nyx Foundationは、皆さまからのご支援をお願いしています。
                   </p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                     <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 分散システムと暗号技術の研究開発</li>
@@ -814,13 +831,13 @@ export default function ContributionPage() {
                     <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> コミュニティへの還元</li>
                   </ul>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    ※ 剰余は当団体の目的に再投資し、理事・社員への配当は行いません。寄付額は任意です。
+                    ※ 剰余は当団体の目的に再投資します。寄付額は任意です。
                   </p>
                 </div>
               ) : (
                 <div className="space-y-3">
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    We ask for your support. Research needs funding, but relying on specific sources can distort priorities and evaluation.
+                    We ask for your support.
                   </p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                     <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Distributed systems & cryptography R&D</li>
@@ -829,7 +846,7 @@ export default function ContributionPage() {
                     <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Giving back to the community</li>
                   </ul>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    Note: Any surplus is reinvested toward our mission. We do not distribute dividends to directors or members. Donations are voluntary.
+                    Note: Any surplus is reinvested toward our mission. Donations are voluntary.
                   </p>
                 </div>
               )}

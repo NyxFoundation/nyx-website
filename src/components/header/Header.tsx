@@ -17,7 +17,6 @@ export function Header() {
     { href: "/member", label: t("member") },
     { href: "/contribution", label: t("contribution") },
     { href: "/news", label: t("news") },
-    { href: "https://www.notion.so/grandchildrice/Nyx-Foundation-Job-251d05af0d5a805ca9c4e75f40cb5b81", label: t("job"), external: true },
   ];
 
   // モバイルメニューが開いているときはスクロールを防ぐ

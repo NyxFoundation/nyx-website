@@ -272,10 +272,6 @@ export default function ContributionPage() {
       question: "法人での寄付や協賛は可能ですか？",
       answer: faqCorporateAnswer,
     },
-    {
-      question: "寄付者特典はいつ受け取れますか？",
-      answer: faqBenefitsAnswer,
-    },
   ];
 
   const faqEn = [
@@ -302,10 +298,6 @@ export default function ContributionPage() {
     {
       question: "Can companies sponsor or donate?",
       answer: faqCorporateAnswer,
-    },
-    {
-      question: "When do I receive supporter benefits?",
-      answer: faqBenefitsAnswer,
     },
   ];
 
@@ -418,7 +410,7 @@ export default function ContributionPage() {
     <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
       <div className="container mx-auto max-w-6xl">
         {/* Hero (donation card moved below) */}
-        <section className="relative grid grid-cols-1 items-start mb-24 md:mb-28 overflow-hidden pt-24 sm:pt-28 md:pt-40">
+        <section className="relative grid grid-cols-1 items-start mb-28 md:mb-36 overflow-hidden pt-24 sm:pt-28 md:pt-40">
           <div className="relative z-10 space-y-5 md:space-y-6">
             {/* subtle background icon anchored to heading for consistent mobile/desktop positioning */}
             <img
@@ -450,7 +442,7 @@ export default function ContributionPage() {
         </section>
 
         {/* Story - Part 1: 信頼できる社会基盤としてのEthereum */}
-        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">信頼できる社会基盤としてのEthereum</h2>
@@ -520,7 +512,7 @@ export default function ContributionPage() {
         )}
 
         {/* Roadmap: 何をするか（タイトルのみ変更） */}
-        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちの3つの柱</h3>
@@ -647,7 +639,7 @@ export default function ContributionPage() {
         </section>
 
         {/* Team & Achievements section */}
-        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">チームと実績</h3>
@@ -754,7 +746,7 @@ export default function ContributionPage() {
         </section>
 
         {/* Story - Part 2: 私たちがやる理由 */}
-        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
               <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちがやる理由</h3>
@@ -793,7 +785,7 @@ export default function ContributionPage() {
 
         {/* Story - Part 3: Sponsor / Supporterについて */}
         {false && (
-        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
+        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <div className="max-w-6xl mx-auto space-y-4">
@@ -890,7 +882,7 @@ export default function ContributionPage() {
         {/* Benefits section moved into “ご支援の使い道” */}
 
         {/* Sponsors & Supporters（グリッド、非スクロール、ロゴ貼り付け） */}
-        <section className="mb-20 md:mb-28">
+        <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10 md:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">{supportersHeading}</h2>
@@ -976,7 +968,7 @@ export default function ContributionPage() {
         {/* Research Partnership section removed */}
 
         {/* Support Nyx section (donation card relocated here) */}
-        <section className="mb-20 md:mb-28">
+        <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
             <div className="space-y-5 md:space-y-6">
               <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
@@ -1100,7 +1092,7 @@ export default function ContributionPage() {
         </section>
 
         {/* FAQ */}
-        <section className="mb-20 md:mb-28">
+        <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12 md:mb-14">
               <h2 className="text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">{locale === "ja" ? "よくある質問" : "FAQ"}</h2>

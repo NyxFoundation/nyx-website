@@ -154,18 +154,21 @@
         "step1": {
           "label": "手順2",
           "title": "WalletConnectで接続",
-          "description": "対応ウォレットでQRコードを読み取り、ウォレットを接続してください。接続が完了するとチェックマークが緑色になります。"
+          "description": "対応ウォレットでQRコードを読み取り、ウォレットを接続してください。接続が完了するとチェックマークが緑色になります。",
+          "fiatDescription": "銀行振込ではウォレット接続は必要ありません。この手順はスキップしてください。"
         },
         "step2": {
           "label": "手順3",
           "title": "寄付を送信",
-          "description": "「寄付する」を押してトランザクションを送信します。完了後にthankyou-donationページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。"
+          "description": "「寄付する」を押してトランザクションを送信します。完了後にthankyou-donationページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。",
+          "fiatDescription": "銀行振込を完了したら、下の「完了」ボタンを押して寄付手続きを終了してください。"
         },
         "status": {
           "pending": "待機中",
           "complete": "接続済み",
           "action": "ウォレットを接続してください",
-          "ready": "送信準備完了"
+          "ready": "送信準備完了",
+          "skipped": "不要"
         }
       },
       "distributionTitle": "寄付額の分布",
@@ -173,6 +176,7 @@
       "moreLabel": "それ以上",
       "peopleSuffix": "人",
       "donateCta": "寄付する",
+      "completeCta": "完了",
       "copyAddress": "アドレスをコピー",
       "wcTitle": "WalletConnectで接続",
       "wcDescription": "WalletConnect対応のEthereumウォレットで読み取って接続し、接続後に\"寄付する\"を押すとトランザクションが送信されます。",

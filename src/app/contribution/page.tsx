@@ -340,14 +340,19 @@ export default function ContributionPage() {
   const stepOneLabel = t("supportSection.steps.step1.label");
   const stepOneTitle = t("supportSection.steps.step1.title");
   const stepOneDescription = t("supportSection.steps.step1.description");
+  const stepOneFiatDescription = t("supportSection.steps.step1.fiatDescription");
   const stepStatusPending = t("supportSection.steps.status.pending");
   const stepStatusComplete = t("supportSection.steps.status.complete");
   const stepStatusAction = t("supportSection.steps.status.action");
   const stepStatusReady = t("supportSection.steps.status.ready");
+  const stepStatusSkipped = t("supportSection.steps.status.skipped");
   const stepTwoLabel = t("supportSection.steps.step2.label");
   const stepTwoTitle = t("supportSection.steps.step2.title");
   const stepTwoDescription = t("supportSection.steps.step2.description");
+  const stepTwoFiatDescription = t("supportSection.steps.step2.fiatDescription");
   const distributionPeopleSuffix = t("supportSection.peopleSuffix");
+  const supportDonateCta = t("supportSection.donateCta");
+  const supportCompleteCta = t("supportSection.completeCta");
   const faqCorporateAnswer = t.rich("faq.corporateAnswer", {
     contactLink: (chunks) => (
       <Link href="/contact" className="underline underline-offset-2">
@@ -539,10 +544,12 @@ export default function ContributionPage() {
     ? Boolean(walletConnectSession && walletConnectSupportsTargetChain && walletConnectAddressForTarget)
     : true;
   const canSendDonation = !isWalletConnectEligible || isStepOneComplete;
-  const stepOneStatusLabel = isStepOneComplete ? stepStatusComplete : stepStatusPending;
+  const isStepOneSkipped = isFiatJPY;
+  const stepOneStatusLabel = isStepOneSkipped ? stepStatusSkipped : isStepOneComplete ? stepStatusComplete : stepStatusPending;
   const stepTwoStatusLabel = canSendDonation ? stepStatusReady : stepStatusAction;
-  const stepOneStatusClass = isStepOneComplete ? "text-emerald-600" : "text-muted-foreground";
+  const stepOneStatusClass = isStepOneSkipped ? "text-muted-foreground" : isStepOneComplete ? "text-emerald-600" : "text-muted-foreground";
   const stepTwoStatusClass = canSendDonation ? "text-emerald-600" : "text-amber-600";
+  const donateButtonLabel = isFiatJPY ? supportCompleteCta : supportDonateCta;
 
   const lastPresetIndex = Math.max(presetEthAmounts.length - 1, 0);
   const presetVisualSpacing = VARIABLE_STEPS + 2; // stretch preset donation marks across most of the track
@@ -1554,7 +1561,9 @@ export default function ContributionPage() {
                         <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
                       </div>
                       <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
-                        {isStepOneComplete ? (
+                        {isStepOneSkipped ? (
+                          <Circle className="w-4 h-4" />
+                        ) : isStepOneComplete ? (
                           <CheckCircle2 className="w-4 h-4" />
                         ) : (
                           <Circle className="w-4 h-4" />
@@ -1562,7 +1571,7 @@ export default function ContributionPage() {
                         <span>{stepOneStatusLabel}</span>
                       </div>
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{stepOneDescription}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
                     {isWalletConnectEligible ? (
                       <div className="space-y-4">
                         <div className="flex justify-end">
@@ -1644,7 +1653,7 @@ export default function ContributionPage() {
                         <span>{stepTwoStatusLabel}</span>
                       </div>
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{stepTwoDescription}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
                     {isWalletConnectEligible && !canSendDonation && (
                       <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
                     )}
@@ -1675,7 +1684,7 @@ export default function ContributionPage() {
                       disabled={!canSendDonation}
                       className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
                     >
-                      <Heart className="w-4 h-4" /> {t("supportSection.donateCta")}{" "}{getDisplayAmount()}
+                      <Heart className="w-4 h-4" /> {donateButtonLabel}{" "}{getDisplayAmount()}
                     </button>
                   </div>
                 </div>

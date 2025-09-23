@@ -154,18 +154,21 @@
         "step1": {
           "label": "Step 2",
           "title": "Connect your wallet",
-          "description": "Scan the QR code with a WalletConnect-compatible wallet to link your address. Once you're connected, the check mark will turn green."
+          "description": "Scan the QR code with a WalletConnect-compatible wallet to link your address. Once you're connected, the check mark will turn green.",
+          "fiatDescription": "WalletConnect is not required for bank transfers. Skip this step and continue to Step 3."
         },
         "step2": {
           "label": "Step 3",
           "title": "Send your donation",
-          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thank-you page to register your leaderboard name and icon."
+          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thank-you page to register your leaderboard name and icon.",
+          "fiatDescription": "Complete your bank transfer, then press the “Done” button below so we can reconcile your donation."
         },
         "status": {
           "pending": "Waiting",
           "complete": "Connected",
           "action": "Connect your wallet",
-          "ready": "Ready to send"
+          "ready": "Ready to send",
+          "skipped": "Not required"
         }
       },
       "distributionTitle": "Donation distribution",
@@ -173,6 +176,7 @@
       "moreLabel": "More",
       "peopleSuffix": " supporters",
       "donateCta": "Donate",
+      "completeCta": "Done",
       "copyAddress": "Copy address",
       "wcTitle": "Connect with WalletConnect",
       "wcDescription": "Scan with a WalletConnect-compatible Ethereum wallet. Once connected, press Donate to send the transaction.",

@@ -1,10 +1,29 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { Heart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle, QrCode, RefreshCcw } from "lucide-react";
+import {
+  Heart,
+  Users,
+  Lightbulb,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  ShieldCheck,
+  FunctionSquare,
+  Globe,
+  Shirt,
+  Calendar,
+  BadgeCheck,
+  HelpCircle,
+  QrCode,
+  RefreshCcw,
+  CheckCircle2,
+  Circle,
+} from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SliderWithMarks } from "@/components/contribution/SliderWithMarks";
 import { SupportDistributionChart } from "@/components/contribution/SupportDistributionChart";
 import QRCode from "react-qr-code";
@@ -244,6 +263,7 @@ const formatAmountMarkLabel = (ethAmount: number, method: PaymentMethod, locale:
 export default function ContributionPage() {
   const t = useTranslations("contribution");
   const locale = useLocale();
+  const router = useRouter();
 
   // Donation UI state (one-time only, default crypto)
   const [selectedChain, setSelectedChain] = useState<CryptoChain>("ethereum");
@@ -316,6 +336,16 @@ export default function ContributionPage() {
   const supportAmountLabel = t("supportSection.amountLabel");
   const supportMethodLabel = t("supportSection.methodLabel");
   const supportChainLabel = t("supportSection.chainLabel");
+  const stepOneLabel = t("supportSection.steps.step1.label");
+  const stepOneTitle = t("supportSection.steps.step1.title");
+  const stepOneDescription = t("supportSection.steps.step1.description");
+  const stepStatusPending = t("supportSection.steps.status.pending");
+  const stepStatusComplete = t("supportSection.steps.status.complete");
+  const stepStatusAction = t("supportSection.steps.status.action");
+  const stepStatusReady = t("supportSection.steps.status.ready");
+  const stepTwoLabel = t("supportSection.steps.step2.label");
+  const stepTwoTitle = t("supportSection.steps.step2.title");
+  const stepTwoDescription = t("supportSection.steps.step2.description");
   const distributionTitle = t("supportSection.distributionTitle");
   const distributionSubtitle = t("supportSection.distributionSubtitle");
   const distributionMoreLabel = t("supportSection.moreLabel");
@@ -501,7 +531,20 @@ export default function ContributionPage() {
 
   const walletConnectSupportsTargetChain = Boolean(walletConnectAccountForTarget);
 
-  const walletConnectError = walletConnectErrorKey ? t(`supportSection.${walletConnectErrorKey}` as any) : null;
+  const walletConnectErrorMessages: Record<string, string> = {
+    wcUnavailable: t("supportSection.wcUnavailable"),
+    wcInitError: t("supportSection.wcInitError"),
+    wcConnectError: t("supportSection.wcConnectError"),
+  };
+  const walletConnectError = walletConnectErrorKey ? walletConnectErrorMessages[walletConnectErrorKey] ?? null : null;
+  const isStepOneComplete = isWalletConnectEligible
+    ? Boolean(walletConnectSession && walletConnectSupportsTargetChain && walletConnectAddressForTarget)
+    : true;
+  const canSendDonation = !isWalletConnectEligible || isStepOneComplete;
+  const stepOneStatusLabel = isStepOneComplete ? stepStatusComplete : stepStatusPending;
+  const stepTwoStatusLabel = canSendDonation ? stepStatusReady : stepStatusAction;
+  const stepOneStatusClass = isStepOneComplete ? "text-emerald-600" : "text-muted-foreground";
+  const stepTwoStatusClass = canSendDonation ? "text-emerald-600" : "text-amber-600";
 
   const lastPresetIndex = Math.max(presetEthAmounts.length - 1, 0);
   const presetVisualSpacing = VARIABLE_STEPS + 2; // stretch preset donation marks across most of the track
@@ -780,7 +823,7 @@ export default function ContributionPage() {
             data: "0x",
           } as const;
         })();
-        await signClient.request({
+        const txHash = await signClient.request({
           topic: walletConnectSession.topic,
           chainId: targetNamespace,
           request: {
@@ -788,7 +831,22 @@ export default function ContributionPage() {
             params: [txParams],
           },
         });
-        alert(t("supportSection.wcRequestSent"));
+        const params = new URLSearchParams();
+        params.set("amount", currentAmount.toString());
+        params.set("displayAmount", formattedAmount);
+        params.set("method", selectedMethod);
+        if (!isFiatJPY) {
+          params.set("chain", selectedChain);
+        }
+        const donorAddress = walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "";
+        if (donorAddress) {
+          params.set("address", donorAddress);
+        }
+        if (typeof txHash === "string" && txHash) {
+          params.set("txHash", txHash);
+        }
+        const query = params.toString();
+        router.push(`/thankyou-donation${query ? `?${query}` : ""}`);
       } catch (error) {
         console.error(error);
         if (isUserRejectedRequest(error)) {
@@ -800,15 +858,24 @@ export default function ContributionPage() {
       }
       return;
     }
-
-    alert(`支払いページに移動します: ${getDisplayAmount()} 今回のみ`);
+    const params = new URLSearchParams();
+    params.set("amount", currentAmount.toString());
+    params.set("displayAmount", formattedAmount);
+    params.set("method", selectedMethod);
+    if (!isFiatJPY) {
+      params.set("chain", selectedChain);
+    }
+    const query = params.toString();
+    router.push(`/thankyou-donation${query ? `?${query}` : ""}`);
   }, [
     availableCryptoChains,
-    currentEthAmount,
     currentAmount,
-    getDisplayAmount,
+    currentEthAmount,
+    formattedAmount,
+    isFiatJPY,
     isWalletConnectEligible,
     isTokenPayment,
+    router,
     safeChainSliderValue,
     signClient,
     startWalletConnect,
@@ -817,6 +884,9 @@ export default function ContributionPage() {
     targetChainIdHex,
     selectedTokenContract,
     selectedTokenDecimals,
+    selectedChain,
+    selectedMethod,
+    walletConnectPrimaryAddress,
     walletConnectAddressForTarget,
     walletConnectProjectId,
     walletConnectSession,
@@ -1474,114 +1544,153 @@ export default function ContributionPage() {
                   />
                 </div>
 
-                {isWalletConnectEligible && (
-                  <div className="border border-border rounded-lg p-4 bg-muted/40 space-y-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                        <QrCode className="w-4 h-4 text-muted-foreground" />
-                        {t("supportSection.wcTitle")}
+                <div className="space-y-4">
+                  {isWalletConnectEligible ? (
+                    <div className="border border-border rounded-lg p-4 bg-muted/40 space-y-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div>
+                          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
+                          <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
+                        </div>
+                        <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
+                          {isStepOneComplete ? (
+                            <CheckCircle2 className="w-4 h-4" />
+                          ) : (
+                            <Circle className="w-4 h-4" />
+                          )}
+                          <span>{stepOneStatusLabel}</span>
+                        </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => void resetWalletConnect()}
-                        disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
-                        className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
-                      >
-                        <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
-                      </button>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{stepOneDescription}</p>
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                          <QrCode className="w-4 h-4 text-muted-foreground" />
+                          {t("supportSection.wcTitle")}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => void resetWalletConnect()}
+                          disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
+                          className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                        >
+                          <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
+                        </button>
+                      </div>
+                      {walletConnectError && (
+                        <p className="text-xs text-red-600">{walletConnectError}</p>
+                      )}
+                      {walletConnectUri && (
+                        <div className="flex justify-center">
+                          <div className="rounded-lg bg-white p-4 shadow-sm">
+                            <QRCode
+                              value={walletConnectUri}
+                              size={168}
+                              bgColor="#ffffff"
+                              fgColor="#111827"
+                              style={{ height: "168px", width: "168px" }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {!walletConnectUri && walletConnectLoading && (
+                        <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>
+                      )}
+                      {walletConnectSession && (
+                        <div className="space-y-2 text-xs text-muted-foreground">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{t("supportSection.wcConnected")}</span>
+                            <span className="font-mono text-foreground/90">
+                              {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{supportChainLabel}</span>
+                            <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{supportAmountLabel}</span>
+                            <span>{formattedAmount}</span>
+                          </div>
+                          {!walletConnectSupportsTargetChain && (
+                            <p className="text-amber-600">
+                              {t("supportSection.wcSwitchHint", {
+                                chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
+                              })}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{t("supportSection.wcDescription")}</p>
-                    {walletConnectError && (
-                      <p className="text-xs text-red-600">{walletConnectError}</p>
-                    )}
-                    {walletConnectUri && (
-                      <div className="flex justify-center">
-                        <div className="rounded-lg bg-white p-4 shadow-sm">
-                          <QRCode
-                            value={walletConnectUri}
-                            size={168}
-                            bgColor="#ffffff"
-                            fgColor="#111827"
-                            style={{ height: "168px", width: "168px" }}
-                          />
-                        </div>
+                  ) : (
+                    !isFiatJPY && (
+                      <div className="border border-dashed border-border rounded-lg p-4 bg-muted/30 text-xs text-muted-foreground">
+                        {t("supportSection.wcDisabled")}
                       </div>
-                    )}
-                    {!walletConnectUri && walletConnectLoading && (
-                      <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>
-                    )}
-                    {walletConnectSession && (
-                      <div className="space-y-2 text-xs text-muted-foreground">
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{t("supportSection.wcConnected")}</span>
-                          <span className="font-mono text-foreground/90">
-                            {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{supportChainLabel}</span>
-                          <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{supportAmountLabel}</span>
-                          <span>{formattedAmount}</span>
-                        </div>
-                        {!walletConnectSupportsTargetChain && (
-                          <p className="text-amber-600">
-                            {t("supportSection.wcSwitchHint", {
-                              chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
-                            })}
-                          </p>
+                    )
+                  )}
+
+                  <div className="border border-border rounded-lg p-4 bg-muted/20 space-y-4">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
+                        <h3 className="text-sm font-semibold text-foreground mt-1">{stepTwoTitle}</h3>
+                      </div>
+                      <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
+                        {canSendDonation ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : (
+                          <Circle className="w-4 h-4" />
                         )}
+                        <span>{stepTwoStatusLabel}</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{stepTwoDescription}</p>
+                    {isWalletConnectEligible && !canSendDonation && (
+                      <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
+                    )}
+                    {isWalletConnectEligible && (
+                      <div className="flex items-center justify-between gap-3 rounded-md border border-dashed border-border bg-white/70 px-3 py-2">
+                        <code className="font-mono text-xs break-all text-foreground/90">{DONATION_ADDRESS}</code>
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard(DONATION_ADDRESS)}
+                          className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                        >
+                          <Copy className="w-3 h-3" /> {t("supportSection.copyAddress")}
+                        </button>
                       </div>
                     )}
-                    <div className="flex items-center justify-between gap-3 rounded-md border border-dashed border-border bg-white/70 px-3 py-2">
-                      <code className="font-mono text-xs break-all text-foreground/90">{DONATION_ADDRESS}</code>
-                      <button
-                        type="button"
-                        onClick={() => copyToClipboard(DONATION_ADDRESS)}
-                        className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
-                      >
-                        <Copy className="w-3 h-3" /> {t("supportSection.copyAddress")}
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {!isWalletConnectEligible && !isFiatJPY && (
-                  <div className="border border-dashed border-border rounded-lg p-3 bg-muted/30 text-xs text-muted-foreground">
-                    {t("supportSection.wcDisabled")}
-                  </div>
-                )}
-
-                {isFiatJPY && (
-                  <div className="border border-border rounded-lg p-4 bg-muted/50">
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">PayPay銀行</span>
-                        <button onClick={() => copyToClipboard("PayPay銀行")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                        </button>
+                    {isFiatJPY && (
+                      <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium">PayPay銀行</span>
+                          <button onClick={() => copyToClipboard("PayPay銀行")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                            <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
+                          </button>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span>かわせみ支店(007) 普通</span>
+                          <button onClick={() => copyToClipboard("007")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                            <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
+                          </button>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span>7551963 ツツミマサト</span>
+                          <button onClick={() => copyToClipboard("7551963")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                            <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span>かわせみ支店(007) 普通</span>
-                        <button onClick={() => copyToClipboard("007")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                        </button>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>7551963 ツツミマサト</span>
-                        <button onClick={() => copyToClipboard("7551963")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                        </button>
-                      </div>
-                    </div>
+                    )}
+                    <button
+                      onClick={handlePayment}
+                      disabled={!canSendDonation}
+                      className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                    >
+                      <Heart className="w-4 h-4" /> {t("supportSection.donateCta")}{" "}{getDisplayAmount()}
+                    </button>
                   </div>
-                )}
-
-                <button onClick={handlePayment} className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 inline-flex items-center justify-center gap-2">
-                  <Heart className="w-4 h-4" /> {t("supportSection.donateCta")}{" "}{getDisplayAmount()}
-                </button>
+                </div>
               </div>
             </div>
           </div>

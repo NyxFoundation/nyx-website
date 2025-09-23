@@ -146,6 +146,24 @@
       "amountLabel": "寄付額",
       "methodLabel": "支払い方法",
       "chainLabel": "チェーン",
+      "steps": {
+        "step1": {
+          "label": "手順①",
+          "title": "WalletConnectで接続",
+          "description": "対応ウォレットでQRコードを読み取り、ウォレットを接続してください。接続が完了するとチェックマークが緑色になります。"
+        },
+        "step2": {
+          "label": "手順②",
+          "title": "寄付を送信",
+          "description": "「寄付する」を押してトランザクションを送信します。完了後にthankyou-donationページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。"
+        },
+        "status": {
+          "pending": "待機中",
+          "complete": "接続済み",
+          "action": "ウォレットを接続してください",
+          "ready": "送信準備完了"
+        }
+      },
       "distributionTitle": "寄付額の分布",
       "distributionSubtitle": "支援額ごとの人数",
       "moreLabel": "それ以上",
@@ -182,6 +200,51 @@
         "arbitrum": "Arbitrum",
         "base": "Base"
       }
+    }
+  },
+  "thankYouDonation": {
+    "title": "おめでとうございます！！",
+    "subtitle": "寄付が完了しました。",
+    "back": "寄付ページに戻る",
+    "banner": {
+      "heading": "Nyx Foundationへの寄付",
+      "tagline": "Nyx Foundationへ寄付しました！",
+      "memberLabel": "Nyx Foundation",
+      "amount": "金額",
+      "name": "支援者",
+      "anonymous": "匿名",
+      "method": "方法",
+      "namePlaceholder": "お名前",
+      "icon": "アイコン",
+      "iconPlaceholder": "アイコンURLを入力してください",
+      "wallet": "ウォレット",
+      "share": "#NyxFoundation を付けてシェアしましょう"
+    },
+    "summary": {
+      "heading": "寄付内容",
+      "amount": "金額",
+      "method": "方法",
+      "chain": "チェーン",
+      "wallet": "ウォレットアドレス / 送信者名",
+      "txHash": "トランザクションハッシュ"
+    },
+    "form": {
+      "intro": "ホームページに掲載する情報を入力してください。",
+      "heading": "リーダーボード掲載情報",
+      "nameLabel": "ユーザー名",
+      "namePlaceholder": "例: Nyx Supporter",
+      "iconLabel": "アイコンURL",
+      "iconHint": "画像URLを貼り付け（任意）",
+      "amountLabel": "寄付額",
+      "addressLabel": "ウォレットアドレス / 送信者名",
+      "urlLabel": "SNSリンク",
+      "urlPlaceholder": "https://twitter.com/",
+      "submit": "送信する",
+      "submitting": "送信中...",
+      "error": "送信できませんでした。再度お試しください。",
+      "iconInvalid": "http(s)のURLを入力してください。",
+      "completed": "完了！",
+      "completedDescription": "ご入力ありがとうございます。確認後、リーダーボードに反映いたします。"
     }
   }
 }

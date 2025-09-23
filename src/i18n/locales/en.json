@@ -146,6 +146,24 @@
       "amountLabel": "Contribution amount",
       "methodLabel": "Payment method",
       "chainLabel": "Chain",
+      "steps": {
+        "step1": {
+          "label": "Step 1",
+          "title": "Connect your wallet",
+          "description": "Scan the QR code with a WalletConnect-compatible wallet to link your address. Once you're connected, the check mark will turn green."
+        },
+        "step2": {
+          "label": "Step 2",
+          "title": "Send your donation",
+          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thank-you page to register your leaderboard name and icon."
+        },
+        "status": {
+          "pending": "Waiting",
+          "complete": "Connected",
+          "action": "Connect your wallet",
+          "ready": "Ready to send"
+        }
+      },
       "distributionTitle": "Donation distribution",
       "distributionSubtitle": "Supporters at each amount tier",
       "moreLabel": "More",
@@ -182,6 +200,51 @@
         "arbitrum": "Arbitrum",
         "base": "Base"
       }
+    }
+  },
+  "thankYouDonation": {
+    "title": "Congratulations!!",
+    "subtitle": "Donation completed.",
+    "back": "Back to donations",
+    "banner": {
+      "heading": "Nyx Foundation Donation",
+      "tagline": "Donated to Nyx Foundation!",
+      "memberLabel": "Nyx Foundation",
+      "amount": "Amount",
+      "name": "Supporter",
+      "anonymous": "Anonymous",
+      "method": "Method",
+      "namePlaceholder": "Your name",
+      "icon": "Icon",
+      "iconPlaceholder": "Add your icon URL",
+      "wallet": "Wallet",
+      "share": "Share your support with #NyxFoundation"
+    },
+    "summary": {
+      "heading": "Donation summary",
+      "amount": "Amount",
+      "method": "Method",
+      "chain": "Chain",
+      "wallet": "Wallet address / Sender name",
+      "txHash": "Transaction hash"
+    },
+    "form": {
+      "intro": "Please provide the details you want featured on our homepage.",
+      "heading": "Leaderboard submission",
+      "nameLabel": "Display name",
+      "namePlaceholder": "e.g. Nyx Supporter",
+      "iconLabel": "Icon URL",
+      "iconHint": "Paste an image URL (optional).",
+      "amountLabel": "Donation amount",
+      "addressLabel": "Wallet address / Sender name",
+      "urlLabel": "Social link",
+      "urlPlaceholder": "https://twitter.com/",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "error": "We couldn't save your submission. Please try again.",
+      "iconInvalid": "Please enter a valid http(s) URL.",
+      "completed": "Done!",
+      "completedDescription": "Thank you! We'll review the details and update the leaderboard soon."
     }
   }
 }

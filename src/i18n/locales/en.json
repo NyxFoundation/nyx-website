@@ -206,6 +206,7 @@
       "wcRequestError": "Failed to send the transaction request. Please try again.",
       "wcRequestRejected": "Transaction was cancelled in your wallet.",
       "wcDisabled": "WalletConnect is available only for ETH donations.",
+      "wcFallbackNote": "If WalletConnect isn't working, please send to <address>0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a</address> and let us know via the <contactLink>contact form</contactLink>.",
       "wcSwitchHint": "Switch your wallet to {chain} before sending the transaction.",
       "paymentOptions": {
         "ETH": "ETH",

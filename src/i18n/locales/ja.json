@@ -206,6 +206,7 @@
       "wcRequestError": "トランザクションの送信に失敗しました。もう一度お試しください。",
       "wcRequestRejected": "ウォレット側でトランザクションがキャンセルされました。",
       "wcDisabled": "WalletConnectはETHでの寄付のみ対応しています。",
+      "wcFallbackNote": "もしWalletConnectが上手く行かない場合は<address>0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a</address>へ送金し、<contactLink>お問い合わせ</contactLink>から送金したことをお知らせください。",
       "wcSwitchHint": "ウォレット側で {chain} に切り替えてから実行してください。",
       "paymentOptions": {
         "ETH": "ETH",

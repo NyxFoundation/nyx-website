@@ -313,13 +313,13 @@ export default function ContributionPage() {
     { name: "Geodework", jpname: "ジオデワーク", logo: "/sponsors/geodework.jpg" },
     { name: "GuildQB", jpname: "ギルドQB", logo: "/sponsors/guildqb.png" },
     { name: "KIRIFUDA Inc.", jpname: "キリフダ株式会社", logo: "/sponsors/kirifuda.jpg" },
-    { name: "DeSci Tokyo", jpname: "デサイ東京", logo: "/sponsors/desci.jpg" },
-  ];
-  const individualSupporters = [
     { name: "Hiro Shimo", jpname: "志茂 博", logo: "/sponsors/shimo.jpg" },
     { name: "chikeo", jpname: "ちけみーくん", logo: "/sponsors/ticket.jpg" },
     { name: "KIMINORI JAPAN", jpname: "キミノリ・ジャパン", logo: "/sponsors/kiminorijapan.jpg" },
     { name: "Anonymous", jpname: "匿名希望", logo: null },
+  ];
+  const individualSupporters = [
+    { name: "DeSci Tokyo", jpname: "デサイ東京", logo: "/sponsors/desci.jpg" },
   ];
   const communityPartners: { name: string; jpname?: string; logo: string | null }[] = [
     // 例: { name: "Community XYZ", jpname: "コミュニティXYZ", logo: null }
@@ -362,6 +362,14 @@ export default function ContributionPage() {
   const distributionPeopleSuffix = t("supportSection.peopleSuffix");
   const supportDonateCta = t("supportSection.donateCta");
   const supportCompleteCta = t("supportSection.completeCta");
+  const walletConnectFallbackNote = t.rich("supportSection.wcFallbackNote", {
+    contactLink: (chunks) => (
+      <Link href="/contact" className="underline underline-offset-2">
+        {chunks}
+      </Link>
+    ),
+    address: (chunks) => <span className="font-mono break-all text-foreground/80">{chunks}</span>,
+  });
   const faqCorporateAnswer = t.rich("faq.corporateAnswer", {
     contactLink: (chunks) => (
       <Link href="/contact" className="underline underline-offset-2">
@@ -1440,9 +1448,7 @@ export default function ContributionPage() {
                         )}
                       </div>
                       <div className="text-xs md:text-sm text-center text-foreground/80">
-                        {locale === "ja"
-                          ? (c.name === "KIRIFUDA Inc." ? c.jpname : c.name)
-                          : c.name}
+                        {locale === "ja" ? c.jpname ?? c.name : c.name}
                       </div>
                     </div>
                   ))}
@@ -1463,9 +1469,7 @@ export default function ContributionPage() {
                         )}
                       </div>
                       <div className="text-xs md:text-sm text-center text-foreground/80">
-                        {locale === "ja"
-                          ? (c.name === "Hiro Shimo" || c.name === "KIMINORI JAPAN" ? c.name : c.jpname)
-                          : c.name}
+                        {locale === "ja" ? c.jpname ?? c.name : c.name}
                       </div>
                     </div>
                   ))}
@@ -1760,13 +1764,16 @@ export default function ContributionPage() {
                         </div>
                       </div>
                     )}
-                    <button
+                  <button
                       onClick={handlePayment}
                       disabled={!canSendDonation}
                       className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
                     >
                       <Heart className="w-4 h-4" /> {donateButtonLabel}{" "}{getDisplayAmount()}
                     </button>
+                  </div>
+                  <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
+                    {walletConnectFallbackNote}
                   </div>
                 </div>
               </div>

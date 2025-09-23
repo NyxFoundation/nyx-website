@@ -151,6 +151,11 @@
       "moreLabel": "More",
       "peopleSuffix": " supporters",
       "donateCta": "Donate",
+      "qrTitle": "Scan to prefill",
+      "qrDescription": "Scan with an Ethereum wallet to prefill the address, chain, and amount.",
+      "copyUri": "Copy payment URI",
+      "copyAddress": "Copy address",
+      "qrUnavailable": "Prefilled QR is available only for ETH donations.",
       "paymentOptions": {
         "ETH": "ETH",
         "USDC": "USDC",

@@ -1,15 +1,39 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { Heart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle } from "lucide-react";
+import { Heart, Users, Lightbulb, ChevronDown, ChevronUp, Copy, ShieldCheck, FunctionSquare, Globe, Shirt, Calendar, BadgeCheck, HelpCircle, QrCode } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SliderWithMarks } from "@/components/contribution/SliderWithMarks";
 import { SupportDistributionChart } from "@/components/contribution/SupportDistributionChart";
+import QRCode from "react-qr-code";
 
 type PaymentMethod = "ETH" | "USDC" | "USDT" | "DAI" | "JPY";
 type CryptoChain = "ethereum" | "optimism" | "arbitrum" | "base";
+
+const DONATION_ADDRESS = "0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a";
+const CHAIN_ID_MAP: Record<CryptoChain, number> = {
+  ethereum: 1,
+  optimism: 10,
+  arbitrum: 42161,
+  base: 8453,
+};
+const WEI_FACTOR = 10n ** 18n;
+const DECIMAL_FORMATTER = new Intl.NumberFormat("en-US", { maximumSignificantDigits: 21, useGrouping: false });
+
+const toWeiString = (amount: number) => {
+  const sanitized = Number.isFinite(amount) ? Math.max(amount, 0) : 0;
+  if (sanitized === 0) {
+    return "0";
+  }
+  const decimal = DECIMAL_FORMATTER.format(sanitized);
+  const [integerPart, fractionPart = ""] = decimal.split(".");
+  const fraction = fractionPart.padEnd(18, "0").slice(0, 18);
+  const integerWei = BigInt(integerPart) * WEI_FACTOR;
+  const fractionalWei = fraction ? BigInt(fraction) : 0n;
+  return (integerWei + fractionalWei).toString();
+};
 
 const ETH_TO_USD = 4500;
 const USD_TO_JPY = 145;
@@ -312,6 +336,24 @@ export default function ContributionPage() {
   const safePaymentSliderValue = paymentSliderValue === -1 ? 0 : paymentSliderValue;
   const chainSliderValue = cryptoChains.findIndex((chain) => chain.value === selectedChain);
   const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
+
+  const eip681Uri = useMemo(() => {
+    if (isFiatJPY || selectedMethod !== "ETH" || currentEthAmount <= 0) {
+      return "";
+    }
+    const chainId = CHAIN_ID_MAP[selectedChain] ?? CHAIN_ID_MAP.ethereum;
+    const weiValue = toWeiString(currentEthAmount);
+    if (!weiValue || weiValue === "0") {
+      return "";
+    }
+    const params = new URLSearchParams();
+    params.set("value", weiValue);
+    params.set("chainId", String(chainId));
+    params.set("label", "Nyx Donation");
+    return `ethereum:${DONATION_ADDRESS}@${chainId}?${params.toString()}`;
+  }, [currentEthAmount, isFiatJPY, selectedChain, selectedMethod]);
+  const showQrBlock = !isFiatJPY && selectedMethod === "ETH";
+  const hasQrValue = Boolean(eip681Uri);
 
   const lastPresetIndex = Math.max(presetEthAmounts.length - 1, 0);
   const presetVisualSpacing = VARIABLE_STEPS + 2; // stretch preset donation marks across most of the track
@@ -1057,6 +1099,65 @@ export default function ContributionPage() {
                     ariaValueText={formattedAmount}
                   />
                 </div>
+
+                {showQrBlock && (
+                  <div className="border border-border rounded-lg p-4 bg-muted/40 space-y-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                        <QrCode className="w-4 h-4 text-muted-foreground" />
+                        {t("supportSection.qrTitle")}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => eip681Uri && copyToClipboard(eip681Uri)}
+                        disabled={!hasQrValue}
+                        className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                      >
+                        <Copy className="w-3 h-3" /> {t("supportSection.copyUri")}
+                      </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{t("supportSection.qrDescription")}</p>
+                    {hasQrValue && (
+                      <div className="flex justify-center">
+                        <div className="rounded-lg bg-white p-4 shadow-sm">
+                          <QRCode
+                            value={eip681Uri}
+                            size={168}
+                            bgColor="#ffffff"
+                            fgColor="#111827"
+                            style={{ height: "168px", width: "168px" }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div className="space-y-2 text-xs text-muted-foreground">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{supportChainLabel}</span>
+                        <span>{cryptoChains[safeChainSliderValue]?.label ?? ""}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{supportAmountLabel}</span>
+                        <span>{formattedAmount}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 rounded-md border border-dashed border-border bg-white/70 px-3 py-2">
+                      <code className="font-mono text-xs break-all text-foreground/90">{DONATION_ADDRESS}</code>
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(DONATION_ADDRESS)}
+                        className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                      >
+                        <Copy className="w-3 h-3" /> {t("supportSection.copyAddress")}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {!showQrBlock && !isFiatJPY && (
+                  <div className="border border-dashed border-border rounded-lg p-3 bg-muted/30 text-xs text-muted-foreground">
+                    {t("supportSection.qrUnavailable")}
+                  </div>
+                )}
 
                 {isFiatJPY && (
                   <div className="border border-border rounded-lg p-4 bg-muted/50">

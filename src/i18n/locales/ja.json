@@ -151,6 +151,11 @@
       "moreLabel": "それ以上",
       "peopleSuffix": "人",
       "donateCta": "寄付する",
+      "qrTitle": "QRコードで入力",
+      "qrDescription": "対応ウォレットで読み取るとアドレス・チェーン・金額が自動入力されます。",
+      "copyUri": "URIをコピー",
+      "copyAddress": "アドレスをコピー",
+      "qrUnavailable": "ETHでの寄付時のみQRコードを表示しています。",
       "paymentOptions": {
         "ETH": "ETH",
         "USDC": "USDC",

@@ -68,6 +68,26 @@ export default function ContributionPage() {
     // 例: { name: "Community XYZ", jpname: "コミュニティXYZ", logo: null }
   ];
 
+  const supportBullets = t.raw("supportSection.bullets") as string[];
+  const supportersHeading = t("supportersSection.heading");
+  const sponsorTitle = t("supportersSection.sponsorTitle");
+  const supporterTitle = t("supportersSection.supporterTitle");
+  const communityTitle = t("supportersSection.communityTitle");
+  const communityComingSoon = t("supportersSection.comingSoon");
+  const supportHeading = t("supportSection.heading");
+  const supportIntro = t("supportSection.intro");
+  const supportTiers = t("supportSection.tiers");
+  const supportNote = t("supportSection.note");
+  const supportOrganizationsCta = t("supportSection.organizationsCta");
+  const faqCorporateAnswer = t.rich("faq.corporateAnswer", {
+    contactLink: (chunks) => (
+      <Link href="/contact" className="underline underline-offset-2">
+        {chunks}
+      </Link>
+    ),
+  });
+  const faqBenefitsAnswer = t("faq.benefitsAnswer");
+
   const impactCards = [
     {
       title: "研究",
@@ -154,21 +174,11 @@ export default function ContributionPage() {
     },
     {
       question: "法人での寄付や協賛は可能ですか？",
-      answer:
-        (
-          <>
-            可能です。研究パートナーシップやスポンサーシップのプログラムをご用意しています。まずは
-            <Link href="/contact" className="underline underline-offset-2">
-              お問い合わせフォーム
-            </Link>
-            からご相談ください。
-          </>
-        ),
+      answer: faqCorporateAnswer,
     },
     {
       question: "寄付者特典はいつ受け取れますか？",
-      answer:
-        "ロゴ掲載は寄付確認後1週間以内、グッズ配送は月末締めで翌月発送、イベント参加権は開催1か月前にご案内、バッジ（Nyx Mate）は確認後に順次ご案内します。",
+      answer: faqBenefitsAnswer,
     },
   ];
 
@@ -195,21 +205,11 @@ export default function ContributionPage() {
     },
     {
       question: "Can companies sponsor or donate?",
-      answer:
-        (
-          <>
-            Yes. We offer research partnerships and sponsorship programs. Please{' '}
-            <Link href="/contact" className="underline underline-offset-2">
-              contact us
-            </Link>{' '}
-            to discuss details.
-          </>
-        ),
+      answer: faqCorporateAnswer,
     },
     {
       question: "When do I receive supporter benefits?",
-      answer:
-        "Logo placement within one week after confirmation, goods shipped the following month (monthly batch), event access announced about one month prior, and Nyx Mate badge provided upon confirmation.",
+      answer: faqBenefitsAnswer,
     },
   ];
 
@@ -628,14 +628,14 @@ export default function ContributionPage() {
           )}
         </section>
 
-        {/* Story - Part 3: Nyx Mateについて */}
+        {/* Story - Part 3: Sponsor / Supporterについて */}
         {false && (
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-16 md:mb-24">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <div className="max-w-6xl mx-auto space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Nyx Mateについて</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">Nyx Foundationの価値観に共感し、Nyxの活動を前に進めるお手伝いをしてくださる方々をNyx Mateと呼んでいます。Nyx Mateからのご支援は、「検証が前提」のエコシステムと、公平なルールの上で価値が広がる世界への一歩になります。</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">スポンサー / サポーターについて</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">Nyx Foundationの価値観に共感し、Nyxの活動を前に進めるお手伝いをしてくださる方々をスポンサー / サポーターと呼んでいます。スポンサー / サポーターからのご支援は、「検証が前提」のエコシステムと、公平なルールの上で価値が広がる世界への一歩になります。</p>
               </div>
               {/* 返礼品をこのコンテナ内に配置（重複を避け、この場だけで表示） */}
               <div className="max-w-6xl mx-auto">
@@ -664,9 +664,9 @@ export default function ContributionPage() {
                   <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
                     <div className="flex items-center justify-center gap-3">
                       <div className="p-2 rounded-md bg-amber-50 text-amber-700"><BadgeCheck className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">Nyx Mate称号・バッジの使用</h5>
+                      <h5 className="font-semibold">スポンサー / サポーター称号・バッジの使用</h5>
                     </div>
-                    <p className="text-sm text-muted-foreground">プロフィール/発表資料等で「Nyx Mate」を名乗れます</p>
+                    <p className="text-sm text-muted-foreground">プロフィール/発表資料等で「スポンサー / サポーター」を名乗れます</p>
                   </div>
                 </div>
               </div>
@@ -674,8 +674,8 @@ export default function ContributionPage() {
           ) : (
             <div className="max-w-6xl mx-auto space-y-8">
               <div className="max-w-6xl mx-auto space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">About Nyx Mate</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">We call those who share Nyx Foundation’s values and help move our work forward “Nyx Mates”. Support from Nyx Mates is a step toward a verification‑first ecosystem and a world where value grows on fair rules.</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">About Sponsor / Supporter</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">We call those who share Nyx Foundation’s values and help move our work forward the Sponsor / Supporter community. Support from Sponsor / Supporter is a step toward a verification-first ecosystem and a world where value grows on fair rules.</p>
               </div>
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-6">
@@ -707,9 +707,9 @@ export default function ContributionPage() {
                   <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
                     <div className="flex items-center justify-center gap-3">
                       <div className="p-2 rounded-md bg-amber-50 text-amber-700"><BadgeCheck className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">Nyx Mate badge</h5>
+                      <h5 className="font-semibold">Sponsor / Supporter badge</h5>
                     </div>
-                    <p className="text-sm text-muted-foreground">Use “Nyx Mate” on profiles and slides</p>
+                    <p className="text-sm text-muted-foreground">Use “Sponsor / Supporter” on profiles and slides</p>
                   </div>
                 </div>
               </div>
@@ -726,17 +726,17 @@ export default function ContributionPage() {
 
         {/* Benefits section moved into “ご支援の使い道” */}
 
-        {/* Sponsors: Corporate & Individual（グリッド、非スクロール、ロゴ貼り付け） */}
+        {/* Sponsors & Supporters（グリッド、非スクロール、ロゴ貼り付け） */}
         <section className="mb-20 md:mb-28">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">{locale === "ja" ? "多くのMateがNyxの活動を支えています。" : "Many mates support Nyx's work."}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">{supportersHeading}</h2>
             </div>
             {/* 法人・個人メイトを単一コンテナに統合 */}
             <div className="rounded-xl p-12 md:p-14 bg-white shadow-sm ring-1 ring-gray-100">
               <div className="grid grid-cols-1 gap-12 md:gap-14">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-8">{locale === "ja" ? "法人" : "Corporate"}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-8">{sponsorTitle}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                   {corporateSponsors.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
@@ -757,7 +757,7 @@ export default function ContributionPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold mb-8">{locale === "ja" ? "個人" : "Individuals"}</h3>
+                <h3 className="text-xl md:text-2xl font-bold mb-8">{supporterTitle}</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                   {individualSupporters.map((c) => (
                     <div key={c.name} className="flex flex-col items-center gap-3">
@@ -780,12 +780,10 @@ export default function ContributionPage() {
                 </div>
                 {/* Community Partners */}
                 <div className="mt-12">
-                  <h3 className="text-xl md:text-2xl font-bold mb-8">{locale === "ja" ? "コミュニティパートナー" : "Community Partners"}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-8">{communityTitle}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
                     {communityPartners.length === 0 ? (
-                      <p className="col-span-full text-center text-sm text-muted-foreground">
-                        {locale === "ja" ? "準備中です。" : "Coming soon."}
-                      </p>
+                      <p className="col-span-full text-center text-sm text-muted-foreground">{communityComingSoon}</p>
                     ) : (
                       communityPartners.map((c) => (
                         <div key={c.name} className="flex flex-col items-center gap-3">
@@ -818,43 +816,24 @@ export default function ContributionPage() {
         <section className="mb-20 md:mb-28">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-start">
             <div className="space-y-5 md:space-y-6">
-              <h2 className="text-2xl md:text-3xl font-bold">{locale === "ja" ? "Nyxに支援をする" : "Support Nyx"}</h2>
-              {locale === "ja" ? (
-                <div className="space-y-3">
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    Nyx Foundationは、皆さまからのご支援をお願いしています。
-                  </p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 分散システムと暗号技術の研究開発</li>
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 形式検証</li>
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> 自動検証ツールの独自開発</li>
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> コミュニティへの還元</li>
-                  </ul>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    ※ 剰余は当団体の目的に再投資します。寄付額は任意です。
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    We ask for your support.
-                  </p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Distributed systems & cryptography R&D</li>
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Formal verification</li>
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> In‑house automated verification tools</li>
-                    <li className="flex items-center gap-2"><BadgeCheck className="w-4 h-4 text-emerald-600" /> Giving back to the community</li>
-                  </ul>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    Note: Any surplus is reinvested toward our mission. Donations are voluntary.
-                  </p>
-                </div>
-              )}
+              <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
+              <div className="space-y-3">
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  {supportBullets.map((item, idx) => (
+                    <li key={`${item}-${idx}`} className="flex items-center gap-2">
+                      <BadgeCheck className="w-4 h-4 text-emerald-600" /> {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-sm text-muted-foreground">{supportTiers}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{supportNote}</p>
+              </div>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
               >
-                <Users className="w-4 h-4" /> {locale === "ja" ? "法人の方はこちら" : "For organizations"}
+                <Users className="w-4 h-4" /> {supportOrganizationsCta}
               </Link>
             </div>
             <div className="relative z-10 rounded-xl p-6 md:p-8 bg-white shadow-sm ring-1 ring-gray-100">

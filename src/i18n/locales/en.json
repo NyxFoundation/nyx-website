@@ -119,6 +119,30 @@
       },
       "contact": "Research proposals can be sent to"
     },
-    "taxInfo": "Nyx Foundation is a 501(c)(3) nonprofit organization. Donations may be tax-deductible in the United States."
+    "taxInfo": "Nyx Foundation is a 501(c)(3) nonprofit organization. Donations may be tax-deductible in the United States.",
+    "faq": {
+      "corporateAnswer": "Yes. We offer research partnerships and sponsorship programs. Please <contactLink>contact us</contactLink> to discuss details.",
+      "benefitsAnswer": "Logo placement within one week after confirmation, goods shipped the following month (monthly batch), event access announced about one month prior, and the Sponsor / Supporter badge provided upon confirmation."
+    },
+    "supportersSection": {
+      "heading": "Our supporters sustain Nyx's work.",
+      "sponsorTitle": "Sponsor",
+      "supporterTitle": "Supporter",
+      "communityTitle": "Community Partners",
+      "comingSoon": "Coming soon."
+    },
+    "supportSection": {
+      "heading": "Support Nyx",
+      "intro": "We ask for your support.",
+      "bullets": [
+        "Distributed systems & cryptography R&D",
+        "Formal verification",
+        "In-house automated verification tools",
+        "Giving back to the community"
+      ],
+      "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
+      "note": "Note: Any surplus is reinvested toward our mission. Donations are voluntary.",
+      "organizationsCta": "For organizations"
+    }
   }
 }

@@ -12,12 +12,13 @@ export function Header() {
   const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
 
-  const navItems = [
+  type NavItem = { href: string; label: string; external?: boolean };
+
+  const navItems: NavItem[] = [
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
     { href: "/contribution", label: t("contribution") },
     { href: "/news", label: t("news") },
-    { href: "https://www.notion.so/grandchildrice/Nyx-Foundation-Job-251d05af0d5a805ca9c4e75f40cb5b81", label: t("job"), external: true },
   ];
 
   // モバイルメニューが開いているときはスクロールを防ぐ
@@ -55,7 +56,7 @@ export function Header() {
                 alt="Nyx Foundation"
                 width={32}
                 height={32}
-                className="w-8 h-8"
+                className="w-7 h-7 md:w-8 md:h-8"
               />
             </Link>
 

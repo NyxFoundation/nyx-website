@@ -119,6 +119,153 @@
       },
       "contact": "Research proposals can be sent to"
     },
-    "taxInfo": "Nyx Foundation is a 501(c)(3) nonprofit organization. Donations may be tax-deductible in the United States."
+    "taxInfo": "Nyx Foundation is a 501(c)(3) nonprofit organization. Donations may be tax-deductible in the United States.",
+    "faq": {
+      "corporateAnswer": "Yes. We offer research partnerships and sponsorship programs. Please <contactLink>contact us</contactLink> to discuss details.",
+      "benefitsAnswer": "Logo placement within one week after confirmation, goods shipped the following month (monthly batch), event access announced about one month prior, and the Sponsor / Supporter badge provided upon confirmation."
+    },
+    "supportersSection": {
+      "heading": "Our supporters sustain Nyx's work.",
+      "sponsorTitle": "Sponsor",
+      "supporterTitle": "Supporter",
+      "communityTitle": "Community Partners",
+      "comingSoon": "Coming soon."
+    },
+    "supportSection": {
+      "heading": "Support Nyx",
+      "intro": "We ask for your support.",
+      "bullets": [
+        "Distributed systems & cryptography R&D",
+        "Formal verification",
+        "In-house automated verification tools",
+        "Giving back to the community"
+      ],
+      "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
+      "useCasesHeading": "Where your support goes",
+      "benefitsHeading": "Supporter perks",
+      "benefits": [
+        {
+          "title": "Sponsor access",
+          "description": "Sponsors are welcome to visit the Nyx House anytime."
+        },
+        {
+          "title": "Recognition",
+          "description": "Supporters and Sponsors are featured on our website."
+        }
+      ],
+      "note": "Note: Any surplus is reinvested toward our mission. Donations are voluntary.",
+      "organizationsCta": "For organizations",
+      "selectionStep": {
+        "label": "Step 1",
+        "title": "Choose your donation details"
+      },
+      "amountLabel": "Contribution amount",
+      "methodLabel": "Payment method",
+      "chainLabel": "Chain",
+      "steps": {
+        "step1": {
+          "label": "Step 2",
+          "title": "Connect your wallet",
+          "description": "Scan the QR code with a WalletConnect-compatible wallet to link your address. Once you're connected, the check mark will turn green.",
+          "fiatDescription": "WalletConnect is not required for bank transfers. Skip this step and continue to Step 3."
+        },
+        "step2": {
+          "label": "Step 3",
+          "title": "Send your donation",
+          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thank-you page to register your leaderboard name and icon.",
+          "fiatDescription": "Complete your bank transfer, then press the “Done” button below so we can reconcile your donation."
+        },
+        "status": {
+          "pending": "Waiting",
+          "complete": "Connected",
+          "action": "Connect your wallet",
+          "ready": "Ready to send",
+          "skipped": "Not required"
+        }
+      },
+      "distributionTitle": "Donation distribution",
+      "distributionSubtitle": "Supporters at each amount tier",
+      "moreLabel": "More",
+      "peopleSuffix": " supporters",
+      "donateCta": "Donate",
+      "completeCta": "Done",
+      "copyAddress": "Copy address",
+      "wcTitle": "Connect with WalletConnect",
+      "wcDescription": "Scan with a WalletConnect-compatible Ethereum wallet. Once connected, press Donate to send the transaction.",
+      "wcWaiting": "Waiting for wallet approval…",
+      "wcConnected": "Connected wallet",
+      "wcReset": "Reset connection",
+      "wcUnavailable": "WalletConnect is unavailable. Please configure NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID.",
+      "wcInitError": "Failed to initialize WalletConnect client.",
+      "wcConnectError": "Failed to start a WalletConnect session.",
+      "wcNeedsProject": "WalletConnect is not configured yet.",
+      "wcInitPending": "Preparing WalletConnect client…",
+      "wcConnectPrompt": "Connect your wallet with WalletConnect before donating.",
+      "wcChainMismatch": "Your wallet is connected to a different network. Switch to {chain} in your wallet and try again.",
+      "wcRequestSent": "Transaction request sent to your wallet.",
+      "wcRequestError": "Failed to send the transaction request. Please try again.",
+      "wcRequestRejected": "Transaction was cancelled in your wallet.",
+      "wcDisabled": "WalletConnect is available only for ETH donations.",
+      "wcFallbackNote": "If WalletConnect isn't working, please send to <address>0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a</address> and let us know via the <contactLink>contact form</contactLink>.",
+      "wcSwitchHint": "Switch your wallet to {chain} before sending the transaction.",
+      "paymentOptions": {
+        "ETH": "ETH",
+        "USDC": "USDC",
+        "USDT": "USDT",
+        "DAI": "DAI",
+        "JPY": "JPY"
+      },
+      "chainOptions": {
+        "ethereum": "Ethereum",
+        "optimism": "Optimism",
+        "arbitrum": "Arbitrum",
+        "base": "Base"
+      }
+    }
+  },
+  "thankYouDonation": {
+    "title": "Congratulations!!",
+    "subtitle": "Donation completed.",
+    "back": "Back to donations",
+    "banner": {
+      "heading": "Nyx Foundation Donation",
+      "tagline": "Donated to Nyx Foundation!",
+      "memberLabel": "Nyx Foundation",
+      "amount": "Amount",
+      "name": "Supporter",
+      "anonymous": "Anonymous",
+      "method": "Method",
+      "namePlaceholder": "Your name",
+      "icon": "Icon",
+      "iconPlaceholder": "Add your icon URL",
+      "wallet": "Wallet",
+      "share": "Share your support with #NyxFoundation"
+    },
+    "summary": {
+      "heading": "Donation summary",
+      "amount": "Amount",
+      "method": "Method",
+      "chain": "Chain",
+      "wallet": "Wallet address / Sender name",
+      "txHash": "Transaction hash"
+    },
+    "form": {
+      "intro": "Please provide the details you want featured on our homepage.",
+      "heading": "Leaderboard submission",
+      "nameLabel": "Display name",
+      "namePlaceholder": "e.g. Nyx Supporter",
+      "iconLabel": "Icon URL",
+      "iconHint": "Paste an image URL (optional).",
+      "amountLabel": "Donation amount",
+      "addressLabel": "Wallet address / Sender name",
+      "urlLabel": "Social link",
+      "urlPlaceholder": "https://twitter.com/",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "error": "We couldn't save your submission. Please try again.",
+      "iconInvalid": "Please enter a valid http(s) URL.",
+      "completed": "Done!",
+      "completedDescription": "Thank you! We'll review the details and update the leaderboard soon."
+    }
   }
 }

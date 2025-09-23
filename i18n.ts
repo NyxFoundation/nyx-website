@@ -18,6 +18,7 @@ export default getRequestConfig(async () => {
 
   return {
     locale,
+    timeZone: process.env.NEXT_PUBLIC_DEFAULT_TIME_ZONE || "Asia/Tokyo",
     messages: (await import(`./src/i18n/locales/${locale}.json`)).default,
   };
 });

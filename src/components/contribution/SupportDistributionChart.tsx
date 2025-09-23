@@ -1,0 +1,81 @@
+"use client";
+
+import { scaleLinear } from "@visx/scale";
+import { memo, useMemo } from "react";
+
+interface DistributionDatum {
+  label: string;
+  count: number;
+}
+
+interface SupportDistributionChartProps {
+  data: DistributionDatum[];
+  activeIndex: number;
+  peopleSuffix: string;
+  hideLabels?: boolean;
+}
+
+const chartHeight = 36;
+const chartWidth = 100;
+
+function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix, hideLabels }: SupportDistributionChartProps) {
+  const maxCount = useMemo(() => Math.max(...data.map((d) => d.count), 1), [data]);
+  const labelAreaHeight = hideLabels ? 0 : 26;
+
+  const stepSpacing = data.length > 0 ? chartWidth / data.length : chartWidth;
+  const baseBarWidth = data.length > 0 ? Math.max(stepSpacing * 0.55, 6) : chartWidth * 0.3;
+
+  const yScale = useMemo(
+    () =>
+      scaleLinear<number>({
+        domain: [0, maxCount],
+        range: [chartHeight, 0],
+        nice: true,
+      }),
+    [maxCount]
+  );
+
+  return (
+    <div className="w-full overflow-x-auto">
+      <svg viewBox={`0 0 ${chartWidth} ${chartHeight + labelAreaHeight}`} className="h-auto w-full">
+        <g>
+          {data.map((bucket, idx) => {
+            const centerX = data.length > 0 ? (idx + 0.5) * stepSpacing : chartWidth / 2;
+            const adjustedWidth = Math.min(baseBarWidth, stepSpacing * 0.85);
+            const barX = centerX - adjustedWidth / 2;
+            const barHeight = chartHeight - yScale(bucket.count);
+            const barY = yScale(bucket.count);
+            const isActive = idx === activeIndex;
+            const countLabel = `${bucket.count}${peopleSuffix}`;
+
+            return (
+              <g key={`${bucket.label}-${idx}`}>
+                <rect
+                  x={barX}
+                  y={barY}
+                  width={adjustedWidth}
+                  height={Math.max(barHeight, 4)}
+                  className={isActive ? "fill-emerald-500" : "fill-emerald-200"}
+                >
+                  <title>{countLabel}</title>
+                </rect>
+                {!hideLabels && (
+                  <text
+                    x={centerX}
+                    y={chartHeight + 18}
+                    textAnchor="middle"
+                    className="fill-muted-foreground text-[10px]"
+                  >
+                    {bucket.label}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+export const SupportDistributionChart = memo(SupportDistributionChartComponent);

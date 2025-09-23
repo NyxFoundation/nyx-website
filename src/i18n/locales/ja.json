@@ -119,6 +119,153 @@
       },
       "contact": "共同研究の提案は"
     },
-    "taxInfo": "Nyx Foundationは501(c)(3)非営利団体です。米国での寄付は税控除の対象となる場合があります。"
+    "taxInfo": "Nyx Foundationは501(c)(3)非営利団体です。米国での寄付は税控除の対象となる場合があります。",
+    "faq": {
+      "corporateAnswer": "可能です。研究パートナーシップやスポンサーシップのプログラムをご用意しています。まずは<contactLink>お問い合わせフォーム</contactLink>からご相談ください。",
+      "benefitsAnswer": "ロゴ掲載は寄付確認後1週間以内、グッズ配送は月末締めで翌月発送、イベント参加権は開催1か月前にご案内、バッジ（スポンサー / サポーター）は確認後に順次ご案内します。"
+    },
+    "supportersSection": {
+      "heading": "支援者のみなさまがNyxの活動を支えています。",
+      "sponsorTitle": "スポンサー",
+      "supporterTitle": "サポーター",
+      "communityTitle": "コミュニティパートナー",
+      "comingSoon": "準備中です。"
+    },
+    "supportSection": {
+      "heading": "Nyxに支援をする",
+      "intro": "Nyx Foundationは、皆さまからのご支援をお願いしています。",
+      "bullets": [
+        "分散システムと暗号技術の研究開発",
+        "形式検証",
+        "自動検証ツールの独自開発",
+        "コミュニティへの還元"
+      ],
+      "tiers": "累計寄付額10万円以上でサポーター、100万円以上でスポンサー、32 ETH以上でプレミアムスポンサーとしてご案内します。",
+      "useCasesHeading": "支援が活きる領域",
+      "benefitsHeading": "寄付特典",
+      "benefits": [
+        {
+          "title": "スポンサー特典",
+          "description": "スポンサーになるとハウスにいつでもお越しいただけます。"
+        },
+        {
+          "title": "掲載特典",
+          "description": "支援者のみなさまはホームページでご紹介します。"
+        }
+      ],
+      "note": "※ 剰余は当団体の目的に再投資します。寄付額は任意です。",
+      "organizationsCta": "法人の方はこちら",
+      "selectionStep": {
+        "label": "手順1",
+        "title": "寄付方法を選択"
+      },
+      "amountLabel": "寄付額",
+      "methodLabel": "支払い方法",
+      "chainLabel": "チェーン",
+      "steps": {
+        "step1": {
+          "label": "手順2",
+          "title": "WalletConnectで接続",
+          "description": "対応ウォレットでQRコードを読み取り、ウォレットを接続してください。接続が完了するとチェックマークが緑色になります。",
+          "fiatDescription": "銀行振込ではウォレット接続は必要ありません。この手順はスキップしてください。"
+        },
+        "step2": {
+          "label": "手順3",
+          "title": "寄付を送信",
+          "description": "「寄付する」を押してトランザクションを送信します。完了後にthankyou-donationページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。",
+          "fiatDescription": "銀行振込を完了したら、下の「完了」ボタンを押して寄付手続きを終了してください。"
+        },
+        "status": {
+          "pending": "待機中",
+          "complete": "接続済み",
+          "action": "ウォレットを接続してください",
+          "ready": "送信準備完了",
+          "skipped": "不要"
+        }
+      },
+      "distributionTitle": "寄付額の分布",
+      "distributionSubtitle": "支援額ごとの人数",
+      "moreLabel": "それ以上",
+      "peopleSuffix": "人",
+      "donateCta": "寄付する",
+      "completeCta": "完了",
+      "copyAddress": "アドレスをコピー",
+      "wcTitle": "WalletConnectで接続",
+      "wcDescription": "WalletConnect対応のEthereumウォレットで読み取って接続し、接続後に\"寄付する\"を押すとトランザクションが送信されます。",
+      "wcWaiting": "ウォレットの承認を待っています…",
+      "wcConnected": "接続中のウォレット",
+      "wcReset": "接続をリセット",
+      "wcUnavailable": "WalletConnectを利用できません。NEXT_PUBLIC_WALLETCONNECT_PROJECT_IDを設定してください。",
+      "wcInitError": "WalletConnectクライアントの初期化に失敗しました。",
+      "wcConnectError": "WalletConnectセッションの開始に失敗しました。",
+      "wcNeedsProject": "WalletConnectが未設定です。",
+      "wcInitPending": "WalletConnectクライアントを準備中です…",
+      "wcConnectPrompt": "寄付前にWalletConnectでウォレットを接続してください。",
+      "wcChainMismatch": "ウォレットが別のネットワークに接続されています。ウォレット側で {chain} に切り替えてから再度お試しください。",
+      "wcRequestSent": "ウォレットにトランザクションを送信しました。",
+      "wcRequestError": "トランザクションの送信に失敗しました。もう一度お試しください。",
+      "wcRequestRejected": "ウォレット側でトランザクションがキャンセルされました。",
+      "wcDisabled": "WalletConnectはETHでの寄付のみ対応しています。",
+      "wcFallbackNote": "もしWalletConnectが上手く行かない場合は<address>0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a</address>へ送金し、<contactLink>お問い合わせ</contactLink>から送金したことをお知らせください。",
+      "wcSwitchHint": "ウォレット側で {chain} に切り替えてから実行してください。",
+      "paymentOptions": {
+        "ETH": "ETH",
+        "USDC": "USDC",
+        "USDT": "USDT",
+        "DAI": "DAI",
+        "JPY": "JPY"
+      },
+      "chainOptions": {
+        "ethereum": "Ethereum",
+        "optimism": "Optimism",
+        "arbitrum": "Arbitrum",
+        "base": "Base"
+      }
+    }
+  },
+  "thankYouDonation": {
+    "title": "おめでとうございます！！",
+    "subtitle": "寄付が完了しました。",
+    "back": "寄付ページに戻る",
+    "banner": {
+      "heading": "Nyx Foundationへの寄付",
+      "tagline": "Nyx Foundationへ寄付しました！",
+      "memberLabel": "Nyx Foundation",
+      "amount": "金額",
+      "name": "支援者",
+      "anonymous": "匿名",
+      "method": "方法",
+      "namePlaceholder": "お名前",
+      "icon": "アイコン",
+      "iconPlaceholder": "アイコンURLを入力してください",
+      "wallet": "ウォレット",
+      "share": "#NyxFoundation を付けてシェアしましょう"
+    },
+    "summary": {
+      "heading": "寄付内容",
+      "amount": "金額",
+      "method": "方法",
+      "chain": "チェーン",
+      "wallet": "ウォレットアドレス / 送信者名",
+      "txHash": "トランザクションハッシュ"
+    },
+    "form": {
+      "intro": "ホームページに掲載する情報を入力してください。",
+      "heading": "リーダーボード掲載情報",
+      "nameLabel": "ユーザー名",
+      "namePlaceholder": "例: Nyx Supporter",
+      "iconLabel": "アイコンURL",
+      "iconHint": "画像URLを貼り付け（任意）",
+      "amountLabel": "寄付額",
+      "addressLabel": "ウォレットアドレス / 送信者名",
+      "urlLabel": "SNSリンク",
+      "urlPlaceholder": "https://twitter.com/",
+      "submit": "送信する",
+      "submitting": "送信中...",
+      "error": "送信できませんでした。再度お試しください。",
+      "iconInvalid": "http(s)のURLを入力してください。",
+      "completed": "完了！",
+      "completedDescription": "ご入力ありがとうございます。確認後、リーダーボードに反映いたします。"
+    }
   }
 }

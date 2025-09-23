@@ -3,7 +3,7 @@ import { getLocale } from "next-intl/server";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { Calendar, Tag, ArrowLeft } from "lucide-react";
-import { getNews, getNewsItem, getPageBlocks } from "@/lib/notion";
+import { getNewsItem, getPageBlocks } from "@/lib/notion";
 import { NotionBlockRenderer } from "@/components/NotionBlockRenderer";
 
 // Dynamic rendering for news pages

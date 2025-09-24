@@ -140,11 +140,11 @@
         "In-house automated verification tools",
         "Giving back to the community"
       ],
-      "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
+      "tiers": "Choose your support plan.",
       "useCasesHeading": "Where your support goes",
-      "benefitsPremiumHeading": "Premium sponsor perks",
-      "benefitsSponsorHeading": "Sponsor perks",
-      "benefitsSupporterHeading": "Supporter perks",
+      "benefitsPremiumHeading": "Premium Sponsor",
+      "benefitsSponsorHeading": "Sponsor",
+      "benefitsSupporterHeading": "Supporter",
       "benefitsPremium": [
         {
           "title": "Premium sponsor perks",
@@ -167,7 +167,8 @@
       "organizationsCta": "For organizations",
       "selectionStep": {
         "label": "Step 1",
-        "title": "Choose your donation details"
+        "title": "Select payment method & chain",
+        "description": "Choose your payment method and chain here. Next connect with WalletConnect, send your donation, and you'll be redirected to the thankyou-donation page."
       },
       "amountLabel": "Contribution amount",
       "methodLabel": "Payment method",
@@ -182,7 +183,7 @@
         "step2": {
           "label": "Step 3",
           "title": "Send your donation",
-          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thank-you page to register your leaderboard name and icon.",
+          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thankyou-donation page to register your leaderboard name and icon.",
           "fiatDescription": "Complete your bank transfer, then press the “Done” button below so we can reconcile your donation."
         },
         "status": {

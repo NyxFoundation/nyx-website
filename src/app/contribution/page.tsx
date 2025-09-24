@@ -10,21 +10,18 @@ import {
   Copy,
   ShieldCheck,
   FunctionSquare,
-  Globe,
-  Shirt,
-  Calendar,
   BadgeCheck,
   Sparkles,
   HelpCircle,
   RefreshCcw,
   CheckCircle2,
   Circle,
+  X,
 } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SliderWithMarks } from "@/components/contribution/SliderWithMarks";
 import { SupportDistributionChart } from "@/components/contribution/SupportDistributionChart";
 import QRCode from "react-qr-code";
 import SignClient from "@walletconnect/sign-client";
@@ -153,23 +150,27 @@ const ETH_TO_USD = 4500;
 const USD_TO_JPY = 145;
 const ETH_TO_JPY = ETH_TO_USD * USD_TO_JPY;
 
-const VARIABLE_STEPS = 12;
-const DISTRIBUTION_COUNTS = [1, 3, 8, 0, 0, 0];
-const DISTRIBUTION_MORE_COUNT = 0;
+const DISTRIBUTION_COUNTS = [6, 3, 1];
 
-const PRESET_ETH_AMOUNTS = [0.01, 0.1, 1, 3, 5, 10] as const;
-const PRESET_USD_AMOUNTS = [70, 700, 7_000, 15_000, 20_000, 35_000] as const;
-const PRESET_JPY_AMOUNTS = [10_000, 100_000, 1_000_000, 2_000_000, 3_000_000, 5_000_000] as const;
-
-const PRESET_METHOD_AMOUNTS: Record<PaymentMethod, readonly number[]> = {
-  ETH: PRESET_ETH_AMOUNTS,
-  USDC: PRESET_USD_AMOUNTS,
-  USDT: PRESET_USD_AMOUNTS,
-  DAI: PRESET_USD_AMOUNTS,
-  JPY: PRESET_JPY_AMOUNTS,
+const FIXED_AMOUNTS: Record<PaymentMethod, readonly number[]> = {
+  ETH: [0.15, 1.5, 7.5],
+  USDC: [600, 6_000, 30_000],
+  USDT: [600, 6_000, 30_000],
+  DAI: [600, 6_000, 30_000],
+  JPY: [93_000, 930_000, 4_500_000],
 };
 
-const clampAmountIndex = (index: number, max: number) => Math.min(Math.max(index, 0), max);
+const SUPPORT_TIER_ETH_AMOUNTS = {
+  supporter: 0.15,
+  sponsor: 1.5,
+  premium: 7.5,
+} as const;
+
+const TIER_AMOUNT_BADGES = {
+  supporter: "0.15 ETH+",
+  sponsor: "1.5 ETH+",
+  premium: "7.5 ETH+",
+} as const;
 
 const convertMethodAmountToEth = (amount: number, method: PaymentMethod) => {
   switch (method) {
@@ -182,40 +183,6 @@ const convertMethodAmountToEth = (amount: number, method: PaymentMethod) => {
     case "DAI":
     default:
       return amount / ETH_TO_USD;
-  }
-};
-
-const getPresetEthAmounts = (method: PaymentMethod) => {
-  const presets = PRESET_METHOD_AMOUNTS[method] ?? PRESET_METHOD_AMOUNTS.ETH;
-  if (method === "ETH") {
-    return [...presets];
-  }
-  return presets.map((value) => convertMethodAmountToEth(value, method));
-};
-
-const getEthAmountFromSlider = (index: number, presets: readonly number[]) => {
-  const maxIndex = presets.length + VARIABLE_STEPS - 1;
-  const clamped = clampAmountIndex(index, maxIndex);
-  if (clamped < presets.length) {
-    return presets[clamped];
-  }
-  const extraIndex = clamped - presets.length + 1;
-  const base = presets[presets.length - 1];
-  const growthFactor = 1.2;
-  return Number((base * Math.pow(growthFactor, extraIndex)).toFixed(4));
-};
-
-const convertEthToMethod = (ethAmount: number, method: PaymentMethod) => {
-  switch (method) {
-    case "JPY":
-      return ethAmount * ETH_TO_JPY;
-    case "ETH":
-      return ethAmount;
-    case "USDC":
-    case "USDT":
-    case "DAI":
-    default:
-      return ethAmount * ETH_TO_USD;
   }
 };
 
@@ -232,45 +199,25 @@ const formatMethodAmount = (amount: number, method: PaymentMethod, locale: strin
     return `${amount.toLocaleString(locale, options)} ETH`;
   }
 
-  const fractionDigits = amount < 10 ? 2 : amount < 100 ? 1 : 0;
+  const displayLocale = locale === "ja" ? "en-US" : locale;
   const isWhole = Math.abs(amount - Math.round(amount)) < 1e-6;
-  return `${amount.toLocaleString(locale === "ja" ? "en-US" : locale, {
-    minimumFractionDigits: isWhole ? 0 : fractionDigits,
-    maximumFractionDigits: fractionDigits === 0 ? (isWhole ? 0 : 2) : 2,
+  return `${amount.toLocaleString(displayLocale, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: isWhole ? 0 : 2,
   })} ${method}`;
-};
-
-const roundToNearest = (value: number, step: number) => Math.round(value / step) * step;
-
-const formatAmountMarkLabel = (ethAmount: number, method: PaymentMethod, locale: string) => {
-  if (method === "ETH") {
-    const options =
-      ethAmount >= 1
-        ? { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-        : { minimumFractionDigits: 2, maximumFractionDigits: 4 };
-    return ethAmount.toLocaleString(locale, options);
-  }
-
-  if (method === "JPY") {
-    const amountInJpy = convertEthToMethod(ethAmount, method);
-    const niceAmount = roundToNearest(amountInJpy, 500);
-    return niceAmount.toLocaleString(locale);
-  }
-
-  const amountInUsd = convertEthToMethod(ethAmount, method);
-  const niceAmount = roundToNearest(amountInUsd, 5);
-  return niceAmount.toLocaleString(locale === "ja" ? "en-US" : locale, { maximumFractionDigits: 0 });
 };
 
 export default function ContributionPage() {
   const t = useTranslations("contribution");
   const locale = useLocale();
   const router = useRouter();
+  const donationCardRef = useRef<HTMLDivElement | null>(null);
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
   // Donation UI state (one-time only, default crypto)
   const [selectedChain, setSelectedChain] = useState<CryptoChain>("ethereum");
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("ETH");
-  const [amountSliderIndex, setAmountSliderIndex] = useState(1);
+  const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [selectedMember, setSelectedMember] = useState<null | { id: string; name: string; role: string; avatar?: string; bio?: string }>(null);
   const [newsMap, setNewsMap] = useState<Record<string, { href: string; external: boolean }>>({});
@@ -279,6 +226,8 @@ export default function ContributionPage() {
   const [walletConnectUri, setWalletConnectUri] = useState<string>("");
   const [walletConnectLoading, setWalletConnectLoading] = useState(false);
   const [walletConnectErrorKey, setWalletConnectErrorKey] = useState<string | null>(null);
+  const [isDonationOverlayOpen, setDonationOverlayOpen] = useState(false);
+  const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
 
   const paymentOptions: { value: PaymentMethod; label: string; type: "crypto" | "fiat" }[] = [
     { value: "ETH", label: t("supportSection.paymentOptions.ETH"), type: "crypto" },
@@ -351,6 +300,14 @@ export default function ContributionPage() {
   const supportAmountLabel = t("supportSection.amountLabel");
   const selectionStepLabel = t("supportSection.selectionStep.label");
   const selectionStepTitle = t("supportSection.selectionStep.title");
+  const selectionStepDescription = t("supportSection.selectionStep.description");
+  const tierHeadingByKey: Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string> = {
+    premium: premiumBenefitsHeading,
+    sponsor: sponsorBenefitsHeading,
+    supporter: supporterBenefitsHeading,
+  };
+  const activeTierHeading = activeTier ? tierHeadingByKey[activeTier] : null;
+  const activeTierBadge = activeTier ? TIER_AMOUNT_BADGES[activeTier] : null;
   const supportMethodLabel = t("supportSection.methodLabel");
   const supportChainLabel = t("supportSection.chainLabel");
   const stepOneLabel = t("supportSection.steps.step1.label");
@@ -480,8 +437,6 @@ export default function ContributionPage() {
     },
   ];
 
-  const presetEthAmounts = getPresetEthAmounts(selectedMethod);
-  const amountSliderMaxIndex = presetEthAmounts.length + VARIABLE_STEPS - 1;
   const isFiatJPY = selectedMethod === "JPY";
   const selectedTokenMeta =
     selectedMethod === "ETH" || selectedMethod === "JPY"
@@ -498,15 +453,20 @@ export default function ContributionPage() {
     const filtered = cryptoChains.filter((chain) => Boolean(tokenMeta.contracts[chain.value]));
     return filtered.length > 0 ? filtered : cryptoChains;
   }, [cryptoChains, isFiatJPY, selectedMethod, selectedTokenMeta]);
+  const methodAmounts = useMemo(() => FIXED_AMOUNTS[selectedMethod] ?? [], [selectedMethod]);
+  const safeAmountIndex = Math.min(selectedAmountIndex, Math.max(methodAmounts.length - 1, 0));
+  const currentMethodAmount = methodAmounts[safeAmountIndex] ?? 0;
+  const currentEthAmount = convertMethodAmountToEth(currentMethodAmount, selectedMethod);
+  const formattedAmount = formatMethodAmount(currentMethodAmount, selectedMethod, locale);
+  const currentAmount = currentMethodAmount;
   const availableChainValues = availableCryptoChains.map((chain) => chain.value);
-  const safeAmountIndex = clampAmountIndex(amountSliderIndex, amountSliderMaxIndex);
-  const currentEthAmount = getEthAmountFromSlider(safeAmountIndex, presetEthAmounts);
-  const currentAmount = convertEthToMethod(currentEthAmount, selectedMethod);
-  const formattedAmount = formatMethodAmount(currentAmount, selectedMethod, locale);
-  const paymentSliderValue = paymentOptions.findIndex((opt) => opt.value === selectedMethod);
-  const safePaymentSliderValue = paymentSliderValue === -1 ? 0 : paymentSliderValue;
-  const chainSliderValue = availableCryptoChains.findIndex((chain) => chain.value === selectedChain);
-  const safeChainSliderValue = chainSliderValue === -1 ? 0 : chainSliderValue;
+  const chainIndex = availableCryptoChains.findIndex((chain) => chain.value === selectedChain);
+  const safeChainIndex = chainIndex === -1 ? 0 : chainIndex;
+  const distributionData = methodAmounts.map((amount, idx) => ({
+    label: formatMethodAmount(amount, selectedMethod, locale),
+    count: DISTRIBUTION_COUNTS[idx] ?? 0,
+  }));
+  const activeBucketIndex = safeAmountIndex;
 
   useEffect(() => {
     if (isFiatJPY) {
@@ -519,6 +479,18 @@ export default function ContributionPage() {
       setSelectedChain(availableChainValues[0]);
     }
   }, [availableChainValues, isFiatJPY, selectedChain]);
+
+  useEffect(() => {
+    if (methodAmounts.length === 0) {
+      if (selectedAmountIndex !== 0) {
+        setSelectedAmountIndex(0);
+      }
+      return;
+    }
+    if (selectedAmountIndex >= methodAmounts.length) {
+      setSelectedAmountIndex(methodAmounts.length - 1);
+    }
+  }, [methodAmounts, selectedAmountIndex]);
   const selectedTokenContract = selectedTokenMeta?.contracts[selectedChain] ?? null;
   const selectedTokenDecimals = selectedTokenMeta?.decimals ?? 0;
   const isTokenPayment = Boolean(selectedTokenMeta);
@@ -574,70 +546,6 @@ export default function ContributionPage() {
   const stepTwoStatusClass = canSendDonation ? "text-emerald-600" : "text-amber-600";
   const donateButtonLabel = isFiatJPY ? supportCompleteCta : supportDonateCta;
 
-  const lastPresetIndex = Math.max(presetEthAmounts.length - 1, 0);
-  const presetVisualSpacing = VARIABLE_STEPS + 2; // stretch preset donation marks across most of the track
-  const amountSliderPositions = Array.from({ length: amountSliderMaxIndex + 1 }, (_, idx) => {
-    if (idx <= lastPresetIndex) {
-      return idx * presetVisualSpacing;
-    }
-    const extraIdx = idx - lastPresetIndex;
-    return lastPresetIndex * presetVisualSpacing + extraIdx;
-  });
-  const amountSliderMaxValue = amountSliderPositions[amountSliderPositions.length - 1] ?? 0;
-  const safeAmountSliderValue = amountSliderPositions[safeAmountIndex] ?? 0;
-
-  const findClosestAmountIndex = (sliderValue: number) => {
-    let closestIndex = 0;
-    let smallestDiff = Number.POSITIVE_INFINITY;
-    amountSliderPositions.forEach((position, idx) => {
-      const diff = Math.abs(position - sliderValue);
-      if (diff < smallestDiff) {
-        smallestDiff = diff;
-        closestIndex = idx;
-      }
-    });
-    return closestIndex;
-  };
-
-  const handleAmountSliderChange = (sliderValue: number) => {
-    setAmountSliderIndex(findClosestAmountIndex(sliderValue));
-  };
-
-  const amountMarks = presetEthAmounts.map((eth, index) => ({
-    value: amountSliderPositions[index],
-    label: formatAmountMarkLabel(eth, selectedMethod, locale),
-  }));
-  const customMark = {
-    value: amountSliderPositions[amountSliderPositions.length - 1] ?? 0,
-    label: "more"
-  };
-  const distributionDataBase = presetEthAmounts.map((eth, idx) => ({
-    label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
-    count: DISTRIBUTION_COUNTS[idx] ?? 0,
-  }));
-  const distributionData = [
-    ...distributionDataBase,
-    { label: "", count: DISTRIBUTION_MORE_COUNT },
-  ];
-  const activeBucketIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : distributionData.length - 1;
-  const customTickIndex = amountMarks.length;
-  const activeTickIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : customTickIndex;
-  const methodMarks = paymentOptions.map((option, idx) => ({ value: idx, label: option.label }));
-  const chainMarks = availableCryptoChains.map((chain, idx) => ({ value: idx, label: chain.label }));
-  const amountSliderMarks = [...amountMarks, customMark].map((mark, idx) => ({
-    ...mark,
-    isActive: idx === activeTickIndex,
-  }));
-  const methodSliderMarks = methodMarks.map((mark, idx) => ({
-    ...mark,
-    isActive: idx === safePaymentSliderValue,
-    onSelect: () => handlePaymentSliderChange(mark.value),
-  }));
-  const chainSliderMarks = chainMarks.map((mark, idx) => ({
-    ...mark,
-    isActive: idx === safeChainSliderValue,
-    onSelect: () => handleChainSliderChange(idx),
-  }));
   const faqs = locale === "ja" ? faqJa : faqEn;
 
   useEffect(() => {
@@ -779,31 +687,88 @@ export default function ContributionPage() {
 
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 
-  const handleMethodChange = (method: PaymentMethod) => {
+  const handleMethodChange = useCallback((method: PaymentMethod) => {
     setSelectedMethod(method);
-    const nextPresets = getPresetEthAmounts(method);
-    const nextMaxIndex = nextPresets.length + VARIABLE_STEPS - 1;
-    setAmountSliderIndex((idx) => clampAmountIndex(idx, nextMaxIndex));
-  };
+    setSelectedAmountIndex(0);
+  }, []);
 
-  const handlePaymentSliderChange = (index: number) => {
-    const option = paymentOptions[index];
-    if (option) {
-      handleMethodChange(option.value);
-    }
-  };
+  const handleChainSelect = useCallback(
+    (index: number) => {
+      const target = availableCryptoChains[index]?.value;
+      if (target) {
+        setSelectedChain(target);
+      }
+    },
+    [availableCryptoChains]
+  );
 
-  const handleChainSliderChange = (index: number) => {
-    const target = availableCryptoChains[index]?.value;
-    if (target) {
-      setSelectedChain(target);
-    }
-  };
+  const handleAmountSelect = useCallback((index: number) => {
+    setSelectedAmountIndex(index);
+  }, []);
+
+  const handleTierClick = useCallback(
+    (tier: keyof typeof SUPPORT_TIER_ETH_AMOUNTS) => {
+      const targetEth = SUPPORT_TIER_ETH_AMOUNTS[tier];
+      const ethAmounts = FIXED_AMOUNTS.ETH ?? [];
+      const foundIndex = ethAmounts.findIndex((value) => Math.abs(value - targetEth) < 1e-9);
+      const targetIndex = foundIndex === -1 ? 0 : foundIndex;
+
+      setActiveTier(tier);
+      handleMethodChange("ETH");
+      setSelectedAmountIndex(targetIndex);
+      lastFocusedElementRef.current = (document.activeElement as HTMLElement) ?? null;
+      setDonationOverlayOpen(true);
+    },
+    [handleMethodChange]
+  );
 
   const getDisplayAmount = () => formattedAmount;
 
   const toggleFAQ = (idx: number) =>
     setOpenFAQ((prev) => (prev === idx ? null : idx));
+
+  const handleCloseOverlay = useCallback(() => {
+    setDonationOverlayOpen(false);
+    setActiveTier(null);
+    const previousFocus = lastFocusedElementRef.current;
+    if (previousFocus && typeof previousFocus.focus === "function") {
+      previousFocus.focus();
+    }
+    lastFocusedElementRef.current = null;
+  }, []);
+
+  const handleOverlayKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        handleCloseOverlay();
+      }
+    },
+    [handleCloseOverlay]
+  );
+
+  useEffect(() => {
+    if (!isDonationOverlayOpen) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      donationCardRef.current?.focus({ preventScroll: true });
+    }, 40);
+    return () => window.clearTimeout(timer);
+  }, [isDonationOverlayOpen]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+    if (isDonationOverlayOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isDonationOverlayOpen]);
 
   const handlePayment = useCallback(async () => {
     if (isWalletConnectEligible) {
@@ -823,7 +788,7 @@ export default function ContributionPage() {
       if (!walletConnectAddressForTarget) {
         alert(
           t("supportSection.wcChainMismatch", {
-            chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
+            chain: availableCryptoChains[safeChainIndex]?.label ?? "",
           })
         );
         return;
@@ -909,7 +874,7 @@ export default function ContributionPage() {
     isWalletConnectEligible,
     isTokenPayment,
     router,
-    safeChainSliderValue,
+    safeChainIndex,
     signClient,
     startWalletConnect,
     t,
@@ -1429,307 +1394,367 @@ export default function ContributionPage() {
 
         {/* Support Nyx section (donation card relocated here) */}
         <section id="support-nyx" className="mb-28 md:mb-36">
-          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.05fr),minmax(0,1fr)] lg:items-start">
-            <div className="space-y-8 md:space-y-10 text-left">
-              <div className="space-y-3 text-center md:text-left">
-                <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
-              </div>
-
-              {supportBullets.length > 0 && (
-                <div className="space-y-3">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em]">
-                    {supportUseCasesHeading}
-                  </h3>
-                  <ul className="grid gap-3 sm:grid-cols-2">
-                    {supportBullets.map((item, idx) => (
-                      <li
-                        key={`${item}-${idx}`}
-                        className="flex w-full items-start gap-3 rounded-lg border border-emerald-100 bg-emerald-50/70 p-4 shadow-sm"
-                      >
-                        <BadgeCheck className="h-5 w-5 shrink-0 text-emerald-600" />
-                        <span className="text-sm text-emerald-900">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-xs text-muted-foreground">{supportNote}</p>
-                </div>
-              )}
-
-              {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
-                <div className="space-y-3">
-                  <p className="text-md text-muted-foreground">{supportTiers}</p>
-                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {premiumBenefits.length > 0 && (
-                      <div className="rounded-lg border border-emerald-300 bg-emerald-100 p-5 shadow-sm">
-                        <h3 className="text-sm font-semibold text-emerald-900">{premiumBenefitsHeading}</h3>
-                        <div className="mt-3 space-y-3">
-                          {premiumBenefits.map((benefit) => (
-                            <div key={`premium-${benefit.title}`} className="flex items-start gap-3">
-                              <Sparkles className="h-5 w-5 shrink-0 text-emerald-700" />
-                              <div className="space-y-1">
-                                <p className="text-sm text-emerald-900 leading-relaxed">{benefit.description}</p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {sponsorBenefits.length > 0 && (
-                      <div className="rounded-lg border border-emerald-200 bg-emerald-100/80 p-5 shadow-sm">
-                        <h3 className="text-sm font-semibold text-emerald-900">{sponsorBenefitsHeading}</h3>
-                        <div className="mt-3 space-y-3">
-                          {sponsorBenefits.map((benefit) => (
-                            <div key={`sponsor-${benefit.title}`} className="flex items-start gap-3">
-                              <Sparkles className="h-5 w-5 shrink-0 text-emerald-700" />
-                              <div className="space-y-1">
-                                <p className="text-sm text-emerald-900 leading-relaxed">{benefit.description}</p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {supporterBenefits.length > 0 && (
-                      <div className="rounded-lg border border-emerald-100 bg-emerald-50 p-5 shadow-sm">
-                        <h3 className="text-sm font-semibold text-emerald-800">{supporterBenefitsHeading}</h3>
-                        <div className="mt-3 space-y-3">
-                          {supporterBenefits.map((benefit) => (
-                            <div key={`supporter-${benefit.title}`} className="flex items-start gap-3">
-                              <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
-                              <div className="space-y-1">
-                                <p className="text-sm text-emerald-800 leading-relaxed">{benefit.description}</p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
-              >
-                <Users className="w-4 h-4" /> {supportOrganizationsCta}
-              </Link>
+          <div className="mx-auto max-w-6xl space-y-10 text-left">
+            <div className="space-y-3 text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
             </div>
-            <div className="relative z-10 rounded-xl p-6 md:p-8 bg-white shadow-sm ring-1 ring-gray-100">
-              <div className="grid grid-cols-1 gap-6 md:gap-7 md:grid-cols-2 lg:gap-8 lg:grid-cols-[1.15fr,1fr]">
-                <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-5 md:space-y-6">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{selectionStepLabel}</div>
-                    <h3 className="text-sm font-semibold text-foreground mt-1">{selectionStepTitle}</h3>
-                  </div>
 
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-sm font-medium">
-                      <span>{supportMethodLabel}</span>
-                      <span>{paymentOptions[safePaymentSliderValue]?.label ?? ""}</span>
-                    </div>
-                    <div className="px-4 md:px-6">
-                      <SliderWithMarks
-                        min={0}
-                        max={Math.max(paymentOptions.length - 1, 0)}
-                        value={safePaymentSliderValue}
-                        onChange={handlePaymentSliderChange}
-                        marks={methodSliderMarks}
-                        ariaLabel={supportMethodLabel}
-                        ariaValueText={paymentOptions[safePaymentSliderValue]?.label ?? undefined}
-                      />
-                    </div>
-                  </div>
-
-                  {!isFiatJPY && (
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm font-medium">
-                        <span>{supportChainLabel}</span>
-                        <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
-                      </div>
-                      <div className="px-4 md:px-6">
-                        <SliderWithMarks
-                          min={0}
-                          max={Math.max(availableCryptoChains.length - 1, 0)}
-                          value={safeChainSliderValue}
-                          onChange={handleChainSliderChange}
-                          marks={chainSliderMarks}
-                          ariaLabel={supportChainLabel}
-                          ariaValueText={availableCryptoChains[safeChainSliderValue]?.label ?? undefined}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between text-sm font-medium">
-                      <span>{supportAmountLabel}</span>
-                      <span>{formattedAmount}</span>
-                    </div>
-                    <SupportDistributionChart
-                      data={distributionData}
-                      activeIndex={activeBucketIndex}
-                      peopleSuffix={distributionPeopleSuffix}
-                      hideLabels
-                    />
-                    <div className="px-4 md:px-6">
-                      <SliderWithMarks
-                        min={0}
-                        max={amountSliderMaxValue}
-                        value={safeAmountSliderValue}
-                        onChange={handleAmountSliderChange}
-                        marks={amountSliderMarks}
-                        ariaLabel={supportAmountLabel}
-                        ariaValueText={formattedAmount}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-6 md:space-y-7">
-                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
-                        <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
-                      </div>
-                      <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
-                        {isStepOneSkipped ? (
-                          <Circle className="w-4 h-4" />
-                        ) : isStepOneComplete ? (
-                          <CheckCircle2 className="w-4 h-4" />
-                        ) : (
-                          <Circle className="w-4 h-4" />
-                        )}
-                        <span>{stepOneStatusLabel}</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
-                    {isWalletConnectEligible ? (
-                      <div className="space-y-4">
-                        <div className="flex justify-end">
-                          <button
-                            type="button"
-                            onClick={() => void resetWalletConnect()}
-                            disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
-                            className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
-                          >
-                            <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
-                          </button>
-                        </div>
-                        {walletConnectError && (
-                          <p className="text-xs text-red-600">{walletConnectError}</p>
-                        )}
-                        {walletConnectUri && (
-                          <div className="flex justify-center">
-                            <div className="rounded-lg bg-white p-4 shadow-sm">
-                              <QRCode
-                                value={walletConnectUri}
-                                size={168}
-                                bgColor="#ffffff"
-                                fgColor="#111827"
-                                style={{ height: "168px", width: "168px" }}
-                              />
-                            </div>
-                          </div>
-                        )}
-                        {!walletConnectUri && walletConnectLoading && (
-                          <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>
-                        )}
-                        {walletConnectSession && (
-                          <div className="space-y-2 text-xs text-muted-foreground">
-                            <div className="flex items-center justify-between">
-                              <span className="font-medium">{t("supportSection.wcConnected")}</span>
-                              <span className="font-mono text-foreground/90">
-                                {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="font-medium">{supportChainLabel}</span>
-                              <span>{availableCryptoChains[safeChainSliderValue]?.label ?? ""}</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="font-medium">{supportAmountLabel}</span>
-                              <span>{formattedAmount}</span>
-                            </div>
-                            {!walletConnectSupportsTargetChain && (
-                              <p className="text-amber-600">
-                                {t("supportSection.wcSwitchHint", {
-                                  chain: availableCryptoChains[safeChainSliderValue]?.label ?? "",
-                                })}
-                              </p>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      !isFiatJPY && (
-                        <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
-                          {t("supportSection.wcDisabled")}
-                        </div>
-                      )
-                    )}
-                  </div>
-
-                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
-                        <h3 className="text-sm font-semibold text-foreground mt-1">{stepTwoTitle}</h3>
-                      </div>
-                      <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
-                        {canSendDonation ? (
-                          <CheckCircle2 className="w-4 h-4" />
-                        ) : (
-                          <Circle className="w-4 h-4" />
-                        )}
-                        <span>{stepTwoStatusLabel}</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
-                    {isWalletConnectEligible && !canSendDonation && (
-                      <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
-                    )}
-                    {isFiatJPY && (
-                      <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium">PayPay銀行</span>
-                          <button onClick={() => copyToClipboard("PayPay銀行")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                            <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                          </button>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>かわせみ支店(007) 普通</span>
-                          <button onClick={() => copyToClipboard("007")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                            <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                          </button>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span>7551963 ツツミマサト</span>
-                          <button onClick={() => copyToClipboard("7551963")} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                            <Copy className="w-3 h-3" /> {locale === "ja" ? "コピー" : "Copy"}
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  <button
-                      onClick={handlePayment}
-                      disabled={!canSendDonation}
-                      className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+            {supportBullets.length > 0 && (
+              <div className="space-y-3">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.16em]">
+                  {supportUseCasesHeading}
+                </h3>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {supportBullets.map((item, idx) => (
+                    <li
+                      key={`${item}-${idx}`}
+                      className="flex w-full items-start gap-3 rounded-lg border border-emerald-100 bg-emerald-50/70 p-4 shadow-sm"
                     >
-                      <Heart className="w-4 h-4" /> {donateButtonLabel}{" "}{getDisplayAmount()}
+                      <BadgeCheck className="h-5 w-5 shrink-0 text-emerald-600" />
+                      <span className="text-sm text-emerald-900">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground">{supportNote}</p>
+              </div>
+            )}
+
+            {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
+              <div className="space-y-3">
+                <p className="text-md text-muted-foreground">{supportTiers}</p>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {premiumBenefits.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => handleTierClick('premium')}
+                      className="group relative w-full overflow-hidden rounded-xl border border-emerald-600 bg-gradient-to-br from-emerald-700 via-emerald-500 to-teal-400 p-5 text-left text-white shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+                    >
+                      <div className="flex items-baseline justify-between gap-3">
+                        <h3 className="text-sm font-semibold">{premiumBenefitsHeading}</h3>
+                        <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]">
+                          {TIER_AMOUNT_BADGES.premium}
+                        </span>
+                      </div>
+                      <div className="mt-4 space-y-3">
+                        {premiumBenefits.map((benefit) => (
+                          <div key={`premium-${benefit.title}`} className="flex items-start gap-3">
+                            <Sparkles className="h-5 w-5 shrink-0 text-white/90" />
+                            <div className="space-y-1">
+                              <p className="text-sm leading-relaxed text-white/90">{benefit.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </button>
+                  )}
+                  {sponsorBenefits.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => handleTierClick('sponsor')}
+                      className="group relative w-full overflow-hidden rounded-xl border border-emerald-500 bg-gradient-to-br from-emerald-600 via-emerald-500 to-lime-400 p-5 text-left text-white shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+                    >
+                      <div className="flex items-baseline justify-between gap-3">
+                        <h3 className="text-sm font-semibold">{sponsorBenefitsHeading}</h3>
+                        <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]">
+                          {TIER_AMOUNT_BADGES.sponsor}
+                        </span>
+                      </div>
+                      <div className="mt-4 space-y-3">
+                        {sponsorBenefits.map((benefit) => (
+                          <div key={`sponsor-${benefit.title}`} className="flex items-start gap-3">
+                            <Sparkles className="h-5 w-5 shrink-0 text-white/90" />
+                            <div className="space-y-1">
+                              <p className="text-sm leading-relaxed text-white/90">{benefit.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </button>
+                  )}
+                  {supporterBenefits.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => handleTierClick('supporter')}
+                      className="group relative w-full overflow-hidden rounded-xl border border-emerald-300 bg-gradient-to-br from-emerald-300 via-teal-200 to-sky-200 p-5 text-left text-emerald-900 shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700/60"
+                    >
+                      <div className="flex items-baseline justify-between gap-3">
+                        <h3 className="text-sm font-semibold">{supporterBenefitsHeading}</h3>
+                        <span className="rounded-full bg-emerald-900/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-900">
+                          {TIER_AMOUNT_BADGES.supporter}
+                        </span>
+                      </div>
+                      <div className="mt-4 space-y-3">
+                        {supporterBenefits.map((benefit) => (
+                          <div key={`supporter-${benefit.title}`} className="flex items-start gap-3">
+                            <Sparkles className="h-5 w-5 shrink-0 text-emerald-800" />
+                            <div className="space-y-1">
+                              <p className="text-sm leading-relaxed text-emerald-900/90">{benefit.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+            >
+              <Users className="w-4 h-4" /> {supportOrganizationsCta}
+            </Link>
+          </div>
+        </section>
+
+        {isDonationOverlayOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-10 bg-black/70 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            onKeyDown={handleOverlayKeyDown}
+            onClick={(event) => {
+              if (event.currentTarget === event.target) {
+                handleCloseOverlay();
+              }
+            }}
+          >
+            <div className="relative w-full max-w-5xl">
+              <button
+                type="button"
+                onClick={handleCloseOverlay}
+                className="absolute -top-10 right-0 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+                aria-label={locale === 'ja' ? '寄付画面を閉じる' : 'Close donation flow'}
+              >
+                <X className="h-5 w-5" />
+              </button>
+              <div
+                ref={donationCardRef}
+                tabIndex={-1}
+                className="outline-none rounded-xl bg-white p-6 md:p-8 shadow-xl ring-1 ring-gray-100"
+              >
+                {activeTierHeading && (
+                  <div className="mb-5 flex items-center justify-between gap-3 rounded-lg bg-emerald-50/80 px-4 py-3 text-emerald-900">
+                    <span className="text-sm font-semibold">{activeTierHeading}</span>
+                    {activeTierBadge && (
+                      <span className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                        {activeTierBadge}
+                      </span>
+                    )}
                   </div>
-                  <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
-                    {walletConnectFallbackNote}
+                )}
+                <div className="grid grid-cols-1 gap-6 md:gap-7 md:grid-cols-2 lg:gap-8 lg:grid-cols-[1.15fr,1fr]">
+                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-5 md:space-y-6">
+                    <div>
+                      <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{selectionStepLabel}</div>
+                      <h3 className="text-sm font-semibold text-foreground mt-1">{selectionStepTitle}</h3>
+                      <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{selectionStepDescription}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="text-sm font-medium text-foreground">{supportMethodLabel}</div>
+                      <div className="flex flex-wrap gap-2">
+                        {paymentOptions.map((option) => {
+                          const isActive = option.value === selectedMethod;
+                          return (
+                            <button
+                              type="button"
+                              key={`method-${option.value}`}
+                              onClick={() => handleMethodChange(option.value)}
+                              className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition ${
+                                isActive
+                                  ? "bg-emerald-600 text-white shadow"
+                                  : "bg-white text-foreground ring-1 ring-border hover:bg-muted"
+                              }`}
+                            >
+                              {option.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {!isFiatJPY && (
+                      <div className="space-y-2">
+                        <div className="text-sm font-medium text-foreground">{supportChainLabel}</div>
+                        <div className="flex flex-wrap gap-2">
+                          {availableCryptoChains.map((chain, idx) => {
+                            const isActive = idx === safeChainIndex;
+                            return (
+                              <button
+                                type="button"
+                                key={`chain-${chain.value}`}
+                                onClick={() => handleChainSelect(idx)}
+                                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
+                                  isActive
+                                    ? "bg-emerald-500 text-white shadow"
+                                    : "bg-white text-foreground ring-1 ring-border hover:bg-muted"
+                                }`}
+                              >
+                                <span className={`h-2.5 w-2.5 rounded-full ${chain.color}`} />
+                                {chain.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-6 md:space-y-7">
+                    <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div>
+                          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
+                          <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
+                        </div>
+                        <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
+                          {isStepOneSkipped ? (
+                            <Circle className="w-4 h-4" />
+                          ) : isStepOneComplete ? (
+                            <CheckCircle2 className="w-4 h-4" />
+                          ) : (
+                            <Circle className="w-4 h-4" />
+                          )}
+                          <span>{stepOneStatusLabel}</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
+                      {isWalletConnectEligible ? (
+                        <div className="space-y-4">
+                          <div className="flex justify-end">
+                            <button
+                              type="button"
+                              onClick={() => void resetWalletConnect()}
+                              disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
+                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                            >
+                              <RefreshCcw className="w-3 h-3" /> {t('supportSection.wcReset')}
+                            </button>
+                          </div>
+                          {walletConnectError && (
+                            <p className="text-xs text-red-600">{walletConnectError}</p>
+                          )}
+                          {walletConnectUri && (
+                            <div className="flex justify-center">
+                              <div className="rounded-lg bg-white p-4 shadow-sm">
+                                <QRCode
+                                  value={walletConnectUri}
+                                  size={168}
+                                  bgColor="#ffffff"
+                                  fgColor="#111827"
+                                  style={{ height: '168px', width: '168px' }}
+                                />
+                              </div>
+                            </div>
+                          )}
+                          {!walletConnectUri && walletConnectLoading && (
+                            <p className="text-xs text-muted-foreground">{t('supportSection.wcWaiting')}</p>
+                          )}
+                          {walletConnectSession && (
+                            <div className="space-y-2 text-xs text-muted-foreground">
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium">{t('supportSection.wcConnected')}</span>
+                                <span className="font-mono text-foreground/90">
+                                  {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? '') || '—'}
+                                </span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium">{supportChainLabel}</span>
+                                <span>{availableCryptoChains[safeChainIndex]?.label ?? ''}</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium">{supportAmountLabel}</span>
+                                <span>{formattedAmount}</span>
+                              </div>
+                              {!walletConnectSupportsTargetChain && (
+                                <p className="text-amber-600">
+                                  {t('supportSection.wcSwitchHint', {
+                                    chain: availableCryptoChains[safeChainIndex]?.label ?? '',
+                                  })}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        !isFiatJPY && (
+                          <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
+                            {t('supportSection.wcDisabled')}
+                          </div>
+                        )
+                      )}
+                    </div>
+
+                    <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div>
+                          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
+                          <h3 className="text-sm font-semibold text-foreground mt-1">{stepTwoTitle}</h3>
+                        </div>
+                        <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
+                          {canSendDonation ? (
+                            <CheckCircle2 className="w-4 h-4" />
+                          ) : (
+                            <Circle className="w-4 h-4" />
+                          )}
+                          <span>{stepTwoStatusLabel}</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
+                      {isWalletConnectEligible && !canSendDonation && (
+                        <p className="text-xs text-amber-600">{t('supportSection.wcConnectPrompt')}</p>
+                      )}
+                      {isFiatJPY && (
+                        <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
+                          <div className="flex justify-between items-center">
+                            <span className="font-medium">PayPay銀行</span>
+                            <button
+                              onClick={() => copyToClipboard('PayPay銀行')}
+                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                            >
+                              <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
+                            </button>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span>かわせみ支店(007) 普通</span>
+                            <button
+                              onClick={() => copyToClipboard('007')}
+                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                            >
+                              <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
+                            </button>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span>7551963 ツツミマサト</span>
+                            <button
+                              onClick={() => copyToClipboard('7551963')}
+                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                            >
+                              <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      <button
+                        onClick={handlePayment}
+                        disabled={!canSendDonation}
+                        className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                      >
+                        <Heart className="w-4 h-4" /> {donateButtonLabel}{' '}{getDisplayAmount()}
+                      </button>
+                      <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
+                        {walletConnectFallbackNote}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-
+        )}
         {/* FAQ */}
         <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto">

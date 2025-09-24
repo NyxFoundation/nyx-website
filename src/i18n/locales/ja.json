@@ -140,11 +140,11 @@
         "自動検証ツールの独自開発",
         "コミュニティへの還元"
       ],
-      "tiers": "累計寄付額10万円以上でサポーター、100万円以上でスポンサー、32 ETH以上でプレミアムスポンサーとしてご案内します。",
+      "tiers": "寄付プランを選択してください。",
       "useCasesHeading": "支援が活きる領域",
-      "benefitsSponsorHeading": "スポンサー特典",
-      "benefitsSupporterHeading": "サポーター特典",
-      "benefitsPremiumHeading": "プレミアムスポンサー特典",
+      "benefitsSponsorHeading": "スポンサー",
+      "benefitsSupporterHeading": "サポーター",
+      "benefitsPremiumHeading": "プレミアムスポンサー",
       "benefitsPremium": [
         {
           "title": "プレミアムスポンサー特典",
@@ -167,7 +167,8 @@
       "organizationsCta": "法人の方はこちら",
       "selectionStep": {
         "label": "手順1",
-        "title": "寄付方法を選択"
+        "title": "支払い方法とチェーンを選択",
+        "description": "ここで支払い方法とチェーンを選び、続けてWalletConnectで接続し、寄付を送信するとthankyou-donationページへ遷移します。"
       },
       "amountLabel": "寄付額",
       "methodLabel": "支払い方法",

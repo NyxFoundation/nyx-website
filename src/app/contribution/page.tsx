@@ -1345,104 +1345,6 @@ export default function ContributionPage() {
           )}
         </section>
 
-        {/* Story - Part 3: Sponsor / Supporterについて */}
-        {false && (
-        <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
-          {locale === "ja" ? (
-            <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
-              <div className="max-w-6xl mx-auto space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">スポンサー / サポーターについて</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">Nyx Foundationの価値観に共感し、Nyxの活動を前に進めるお手伝いをしてくださる方々をスポンサー / サポーターと呼んでいます。スポンサー / サポーターからのご支援は、「検証が前提」のエコシステムと、公平なルールの上で価値が広がる世界への一歩になります。</p>
-              </div>
-              {/* 返礼品をこのコンテナ内に配置（重複を避け、この場だけで表示） */}
-              <div className="max-w-6xl mx-auto">
-                <div className="grid sm:grid-cols-2 gap-6 md:gap-7 place-items-stretch">
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-blue-50 text-blue-700"><Globe className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">webページへのロゴ掲載</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">公式サイトのスポンサー欄に掲載</p>
-                  </div>
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-purple-50 text-purple-700"><Shirt className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">オリジナルグッズ配送</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">Tシャツやステッカーなど</p>
-                  </div>
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-emerald-50 text-emerald-700"><Calendar className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">イベント参加権</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">カンファレンス・勉強会への優先参加</p>
-                  </div>
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-amber-50 text-amber-700"><BadgeCheck className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">スポンサー / サポーター称号・バッジの使用</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">プロフィール/発表資料等で「スポンサー / サポーター」を名乗れます</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="max-w-6xl mx-auto space-y-8">
-              <div className="max-w-6xl mx-auto space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">About Sponsor / Supporter</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">We call those who share Nyx Foundation’s values and help move our work forward the Sponsor / Supporter community. Support from Sponsor / Supporter is a step toward a verification-first ecosystem and a world where value grows on fair rules.</p>
-              </div>
-              <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-6">
-                  <h4 className="text-lg font-semibold">Benefits</h4>
-                  <p className="text-sm text-muted-foreground">As a thank-you for your support:</p>
-                </div>
-                <div className="grid sm:grid-cols-2 gap-6 md:gap-7 place-items-stretch">
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-blue-50 text-blue-700"><Globe className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">Logo placement</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">On our website sponsor section</p>
-                  </div>
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-purple-50 text-purple-700"><Shirt className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">Original goods</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">T-shirts, stickers, and more</p>
-                  </div>
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-emerald-50 text-emerald-700"><Calendar className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">Event access</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">Priority for conferences and meetups</p>
-                  </div>
-                  <div className="w-full rounded-xl p-6 bg-white/90 shadow-sm ring-1 ring-gray-100 text-center hover:shadow-md transition-shadow space-y-2">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="p-2 rounded-md bg-amber-50 text-amber-700"><BadgeCheck className="w-6 h-6" /></div>
-                      <h5 className="font-semibold">Sponsor / Supporter badge</h5>
-                    </div>
-                    <p className="text-sm text-muted-foreground">Use “Sponsor / Supporter” on profiles and slides</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </section>
-        )}
-
-        {/* Impact section removed; merged conceptually into reasons */}
-
-        {/* 寄付方法＆ツイート セクションは削除（要望） */}
-
-        {/* Achievements section removed as requested */}
-
-        {/* Benefits section moved into “ご支援の使い道” */}
-
         {/* Sponsors & Supporters（グリッド、非スクロール、ロゴ貼り付け） */}
         <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto">
@@ -1532,12 +1434,11 @@ export default function ContributionPage() {
               <div className="space-y-3 text-center md:text-left">
                 <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
-                <p className="text-sm text-muted-foreground">{supportTiers}</p>
               </div>
 
               {supportBullets.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em]">
                     {supportUseCasesHeading}
                   </h3>
                   <ul className="grid gap-3 sm:grid-cols-2">
@@ -1557,6 +1458,7 @@ export default function ContributionPage() {
 
               {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
                 <div className="space-y-3">
+                  <p className="text-md text-muted-foreground">{supportTiers}</p>
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {premiumBenefits.length > 0 && (
                       <div className="rounded-lg border border-emerald-300 bg-emerald-100 p-5 shadow-sm">

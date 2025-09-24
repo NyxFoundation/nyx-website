@@ -142,18 +142,25 @@
       ],
       "tiers": "We recognize supporters based on cumulative contributions: Supporter from JPY 100,000, Sponsor from JPY 1,000,000, and Premium Sponsor from 32 ETH.",
       "useCasesHeading": "Where your support goes",
+      "benefitsPremiumHeading": "Premium sponsor perks",
       "benefitsSponsorHeading": "Sponsor perks",
       "benefitsSupporterHeading": "Supporter perks",
+      "benefitsPremium": [
+        {
+          "title": "Premium sponsor perks",
+          "description": "Premium sponsors receive a Nyx Foundation T-shirt and priority access to collaborative research proposals and technical advisement."
+        }
+      ],
       "benefitsSponsor": [
         {
-          "title": "Nyx House access",
-          "description": "Sponsors are welcome to visit the Nyx House anytime."
+          "title": "Sponsor perk",
+          "description": "Sponsors receive anytime access to the Nyx House."
         }
       ],
       "benefitsSupporter": [
         {
-          "title": "Recognition",
-          "description": "Supporters and Sponsors are featured on our website."
+          "title": "Supporter perk",
+          "description": "Supporters are recognized on our official website."
         }
       ],
       "note": "Note: Any surplus is allocated as funding toward our mission. Donations are voluntary.",

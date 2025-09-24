@@ -144,16 +144,23 @@
       "useCasesHeading": "支援が活きる領域",
       "benefitsSponsorHeading": "スポンサー特典",
       "benefitsSupporterHeading": "サポーター特典",
+      "benefitsPremiumHeading": "プレミアムスポンサー特典",
+      "benefitsPremium": [
+        {
+          "title": "プレミアムスポンサー特典",
+          "description": "プレミアムスポンサーにはNyx Foundation Tシャツを進呈し、共同研究の提案や技術アドバイスを優先的にご案内します。"
+        }
+      ],
       "benefitsSponsor": [
         {
-          "title": "ハウスへの常時アクセス",
-          "description": "スポンサーになるとハウスにいつでもお越しいただけます。"
+          "title": "スポンサー特典",
+          "description": "スポンサーはNyxハウスを随時ご利用いただけます。"
         }
       ],
       "benefitsSupporter": [
         {
-          "title": "掲載特典",
-          "description": "支援者のみなさまはホームページでご紹介します。"
+          "title": "サポーター特典",
+          "description": "サポーターは公式サイトでご紹介します。"
         }
       ],
       "note": "※ 剰余は当団体の目的領域への資金提供に充てます。寄付額は任意です。",

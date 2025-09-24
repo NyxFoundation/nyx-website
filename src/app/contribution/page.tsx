@@ -328,10 +328,13 @@ export default function ContributionPage() {
 
   const supportBulletsRaw = t.raw("supportSection.bullets");
   const supportBullets = Array.isArray(supportBulletsRaw) ? (supportBulletsRaw as string[]) : [];
+  const premiumBenefitsRaw = t.raw("supportSection.benefitsPremium");
+  const premiumBenefits = Array.isArray(premiumBenefitsRaw) ? (premiumBenefitsRaw as SupportBenefit[]) : [];
   const sponsorBenefitsRaw = t.raw("supportSection.benefitsSponsor");
   const sponsorBenefits = Array.isArray(sponsorBenefitsRaw) ? (sponsorBenefitsRaw as SupportBenefit[]) : [];
   const supporterBenefitsRaw = t.raw("supportSection.benefitsSupporter");
   const supporterBenefits = Array.isArray(supporterBenefitsRaw) ? (supporterBenefitsRaw as SupportBenefit[]) : [];
+  const premiumBenefitsHeading = t("supportSection.benefitsPremiumHeading");
   const sponsorBenefitsHeading = t("supportSection.benefitsSponsorHeading");
   const supporterBenefitsHeading = t("supportSection.benefitsSupporterHeading");
   const supportUseCasesHeading = t("supportSection.useCasesHeading");
@@ -1552,50 +1555,55 @@ export default function ContributionPage() {
                 </div>
               )}
 
-              {(sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
-                <div className="space-y-5">
-                  {sponsorBenefits.length > 0 && (
-                    <div className="space-y-3">
-                      <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-                        {sponsorBenefitsHeading}
-                      </h3>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        {sponsorBenefits.map((benefit) => (
-                          <div
-                            key={`sponsor-${benefit.title}`}
-                            className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4"
-                          >
-                            <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
-                            <div className="space-y-1">
-                              <div className="text-sm font-semibold text-emerald-900">{benefit.title}</div>
-                              <p className="text-sm text-emerald-800">{benefit.description}</p>
+              {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
+                <div className="space-y-3">
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {premiumBenefits.length > 0 && (
+                      <div className="rounded-lg border border-emerald-300 bg-emerald-100 p-5 shadow-sm">
+                        <h3 className="text-sm font-semibold text-emerald-900">{premiumBenefitsHeading}</h3>
+                        <div className="mt-3 space-y-3">
+                          {premiumBenefits.map((benefit) => (
+                            <div key={`premium-${benefit.title}`} className="flex items-start gap-3">
+                              <Sparkles className="h-5 w-5 shrink-0 text-emerald-700" />
+                              <div className="space-y-1">
+                                <p className="text-sm text-emerald-900 leading-relaxed">{benefit.description}</p>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  {supporterBenefits.length > 0 && (
-                    <div className="space-y-3">
-                      <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-                        {supporterBenefitsHeading}
-                      </h3>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        {supporterBenefits.map((benefit) => (
-                          <div
-                            key={`supporter-${benefit.title}`}
-                            className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4"
-                          >
-                            <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
-                            <div className="space-y-1">
-                              <div className="text-sm font-semibold text-emerald-900">{benefit.title}</div>
-                              <p className="text-sm text-emerald-800">{benefit.description}</p>
+                    )}
+                    {sponsorBenefits.length > 0 && (
+                      <div className="rounded-lg border border-emerald-200 bg-emerald-100/80 p-5 shadow-sm">
+                        <h3 className="text-sm font-semibold text-emerald-900">{sponsorBenefitsHeading}</h3>
+                        <div className="mt-3 space-y-3">
+                          {sponsorBenefits.map((benefit) => (
+                            <div key={`sponsor-${benefit.title}`} className="flex items-start gap-3">
+                              <Sparkles className="h-5 w-5 shrink-0 text-emerald-700" />
+                              <div className="space-y-1">
+                                <p className="text-sm text-emerald-900 leading-relaxed">{benefit.description}</p>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                    {supporterBenefits.length > 0 && (
+                      <div className="rounded-lg border border-emerald-100 bg-emerald-50 p-5 shadow-sm">
+                        <h3 className="text-sm font-semibold text-emerald-800">{supporterBenefitsHeading}</h3>
+                        <div className="mt-3 space-y-3">
+                          {supporterBenefits.map((benefit) => (
+                            <div key={`supporter-${benefit.title}`} className="flex items-start gap-3">
+                              <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
+                              <div className="space-y-1">
+                                <p className="text-sm text-emerald-800 leading-relaxed">{benefit.description}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 

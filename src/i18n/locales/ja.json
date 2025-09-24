@@ -142,18 +142,21 @@
       ],
       "tiers": "累計寄付額10万円以上でサポーター、100万円以上でスポンサー、32 ETH以上でプレミアムスポンサーとしてご案内します。",
       "useCasesHeading": "支援が活きる領域",
-      "benefitsHeading": "寄付特典",
-      "benefits": [
+      "benefitsSponsorHeading": "スポンサー特典",
+      "benefitsSupporterHeading": "サポーター特典",
+      "benefitsSponsor": [
         {
-          "title": "スポンサー特典",
+          "title": "ハウスへの常時アクセス",
           "description": "スポンサーになるとハウスにいつでもお越しいただけます。"
-        },
+        }
+      ],
+      "benefitsSupporter": [
         {
           "title": "掲載特典",
           "description": "支援者のみなさまはホームページでご紹介します。"
         }
       ],
-      "note": "※ 剰余は当団体の目的に再投資します。寄付額は任意です。",
+      "note": "※ 剰余は当団体の目的領域への資金提供に充てます。寄付額は任意です。",
       "organizationsCta": "法人の方はこちら",
       "selectionStep": {
         "label": "手順1",

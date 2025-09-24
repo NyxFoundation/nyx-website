@@ -47,6 +47,7 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix, hi
             const barY = yScale(bucket.count);
             const isActive = idx === activeIndex;
             const countLabel = `${bucket.count}${peopleSuffix}`;
+            const labelY = Math.max(barY - 3, 10);
 
             return (
               <g key={`${bucket.label}-${idx}`}>
@@ -59,6 +60,11 @@ function SupportDistributionChartComponent({ data, activeIndex, peopleSuffix, hi
                 >
                   <title>{countLabel}</title>
                 </rect>
+                {isActive && (
+                  <text x={centerX} y={labelY} textAnchor="middle" className="fill-emerald-700 text-[4px] font-semibold">
+                    {countLabel}
+                  </text>
+                )}
                 {!hideLabels && (
                   <text
                     x={centerX}

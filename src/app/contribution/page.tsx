@@ -153,9 +153,9 @@ const ETH_TO_USD = 4500;
 const USD_TO_JPY = 145;
 const ETH_TO_JPY = ETH_TO_USD * USD_TO_JPY;
 
-const VARIABLE_STEPS = 6;
-const DISTRIBUTION_COUNTS = [10, 18, 34, 20, 12, 6];
-const DISTRIBUTION_MORE_COUNT = 4;
+const VARIABLE_STEPS = 12;
+const DISTRIBUTION_COUNTS = [1, 3, 8, 0, 0, 0];
+const DISTRIBUTION_MORE_COUNT = 0;
 
 const PRESET_ETH_AMOUNTS = [0.01, 0.1, 1, 3, 5, 10] as const;
 const PRESET_USD_AMOUNTS = [70, 700, 7_000, 15_000, 20_000, 35_000] as const;
@@ -201,7 +201,8 @@ const getEthAmountFromSlider = (index: number, presets: readonly number[]) => {
   }
   const extraIndex = clamped - presets.length + 1;
   const base = presets[presets.length - 1];
-  return Number((base * Math.pow(1.6, extraIndex)).toFixed(4));
+  const growthFactor = 1.2;
+  return Number((base * Math.pow(growthFactor, extraIndex)).toFixed(4));
 };
 
 const convertEthToMethod = (ethAmount: number, method: PaymentMethod) => {
@@ -327,9 +328,12 @@ export default function ContributionPage() {
 
   const supportBulletsRaw = t.raw("supportSection.bullets");
   const supportBullets = Array.isArray(supportBulletsRaw) ? (supportBulletsRaw as string[]) : [];
-  const supportBenefitsRaw = t.raw("supportSection.benefits");
-  const supportBenefits = Array.isArray(supportBenefitsRaw) ? (supportBenefitsRaw as SupportBenefit[]) : [];
-  const supportBenefitsHeading = t("supportSection.benefitsHeading");
+  const sponsorBenefitsRaw = t.raw("supportSection.benefitsSponsor");
+  const sponsorBenefits = Array.isArray(sponsorBenefitsRaw) ? (sponsorBenefitsRaw as SupportBenefit[]) : [];
+  const supporterBenefitsRaw = t.raw("supportSection.benefitsSupporter");
+  const supporterBenefits = Array.isArray(supporterBenefitsRaw) ? (supporterBenefitsRaw as SupportBenefit[]) : [];
+  const sponsorBenefitsHeading = t("supportSection.benefitsSponsorHeading");
+  const supporterBenefitsHeading = t("supportSection.benefitsSupporterHeading");
   const supportUseCasesHeading = t("supportSection.useCasesHeading");
   const supportersHeading = t("supportersSection.heading");
   const sponsorTitle = t("supportersSection.sponsorTitle");
@@ -423,7 +427,7 @@ export default function ContributionPage() {
     {
       question: "Nyx Foundationは非営利法人ですか？",
       answer:
-        "はい、Nyx Foundationは非営利型の一般社団法人という法人格を有しています。利益分配を目的とせず、剰余金は研究開発・形式検証・コミュニティへの貢献など当団体の目的に再投資されます。",
+        "はい、Nyx Foundationは非営利型の一般社団法人という法人格を有しています。利益分配を目的とせず、剰余金は研究開発・形式検証・コミュニティへの貢献など当団体の目的領域への資金提供に充当されます。",
     },
     {
       question: "寄付金はどのように使われますか？",
@@ -436,7 +440,7 @@ export default function ContributionPage() {
         "はい、必要な方に発行します。自動で全ての寄付に発行はしていません。ご希望の方はお問い合わせフォームまたは contact@nyx.foundation までご連絡ください。銀行振込・暗号資産の場合は着金確認後の発行となります。",
     },
     {
-      question: "日本円（銀行振込）の方法は？",
+      question: "日本円で銀行振込できますか？",
       answer:
         "PayPay銀行 かわせみ支店(007) 普通 7551963 ツツミマサト へお振込みください。名義や金額の確認のため、必要に応じてメールでご連絡差し上げます。",
     },
@@ -450,7 +454,7 @@ export default function ContributionPage() {
     {
       question: "Is Nyx Foundation a nonprofit?",
       answer:
-        "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is reinvested into research, formal verification, and community contributions.",
+        "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is allocated as funding for research, formal verification, and community contributions.",
     },
     {
       question: "How is my donation used?",
@@ -463,7 +467,7 @@ export default function ContributionPage() {
         "Yes, on request. We don’t issue receipts automatically for every donation. If you need one, please contact us via the form or at contact@nyx.foundation. For bank transfers or crypto, we issue after confirming receipt.",
     },
     {
-      question: "How do I donate in JPY (bank transfer)?",
+      question: "Can I donate in JPY via bank transfer?",
       answer:
         "Please transfer to PayPay Bank, Kawasemi branch (007), ordinary 7551963, name: ツツミマサト. We may email you to confirm the payer name and amount if needed.",
     },
@@ -600,6 +604,10 @@ export default function ContributionPage() {
     value: amountSliderPositions[index],
     label: formatAmountMarkLabel(eth, selectedMethod, locale),
   }));
+  const customMark = {
+    value: amountSliderPositions[amountSliderPositions.length - 1] ?? 0,
+    label: "more"
+  };
   const distributionDataBase = presetEthAmounts.map((eth, idx) => ({
     label: formatMethodAmount(convertEthToMethod(eth, selectedMethod), selectedMethod, locale),
     count: DISTRIBUTION_COUNTS[idx] ?? 0,
@@ -609,10 +617,11 @@ export default function ContributionPage() {
     { label: "", count: DISTRIBUTION_MORE_COUNT },
   ];
   const activeBucketIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : distributionData.length - 1;
-  const activeTickIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : amountMarks.length - 1;
+  const customTickIndex = amountMarks.length;
+  const activeTickIndex = safeAmountIndex < presetEthAmounts.length ? safeAmountIndex : customTickIndex;
   const methodMarks = paymentOptions.map((option, idx) => ({ value: idx, label: option.label }));
   const chainMarks = availableCryptoChains.map((chain, idx) => ({ value: idx, label: chain.label }));
-  const amountSliderMarks = amountMarks.map((mark, idx) => ({
+  const amountSliderMarks = [...amountMarks, customMark].map((mark, idx) => ({
     ...mark,
     isActive: idx === activeTickIndex,
   }));
@@ -790,7 +799,8 @@ export default function ContributionPage() {
 
   const getDisplayAmount = () => formattedAmount;
 
-  const toggleFAQ = (idx: number) => setOpenFAQ(openFAQ === idx ? null : idx);
+  const toggleFAQ = (idx: number) =>
+    setOpenFAQ((prev) => (prev === idx ? null : idx));
 
   const handlePayment = useCallback(async () => {
     if (isWalletConnectEligible) {
@@ -931,11 +941,9 @@ export default function ContributionPage() {
               />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
-              {locale === "ja" ? (
-                <span className="whitespace-nowrap">NyxはEthereumを信頼できる社会基盤に。</span>
-              ) : (
-                <>Nyx makes Ethereum a trustworthy social infrastructure.</>
-              )}
+              {locale === "ja"
+                ? "Ethereumを信頼できる社会基盤に。"
+                : "Make Ethereum a trustworthy social infrastructure."}
             </h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               {locale === "ja" ? (
@@ -950,7 +958,7 @@ export default function ContributionPage() {
             </p>
             <Link
               href="#support-nyx"
-              className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              className="inline-flex items-center justify-center rounded-md bg-emerald-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
             >
               {supportHeading}
             </Link>
@@ -962,7 +970,7 @@ export default function ContributionPage() {
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">信頼できる社会基盤としてのEthereum</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">信頼できる社会基盤としてのEthereum</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
                   <p>仕様と実装が整合し、状態遷移と資産移転が期待どおりに一貫して実行され、第三者が検証できる——それが「信頼できる社会基盤」としての条件です。</p>
@@ -983,7 +991,7 @@ export default function ContributionPage() {
             </div>
           ) : (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h2 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Ethereum as trustworthy social infrastructure</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">Ethereum as trustworthy social infrastructure</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-2 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
                   <p>Alignment between specs and implementations, predictable state transitions and value transfers, and third‑party verifiability—these are the conditions for a trustworthy social infrastructure.</p>
@@ -1042,7 +1050,7 @@ export default function ContributionPage() {
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちの3つの柱</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">私たちの3つの柱</h3>
 
               {/* Stepper */}
               <div className="relative">
@@ -1090,7 +1098,7 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold whitespace-nowrap">広げる</h4>
+                    <h4 className="font-semibold md:whitespace-nowrap">広げる</h4>
                   </div>
                   <p className="text-xs text-muted-foreground mb-2">学術と産業をオープンに橋渡しする</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
@@ -1103,7 +1111,7 @@ export default function ContributionPage() {
             </div>
           ) : (
             <div className="max-w-6xl mx-auto space-y-10">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Our Three Pillars</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">Our Three Pillars</h3>
 
               <div className="relative">
                 <div className="absolute left-0 right-0 top-[7px] h-[2px] bg-gray-200" />
@@ -1149,7 +1157,7 @@ export default function ContributionPage() {
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="p-2 rounded-md bg-sky-50 text-sky-700"><Lightbulb className="w-5 h-5" /></div>
-                    <h4 className="font-semibold whitespace-nowrap">Expand</h4>
+                    <h4 className="font-semibold md:whitespace-nowrap">Expand</h4>
                   </div>
                   <p className="text-xs text-muted-foreground mb-2">Bridge academia and industry openly</p>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
@@ -1169,7 +1177,7 @@ export default function ContributionPage() {
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">チームと実績</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">チームと実績</h3>
               <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-3">チーム</h4>
@@ -1226,7 +1234,7 @@ export default function ContributionPage() {
             </div>
           ) : (
             <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Team & Achievements</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">Team & Achievements</h3>
               <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <h4 className="font-semibold mb-2">Team</h4>
@@ -1288,7 +1296,7 @@ export default function ContributionPage() {
         <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">私たちがやる理由</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">私たちがやる理由</h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-1 md:order-1 lg:col-span-7 self-center space-y-3 text-base text-muted-foreground leading-relaxed">
                   <p>Ethereum は、学歴・人種・年齢・所属にかかわらず、行為と成果で評価される場です。オープンな議論とピアレビュー、公開された実装と検証、そして誰もが参加できる開発プロセス――この世界観に強く惹かれた少人数の若手中心チームが私たちです。</p>
@@ -1310,7 +1318,7 @@ export default function ContributionPage() {
             </div>
           ) : (
             <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
-              <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">Why we do this</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">Why we do this</h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">
                 <div className="order-2 md:order-1 lg:col-span-7 self-center space-y-4 text-[15px] md:text-base text-muted-foreground leading-relaxed">
                   <p>
@@ -1340,7 +1348,7 @@ export default function ContributionPage() {
           {locale === "ja" ? (
             <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
               <div className="max-w-6xl mx-auto space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">スポンサー / サポーターについて</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">スポンサー / サポーターについて</h3>
                 <p className="text-base text-muted-foreground leading-relaxed">Nyx Foundationの価値観に共感し、Nyxの活動を前に進めるお手伝いをしてくださる方々をスポンサー / サポーターと呼んでいます。スポンサー / サポーターからのご支援は、「検証が前提」のエコシステムと、公平なルールの上で価値が広がる世界への一歩になります。</p>
               </div>
               {/* 返礼品をこのコンテナ内に配置（重複を避け、この場だけで表示） */}
@@ -1380,7 +1388,7 @@ export default function ContributionPage() {
           ) : (
             <div className="max-w-6xl mx-auto space-y-8">
               <div className="max-w-6xl mx-auto space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold text-center whitespace-nowrap">About Sponsor / Supporter</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">About Sponsor / Supporter</h3>
                 <p className="text-base text-muted-foreground leading-relaxed">We call those who share Nyx Foundation’s values and help move our work forward the Sponsor / Supporter community. Support from Sponsor / Supporter is a step toward a verification-first ecosystem and a world where value grows on fair rules.</p>
               </div>
               <div className="max-w-6xl mx-auto">
@@ -1436,7 +1444,7 @@ export default function ContributionPage() {
         <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold whitespace-nowrap">{supportersHeading}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold md:whitespace-nowrap">{supportersHeading}</h2>
             </div>
             {/* 法人・個人メイトを単一コンテナに統合 */}
             <div className="rounded-xl p-12 md:p-14 bg-white shadow-sm ring-1 ring-gray-100">
@@ -1544,25 +1552,50 @@ export default function ContributionPage() {
                 </div>
               )}
 
-              {supportBenefits.length > 0 && (
-                <div className="space-y-3">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
-                    {supportBenefitsHeading}
-                  </h3>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {supportBenefits.map((benefit) => (
-                      <div
-                        key={benefit.title}
-                        className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4"
-                      >
-                        <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
-                        <div className="space-y-1">
-                          <div className="text-sm font-semibold text-emerald-900">{benefit.title}</div>
-                          <p className="text-sm text-emerald-800">{benefit.description}</p>
-                        </div>
+              {(sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
+                <div className="space-y-5">
+                  {sponsorBenefits.length > 0 && (
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                        {sponsorBenefitsHeading}
+                      </h3>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {sponsorBenefits.map((benefit) => (
+                          <div
+                            key={`sponsor-${benefit.title}`}
+                            className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4"
+                          >
+                            <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
+                            <div className="space-y-1">
+                              <div className="text-sm font-semibold text-emerald-900">{benefit.title}</div>
+                              <p className="text-sm text-emerald-800">{benefit.description}</p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  )}
+                  {supporterBenefits.length > 0 && (
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                        {supporterBenefitsHeading}
+                      </h3>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {supporterBenefits.map((benefit) => (
+                          <div
+                            key={`supporter-${benefit.title}`}
+                            className="flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4"
+                          >
+                            <Sparkles className="h-5 w-5 shrink-0 text-emerald-600" />
+                            <div className="space-y-1">
+                              <div className="text-sm font-semibold text-emerald-900">{benefit.title}</div>
+                              <p className="text-sm text-emerald-800">{benefit.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1791,12 +1824,12 @@ export default function ContributionPage() {
         <section className="mb-28 md:mb-36">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12 md:mb-14">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">{locale === "ja" ? "よくある質問" : "FAQ"}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2 md:whitespace-nowrap">{locale === "ja" ? "よくある質問" : "FAQ"}</h2>
               <p className="text-muted-foreground">{locale === "ja" ? "寄付に関するご質問にお答えします" : "Answers to common donation questions"}</p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="rounded-md bg-white/90 shadow-sm ring-1 ring-gray-100">
+                <div key={`${faq.question}-${idx}`} className="rounded-md bg-white/90 shadow-sm ring-1 ring-gray-100">
                   <button onClick={() => toggleFAQ(idx)} className="w-full p-6 text-left hover:bg-muted/40">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold pr-4 tracking-tight">{faq.question}</h3>

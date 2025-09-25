@@ -298,10 +298,6 @@
           "skipped": "Not required"
         }
       },
-      "distributionTitle": "Donation distribution",
-      "distributionSubtitle": "Supporters at each amount tier",
-      "moreLabel": "More",
-      "peopleSuffix": " supporters",
       "donateCta": "Donate",
       "completeCta": "Done",
       "copyAddress": "Copy address",

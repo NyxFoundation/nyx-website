@@ -299,10 +299,6 @@
           "skipped": "不要"
         }
       },
-      "distributionTitle": "寄付額の分布",
-      "distributionSubtitle": "支援額ごとの人数",
-      "moreLabel": "それ以上",
-      "peopleSuffix": "人",
       "donateCta": "寄付する",
       "completeCta": "完了",
       "copyAddress": "アドレスをコピー",

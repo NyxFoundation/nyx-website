@@ -184,6 +184,8 @@ export const CORPORATE_SPONSORS: SponsorInfo[] = [
   },
 ];
 
+export const PREMIUM_SPONSORS: SponsorInfo[] = [];
+
 export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
   {
     names: { default: "DeSci Tokyo", ja: "デサイ東京" },

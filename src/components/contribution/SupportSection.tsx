@@ -17,6 +17,7 @@ import {
   ERC20_METADATA,
   FIXED_AMOUNTS,
   INDIVIDUAL_SUPPORTERS,
+  PREMIUM_SPONSORS,
   SUPPORT_TIER_ETH_AMOUNTS,
   TIER_AMOUNT_BADGES,
   TOKEN_TRANSFER_GAS_HEX,
@@ -62,12 +63,8 @@ const ContributionSupportSection = () => {
   const [isDonationOverlayOpen, setDonationOverlayOpen] = useState(false);
   const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
 
-  const corporateSplitIndex = Math.ceil(CORPORATE_SPONSORS.length / 2);
-  const premiumTierDonors = useMemo(() => CORPORATE_SPONSORS.slice(0, corporateSplitIndex), [corporateSplitIndex]);
-  const sponsorTierDonors = useMemo(() => {
-    const remainder = CORPORATE_SPONSORS.slice(corporateSplitIndex);
-    return remainder.length > 0 ? remainder : CORPORATE_SPONSORS;
-  }, [corporateSplitIndex]);
+  const premiumTierDonors = useMemo(() => PREMIUM_SPONSORS, []);
+  const sponsorTierDonors = useMemo(() => CORPORATE_SPONSORS, []);
   const supporterTierDonors = useMemo(() => INDIVIDUAL_SUPPORTERS, []);
   const tierDonors = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, SponsorInfo[]>>(
     () => ({

@@ -11,7 +11,6 @@ import {
   ShieldCheck,
   FunctionSquare,
   BadgeCheck,
-  Sparkles,
   HelpCircle,
   RefreshCcw,
   CheckCircle2,
@@ -23,6 +22,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent a
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SupportDistributionChart } from "@/components/contribution/SupportDistributionChart";
+import { SupportTierButton, type SupportBenefit } from "@/components/contribution/SupportTierButton";
 import QRCode from "react-qr-code";
 import SignClient from "@walletconnect/sign-client";
 import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
@@ -30,8 +30,6 @@ import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
 type PaymentMethod = "ETH" | "USDC" | "USDT" | "DAI" | "JPY";
 type CryptoChain = "ethereum" | "optimism" | "arbitrum" | "base";
 type TokenPaymentMethod = Exclude<PaymentMethod, "ETH" | "JPY">;
-type SupportBenefit = { title: string; description: string };
-
 const DONATION_ADDRESS = "0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a";
 const CHAIN_ID_MAP: Record<CryptoChain, number> = {
   ethereum: 1,
@@ -271,9 +269,6 @@ export default function ContributionPage() {
   const individualSupporters = [
     { name: "DeSci Tokyo", jpname: "デサイ東京", logo: "/sponsors/desci.jpg" },
   ];
-  const communityPartners: { name: string; jpname?: string; logo: string | null }[] = [
-    // 例: { name: "Community XYZ", jpname: "コミュニティXYZ", logo: null }
-  ];
 
   const supportBulletsRaw = t.raw("supportSection.bullets");
   const supportBullets = Array.isArray(supportBulletsRaw) ? (supportBulletsRaw as string[]) : [];
@@ -290,8 +285,6 @@ export default function ContributionPage() {
   const supportersHeading = t("supportersSection.heading");
   const sponsorTitle = t("supportersSection.sponsorTitle");
   const supporterTitle = t("supportersSection.supporterTitle");
-  const communityTitle = t("supportersSection.communityTitle");
-  const communityComingSoon = t("supportersSection.comingSoon");
   const supportHeading = t("supportSection.heading");
   const supportIntro = t("supportSection.intro");
   const supportTiers = t("supportSection.tiers");
@@ -926,7 +919,7 @@ export default function ContributionPage() {
             </p>
             <Link
               href="#support-nyx"
-              className="inline-flex items-center justify-center rounded-md bg-emerald-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
+              className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-lime-300 via-emerald-400 to-cyan-400 px-6 py-3 text-sm font-semibold text-slate-900 shadow-[0_0_22px_rgba(74,222,128,0.45)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_32px_rgba(16,185,129,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-300"
             >
               {supportHeading}
             </Link>
@@ -1320,69 +1313,45 @@ export default function ContributionPage() {
             <div className="rounded-xl p-12 md:p-14 bg-white shadow-sm ring-1 ring-gray-100">
               <div className="grid grid-cols-1 gap-12 md:gap-14">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-8">{sponsorTitle}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold leading-tight mb-8">{sponsorTitle}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-                  {corporateSponsors.map((c) => (
-                    <div key={c.name} className="flex flex-col items-center gap-3">
-                      <div className="relative w-16 h-16 md:w-16 md:h-16">
-                        {c.logo ? (
-                          <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
-                        ) : (
-                          <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200" />
-                        )}
-                      </div>
-                      <div className="text-xs md:text-sm text-center text-foreground/80">
-                        {locale === "ja" ? c.jpname ?? c.name : c.name}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold mb-8">{supporterTitle}</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-                  {individualSupporters.map((c) => (
-                    <div key={c.name} className="flex flex-col items-center gap-3">
-                      <div className="relative w-16 h-16 md:w-16 md:h-16">
-                        {c.logo ? (
-                          <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
-                        ) : (
-                          <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200 flex items-center justify-center">
-                            <HelpCircle className="w-6 h-6 text-muted-foreground" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="text-xs md:text-sm text-center text-foreground/80">
-                        {locale === "ja" ? c.jpname ?? c.name : c.name}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                {/* Community Partners */}
-                <div className="mt-12">
-                  <h3 className="text-xl md:text-2xl font-bold mb-8">{communityTitle}</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-                    {communityPartners.length === 0 ? (
-                      <p className="col-span-full text-center text-sm text-muted-foreground">{communityComingSoon}</p>
-                    ) : (
-                      communityPartners.map((c) => (
-                        <div key={c.name} className="flex flex-col items-center gap-3">
-                          <div className="relative w-16 h-16 md:w-16 md:h-16">
-                            {c.logo ? (
-                              <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
-                            ) : (
-                              <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200 flex items-center justify-center" />
-                            )}
-                          </div>
-                          <div className="text-xs md:text-sm text-center text-foreground/80">
-                            {locale === "ja" ? (c.jpname ?? c.name) : c.name}
-                          </div>
+                    {corporateSponsors.map((c) => (
+                      <div key={c.name} className="flex flex-col items-center gap-3">
+                        <div className="relative w-16 h-16 md:w-16 md:h-16">
+                          {c.logo ? (
+                            <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
+                          ) : (
+                            <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200" />
+                          )}
                         </div>
-                      ))
-                    )}
+                        <div className="text-xs md:text-sm text-center text-foreground/80">
+                          {locale === "ja" ? c.jpname ?? c.name : c.name}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
+                <div>
+                  <h3 className="text-xl md:text-2xl font-bold leading-tight mb-8">{supporterTitle}</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+                    {individualSupporters.map((c) => (
+                      <div key={c.name} className="flex flex-col items-center gap-3">
+                        <div className="relative w-16 h-16 md:w-16 md:h-16">
+                          {c.logo ? (
+                            <Image src={c.logo} alt={c.name} fill className="object-cover rounded-full ring-1 ring-gray-200" />
+                          ) : (
+                            <div className="w-full h-full bg-muted rounded-full ring-1 ring-gray-200 flex items-center justify-center">
+                              <HelpCircle className="w-6 h-6 text-muted-foreground" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-xs md:text-sm text-center text-foreground/80">
+                          {locale === "ja" ? c.jpname ?? c.name : c.name}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1425,76 +1394,31 @@ export default function ContributionPage() {
                 <p className="text-md text-muted-foreground">{supportTiers}</p>
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {premiumBenefits.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => handleTierClick('premium')}
-                      className="group relative w-full overflow-hidden rounded-xl border border-emerald-600 bg-gradient-to-br from-emerald-700 via-emerald-500 to-teal-400 p-5 text-left text-white shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
-                    >
-                      <div className="flex items-baseline justify-between gap-3">
-                        <h3 className="text-sm font-semibold">{premiumBenefitsHeading}</h3>
-                        <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]">
-                          {TIER_AMOUNT_BADGES.premium}
-                        </span>
-                      </div>
-                      <div className="mt-4 space-y-3">
-                        {premiumBenefits.map((benefit) => (
-                          <div key={`premium-${benefit.title}`} className="flex items-start gap-3">
-                            <Sparkles className="h-5 w-5 shrink-0 text-white/90" />
-                            <div className="space-y-1">
-                              <p className="text-sm leading-relaxed text-white/90">{benefit.description}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </button>
+                    <SupportTierButton
+                      variant="premium"
+                      heading={premiumBenefitsHeading}
+                      badgeLabel={TIER_AMOUNT_BADGES.premium}
+                      benefits={premiumBenefits}
+                      onClick={() => handleTierClick("premium")}
+                    />
                   )}
                   {sponsorBenefits.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => handleTierClick('sponsor')}
-                      className="group relative w-full overflow-hidden rounded-xl border border-emerald-500 bg-gradient-to-br from-emerald-600 via-emerald-500 to-lime-400 p-5 text-left text-white shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
-                    >
-                      <div className="flex items-baseline justify-between gap-3">
-                        <h3 className="text-sm font-semibold">{sponsorBenefitsHeading}</h3>
-                        <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]">
-                          {TIER_AMOUNT_BADGES.sponsor}
-                        </span>
-                      </div>
-                      <div className="mt-4 space-y-3">
-                        {sponsorBenefits.map((benefit) => (
-                          <div key={`sponsor-${benefit.title}`} className="flex items-start gap-3">
-                            <Sparkles className="h-5 w-5 shrink-0 text-white/90" />
-                            <div className="space-y-1">
-                              <p className="text-sm leading-relaxed text-white/90">{benefit.description}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </button>
+                    <SupportTierButton
+                      variant="sponsor"
+                      heading={sponsorBenefitsHeading}
+                      badgeLabel={TIER_AMOUNT_BADGES.sponsor}
+                      benefits={sponsorBenefits}
+                      onClick={() => handleTierClick("sponsor")}
+                    />
                   )}
                   {supporterBenefits.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => handleTierClick('supporter')}
-                      className="group relative w-full overflow-hidden rounded-xl border border-emerald-300 bg-gradient-to-br from-emerald-300 via-teal-200 to-sky-200 p-5 text-left text-emerald-900 shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700/60"
-                    >
-                      <div className="flex items-baseline justify-between gap-3">
-                        <h3 className="text-sm font-semibold">{supporterBenefitsHeading}</h3>
-                        <span className="rounded-full bg-emerald-900/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-900">
-                          {TIER_AMOUNT_BADGES.supporter}
-                        </span>
-                      </div>
-                      <div className="mt-4 space-y-3">
-                        {supporterBenefits.map((benefit) => (
-                          <div key={`supporter-${benefit.title}`} className="flex items-start gap-3">
-                            <Sparkles className="h-5 w-5 shrink-0 text-emerald-800" />
-                            <div className="space-y-1">
-                              <p className="text-sm leading-relaxed text-emerald-900/90">{benefit.description}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </button>
+                    <SupportTierButton
+                      variant="supporter"
+                      heading={supporterBenefitsHeading}
+                      badgeLabel={TIER_AMOUNT_BADGES.supporter}
+                      benefits={supporterBenefits}
+                      onClick={() => handleTierClick("supporter")}
+                    />
                   )}
                 </div>
               </div>
@@ -1511,7 +1435,7 @@ export default function ContributionPage() {
 
         {isDonationOverlayOpen && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-10 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-start md:items-center justify-center overflow-y-auto px-4 py-10 md:py-16 bg-black/70 backdrop-blur-sm"
             role="dialog"
             aria-modal="true"
             onKeyDown={handleOverlayKeyDown}
@@ -1533,7 +1457,7 @@ export default function ContributionPage() {
               <div
                 ref={donationCardRef}
                 tabIndex={-1}
-                className="outline-none rounded-xl bg-white p-6 md:p-8 shadow-xl ring-1 ring-gray-100"
+                className="outline-none rounded-xl bg-white p-6 md:p-8 shadow-xl ring-1 ring-gray-100 max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-6rem)] overflow-y-auto"
               >
                 {activeTierHeading && (
                   <div className="mb-5 flex items-center justify-between gap-3 rounded-lg bg-emerald-50/80 px-4 py-3 text-emerald-900">
@@ -1545,7 +1469,7 @@ export default function ContributionPage() {
                     )}
                   </div>
                 )}
-                <div className="grid grid-cols-1 gap-6 md:gap-7 md:grid-cols-2 lg:gap-8 lg:grid-cols-[1.15fr,1fr]">
+                <div className="flex flex-col gap-6 md:gap-7">
                   <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-5 md:space-y-6">
                     <div>
                       <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{selectionStepLabel}</div>
@@ -1603,151 +1527,149 @@ export default function ContributionPage() {
                     )}
                   </div>
 
-                  <div className="space-y-6 md:space-y-7">
-                    <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
-                          <h3 className="text-sm font-semibold text-foreground mt-1">{stepOneTitle}</h3>
-                        </div>
-                        <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
-                          {isStepOneSkipped ? (
-                            <Circle className="w-4 h-4" />
-                          ) : isStepOneComplete ? (
-                            <CheckCircle2 className="w-4 h-4" />
-                          ) : (
-                            <Circle className="w-4 h-4" />
-                          )}
-                          <span>{stepOneStatusLabel}</span>
-                        </div>
+                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
+                        <h3 className="text-sm font-semibold leading-tight text-foreground mt-1">{stepOneTitle}</h3>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
-                      {isWalletConnectEligible ? (
-                        <div className="space-y-4">
-                          <div className="flex justify-end">
-                            <button
-                              type="button"
-                              onClick={() => void resetWalletConnect()}
-                              disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
-                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
-                            >
-                              <RefreshCcw className="w-3 h-3" /> {t('supportSection.wcReset')}
-                            </button>
-                          </div>
-                          {walletConnectError && (
-                            <p className="text-xs text-red-600">{walletConnectError}</p>
-                          )}
-                          {walletConnectUri && (
-                            <div className="flex justify-center">
-                              <div className="rounded-lg bg-white p-4 shadow-sm">
-                                <QRCode
-                                  value={walletConnectUri}
-                                  size={168}
-                                  bgColor="#ffffff"
-                                  fgColor="#111827"
-                                  style={{ height: '168px', width: '168px' }}
-                                />
-                              </div>
-                            </div>
-                          )}
-                          {!walletConnectUri && walletConnectLoading && (
-                            <p className="text-xs text-muted-foreground">{t('supportSection.wcWaiting')}</p>
-                          )}
-                          {walletConnectSession && (
-                            <div className="space-y-2 text-xs text-muted-foreground">
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium">{t('supportSection.wcConnected')}</span>
-                                <span className="font-mono text-foreground/90">
-                                  {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? '') || '—'}
-                                </span>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium">{supportChainLabel}</span>
-                                <span>{availableCryptoChains[safeChainIndex]?.label ?? ''}</span>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium">{supportAmountLabel}</span>
-                                <span>{formattedAmount}</span>
-                              </div>
-                              {!walletConnectSupportsTargetChain && (
-                                <p className="text-amber-600">
-                                  {t('supportSection.wcSwitchHint', {
-                                    chain: availableCryptoChains[safeChainIndex]?.label ?? '',
-                                  })}
-                                </p>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        !isFiatJPY && (
-                          <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
-                            {t('supportSection.wcDisabled')}
-                          </div>
-                        )
-                      )}
+                      <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
+                        {isStepOneSkipped ? (
+                          <Circle className="w-4 h-4" />
+                        ) : isStepOneComplete ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : (
+                          <Circle className="w-4 h-4" />
+                        )}
+                        <span>{stepOneStatusLabel}</span>
+                      </div>
                     </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
+                    {isWalletConnectEligible ? (
+                      <div className="space-y-4">
+                        <div className="flex justify-end">
+                          <button
+                            type="button"
+                            onClick={() => void resetWalletConnect()}
+                            disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
+                            className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                          >
+                            <RefreshCcw className="w-3 h-3" /> {t('supportSection.wcReset')}
+                          </button>
+                        </div>
+                        {walletConnectError && (
+                          <p className="text-xs text-red-600">{walletConnectError}</p>
+                        )}
+                        {walletConnectUri && (
+                          <div className="flex justify-center">
+                            <div className="rounded-lg bg-white p-4 shadow-sm">
+                              <QRCode
+                                value={walletConnectUri}
+                                size={168}
+                                bgColor="#ffffff"
+                                fgColor="#111827"
+                                style={{ height: '168px', width: '168px' }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                        {!walletConnectUri && walletConnectLoading && (
+                          <p className="text-xs text-muted-foreground">{t('supportSection.wcWaiting')}</p>
+                        )}
+                        {walletConnectSession && (
+                          <div className="space-y-2 text-xs text-muted-foreground">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{t('supportSection.wcConnected')}</span>
+                              <span className="font-mono text-foreground/90">
+                                {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? '') || '—'}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{supportChainLabel}</span>
+                              <span>{availableCryptoChains[safeChainIndex]?.label ?? ''}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{supportAmountLabel}</span>
+                              <span>{formattedAmount}</span>
+                            </div>
+                            {!walletConnectSupportsTargetChain && (
+                              <p className="text-amber-600">
+                                {t('supportSection.wcSwitchHint', {
+                                  chain: availableCryptoChains[safeChainIndex]?.label ?? '',
+                                })}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      !isFiatJPY && (
+                        <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
+                          {t('supportSection.wcDisabled')}
+                        </div>
+                      )
+                    )}
+                  </div>
 
-                    <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
-                          <h3 className="text-sm font-semibold text-foreground mt-1">{stepTwoTitle}</h3>
+                  <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
+                        <h3 className="text-sm font-semibold leading-tight text-foreground mt-1">{stepTwoTitle}</h3>
+                      </div>
+                      <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
+                        {canSendDonation ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : (
+                          <Circle className="w-4 h-4" />
+                        )}
+                        <span>{stepTwoStatusLabel}</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
+                    {isWalletConnectEligible && !canSendDonation && (
+                      <p className="text-xs text-amber-600">{t('supportSection.wcConnectPrompt')}</p>
+                    )}
+                    {isFiatJPY && (
+                      <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">PayPay銀行</span>
+                          <button
+                            onClick={() => copyToClipboard('PayPay銀行')}
+                            className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                          >
+                            <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
+                          </button>
                         </div>
-                        <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
-                          {canSendDonation ? (
-                            <CheckCircle2 className="w-4 h-4" />
-                          ) : (
-                            <Circle className="w-4 h-4" />
-                          )}
-                          <span>{stepTwoStatusLabel}</span>
+                        <div className="flex items-center justify-between">
+                          <span>かわせみ支店(007) 普通</span>
+                          <button
+                            onClick={() => copyToClipboard('007')}
+                            className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                          >
+                            <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
+                          </button>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span>7551963 ツツミマサト</span>
+                          <button
+                            onClick={() => copyToClipboard('7551963')}
+                            className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
+                          >
+                            <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
+                          </button>
                         </div>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
-                      {isWalletConnectEligible && !canSendDonation && (
-                        <p className="text-xs text-amber-600">{t('supportSection.wcConnectPrompt')}</p>
-                      )}
-                      {isFiatJPY && (
-                        <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
-                          <div className="flex justify-between items-center">
-                            <span className="font-medium">PayPay銀行</span>
-                            <button
-                              onClick={() => copyToClipboard('PayPay銀行')}
-                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
-                            >
-                              <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
-                            </button>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span>かわせみ支店(007) 普通</span>
-                            <button
-                              onClick={() => copyToClipboard('007')}
-                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
-                            >
-                              <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
-                            </button>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span>7551963 ツツミマサト</span>
-                            <button
-                              onClick={() => copyToClipboard('7551963')}
-                              className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs"
-                            >
-                              <Copy className="w-3 h-3" /> {locale === 'ja' ? 'コピー' : 'Copy'}
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      <button
-                        onClick={handlePayment}
-                        disabled={!canSendDonation}
-                        className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
-                      >
-                        <Heart className="w-4 h-4" /> {donateButtonLabel}{' '}{getDisplayAmount()}
-                      </button>
-                      <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
-                        {walletConnectFallbackNote}
-                      </div>
+                    )}
+                    <button
+                      onClick={handlePayment}
+                      disabled={!canSendDonation}
+                      className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                    >
+                      <Heart className="w-4 h-4" /> {donateButtonLabel}{' '}{getDisplayAmount()}
+                    </button>
+                    <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
+                      {walletConnectFallbackNote}
                     </div>
                   </div>
                 </div>

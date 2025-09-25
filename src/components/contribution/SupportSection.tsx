@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import QRCode from "react-qr-code";
 import SignClient from "@walletconnect/sign-client";
 import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
-import { CheckCircle2, Circle, Copy, Heart, RefreshCcw, Users, X } from "lucide-react";
+import { CheckCircle2, ChevronDown, Circle, Copy, Heart, RefreshCcw, Users, X } from "lucide-react";
 
 import {
   CHAIN_ID_MAP,
@@ -62,6 +62,7 @@ const ContributionSupportSection = () => {
   const [walletConnectErrorKey, setWalletConnectErrorKey] = useState<string | null>(null);
   const [isDonationOverlayOpen, setDonationOverlayOpen] = useState(false);
   const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
+  const [isDonorListOpen, setDonorListOpen] = useState(false);
 
   const premiumTierDonors = useMemo(() => PREMIUM_SPONSORS, []);
   const sponsorTierDonors = useMemo(() => CORPORATE_SPONSORS, []);
@@ -198,6 +199,7 @@ const ContributionSupportSection = () => {
   const activeTierAvatarRing = activeTier ? tierAvatarRings[activeTier] : "ring-2 ring-emerald-100/80 shadow-sm";
   const donorListTitle = activeTier ? t("supportSection.donorListTitle", { count: activeTierDonors.length }) : null;
   const donorListEmptyMessage = t("supportSection.donorListEmpty");
+  const donorListSectionId = activeTier ? `donor-list-${activeTier}` : undefined;
 
   const isFiatJPY = selectedMethod === "JPY";
   const selectedTokenMeta =
@@ -459,6 +461,10 @@ const ContributionSupportSection = () => {
     [availableCryptoChains]
   );
 
+  const toggleDonorList = useCallback(() => {
+    setDonorListOpen((previous) => !previous);
+  }, []);
+
   const handleAmountSelect = useCallback((index: number) => {
     setSelectedAmountIndex(index);
   }, []);
@@ -470,6 +476,7 @@ const ContributionSupportSection = () => {
       const foundIndex = ethAmounts.findIndex((value) => Math.abs(value - targetEth) < 1e-9);
       const targetIndex = foundIndex === -1 ? 0 : foundIndex;
 
+      setDonorListOpen(false);
       setActiveTier(tier);
       handleMethodChange("ETH");
       setSelectedAmountIndex(targetIndex);
@@ -482,6 +489,7 @@ const ContributionSupportSection = () => {
   const handleCloseOverlay = useCallback(() => {
     setDonationOverlayOpen(false);
     setActiveTier(null);
+    setDonorListOpen(false);
     const previousFocus = lastFocusedElementRef.current;
     if (previousFocus && typeof previousFocus.focus === "function") {
       previousFocus.focus();
@@ -657,7 +665,7 @@ const ContributionSupportSection = () => {
           {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
             <div className="space-y-3">
               <p className="text-md text-muted-foreground">{supportTiers}</p>
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-6 md:gap-4 xl:gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {premiumBenefits.length > 0 && (
                   <SupportTierButton
                     variant="premium"
@@ -748,25 +756,41 @@ const ContributionSupportSection = () => {
                 </div>
               )}
               {activeTier !== null && (
-                <div className="mb-6 rounded-lg border border-emerald-100/80 bg-emerald-50/70 p-4">
-                  {donorListTitle && <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-900/80">{donorListTitle}</div>}
-                      {activeTierDonors.length > 0 ? (
-                        <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {activeTierDonors.map((donor, index) => (
-                            <li
-                              key={`${donor.names.default}-${index}`}
-                              className="flex items-center gap-3 rounded-md border border-emerald-100 bg-white/80 p-3"
-                            >
-                              <DonorAvatar donor={donor} locale={locale} size={44} ringClassName={activeTierAvatarRing} />
-                              <div className="text-sm font-medium text-emerald-900">
-                                {getLocalizedSponsorName(donor, locale)}
-                              </div>
-                            </li>
-                          ))}
-                    </ul>
-                  ) : (
-                    <p className="mt-3 text-xs text-emerald-900/80">{donorListEmptyMessage}</p>
-                  )}
+                <div className="mb-6 overflow-hidden rounded-lg border border-emerald-100/80 bg-emerald-50/70">
+                  <button
+                    type="button"
+                    onClick={toggleDonorList}
+                    aria-expanded={isDonorListOpen}
+                    aria-controls={donorListSectionId}
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-emerald-900 transition-colors hover:bg-emerald-100/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400"
+                  >
+                    <span className="text-sm font-semibold leading-tight">
+                      {donorListTitle ?? donorListEmptyMessage}
+                    </span>
+                    <ChevronDown className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isDonorListOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  <div
+                    id={donorListSectionId}
+                    className={`border-t border-emerald-100/60 px-4 py-4 ${isDonorListOpen ? "" : "hidden"}`}
+                  >
+                    {activeTierDonors.length > 0 ? (
+                      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        {activeTierDonors.map((donor, index) => (
+                          <li
+                            key={`${donor.names.default}-${index}`}
+                            className="flex items-center gap-3 rounded-md border border-emerald-100 bg-white/80 p-3"
+                          >
+                            <DonorAvatar donor={donor} locale={locale} size={44} ringClassName={activeTierAvatarRing} />
+                            <div className="text-sm font-medium text-emerald-900">
+                              {getLocalizedSponsorName(donor, locale)}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-emerald-900/80">{donorListEmptyMessage}</p>
+                    )}
+                  </div>
                 </div>
               )}
               <div className="flex flex-col gap-6 md:gap-7">

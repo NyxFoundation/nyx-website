@@ -31,7 +31,7 @@ const tierStyles: Record<SupportTierVariant, {
   container: string;
   hover: string;
   focusRing: string;
-  badge: string;
+  amountText: string;
   benefitText: string;
   icon: string;
   avatarRing: string;
@@ -40,34 +40,34 @@ const tierStyles: Record<SupportTierVariant, {
 }> = {
   premium: {
     container:
-      "border border-fuchsia-400/70 bg-gradient-to-br from-fuchsia-600 via-rose-500 to-amber-300 text-white shadow-[0_0_28px_rgba(244,114,182,0.35)]",
-    hover: "hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(251,191,36,0.45)]",
-    focusRing: "focus-visible:outline-amber-100",
-    badge: "bg-white/20 text-white",
+      "border border-rose-500 bg-gradient-to-br from-rose-600 via-rose-500 to-amber-400 text-white shadow-[0_12px_45px_rgba(225,29,72,0.35)]",
+    hover: "hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(225,29,72,0.45)]",
+    focusRing: "focus-visible:outline-rose-200",
+    amountText: "text-white drop-shadow-[0_6px_18px_rgba(225,29,72,0.55)]",
     benefitText: "text-white/90",
     icon: "text-white/90",
-    avatarRing: "ring-2 ring-fuchsia-200/80 shadow-md",
-    extraBadge: "border border-fuchsia-200/80 bg-white text-fuchsia-800 ring-2 ring-fuchsia-200/60 shadow-md",
-    availabilityBadge: "bg-white text-fuchsia-800",
+    avatarRing: "ring-2 ring-rose-200/80 shadow-md",
+    extraBadge: "border border-rose-200/80 bg-white text-rose-700 ring-2 ring-rose-200/60 shadow-md",
+    availabilityBadge: "bg-white text-rose-700",
   },
   sponsor: {
     container:
-      "border border-emerald-500 bg-gradient-to-br from-emerald-600 via-emerald-500 to-lime-400 text-white shadow-lg",
-    hover: "hover:-translate-y-0.5 hover:shadow-xl",
-    focusRing: "focus-visible:outline-white/70",
-    badge: "bg-white/15 text-white",
+      "border border-sky-500 bg-gradient-to-br from-sky-600 via-blue-500 to-indigo-500 text-white shadow-[0_12px_45px_rgba(56,189,248,0.28)]",
+    hover: "hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(14,116,144,0.45)]",
+    focusRing: "focus-visible:outline-sky-200",
+    amountText: "text-white drop-shadow-[0_6px_18px_rgba(15,118,204,0.55)]",
     benefitText: "text-white/90",
     icon: "text-white/90",
-    avatarRing: "ring-2 ring-emerald-200/90 shadow-md",
-    extraBadge: "border border-emerald-200/80 bg-white text-emerald-800 ring-2 ring-emerald-200/70 shadow-md",
-    availabilityBadge: "bg-white text-emerald-800",
+    avatarRing: "ring-2 ring-sky-200/90 shadow-md",
+    extraBadge: "border border-sky-200/80 bg-white text-sky-700 ring-2 ring-sky-200/70 shadow-md",
+    availabilityBadge: "bg-white text-sky-700",
   },
   supporter: {
     container:
-      "border border-emerald-300 bg-gradient-to-br from-emerald-300 via-teal-200 to-sky-200 text-emerald-900 shadow-lg",
-    hover: "hover:-translate-y-0.5 hover:shadow-xl",
+      "border border-emerald-300 bg-gradient-to-br from-emerald-300 via-emerald-400 to-lime-200 text-emerald-900 shadow-lg",
+    hover: "hover:-translate-y-0.5 hover:shadow-[0_16px_46px_rgba(34,197,94,0.35)]",
     focusRing: "focus-visible:outline-emerald-700/60",
-    badge: "bg-emerald-900/10 text-emerald-900",
+    amountText: "text-emerald-900 drop-shadow-[0_4px_14px_rgba(22,163,74,0.35)]",
     benefitText: "text-emerald-900/90",
     icon: "text-emerald-800",
     avatarRing: "ring-2 ring-emerald-300/80 shadow-md",
@@ -107,13 +107,13 @@ export function SupportTierButton({
         style.focusRing,
       )}
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex w-full flex-col gap-2">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-sm font-semibold leading-tight">{heading}</h3>
+          <h3 className="text-base font-semibold leading-tight md:text-lg">{heading}</h3>
           {availabilityLabel && (
             <span
               className={cn(
-                "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold",
+                "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold",
                 style.availabilityBadge,
               )}
             >
@@ -123,8 +123,8 @@ export function SupportTierButton({
         </div>
         <span
           className={cn(
-            "rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]",
-            style.badge,
+            "text-3xl font-extrabold leading-none tracking-tight md:text-4xl",
+            style.amountText,
           )}
         >
           {badgeLabel}

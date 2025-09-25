@@ -289,7 +289,7 @@
       "selectionStep": {
         "label": "手順1",
         "title": "支払い方法とチェーンを選択",
-        "description": "ここで支払い方法とチェーンを選び、続けてWalletConnectで接続し、寄付を送信するとthankyou-donationページへ遷移します。"
+        "description": "ここで支払い方法とチェーンを選び、続けてWalletConnectで接続し、寄付を送信すると完了ページへ遷移します。"
       },
       "amountLabel": "寄付額",
       "methodLabel": "支払い方法",
@@ -304,7 +304,7 @@
         "step2": {
           "label": "手順3",
           "title": "寄付を送信",
-          "description": "「寄付する」を押してトランザクションを送信します。完了後にthankyou-donationページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。",
+          "description": "「寄付する」を押してトランザクションを送信します。完了後に完了ページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。",
           "fiatDescription": "銀行振込を完了したら、下の「完了」ボタンを押して寄付手続きを終了してください。"
         },
         "status": {

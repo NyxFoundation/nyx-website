@@ -288,7 +288,7 @@
       "selectionStep": {
         "label": "Step 1",
         "title": "Select payment method & chain",
-        "description": "Choose your payment method and chain here. Next connect with WalletConnect, send your donation, and you'll be redirected to the thankyou-donation page."
+        "description": "Choose your payment method and chain here. Next connect with WalletConnect, send your donation, and you'll be redirected to the completion page."
       },
       "amountLabel": "Contribution amount",
       "methodLabel": "Payment method",
@@ -303,7 +303,7 @@
         "step2": {
           "label": "Step 3",
           "title": "Send your donation",
-          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the thankyou-donation page to register your leaderboard name and icon.",
+          "description": "Press Donate to send the transaction. After it succeeds we'll guide you to the completion page to register your leaderboard name and icon.",
           "fiatDescription": "Complete your bank transfer, then press the “Done” button below so we can reconcile your donation."
         },
         "status": {

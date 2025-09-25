@@ -11,10 +11,12 @@ import { BadgeCheck, CheckCircle2, Circle, Copy, Heart, RefreshCcw, Users, X } f
 
 import {
   CHAIN_ID_MAP,
+  CORPORATE_SPONSORS,
   DEFAULT_GAS_HEX,
   DONATION_ADDRESS,
   ERC20_METADATA,
   FIXED_AMOUNTS,
+  INDIVIDUAL_SUPPORTERS,
   SUPPORT_TIER_ETH_AMOUNTS,
   TIER_AMOUNT_BADGES,
   TOKEN_TRANSFER_GAS_HEX,
@@ -33,8 +35,9 @@ import {
   toHexChainId,
   toHexWei,
 } from "@/app/contribution/logic";
-import type { CryptoChain, PaymentMethod, TokenPaymentMethod } from "@/app/contribution/types";
+import type { CryptoChain, PaymentMethod, SponsorInfo, TokenPaymentMethod } from "@/app/contribution/types";
 import { SupportTierButton, type SupportBenefit } from "./SupportTierButton";
+import { DonorAvatar, getLocalizedSponsorName } from "./DonorAvatar";
 
 type PaymentOption = { value: PaymentMethod; label: string; type: "crypto" | "fiat" };
 
@@ -58,6 +61,64 @@ const ContributionSupportSection = () => {
   const [walletConnectErrorKey, setWalletConnectErrorKey] = useState<string | null>(null);
   const [isDonationOverlayOpen, setDonationOverlayOpen] = useState(false);
   const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
+
+  const corporateSplitIndex = Math.ceil(CORPORATE_SPONSORS.length / 2);
+  const premiumTierDonors = useMemo(() => CORPORATE_SPONSORS.slice(0, corporateSplitIndex), [corporateSplitIndex]);
+  const sponsorTierDonors = useMemo(() => {
+    const remainder = CORPORATE_SPONSORS.slice(corporateSplitIndex);
+    return remainder.length > 0 ? remainder : CORPORATE_SPONSORS;
+  }, [corporateSplitIndex]);
+  const supporterTierDonors = useMemo(() => INDIVIDUAL_SUPPORTERS, []);
+  const tierDonors = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, SponsorInfo[]>>(
+    () => ({
+      premium: premiumTierDonors,
+      sponsor: sponsorTierDonors,
+      supporter: supporterTierDonors,
+    }),
+    [premiumTierDonors, sponsorTierDonors, supporterTierDonors]
+  );
+  const tierAvatarRings = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string>>(
+    () => ({
+      premium: "ring-2 ring-fuchsia-200/80 shadow-md",
+      sponsor: "ring-2 ring-emerald-200/80 shadow-md",
+      supporter: "ring-2 ring-emerald-300/80 shadow-md",
+    }),
+    []
+  );
+  const tierDonorNames = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string>>(
+    () => ({
+      premium: premiumTierDonors.map((entry) => getLocalizedSponsorName(entry, locale)).join(", "),
+      sponsor: sponsorTierDonors.map((entry) => getLocalizedSponsorName(entry, locale)).join(", "),
+      supporter: supporterTierDonors.map((entry) => getLocalizedSponsorName(entry, locale)).join(", "),
+    }),
+    [locale, premiumTierDonors, sponsorTierDonors, supporterTierDonors]
+  );
+  const donorPreviewLabels = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string | null>>(
+    () => ({
+      premium:
+        tierDonorNames.premium && tierDonors.premium.length > 0
+          ? t("supportSection.donorPreviewLabel", {
+              count: tierDonors.premium.length,
+              names: tierDonorNames.premium,
+            })
+          : null,
+      sponsor:
+        tierDonorNames.sponsor && tierDonors.sponsor.length > 0
+          ? t("supportSection.donorPreviewLabel", {
+              count: tierDonors.sponsor.length,
+              names: tierDonorNames.sponsor,
+            })
+          : null,
+      supporter:
+        tierDonorNames.supporter && tierDonors.supporter.length > 0
+          ? t("supportSection.donorPreviewLabel", {
+              count: tierDonors.supporter.length,
+              names: tierDonorNames.supporter,
+            })
+          : null,
+    }),
+    [t, tierDonorNames, tierDonors]
+  );
 
   const paymentOptions: PaymentOption[] = [
     { value: "ETH", label: t("supportSection.paymentOptions.ETH"), type: "crypto" },
@@ -138,6 +199,10 @@ const ContributionSupportSection = () => {
   };
   const activeTierHeading = activeTier ? tierHeadingByKey[activeTier] : null;
   const activeTierBadge = activeTier ? TIER_AMOUNT_BADGES[activeTier] : null;
+  const activeTierDonors = activeTier ? tierDonors[activeTier] ?? [] : [];
+  const activeTierAvatarRing = activeTier ? tierAvatarRings[activeTier] : "ring-2 ring-emerald-100/80 shadow-sm";
+  const donorListTitle = activeTier ? t("supportSection.donorListTitle", { count: activeTierDonors.length }) : null;
+  const donorListEmptyMessage = t("supportSection.donorListEmpty");
 
   const isFiatJPY = selectedMethod === "JPY";
   const selectedTokenMeta =
@@ -623,6 +688,10 @@ const ContributionSupportSection = () => {
                     badgeLabel={TIER_AMOUNT_BADGES.premium}
                     benefits={premiumBenefits}
                     onClick={() => handleTierClick("premium")}
+                    donors={tierDonors.premium}
+                    donorNames={tierDonorNames.premium}
+                    donorPreviewLabel={donorPreviewLabels.premium ?? undefined}
+                    locale={locale}
                   />
                 )}
                 {sponsorBenefits.length > 0 && (
@@ -632,6 +701,10 @@ const ContributionSupportSection = () => {
                     badgeLabel={TIER_AMOUNT_BADGES.sponsor}
                     benefits={sponsorBenefits}
                     onClick={() => handleTierClick("sponsor")}
+                    donors={tierDonors.sponsor}
+                    donorNames={tierDonorNames.sponsor}
+                    donorPreviewLabel={donorPreviewLabels.sponsor ?? undefined}
+                    locale={locale}
                   />
                 )}
                 {supporterBenefits.length > 0 && (
@@ -641,6 +714,10 @@ const ContributionSupportSection = () => {
                     badgeLabel={TIER_AMOUNT_BADGES.supporter}
                     benefits={supporterBenefits}
                     onClick={() => handleTierClick("supporter")}
+                    donors={tierDonors.supporter}
+                    donorNames={tierDonorNames.supporter}
+                    donorPreviewLabel={donorPreviewLabels.supporter ?? undefined}
+                    locale={locale}
                   />
                 )}
               </div>
@@ -689,6 +766,28 @@ const ContributionSupportSection = () => {
                     <span className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700">
                       {activeTierBadge}
                     </span>
+                  )}
+                </div>
+              )}
+              {activeTier !== null && (
+                <div className="mb-6 rounded-lg border border-emerald-100/80 bg-emerald-50/70 p-4">
+                  {donorListTitle && <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-900/80">{donorListTitle}</div>}
+                      {activeTierDonors.length > 0 ? (
+                        <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          {activeTierDonors.map((donor, index) => (
+                            <li
+                              key={`${donor.names.default}-${index}`}
+                              className="flex items-center gap-3 rounded-md border border-emerald-100 bg-white/80 p-3"
+                            >
+                              <DonorAvatar donor={donor} locale={locale} size={44} ringClassName={activeTierAvatarRing} />
+                              <div className="text-sm font-medium text-emerald-900">
+                                {getLocalizedSponsorName(donor, locale)}
+                              </div>
+                            </li>
+                          ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-3 text-xs text-emerald-900/80">{donorListEmptyMessage}</p>
                   )}
                 </div>
               )}
@@ -746,27 +845,6 @@ const ContributionSupportSection = () => {
                       </div>
                     </div>
                   )}
-
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-foreground">{supportAmountLabel}</div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      {methodAmounts.map((amount, index) => {
-                        const isActive = index === selectedAmountIndex;
-                        return (
-                          <button
-                            type="button"
-                            key={`${selectedMethod}-${amount}-${index}`}
-                            onClick={() => handleAmountSelect(index)}
-                            className={`rounded-lg px-4 py-3 text-sm font-medium transition ${
-                              isActive ? "bg-emerald-500 text-white" : "bg-white border border-border text-muted-foreground hover:bg-muted/60"
-                            }`}
-                          >
-                            {formatMethodAmount(amount, selectedMethod, locale)}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
                 </div>
 
                 <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">

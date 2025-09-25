@@ -245,6 +245,9 @@
         "リサーチシェアハウス及びオフィスの設置"
       ],
       "tiers": "寄付プランを選択してください。",
+      "donorPreviewLabel": "{count, plural, one {寄付者: {names}} other {寄付者: {names}}}",
+      "donorListTitle": "{count, plural, one {このプランを支援している寄付者 1 名} other {このプランを支援している寄付者 {count} 名}}",
+      "donorListEmpty": "このプランへの最初の寄付者になりましょう。",
       "useCasesHeading": "支援が活きる領域",
       "benefitsSponsorHeading": "スポンサー",
       "benefitsSupporterHeading": "サポーター",

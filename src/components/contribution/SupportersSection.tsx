@@ -23,7 +23,7 @@ const ContributionSupportersSection = () => {
         <div className="text-center mb-10 md:mb-12">
           <h2 className="text-2xl md:text-3xl font-bold md:whitespace-nowrap">{supportersHeading}</h2>
         </div>
-        <div className="rounded-xl p-12 md:p-14 bg-white shadow-sm ring-1 ring-gray-100">
+        <div className="rounded-xl px-6 py-12 md:px-14 md:py-14 bg-white shadow-sm ring-1 ring-gray-100">
           <div className="grid grid-cols-1 gap-12 md:gap-14">
             <div>
               <h3 className="text-xl md:text-2xl font-bold leading-tight mb-8">{sponsorTitle}</h3>

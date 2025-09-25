@@ -253,14 +253,13 @@
         "自動検証ツールの独自開発とOSS化",
         "リサーチシェアハウス及びオフィスの設置"
       ],
-      "tiers": "寄付プランを選択してください。",
       "donorPreviewLabel": "{count, plural, one {寄付者: {names}} other {寄付者: {names}}}",
       "donorListTitle": "{count, plural, one {このプランを支援している寄付者 1 名} other {このプランを支援している寄付者 {count} 名}}",
       "donorListEmpty": "このプランへの最初の寄付者になりましょう。",
       "useCasesHeading": "支援が活きる領域",
       "benefitsPremiumHeading": "プレミアムスポンサー",
       "premiumAvailability": "3枠限定",
-      "sponsorAvailability": "10枠限定",
+      "sponsorAvailability": "15枠限定",
       "benefitsSponsorHeading": "スポンサー",
       "benefitsSupporterHeading": "サポーター",
       "benefitsPremium": [
@@ -307,8 +306,7 @@
       ],
       "planSelectionStep": {
         "label": "手順1",
-        "title": "寄付プランを選択",
-        "description": "ご希望のプランボタンを選択すると寄付フローが表示されます。"
+        "title": "寄付プランを選択"
       },
       "note": "※ 剰余は当団体の目的領域への資金提供に充てます。寄付額は任意です。",
       "organizationsCta": "お問い合わせはこちら",

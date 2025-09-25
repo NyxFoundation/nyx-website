@@ -57,7 +57,7 @@ const ContributionTeamSection = () => {
 
   return (
     <>
-      <section className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
+      <section className="bg-muted/50 rounded-2xl px-6 py-12 md:px-14 md:py-14 mb-28 md:mb-36">
         <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
           <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">{heading}</h3>
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">

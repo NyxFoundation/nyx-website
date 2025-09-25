@@ -39,8 +39,8 @@ export const metadata: Metadata = {
 
 const DonatePage = () => {
   return (
-    <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
-      <div className="container mx-auto max-w-6xl">
+    <div className="min-h-screen px-6 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
+      <div className="mx-auto w-full max-w-6xl">
         <ContributionHeroSection />
         <ContributionTeamSection />
         <ContributionPillarsSection />

@@ -43,7 +43,7 @@ const ContributionHeroSection = () => {
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{heroDescription}</p>
           <Link
             href="#support-nyx"
-            className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-lime-300 via-emerald-400 to-cyan-400 px-6 py-3 text-sm font-semibold text-slate-900 shadow-[0_0_22px_rgba(74,222,128,0.45)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_32px_rgba(16,185,129,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-300"
+            className="flex min-w-[232px] items-center justify-center rounded-md bg-gradient-to-r from-lime-300 via-emerald-400 to-cyan-400 px-8 py-3 text-sm font-semibold text-slate-900 shadow-[0_0_22px_rgba(74,222,128,0.45)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_32px_rgba(16,185,129,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-300 mx-auto"
           >
             {t("supportSection.heading")}
           </Link>
@@ -51,7 +51,10 @@ const ContributionHeroSection = () => {
       </section>
 
       {storyContent.map((section, idx) => (
-        <section key={`${section.heading}-${idx}`} className="bg-muted/50 rounded-2xl p-12 md:p-14 mb-28 md:mb-36">
+        <section
+          key={`${section.heading}-${idx}`}
+          className="bg-muted/50 rounded-2xl px-6 py-12 md:px-14 md:py-14 mb-28 md:mb-36"
+        >
           <div className={`max-w-6xl mx-auto ${section.layout.wrapperSpacingClass}`}>
             <h2 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">{section.heading}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-7 md:gap-9 items-center">

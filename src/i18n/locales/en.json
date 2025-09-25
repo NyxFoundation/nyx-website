@@ -252,14 +252,13 @@
         "In-house automated verification tools and open-sourcing",
         "Establishing research share houses and offices"
       ],
-      "tiers": "Choose your support plan.",
       "donorPreviewLabel": "{count, plural, one {Donor: {names}} other {Donors: {names}}}",
       "donorListTitle": "{count, plural, one {1 donor backing this plan} other {{count} donors backing this plan}}",
       "donorListEmpty": "Be the first to back this plan.",
       "useCasesHeading": "Where your support goes",
       "benefitsPremiumHeading": "Premium Sponsor",
       "premiumAvailability": "Limited to 3 slots",
-      "sponsorAvailability": "Limited to 10 slots",
+      "sponsorAvailability": "Limited to 15 slots",
       "benefitsSponsorHeading": "Sponsor",
       "benefitsSupporterHeading": "Supporter",
       "benefitsPremium": [
@@ -306,8 +305,7 @@
       ],
       "planSelectionStep": {
         "label": "Step 1",
-        "title": "Choose your donation plan",
-        "description": "Pick a plan below to see the full contribution flow."
+        "title": "Choose your donation plan"
       },
       "note": "Note: Any surplus is allocated as funding toward our mission. Donations are voluntary.",
       "organizationsCta": "Contact us",

@@ -132,7 +132,6 @@ const ContributionSupportSection = () => {
 
   const planStepLabel = t("supportSection.planSelectionStep.label");
   const planStepTitle = t("supportSection.planSelectionStep.title");
-  const planStepDescription = t("supportSection.planSelectionStep.description");
   const premiumBenefitsHeading = t("supportSection.benefitsPremiumHeading");
   const premiumAvailabilityLabel = t("supportSection.premiumAvailability");
   const sponsorAvailabilityLabel = t("supportSection.sponsorAvailability");
@@ -140,7 +139,6 @@ const ContributionSupportSection = () => {
   const supporterBenefitsHeading = t("supportSection.benefitsSupporterHeading");
   const supportHeading = t("supportSection.heading");
   const supportIntro = t("supportSection.intro");
-  const supportTiers = t("supportSection.tiers");
   const supportOrganizationsCta = t("supportSection.organizationsCta");
   const copyLabel = tCommon("copy");
   const supportAmountLabel = t("supportSection.amountLabel");
@@ -590,10 +588,6 @@ const ContributionSupportSection = () => {
                   <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{planStepLabel}</div>
                   <h3 className="text-sm font-semibold text-foreground mt-1">{planStepTitle}</h3>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground leading-relaxed">{planStepDescription}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{supportTiers}</p>
               </div>
               <div className="grid gap-6 md:gap-4 xl:gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {premiumBenefits.length > 0 && (

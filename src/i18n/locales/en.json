@@ -46,6 +46,7 @@
   "common": {
     "readMore": "Read More",
     "close": "Close",
+    "copy": "Copy",
     "loading": "Loading...",
     "error": "An error occurred",
     "notFound": "Page not found"
@@ -53,6 +54,81 @@
   "contribution": {
     "title": "Contribute to Nyx",
     "subtitle": "Contribute to our research and development.",
+    "pageHero": {
+      "heading": "Make Ethereum a trustworthy social infrastructure.",
+      "description": "We are a vision-led nonprofit. Under the vision <highlight>“Build a verifiable future for open innovation”</highlight>, we research and develop distributed systems and cryptography. Your donation directly supports that work."
+    },
+    "storySections": [
+      {
+        "heading": "Ethereum as trustworthy social infrastructure",
+        "imageAlt": "Ethereum as trustworthy social infrastructure",
+        "body": [
+          "Alignment between specs and implementations, predictable state transitions and value transfers, and third-party verifiability—these are the conditions for a trustworthy social infrastructure.",
+          "On such a foundation, smart contracts don’t rely on specific intermediaries: they codify promises and keep them verifiably. Excessive intermediation shrinks, inefficiencies from market dominance are curbed, and barriers to entry drop. As a result, anyone, anywhere can experiment, compose, and scale new value under fair rules—and we contribute to building that foundation."
+        ]
+      },
+      {
+        "heading": "Why we do this",
+        "imageAlt": "Our team and work",
+        "body": [
+          "Ethereum is a meritocratic arena where background—education, ethnicity, age, affiliation—matters less than proven skill and outcomes. Open discussion and review, public implementations, and permissionless contribution define the culture. We are a small, young team drawn to that ethos, focused on better implementations and sound verification for the benefit of both users and developers."
+        ]
+      }
+    ],
+    "pillarsSection": {
+      "heading": "Our Three Pillars",
+      "steps": [
+        { "key": "secure", "label": "Secure" },
+        { "key": "usable", "label": "Make usable" },
+        { "key": "expand", "label": "Expand" }
+      ],
+      "cards": [
+        {
+          "key": "secure",
+          "title": "Secure",
+          "subtitle": "Assumes spec–implementation alignment",
+          "bullets": [
+            "Bug fixes and performance optimization for clients",
+            "R&D on leanConsensus and zkVM",
+            "Build automated verification tools"
+          ]
+        },
+        {
+          "key": "usable",
+          "title": "Make usable",
+          "subtitle": "Improve application experience and efficiency",
+          "bullets": [
+            "Report DeFi bugs and improve performance",
+            "Research and implement MEV optimization",
+            "Develop new applications"
+          ]
+        },
+        {
+          "key": "expand",
+          "title": "Expand",
+          "subtitle": "Bridge academia and industry openly",
+          "bullets": [
+            "Operate the Research House",
+            "Run education programs",
+            "Research institutional applications of Ethereum"
+          ]
+        }
+      ]
+    },
+    "teamSection": {
+      "heading": "Team & Achievements",
+      "teamHeading": "Team",
+      "updatesHeading": "Achievements",
+      "viewAll": "View more",
+      "profileFallback": "Profile information is coming soon.",
+      "updates": [
+        "Attended the leanConsensus meeting",
+        "Contributed to Geth",
+        "Implemented a post-quantum signature scheme in leanConsensus",
+        "Presented a paper at Columbia Business School",
+        "Accepted to the ZKProof7 international workshop"
+      ]
+    },
     "contributionMethods": {
       "donation": {
         "title": "Donation",
@@ -121,7 +197,7 @@
     },
     "taxInfo": "Nyx Foundation is a 501(c)(3) nonprofit organization. Donations may be tax-deductible in the United States.",
     "faq": {
-      "corporateAnswer": "Yes. We offer research partnerships and sponsorship programs. Please <contactLink>contact us</contactLink> to discuss details.",
+      "corporateAnswer": "Yes. We offer research partnerships and sponsorship programs. Please contact us via the contact form to discuss details.",
       "benefitsAnswer": "Logo placement within one week after confirmation, goods shipped the following month (monthly batch), event access announced about one month prior, and the Sponsor / Supporter badge provided upon confirmation."
     },
     "supportersSection": {
@@ -130,6 +206,33 @@
       "supporterTitle": "Supporter",
       "communityTitle": "Community Partners",
       "comingSoon": "Coming soon."
+    },
+    "faqSection": {
+      "heading": "FAQ",
+      "description": "Answers to common donation questions",
+      "items": [
+        {
+          "question": "Is Nyx Foundation a nonprofit?",
+          "answer": "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is allocated as funding for research, formal verification, and community contributions."
+        },
+        {
+          "question": "How is my donation used?",
+          "answer": "We fund research and formal verification, vulnerability research and fixes, applied work on MEV and mechanism design, and the operational base. Even small PRs and single proofs help prevent incidents over time and raise reliability."
+        },
+        {
+          "question": "Can I get a receipt?",
+          "answer": "Yes, on request. We don’t issue receipts automatically for every donation. If you need one, please contact us via the form or at contact@nyx.foundation. For bank transfers or crypto, we issue after confirming receipt."
+        },
+        {
+          "question": "Can I donate in JPY via bank transfer?",
+          "answer": "Please transfer to PayPay Bank, Kawasemi branch (007), ordinary 7551963, name: TSUTSUMI MASATO. We may email you to confirm the payer name and amount if needed."
+        },
+        {
+          "question": "Can companies sponsor or donate?",
+          "answerKey": "faq.corporateAnswer"
+        }
+      ],
+      "contactCta": "For other questions, feel free to contact us."
     },
     "supportSection": {
       "heading": "Support Nyx",
@@ -165,6 +268,7 @@
       ],
       "note": "Note: Any surplus is allocated as funding toward our mission. Donations are voluntary.",
       "organizationsCta": "For organizations",
+      "closeOverlayAria": "Close donation flow",
       "selectionStep": {
         "label": "Step 1",
         "title": "Select payment method & chain",

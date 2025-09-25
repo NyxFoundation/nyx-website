@@ -94,7 +94,7 @@ export default function ThankYouDonationPage() {
     <div className="min-h-[60vh] px-5 md:px-8 py-16 md:py-20 bg-muted/20">
       <div className="max-w-3xl mx-auto space-y-6">
         <Link
-          href="/contribution"
+          href="/donate"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

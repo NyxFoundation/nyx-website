@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import type { FaqItemRaw } from "@/app/contribution/types";
+import type { FaqItemRaw } from "@/app/donate/types";
 
 const ContributionFaqSection = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);

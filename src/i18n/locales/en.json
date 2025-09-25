@@ -2,7 +2,7 @@
   "nav": {
     "publications": "Publication",
     "member": "Member",
-    "contribution": "Contribution",
+    "contribution": "Donate",
     "news": "News",
     "job": "Job",
     "language": "Language",
@@ -52,8 +52,8 @@
     "notFound": "Page not found"
   },
   "contribution": {
-    "title": "Contribute to Nyx",
-    "subtitle": "Contribute to our research and development.",
+    "title": "Donate to Nyx",
+    "subtitle": "Support our research and development through donations.",
     "pageHero": {
       "heading": "Make Ethereum a trustworthy social infrastructure.",
       "description": "We are a vision-led nonprofit. Under the vision <highlight>“Build a verifiable future for open innovation”</highlight>, we research and develop distributed systems and cryptography. Your donation directly supports that work."
@@ -78,9 +78,18 @@
     "pillarsSection": {
       "heading": "Our Three Pillars",
       "steps": [
-        { "key": "secure", "label": "Secure" },
-        { "key": "usable", "label": "Make usable" },
-        { "key": "expand", "label": "Expand" }
+        {
+          "key": "secure",
+          "label": "Secure"
+        },
+        {
+          "key": "usable",
+          "label": "Make usable"
+        },
+        {
+          "key": "expand",
+          "label": "Expand"
+        }
       ],
       "cards": [
         {
@@ -132,7 +141,7 @@
     "contributionMethods": {
       "donation": {
         "title": "Donation",
-        "description": "Contribute to our research directly through crypto or traditional methods.",
+        "description": "Donate directly to our research through crypto or traditional methods.",
         "viewMethods": "View donation methods →"
       },
       "collaboration": {
@@ -142,7 +151,7 @@
       },
       "sponsor": {
         "title": "Sponsorship",
-        "description": "Contribute to Nyx's activities through long-term research funding.",
+        "description": "Sustain Nyx Foundation through long-term research donations.",
         "viewDetails": "View sponsors →"
       }
     },
@@ -158,7 +167,7 @@
       },
       "wishList": {
         "title": "Amazon Wish List",
-        "description": "Contribute with equipment and books for our research",
+        "description": "Donate equipment or books essential for our research",
         "button": "View Wish List"
       },
       "bankTransfer": {
@@ -243,11 +252,11 @@
         "In-house automated verification tools and open-sourcing",
         "Establishing research share houses and offices"
       ],
-  "tiers": "Choose your support plan.",
-  "donorPreviewLabel": "{count, plural, one {Donor: {names}} other {Donors: {names}}}",
-  "donorListTitle": "{count, plural, one {1 donor backing this plan} other {{count} donors backing this plan}}",
-  "donorListEmpty": "Be the first to back this plan.",
-  "useCasesHeading": "Where your support goes",
+      "tiers": "Choose your support plan.",
+      "donorPreviewLabel": "{count, plural, one {Donor: {names}} other {Donors: {names}}}",
+      "donorListTitle": "{count, plural, one {1 donor backing this plan} other {{count} donors backing this plan}}",
+      "donorListEmpty": "Be the first to back this plan.",
+      "useCasesHeading": "Where your support goes",
       "benefitsPremiumHeading": "Premium Sponsor",
       "premiumAvailability": "Limited to 4 slots",
       "benefitsSponsorHeading": "Sponsor",

@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-import { STORY_LAYOUTS } from "@/app/contribution/constants";
-import type { StorySectionContent } from "@/app/contribution/types";
+import { STORY_LAYOUTS } from "@/app/donate/constants";
+import type { StorySectionContent } from "@/app/donate/types";
 
 const ContributionHeroSection = () => {
   const t = useTranslations("contribution");

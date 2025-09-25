@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import type { SponsorInfo } from '@/app/contribution/types';
+import type { SponsorInfo } from '@/app/donate/types';
 import { cn } from '@/lib/utils';
 
 export const getLocalizedSponsorName = (entry: SponsorInfo, locale: string) =>

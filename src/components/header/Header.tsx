@@ -17,7 +17,7 @@ export function Header() {
   const navItems: NavItem[] = [
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
-    { href: "/contribution", label: t("contribution") },
+    { href: "/donate", label: t("contribution") },
     { href: "/news", label: t("news") },
   ];
 

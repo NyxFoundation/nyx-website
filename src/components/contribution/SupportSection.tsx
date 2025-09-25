@@ -25,7 +25,7 @@ import {
   WALLETCONNECT_METADATA,
   WALLETCONNECT_METHODS,
   WALLETCONNECT_RELAY_URL,
-} from "@/app/contribution/constants";
+} from "@/app/donate/constants";
 import {
   convertMethodAmountToEth,
   encodeErc20Transfer,
@@ -35,8 +35,8 @@ import {
   toBaseUnits,
   toHexChainId,
   toHexWei,
-} from "@/app/contribution/logic";
-import type { CryptoChain, PaymentMethod, SponsorInfo, TokenPaymentMethod } from "@/app/contribution/types";
+} from "@/app/donate/logic";
+import type { CryptoChain, PaymentMethod, SponsorInfo, TokenPaymentMethod } from "@/app/donate/types";
 import { SupportTierButton, type SupportBenefit } from "./SupportTierButton";
 import { DonorAvatar, getLocalizedSponsorName } from "./DonorAvatar";
 

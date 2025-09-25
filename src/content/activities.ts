@@ -36,7 +36,7 @@ export const activitiesText: ActivityText[] = [
       en:
         "Contributing to the improvement of digital infrastructure security through discovery and responsible disclosure of security vulnerabilities. We participate in bug bounty programs and conduct independent vulnerability research.",
       ja:
-        "セキュリティ脆弱性の発見と責任ある開示を通じて、デジタルインフラストラクチャの安全性向上に貢献しています。バグバウンティプログラムへの参加と独自の脆弱性研究を行っています。",
+        "セキュリティ脆弱性の発見と責任ある開示を通じて、デジタルインフラストラクチャの安全性向上に寄付する取り組みを行っています。バグバウンティプログラムへの参加と独自の脆弱性研究を行っています。",
     },
   },
   {

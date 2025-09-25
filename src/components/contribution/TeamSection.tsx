@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-import { TEAM_MEMBERS } from "@/app/contribution/constants";
-import type { TeamMember, TeamSectionContent } from "@/app/contribution/types";
+import { TEAM_MEMBERS } from "@/app/donate/constants";
+import type { TeamMember, TeamSectionContent } from "@/app/donate/types";
 
 type NewsLinkMap = Record<string, { href: string; external: boolean }>;
 

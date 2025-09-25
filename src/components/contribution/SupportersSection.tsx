@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { HelpCircle } from "lucide-react";
 
-import { CORPORATE_SPONSORS, INDIVIDUAL_SUPPORTERS } from "@/app/contribution/constants";
-import type { SponsorInfo } from "@/app/contribution/types";
+import { CORPORATE_SPONSORS, INDIVIDUAL_SUPPORTERS } from "@/app/donate/constants";
+import type { SponsorInfo } from "@/app/donate/types";
 
 const getLocalizedName = (entry: SponsorInfo, locale: string) => entry.names[locale] ?? entry.names.default;
 

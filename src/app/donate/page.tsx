@@ -5,7 +5,7 @@ import ContributionSupportersSection from "@/components/contribution/SupportersS
 import ContributionTeamSection from "@/components/contribution/TeamSection";
 import ContributionFaqSection from "@/components/contribution/FaqSection";
 
-const ContributionPage = () => {
+const DonatePage = () => {
   return (
     <div className="min-h-screen px-5 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
       <div className="container mx-auto max-w-6xl">
@@ -20,4 +20,4 @@ const ContributionPage = () => {
   );
 };
 
-export default ContributionPage;
+export default DonatePage;

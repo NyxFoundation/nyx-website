@@ -50,7 +50,7 @@ export function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contribution" className="text-muted-foreground hover:text-foreground transition-colors">
+                    <Link href="/donate" className="text-muted-foreground hover:text-foreground transition-colors">
                       {t("contribution")}
                     </Link>
                   </li>

@@ -2,7 +2,7 @@
 
 import { Sparkles } from "lucide-react";
 
-import type { SponsorInfo } from "@/app/contribution/types";
+import type { SponsorInfo } from "@/app/donate/types";
 import { cn } from "@/lib/utils";
 
 import { DonorAvatar, getLocalizedSponsorName } from "./DonorAvatar";

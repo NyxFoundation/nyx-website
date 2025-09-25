@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 
-import { PILLAR_METADATA } from "@/app/contribution/constants";
-import type { PillarsSectionContent } from "@/app/contribution/types";
+import { PILLAR_METADATA } from "@/app/donate/constants";
+import type { PillarsSectionContent } from "@/app/donate/types";
 
 const ContributionPillarsSection = () => {
   const t = useTranslations("contribution");

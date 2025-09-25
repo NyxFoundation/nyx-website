@@ -1,13 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import QRCode from "react-qr-code";
 import SignClient from "@walletconnect/sign-client";
 import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
-import { CheckCircle2, ChevronDown, Circle, Copy, Heart, RefreshCcw, Users, X } from "lucide-react";
+import { CheckCircle2, Circle, Copy, Heart, RefreshCcw, Users } from "lucide-react";
 
 import {
   CHAIN_ID_MAP,
@@ -38,7 +38,7 @@ import {
 } from "@/app/donate/logic";
 import type { CryptoChain, PaymentMethod, SponsorInfo, TokenPaymentMethod } from "@/app/donate/types";
 import { SupportTierButton, type SupportBenefit } from "./SupportTierButton";
-import { DonorAvatar, getLocalizedSponsorName } from "./DonorAvatar";
+import { getLocalizedSponsorName } from "./DonorAvatar";
 
 type PaymentOption = { value: PaymentMethod; label: string; type: "crypto" | "fiat" };
 
@@ -49,9 +49,6 @@ const ContributionSupportSection = () => {
   const tCommon = useTranslations("common");
   const locale = useLocale();
   const router = useRouter();
-  const donationCardRef = useRef<HTMLDivElement | null>(null);
-  const lastFocusedElementRef = useRef<HTMLElement | null>(null);
-
   const [selectedChain, setSelectedChain] = useState<CryptoChain>("ethereum");
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("ETH");
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
@@ -60,9 +57,7 @@ const ContributionSupportSection = () => {
   const [walletConnectUri, setWalletConnectUri] = useState<string>("");
   const [walletConnectLoading, setWalletConnectLoading] = useState(false);
   const [walletConnectErrorKey, setWalletConnectErrorKey] = useState<string | null>(null);
-  const [isDonationOverlayOpen, setDonationOverlayOpen] = useState(false);
   const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
-  const [isDonorListOpen, setDonorListOpen] = useState(false);
 
   const premiumTierDonors = useMemo(() => PREMIUM_SPONSORS, []);
   const sponsorTierDonors = useMemo(() => CORPORATE_SPONSORS, []);
@@ -74,14 +69,6 @@ const ContributionSupportSection = () => {
       supporter: supporterTierDonors,
     }),
     [premiumTierDonors, sponsorTierDonors, supporterTierDonors]
-  );
-  const tierAvatarRings = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string>>(
-    () => ({
-      premium: "ring-2 ring-fuchsia-200/80 shadow-md",
-      sponsor: "ring-2 ring-emerald-200/80 shadow-md",
-      supporter: "ring-2 ring-emerald-300/80 shadow-md",
-    }),
-    []
   );
   const tierDonorNames = useMemo<Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string>>(
     () => ({
@@ -136,7 +123,6 @@ const ContributionSupportSection = () => {
     [t]
   );
 
-  const supportBulletsRaw = t.raw("supportSection.bullets");
   const premiumBenefitsRaw = t.raw("supportSection.benefitsPremium");
   const premiumBenefits = Array.isArray(premiumBenefitsRaw) ? (premiumBenefitsRaw as SupportBenefit[]) : [];
   const sponsorBenefitsRaw = t.raw("supportSection.benefitsSponsor");
@@ -144,8 +130,12 @@ const ContributionSupportSection = () => {
   const supporterBenefitsRaw = t.raw("supportSection.benefitsSupporter");
   const supporterBenefits = Array.isArray(supporterBenefitsRaw) ? (supporterBenefitsRaw as SupportBenefit[]) : [];
 
+  const planStepLabel = t("supportSection.planSelectionStep.label");
+  const planStepTitle = t("supportSection.planSelectionStep.title");
+  const planStepDescription = t("supportSection.planSelectionStep.description");
   const premiumBenefitsHeading = t("supportSection.benefitsPremiumHeading");
   const premiumAvailabilityLabel = t("supportSection.premiumAvailability");
+  const sponsorAvailabilityLabel = t("supportSection.sponsorAvailability");
   const sponsorBenefitsHeading = t("supportSection.benefitsSponsorHeading");
   const supporterBenefitsHeading = t("supportSection.benefitsSupporterHeading");
   const supportHeading = t("supportSection.heading");
@@ -174,7 +164,6 @@ const ContributionSupportSection = () => {
   const stepStatusSkipped = t("supportSection.steps.status.skipped");
   const supportDonateCta = t("supportSection.donateCta");
   const supportCompleteCta = t("supportSection.completeCta");
-  const closeOverlayAria = t("supportSection.closeOverlayAria");
   const bankNameLabel = t("howToDonate.bankTransfer.bankName");
   const branchNameLabel = t("howToDonate.bankTransfer.branchName");
   const accountNumberLabel = t("howToDonate.bankTransfer.accountNumber");
@@ -187,19 +176,6 @@ const ContributionSupportSection = () => {
     ),
     address: (chunks) => <span className="font-mono break-all text-foreground/80">{chunks}</span>,
   });
-
-  const tierHeadingByKey: Record<keyof typeof SUPPORT_TIER_ETH_AMOUNTS, string> = {
-    premium: premiumBenefitsHeading,
-    sponsor: sponsorBenefitsHeading,
-    supporter: supporterBenefitsHeading,
-  };
-  const activeTierHeading = activeTier ? tierHeadingByKey[activeTier] : null;
-  const activeTierBadge = activeTier ? TIER_AMOUNT_BADGES[activeTier] : null;
-  const activeTierDonors = activeTier ? tierDonors[activeTier] ?? [] : [];
-  const activeTierAvatarRing = activeTier ? tierAvatarRings[activeTier] : "ring-2 ring-emerald-100/80 shadow-sm";
-  const donorListTitle = activeTier ? t("supportSection.donorListTitle", { count: activeTierDonors.length }) : null;
-  const donorListEmptyMessage = t("supportSection.donorListEmpty");
-  const donorListSectionId = activeTier ? `donor-list-${activeTier}` : undefined;
 
   const isFiatJPY = selectedMethod === "JPY";
   const selectedTokenMeta =
@@ -461,14 +437,6 @@ const ContributionSupportSection = () => {
     [availableCryptoChains]
   );
 
-  const toggleDonorList = useCallback(() => {
-    setDonorListOpen((previous) => !previous);
-  }, []);
-
-  const handleAmountSelect = useCallback((index: number) => {
-    setSelectedAmountIndex(index);
-  }, []);
-
   const handleTierClick = useCallback(
     (tier: keyof typeof SUPPORT_TIER_ETH_AMOUNTS) => {
       const targetEth = SUPPORT_TIER_ETH_AMOUNTS[tier];
@@ -476,59 +444,12 @@ const ContributionSupportSection = () => {
       const foundIndex = ethAmounts.findIndex((value) => Math.abs(value - targetEth) < 1e-9);
       const targetIndex = foundIndex === -1 ? 0 : foundIndex;
 
-      setDonorListOpen(false);
       setActiveTier(tier);
       handleMethodChange("ETH");
       setSelectedAmountIndex(targetIndex);
-      lastFocusedElementRef.current = (document.activeElement as HTMLElement) ?? null;
-      setDonationOverlayOpen(true);
     },
     [handleMethodChange]
   );
-
-  const handleCloseOverlay = useCallback(() => {
-    setDonationOverlayOpen(false);
-    setActiveTier(null);
-    setDonorListOpen(false);
-    const previousFocus = lastFocusedElementRef.current;
-    if (previousFocus && typeof previousFocus.focus === "function") {
-      previousFocus.focus();
-    }
-    lastFocusedElementRef.current = null;
-  }, []);
-
-  const handleOverlayKeyDown = useCallback(
-    (event: ReactKeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        handleCloseOverlay();
-      }
-    },
-    [handleCloseOverlay]
-  );
-
-  useEffect(() => {
-    if (!isDonationOverlayOpen) {
-      return;
-    }
-    const timer = window.setTimeout(() => {
-      donationCardRef.current?.focus({ preventScroll: true });
-    }, 40);
-    return () => window.clearTimeout(timer);
-  }, [isDonationOverlayOpen]);
-
-  useEffect(() => {
-    if (typeof document === "undefined") {
-      return;
-    }
-    if (isDonationOverlayOpen) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = originalOverflow;
-      };
-    }
-  }, [isDonationOverlayOpen]);
 
   const handlePayment = useCallback(async () => {
     if (isWalletConnectEligible) {
@@ -654,17 +575,26 @@ const ContributionSupportSection = () => {
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 
   return (
-    <>
-      <section id="support-nyx" className="mb-28 md:mb-36">
-        <div className="mx-auto max-w-6xl space-y-10 text-left">
-          <div className="space-y-3 text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
-          </div>
+    <section id="support-nyx" className="mb-28 md:mb-36">
+      <div className="mx-auto max-w-6xl space-y-10 text-left">
+        <div className="space-y-3 text-center md:text-left">
+          <h2 className="text-2xl md:text-3xl font-bold">{supportHeading}</h2>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
+        </div>
 
+        <div className="space-y-6 md:space-y-7">
           {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
-            <div className="space-y-3">
-              <p className="text-md text-muted-foreground">{supportTiers}</p>
+            <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4 md:space-y-5">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{planStepLabel}</div>
+                  <h3 className="text-sm font-semibold text-foreground mt-1">{planStepTitle}</h3>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground leading-relaxed">{planStepDescription}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{supportTiers}</p>
+              </div>
               <div className="grid gap-6 md:gap-4 xl:gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {premiumBenefits.length > 0 && (
                   <SupportTierButton
@@ -678,6 +608,7 @@ const ContributionSupportSection = () => {
                     donorPreviewLabel={donorPreviewLabels.premium ?? undefined}
                     availabilityLabel={premiumAvailabilityLabel}
                     locale={locale}
+                    isActive={activeTier === "premium"}
                   />
                 )}
                 {sponsorBenefits.length > 0 && (
@@ -690,7 +621,9 @@ const ContributionSupportSection = () => {
                     donors={tierDonors.sponsor}
                     donorNames={tierDonorNames.sponsor}
                     donorPreviewLabel={donorPreviewLabels.sponsor ?? undefined}
+                    availabilityLabel={sponsorAvailabilityLabel}
                     locale={locale}
+                    isActive={activeTier === "sponsor"}
                   />
                 )}
                 {supporterBenefits.length > 0 && (
@@ -704,281 +637,204 @@ const ContributionSupportSection = () => {
                     donorNames={tierDonorNames.supporter}
                     donorPreviewLabel={donorPreviewLabels.supporter ?? undefined}
                     locale={locale}
+                    isActive={activeTier === "supporter"}
                   />
                 )}
               </div>
             </div>
           )}
 
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
-          >
-            <Users className="w-4 h-4" /> {supportOrganizationsCta}
-          </Link>
-        </div>
-      </section>
+          <div className="flex flex-col gap-6 md:gap-7">
+            <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-5 md:space-y-6">
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{selectionStepLabel}</div>
+                <h3 className="text-sm font-semibold text-foreground mt-1">{selectionStepTitle}</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{selectionStepDescription}</p>
+              </div>
 
-      {isDonationOverlayOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-start md:items-center justify-center overflow-y-auto px-4 py-10 md:py-16 bg-black/70 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          onKeyDown={handleOverlayKeyDown}
-          onClick={(event) => {
-            if (event.currentTarget === event.target) {
-              handleCloseOverlay();
-            }
-          }}
-        >
-          <div className="relative w-full max-w-5xl">
-            <button
-              type="button"
-              onClick={handleCloseOverlay}
-              className="absolute -top-10 right-0 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
-              aria-label={closeOverlayAria}
-            >
-              <X className="h-5 w-5" />
-            </button>
-            <div
-              ref={donationCardRef}
-              tabIndex={-1}
-              className="outline-none rounded-xl bg-white p-6 md:p-8 shadow-xl ring-1 ring-gray-100 max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-6rem)] overflow-y-auto"
-            >
-              {activeTierHeading && (
-                <div className="mb-5 flex items-center justify-between gap-3 rounded-lg bg-emerald-50/80 px-4 py-3 text-emerald-900">
-                  <span className="text-sm font-semibold">{activeTierHeading}</span>
-                  {activeTierBadge && (
-                    <span className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700">
-                      {activeTierBadge}
-                    </span>
-                  )}
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-foreground">{supportMethodLabel}</div>
+                <div className="flex flex-wrap gap-2">
+                  {paymentOptions.map((option) => {
+                    const isActive = option.value === selectedMethod;
+                    return (
+                      <button
+                        type="button"
+                        key={`method-${option.value}`}
+                        onClick={() => handleMethodChange(option.value)}
+                        className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition ${
+                          isActive ? "bg-emerald-500 text-white" : "bg-white border border-border text-muted-foreground hover:bg-muted/60"
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
-              {activeTier !== null && (
-                <div className="mb-6 overflow-hidden rounded-lg border border-emerald-100/80 bg-emerald-50/70">
-                  <button
-                    type="button"
-                    onClick={toggleDonorList}
-                    aria-expanded={isDonorListOpen}
-                    aria-controls={donorListSectionId}
-                    className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-emerald-900 transition-colors hover:bg-emerald-100/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-400"
-                  >
-                    <span className="text-sm font-semibold leading-tight">
-                      {donorListTitle ?? donorListEmptyMessage}
-                    </span>
-                    <ChevronDown className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isDonorListOpen ? "rotate-180" : ""}`} />
-                  </button>
-                  <div
-                    id={donorListSectionId}
-                    className={`border-t border-emerald-100/60 px-4 py-4 ${isDonorListOpen ? "" : "hidden"}`}
-                  >
-                    {activeTierDonors.length > 0 ? (
-                      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        {activeTierDonors.map((donor, index) => (
-                          <li
-                            key={`${donor.names.default}-${index}`}
-                            className="flex items-center gap-3 rounded-md border border-emerald-100 bg-white/80 p-3"
-                          >
-                            <DonorAvatar donor={donor} locale={locale} size={44} ringClassName={activeTierAvatarRing} />
-                            <div className="text-sm font-medium text-emerald-900">
-                              {getLocalizedSponsorName(donor, locale)}
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-sm text-emerald-900/80">{donorListEmptyMessage}</p>
-                    )}
-                  </div>
-                </div>
-              )}
-              <div className="flex flex-col gap-6 md:gap-7">
-                <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-5 md:space-y-6">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{selectionStepLabel}</div>
-                    <h3 className="text-sm font-semibold text-foreground mt-1">{selectionStepTitle}</h3>
-                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{selectionStepDescription}</p>
-                  </div>
+              </div>
 
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-foreground">{supportMethodLabel}</div>
-                    <div className="flex flex-wrap gap-2">
-                      {paymentOptions.map((option) => {
-                        const isActive = option.value === selectedMethod;
-                        return (
-                          <button
-                            type="button"
-                            key={`method-${option.value}`}
-                            onClick={() => handleMethodChange(option.value)}
-                            className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition ${
-                              isActive ? "bg-emerald-500 text-white" : "bg-white border border-border text-muted-foreground hover:bg-muted/60"
-                            }`}
-                          >
-                            {option.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {!isFiatJPY && (
-                    <div className="space-y-2">
-                      <div className="text-sm font-medium text-foreground">{supportChainLabel}</div>
-                      <div className="flex flex-wrap gap-2">
-                        {availableCryptoChains.map((chain, index) => {
-                          const isActive = chain.value === selectedChain;
-                          return (
-                            <button
-                              type="button"
-                              key={`chain-${chain.value}`}
-                              onClick={() => handleChainSelect(index)}
-                              className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition ${
-                                isActive ? "bg-emerald-500 text-white" : "bg-white border border-border text-muted-foreground hover:bg-muted/60"
-                              }`}
-                            >
-                              <span className="flex items-center gap-2">
-                                <span className={`h-2.5 w-2.5 rounded-full ${chain.color}`} />
-                                {chain.label}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
-                      <h3 className="text-sm font-semibold leading-tight text-foreground mt-1">{stepOneTitle}</h3>
-                    </div>
-                    <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
-                      {isStepOneSkipped ? <Circle className="w-4 h-4" /> : isStepOneComplete ? <CheckCircle2 className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
-                      <span>{stepOneStatusLabel}</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
-                  {isWalletConnectEligible ? (
-                    <div className="space-y-4">
-                      <div className="flex justify-end">
+              {!isFiatJPY && (
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-foreground">{supportChainLabel}</div>
+                  <div className="flex flex-wrap gap-2">
+                    {availableCryptoChains.map((chain, index) => {
+                      const isActive = chain.value === selectedChain;
+                      return (
                         <button
                           type="button"
-                          onClick={() => void resetWalletConnect()}
-                          disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
-                          className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                          key={`chain-${chain.value}`}
+                          onClick={() => handleChainSelect(index)}
+                          className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition ${
+                            isActive ? "bg-emerald-500 text-white" : "bg-white border border-border text-muted-foreground hover:bg-muted/60"
+                          }`}
                         >
-                          <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
+                          <span className="flex items-center gap-2">
+                            <span className={`h-2.5 w-2.5 rounded-full ${chain.color}`} />
+                            {chain.label}
+                          </span>
                         </button>
-                      </div>
-                      {walletConnectError && <p className="text-xs text-red-600">{walletConnectError}</p>}
-                      {walletConnectUri && (
-                        <div className="flex justify-center">
-                          <div className="rounded-lg bg-white p-4 shadow-sm">
-                            <QRCode value={walletConnectUri} size={168} bgColor="#ffffff" fgColor="#111827" style={{ height: "168px", width: "168px" }} />
-                          </div>
-                        </div>
-                      )}
-                      {!walletConnectUri && walletConnectLoading && <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>}
-                      {walletConnectSession && (
-                        <div className="space-y-2 text-xs text-muted-foreground">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{t("supportSection.wcConnected")}</span>
-                            <span className="font-mono text-foreground/90">
-                              {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{supportChainLabel}</span>
-                            <span>{availableCryptoChains[safeChainIndex]?.label ?? ""}</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{supportAmountLabel}</span>
-                            <span>{formattedAmount}</span>
-                          </div>
-                          {!walletConnectSupportsTargetChain && (
-                            <p className="text-amber-600">
-                              {t("supportSection.wcSwitchHint", {
-                                chain: availableCryptoChains[safeChainIndex]?.label ?? "",
-                              })}
-                            </p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    !isFiatJPY && (
-                      <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
-                        {t("supportSection.wcDisabled")}
-                      </div>
-                    )
-                  )}
-                </div>
-
-                <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
-                      <h3 className="text-sm font-semibold leading-tight text-foreground mt-1">{stepTwoTitle}</h3>
-                    </div>
-                    <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
-                      {canSendDonation ? <CheckCircle2 className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
-                      <span>{stepTwoStatusLabel}</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
-                  {isWalletConnectEligible && !canSendDonation && (
-                    <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
-                  )}
-
-                  {isFiatJPY && (
-                    <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">{bankNameLabel}</span>
-                        <button onClick={() => copyToClipboard(bankNameLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {copyLabel}
-                        </button>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span>{branchNameLabel}</span>
-                        <button onClick={() => copyToClipboard(branchNameLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {copyLabel}
-                        </button>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span>{accountNumberLabel}</span>
-                        <button onClick={() => copyToClipboard(accountNumberLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {copyLabel}
-                        </button>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span>{accountNameLabel}</span>
-                        <button onClick={() => copyToClipboard(accountNameLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
-                          <Copy className="w-3 h-3" /> {copyLabel}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  <button
-                    onClick={handlePayment}
-                    disabled={!canSendDonation}
-                    className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
-                  >
-                    <Heart className="w-4 h-4" /> {donateButtonLabel} {getDisplayAmount()}
-                  </button>
-                  <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
-                    {walletConnectFallbackNote}
+                      );
+                    })}
                   </div>
                 </div>
+              )}
+            </div>
+
+            <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepOneLabel}</div>
+                  <h3 className="text-sm font-semibold leading-tight text-foreground mt-1">{stepOneTitle}</h3>
+                </div>
+                <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepOneStatusClass}`}>
+                  {isStepOneSkipped ? <Circle className="w-4 h-4" /> : isStepOneComplete ? <CheckCircle2 className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
+                  <span>{stepOneStatusLabel}</span>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
+              {isWalletConnectEligible ? (
+                <div className="space-y-4">
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => void resetWalletConnect()}
+                      disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
+                      className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                    >
+                      <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
+                    </button>
+                  </div>
+                  {walletConnectError && <p className="text-xs text-red-600">{walletConnectError}</p>}
+                  {walletConnectUri && (
+                    <div className="flex justify-center">
+                      <div className="rounded-lg bg-white p-4 shadow-sm">
+                        <QRCode value={walletConnectUri} size={168} bgColor="#ffffff" fgColor="#111827" style={{ height: "168px", width: "168px" }} />
+                      </div>
+                    </div>
+                  )}
+                  {!walletConnectUri && walletConnectLoading && <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>}
+                  {walletConnectSession && (
+                    <div className="space-y-2 text-xs text-muted-foreground">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{t("supportSection.wcConnected")}</span>
+                        <span className="font-mono text-foreground/90">
+                          {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{supportChainLabel}</span>
+                        <span>{availableCryptoChains[safeChainIndex]?.label ?? ""}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{supportAmountLabel}</span>
+                        <span>{formattedAmount}</span>
+                      </div>
+                      {!walletConnectSupportsTargetChain && (
+                        <p className="text-amber-600">
+                          {t("supportSection.wcSwitchHint", {
+                            chain: availableCryptoChains[safeChainIndex]?.label ?? "",
+                          })}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                !isFiatJPY && (
+                  <div className="rounded-lg border border-dashed border-border bg-white/50 p-4 text-xs text-muted-foreground">
+                    {t("supportSection.wcDisabled")}
+                  </div>
+                )
+              )}
+            </div>
+
+            <div className="border border-border rounded-lg bg-muted/10 p-5 md:p-6 space-y-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{stepTwoLabel}</div>
+                  <h3 className="text-sm font-semibold leading-tight text-foreground mt-1">{stepTwoTitle}</h3>
+                </div>
+                <div className={`inline-flex items-center gap-1 text-xs font-medium ${stepTwoStatusClass}`}>
+                  {canSendDonation ? <CheckCircle2 className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
+                  <span>{stepTwoStatusLabel}</span>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
+              {isWalletConnectEligible && !canSendDonation && (
+                <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
+              )}
+
+              {isFiatJPY && (
+                <div className="rounded-lg border border-border bg-white/80 p-4 space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">{bankNameLabel}</span>
+                    <button onClick={() => copyToClipboard(bankNameLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                      <Copy className="w-3 h-3" /> {copyLabel}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>{branchNameLabel}</span>
+                    <button onClick={() => copyToClipboard(branchNameLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                      <Copy className="w-3 h-3" /> {copyLabel}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>{accountNumberLabel}</span>
+                    <button onClick={() => copyToClipboard(accountNumberLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                      <Copy className="w-3 h-3" /> {copyLabel}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>{accountNameLabel}</span>
+                    <button onClick={() => copyToClipboard(accountNameLabel)} className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs">
+                      <Copy className="w-3 h-3" /> {copyLabel}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={handlePayment}
+                disabled={!canSendDonation}
+                className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+              >
+                <Heart className="w-4 h-4" /> {donateButtonLabel} {getDisplayAmount()}
+              </button>
+              <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
+                {walletConnectFallbackNote}
               </div>
             </div>
           </div>
         </div>
-      )}
-    </>
+
+        <Link
+          href="/contact"
+          className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+        >
+          <Users className="w-4 h-4" /> {supportOrganizationsCta}
+        </Link>
+      </div>
+    </section>
   );
 };
 

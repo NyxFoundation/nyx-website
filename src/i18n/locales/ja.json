@@ -259,7 +259,8 @@
       "donorListEmpty": "このプランへの最初の寄付者になりましょう。",
       "useCasesHeading": "支援が活きる領域",
       "benefitsPremiumHeading": "プレミアムスポンサー",
-      "premiumAvailability": "4枠限定",
+      "premiumAvailability": "3枠限定",
+      "sponsorAvailability": "10枠限定",
       "benefitsSponsorHeading": "スポンサー",
       "benefitsSupporterHeading": "サポーター",
       "benefitsPremium": [
@@ -268,12 +269,12 @@
           "description": "ホームページ掲載"
         },
         {
-          "title": "premium-priority-access",
-          "description": "優先的にリサーチハウスやオフィスアワーにご案内"
-        },
-        {
           "title": "premium-tshirt",
           "description": "Nyx Foundation Tシャツを贈呈"
+        },
+        {
+          "title": "premium-priority-access",
+          "description": "優先的にリサーチハウスやオフィスアワーにご案内"
         },
         {
           "title": "premium-advisory",
@@ -286,6 +287,10 @@
           "description": "ホームページ掲載"
         },
         {
+          "title": "sponsor-tshirt",
+          "description": "Nyx Foundation Tシャツを贈呈"
+        },
+        {
           "title": "sponsor-priority-access",
           "description": "優先的にリサーチハウスやオフィスアワーにご案内"
         }
@@ -294,13 +299,22 @@
         {
           "title": "supporter-homepage",
           "description": "ホームページ掲載"
+        },
+        {
+          "title": "supporter-tshirt",
+          "description": "Nyx Foundation Tシャツを贈呈"
         }
       ],
+      "planSelectionStep": {
+        "label": "手順1",
+        "title": "寄付プランを選択",
+        "description": "ご希望のプランボタンを選択すると寄付フローが表示されます。"
+      },
       "note": "※ 剰余は当団体の目的領域への資金提供に充てます。寄付額は任意です。",
-      "organizationsCta": "法人の方はこちら",
+      "organizationsCta": "お問い合わせはこちら",
       "closeOverlayAria": "寄付画面を閉じる",
       "selectionStep": {
-        "label": "手順1",
+        "label": "手順2",
         "title": "支払い方法とチェーンを選択",
         "description": "ここで支払い方法とチェーンを選び、続けてWalletConnectで接続し、寄付を送信すると完了ページへ遷移します。"
       },
@@ -309,13 +323,13 @@
       "chainLabel": "チェーン",
       "steps": {
         "step1": {
-          "label": "手順2",
+          "label": "手順3",
           "title": "WalletConnectで接続",
           "description": "対応ウォレットでQRコードを読み取り、ウォレットを接続してください。接続が完了するとチェックマークが緑色になります。",
           "fiatDescription": "銀行振込ではウォレット接続は必要ありません。この手順はスキップしてください。"
         },
         "step2": {
-          "label": "手順3",
+          "label": "手順4",
           "title": "寄付を送信",
           "description": "「寄付する」を押してトランザクションを送信します。完了後に完了ページへ移動し、リーダーボードに表示する名前とアイコンを登録できます。",
           "fiatDescription": "銀行振込を完了したら、下の「完了」ボタンを押して寄付手続きを終了してください。"

@@ -25,6 +25,7 @@ type SupportTierButtonProps = {
   donorNames?: string;
   donorPreviewLabel?: string;
   availabilityLabel?: string;
+  isActive?: boolean;
 };
 
 const tierStyles: Record<SupportTierVariant, {
@@ -37,6 +38,7 @@ const tierStyles: Record<SupportTierVariant, {
   avatarRing: string;
   extraBadge: string;
   availabilityBadge: string;
+  activeRing: string;
 }> = {
   premium: {
     container:
@@ -49,6 +51,7 @@ const tierStyles: Record<SupportTierVariant, {
     avatarRing: "ring-2 ring-rose-200/80 shadow-md",
     extraBadge: "border border-rose-200/80 bg-white text-rose-700 ring-2 ring-rose-200/60 shadow-md",
     availabilityBadge: "bg-white text-rose-700",
+    activeRing: "ring-2 ring-white/80",
   },
   sponsor: {
     container:
@@ -61,6 +64,7 @@ const tierStyles: Record<SupportTierVariant, {
     avatarRing: "ring-2 ring-sky-200/90 shadow-md",
     extraBadge: "border border-sky-200/80 bg-white text-sky-700 ring-2 ring-sky-200/70 shadow-md",
     availabilityBadge: "bg-white text-sky-700",
+    activeRing: "ring-2 ring-sky-100/80",
   },
   supporter: {
     container:
@@ -73,6 +77,7 @@ const tierStyles: Record<SupportTierVariant, {
     avatarRing: "ring-2 ring-emerald-300/80 shadow-md",
     extraBadge: "border border-emerald-300/80 bg-white text-emerald-800 ring-2 ring-emerald-300/70 shadow-md",
     availabilityBadge: "bg-white text-emerald-800",
+    activeRing: "ring-2 ring-emerald-200/80",
   },
 };
 
@@ -89,6 +94,7 @@ export function SupportTierButton({
   donorNames,
   donorPreviewLabel,
   availabilityLabel,
+  isActive = false,
 }: SupportTierButtonProps) {
   const style = tierStyles[variant];
   const previewDonors = donors.slice(0, MAX_DONOR_PREVIEW);
@@ -100,11 +106,13 @@ export function SupportTierButton({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={isActive}
       className={cn(
         "group relative flex h-full w-full flex-col overflow-visible rounded-xl border p-5 text-left transition-transform duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
         style.container,
         style.hover,
         style.focusRing,
+        isActive ? cn(style.activeRing, "scale-[1.02] ring-offset-4 ring-offset-background") : "ring-0",
       )}
     >
       <div className="flex w-full flex-col gap-2">
@@ -121,14 +129,22 @@ export function SupportTierButton({
             </span>
           )}
         </div>
-        <span
-          className={cn(
-            "text-3xl font-extrabold leading-none tracking-tight md:text-4xl",
-            style.amountText,
+        <div className="flex items-end justify-between gap-2">
+          <span
+            className={cn(
+              "text-3xl font-extrabold leading-none tracking-tight md:text-4xl",
+              style.amountText,
+            )}
+          >
+            {badgeLabel}
+          </span>
+          {isActive && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-emerald-700 shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+              {locale === "ja" ? "選択中" : "Selected"}
+            </span>
           )}
-        >
-          {badgeLabel}
-        </span>
+        </div>
       </div>
       <ul className="mt-4 space-y-3">
         {benefits.map((benefit) => (

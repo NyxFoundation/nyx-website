@@ -24,8 +24,8 @@ const tierStyles: Record<SupportTierVariant, {
   hover: string;
   focusRing: string;
   badge: string;
-  icon: string;
   benefitText: string;
+  icon: string;
 }> = {
   premium: {
     container:
@@ -33,8 +33,8 @@ const tierStyles: Record<SupportTierVariant, {
     hover: "hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(251,191,36,0.45)]",
     focusRing: "focus-visible:outline-amber-100",
     badge: "bg-white/20 text-white",
-    icon: "text-white/90",
     benefitText: "text-white/90",
+    icon: "text-white/90",
   },
   sponsor: {
     container:
@@ -42,8 +42,8 @@ const tierStyles: Record<SupportTierVariant, {
     hover: "hover:-translate-y-0.5 hover:shadow-xl",
     focusRing: "focus-visible:outline-white/70",
     badge: "bg-white/15 text-white",
-    icon: "text-white/90",
     benefitText: "text-white/90",
+    icon: "text-white/90",
   },
   supporter: {
     container:
@@ -51,8 +51,8 @@ const tierStyles: Record<SupportTierVariant, {
     hover: "hover:-translate-y-0.5 hover:shadow-xl",
     focusRing: "focus-visible:outline-emerald-700/60",
     badge: "bg-emerald-900/10 text-emerald-900",
-    icon: "text-emerald-800",
     benefitText: "text-emerald-900/90",
+    icon: "text-emerald-800",
   },
 };
 
@@ -81,16 +81,14 @@ export function SupportTierButton({ heading, badgeLabel, benefits, onClick, vari
           {badgeLabel}
         </span>
       </div>
-      <div className="mt-4 space-y-3">
+      <ul className="mt-4 space-y-3">
         {benefits.map((benefit) => (
-          <div key={`${variant}-${benefit.title}`} className="flex items-start gap-3">
+          <li key={`${variant}-${benefit.title}`} className="flex items-start gap-3">
             <Sparkles className={cn("h-5 w-5 shrink-0", style.icon)} />
-            <div className="space-y-1">
-              <p className={cn("text-sm leading-relaxed", style.benefitText)}>{benefit.description}</p>
-            </div>
-          </div>
+            <span className={cn("text-sm leading-relaxed", style.benefitText)}>{benefit.description}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </button>
   );
 }

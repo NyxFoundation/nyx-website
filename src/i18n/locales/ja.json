@@ -241,8 +241,8 @@
       "bullets": [
         "分散システムと暗号技術の研究開発",
         "形式検証",
-        "自動検証ツールの独自開発",
-        "コミュニティへの還元"
+        "自動検証ツールの独自開発とOSS化",
+        "リサーチシェアハウス及びオフィスの設置"
       ],
       "tiers": "寄付プランを選択してください。",
       "useCasesHeading": "支援が活きる領域",
@@ -251,20 +251,36 @@
       "benefitsPremiumHeading": "プレミアムスポンサー",
       "benefitsPremium": [
         {
-          "title": "プレミアムスポンサー特典",
-          "description": "プレミアムスポンサーにはNyx Foundation Tシャツを進呈し、共同研究の提案や技術アドバイスを優先的にご案内します。"
+          "title": "premium-homepage",
+          "description": "ホームページ掲載"
+        },
+        {
+          "title": "premium-priority-access",
+          "description": "優先的にリサーチハウスやオフィスアワーにご案内"
+        },
+        {
+          "title": "premium-tshirt",
+          "description": "Nyx Foundation Tシャツを贈呈"
+        },
+        {
+          "title": "premium-advisory",
+          "description": "共同研究の提案や技術アドバイスを優先的にご案内"
         }
       ],
       "benefitsSponsor": [
         {
-          "title": "スポンサー特典",
-          "description": "スポンサーはNyxハウスを随時ご利用いただけます。"
+          "title": "sponsor-homepage",
+          "description": "ホームページ掲載"
+        },
+        {
+          "title": "sponsor-priority-access",
+          "description": "優先的にリサーチハウスやオフィスアワーにご案内"
         }
       ],
       "benefitsSupporter": [
         {
-          "title": "サポーター特典",
-          "description": "サポーターは公式サイトでご紹介します。"
+          "title": "supporter-homepage",
+          "description": "ホームページ掲載"
         }
       ],
       "note": "※ 剰余は当団体の目的領域への資金提供に充てます。寄付額は任意です。",

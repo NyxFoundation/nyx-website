@@ -240,8 +240,8 @@
       "bullets": [
         "Distributed systems & cryptography R&D",
         "Formal verification",
-        "In-house automated verification tools",
-        "Giving back to the community"
+        "In-house automated verification tools and open-sourcing",
+        "Establishing research share houses and offices"
       ],
       "tiers": "Choose your support plan.",
       "useCasesHeading": "Where your support goes",
@@ -250,20 +250,36 @@
       "benefitsSupporterHeading": "Supporter",
       "benefitsPremium": [
         {
-          "title": "Premium sponsor perks",
-          "description": "Premium sponsors receive a Nyx Foundation T-shirt and priority access to collaborative research proposals and technical advisement."
+          "title": "premium-homepage",
+          "description": "Homepage listing"
+        },
+        {
+          "title": "premium-priority-access",
+          "description": "Priority access to the research house and office hours"
+        },
+        {
+          "title": "premium-tshirt",
+          "description": "Nyx Foundation T-shirt"
+        },
+        {
+          "title": "premium-advisory",
+          "description": "Priority proposals for joint research and technical advisement"
         }
       ],
       "benefitsSponsor": [
         {
-          "title": "Sponsor perk",
-          "description": "Sponsors receive anytime access to the Nyx House."
+          "title": "sponsor-homepage",
+          "description": "Homepage listing"
+        },
+        {
+          "title": "sponsor-priority-access",
+          "description": "Priority access to the research house and office hours"
         }
       ],
       "benefitsSupporter": [
         {
-          "title": "Supporter perk",
-          "description": "Supporters are recognized on our official website."
+          "title": "supporter-homepage",
+          "description": "Homepage listing"
         }
       ],
       "note": "Note: Any surplus is allocated as funding toward our mission. Donations are voluntary.",

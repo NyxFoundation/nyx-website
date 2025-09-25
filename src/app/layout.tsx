@@ -9,19 +9,27 @@ import { GOOGLE_SITE_VERIFICATION } from "@/lib/constants";
 import "./globals.css";
 
 const getSiteOrigin = () => {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL;
-  const fallbacks = [raw, `https://${raw}`].filter(Boolean) as string[];
-  for (const candidate of fallbacks) {
+  const rawValues = [process.env.NEXT_PUBLIC_SITE_URL, process.env.SITE_URL];
+  for (const raw of rawValues) {
+    if (!raw) {
+      continue;
+    }
+    const trimmed = raw.trim();
+    if (!trimmed) {
+      continue;
+    }
+    const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
     try {
       return new URL(candidate).origin;
     } catch {
-      // continue
+      // Try the next fallback value.
     }
   }
   return "https://nyx.foundation";
 };
 
 const siteOrigin = getSiteOrigin();
+const defaultOgImage = new URL("/ogp.png", siteOrigin).toString();
 
 const bizUDPMincho = BIZ_UDPMincho({
   weight: "400",
@@ -56,7 +64,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/ogp.png",
+        url: defaultOgImage,
         width: 1200,
         height: 630,
         alt: "Nyx Foundation",
@@ -67,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nyx Foundation",
     description: "Build a Verifiable Future for Open Innovation",
-    images: ["/ogp.png"],
+    images: [defaultOgImage],
   },
   icons: {
     icon: "/favicon.ico",

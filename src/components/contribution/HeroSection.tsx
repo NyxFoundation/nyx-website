@@ -26,16 +26,18 @@ const ContributionHeroSection = () => {
     <>
       <section className="relative grid grid-cols-1 items-start mb-28 md:mb-36 overflow-hidden pt-24 sm:pt-28 md:pt-40">
         <div className="relative z-10 space-y-5 md:space-y-6">
-          <div className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[180px] md:w-[260px] opacity-10">
-            <Image
-              src="/icon.svg"
-              alt=""
-              aria-hidden
-              fill
-              sizes="(min-width: 768px) 260px, 180px"
-              className="object-contain"
-              priority
-            />
+          <div className="pointer-events-none select-none absolute z-0 -left-6 top-[-108px] md:top-[-140px] w-[180px] h-[180px] md:w-[260px] md:h-[260px] opacity-10">
+            <div className="relative h-full w-full">
+              <Image
+                src="/icon.svg"
+                alt=""
+                aria-hidden
+                fill
+                sizes="(min-width: 768px) 260px, 180px"
+                className="object-contain"
+                priority
+              />
+            </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">{heroHeading}</h1>
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{heroDescription}</p>

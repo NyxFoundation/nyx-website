@@ -24,6 +24,7 @@ type SupportTierButtonProps = {
   locale: string;
   donorNames?: string;
   donorPreviewLabel?: string;
+  availabilityLabel?: string;
 };
 
 const tierStyles: Record<SupportTierVariant, {
@@ -35,6 +36,7 @@ const tierStyles: Record<SupportTierVariant, {
   icon: string;
   avatarRing: string;
   extraBadge: string;
+  availabilityBadge: string;
 }> = {
   premium: {
     container:
@@ -46,6 +48,7 @@ const tierStyles: Record<SupportTierVariant, {
     icon: "text-white/90",
     avatarRing: "ring-2 ring-fuchsia-200/80 shadow-md",
     extraBadge: "border border-fuchsia-200/80 bg-white text-fuchsia-800 ring-2 ring-fuchsia-200/60 shadow-md",
+    availabilityBadge: "bg-white text-fuchsia-800",
   },
   sponsor: {
     container:
@@ -57,6 +60,7 @@ const tierStyles: Record<SupportTierVariant, {
     icon: "text-white/90",
     avatarRing: "ring-2 ring-emerald-200/90 shadow-md",
     extraBadge: "border border-emerald-200/80 bg-white text-emerald-800 ring-2 ring-emerald-200/70 shadow-md",
+    availabilityBadge: "bg-white text-emerald-800",
   },
   supporter: {
     container:
@@ -68,6 +72,7 @@ const tierStyles: Record<SupportTierVariant, {
     icon: "text-emerald-800",
     avatarRing: "ring-2 ring-emerald-300/80 shadow-md",
     extraBadge: "border border-emerald-300/80 bg-white text-emerald-800 ring-2 ring-emerald-300/70 shadow-md",
+    availabilityBadge: "bg-white text-emerald-800",
   },
 };
 
@@ -83,6 +88,7 @@ export function SupportTierButton({
   locale,
   donorNames,
   donorPreviewLabel,
+  availabilityLabel,
 }: SupportTierButtonProps) {
   const style = tierStyles[variant];
   const previewDonors = donors.slice(0, MAX_DONOR_PREVIEW);
@@ -102,7 +108,19 @@ export function SupportTierButton({
       )}
     >
       <div className="flex items-start justify-between gap-3">
-        <h3 className="text-sm font-semibold leading-tight">{heading}</h3>
+        <div className="flex flex-wrap items-center gap-2">
+          <h3 className="text-sm font-semibold leading-tight">{heading}</h3>
+          {availabilityLabel && (
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold",
+                style.availabilityBadge,
+              )}
+            >
+              {availabilityLabel}
+            </span>
+          )}
+        </div>
         <span
           className={cn(
             "rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em]",

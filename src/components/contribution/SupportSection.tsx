@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import QRCode from "react-qr-code";
 import SignClient from "@walletconnect/sign-client";
 import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
-import { BadgeCheck, CheckCircle2, Circle, Copy, Heart, RefreshCcw, Users, X } from "lucide-react";
+import { CheckCircle2, Circle, Copy, Heart, RefreshCcw, Users, X } from "lucide-react";
 
 import {
   CHAIN_ID_MAP,
@@ -136,7 +136,6 @@ const ContributionSupportSection = () => {
   );
 
   const supportBulletsRaw = t.raw("supportSection.bullets");
-  const supportBullets = Array.isArray(supportBulletsRaw) ? (supportBulletsRaw as string[]) : [];
   const premiumBenefitsRaw = t.raw("supportSection.benefitsPremium");
   const premiumBenefits = Array.isArray(premiumBenefitsRaw) ? (premiumBenefitsRaw as SupportBenefit[]) : [];
   const sponsorBenefitsRaw = t.raw("supportSection.benefitsSponsor");
@@ -145,13 +144,12 @@ const ContributionSupportSection = () => {
   const supporterBenefits = Array.isArray(supporterBenefitsRaw) ? (supporterBenefitsRaw as SupportBenefit[]) : [];
 
   const premiumBenefitsHeading = t("supportSection.benefitsPremiumHeading");
+  const premiumAvailabilityLabel = t("supportSection.premiumAvailability");
   const sponsorBenefitsHeading = t("supportSection.benefitsSponsorHeading");
   const supporterBenefitsHeading = t("supportSection.benefitsSupporterHeading");
   const supportHeading = t("supportSection.heading");
   const supportIntro = t("supportSection.intro");
   const supportTiers = t("supportSection.tiers");
-  const supportNote = t("supportSection.note");
-  const supportUseCasesHeading = t("supportSection.useCasesHeading");
   const supportOrganizationsCta = t("supportSection.organizationsCta");
   const copyLabel = tCommon("copy");
   const supportAmountLabel = t("supportSection.amountLabel");
@@ -656,24 +654,6 @@ const ContributionSupportSection = () => {
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{supportIntro}</p>
           </div>
 
-          {supportBullets.length > 0 && (
-            <div className="space-y-3">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.16em]">{supportUseCasesHeading}</h3>
-              <ul className="grid gap-3 sm:grid-cols-2">
-                {supportBullets.map((item, idx) => (
-                  <li
-                    key={`${item}-${idx}`}
-                    className="flex w-full items-start gap-3 rounded-lg border border-emerald-100 bg-emerald-50/70 p-4 shadow-sm"
-                  >
-                    <BadgeCheck className="h-5 w-5 shrink-0 text-emerald-600" />
-                    <span className="text-sm text-emerald-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-xs text-muted-foreground">{supportNote}</p>
-            </div>
-          )}
-
           {(premiumBenefits.length > 0 || sponsorBenefits.length > 0 || supporterBenefits.length > 0) && (
             <div className="space-y-3">
               <p className="text-md text-muted-foreground">{supportTiers}</p>
@@ -688,6 +668,7 @@ const ContributionSupportSection = () => {
                     donors={tierDonors.premium}
                     donorNames={tierDonorNames.premium}
                     donorPreviewLabel={donorPreviewLabels.premium ?? undefined}
+                    availabilityLabel={premiumAvailabilityLabel}
                     locale={locale}
                   />
                 )}

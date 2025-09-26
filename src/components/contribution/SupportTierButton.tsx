@@ -113,8 +113,11 @@ export function SupportTierButton({
         style.hover,
         style.focusRing,
         isActive
-          ? cn(style.activeRing, "scale-[1.02] ring-offset-4 ring-offset-background brightness-105 saturate-110")
-          : "ring-0 opacity-85 hover:opacity-100",
+          ? cn(
+              style.activeRing,
+              "scale-[1.02] ring-offset-4 ring-offset-background brightness-105 saturate-110 border-[5px] border-black",
+            )
+          : "ring-0 border opacity-85 hover:opacity-100",
       )}
     >
       <div className="flex w-full flex-col gap-2">

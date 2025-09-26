@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { BIZ_UDPMincho, Noto_Serif_JP } from "next/font/google";
+import { headers } from "next/headers";
 import { getLocale, getMessages, getTimeZone } from "next-intl/server";
 import { I18nProvider } from "@/i18n/provider";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GOOGLE_SITE_VERIFICATION } from "@/lib/constants";
+import { AppKitProvider } from "@/providers/AppKitProvider";
 import "./globals.css";
 
 const getSiteOrigin = () => {
@@ -88,19 +90,23 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
   const locale = await getLocale();
   const messages = await getMessages();
   const timeZone = (await getTimeZone()) ?? process.env.NEXT_PUBLIC_DEFAULT_TIME_ZONE ?? "Asia/Tokyo";
+  const cookieHeader = headersList.get("cookie");
 
   return (
     <html lang={locale} className={`${bizUDPMincho.variable} ${notoSerifJP.variable}`}>
       <body className="antialiased font-serif">
         <GoogleAnalytics />
-        <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </I18nProvider>
+        <AppKitProvider cookies={cookieHeader}>
+          <I18nProvider locale={locale} messages={messages} timeZone={timeZone}>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </I18nProvider>
+        </AppKitProvider>
       </body>
     </html>
   );

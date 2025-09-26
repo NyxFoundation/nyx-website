@@ -1,0 +1,3 @@
+- Nyx Foundation website built with Next.js App Router + TypeScript for bilingual (ja/en) content and donation flows.
+- Uses Tailwind CSS with shadcn/Radix components, next-intl for localisation, Notion API + react-notion-x for CMS-backed content.
+- Focus areas include showing sponsors, publications, news, and supporting crypto/fiat donations.

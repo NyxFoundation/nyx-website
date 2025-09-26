@@ -4,10 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import QRCode from "react-qr-code";
-import SignClient from "@walletconnect/sign-client";
-import type { SignClientTypes, SessionTypes } from "@walletconnect/types";
-import { CheckCircle2, Circle, Copy, Heart, RefreshCcw, Users } from "lucide-react";
+import { useAccount, useChainId, useSendTransaction, useSwitchChain } from "wagmi";
+import { CheckCircle2, Circle, Copy, Heart, Users, Wallet } from "lucide-react";
 
 import {
   CHAIN_ID_MAP,
@@ -21,10 +19,6 @@ import {
   SUPPORT_TIER_ETH_AMOUNTS,
   TIER_AMOUNT_BADGES,
   TOKEN_TRANSFER_GAS_HEX,
-  WALLETCONNECT_EVENTS,
-  WALLETCONNECT_METADATA,
-  WALLETCONNECT_METHODS,
-  WALLETCONNECT_RELAY_URL,
 } from "@/app/donate/constants";
 import {
   convertMethodAmountToEth,
@@ -33,16 +27,14 @@ import {
   isUserRejectedRequest,
   shortenAddress,
   toBaseUnits,
-  toHexChainId,
-  toHexWei,
+  toWei,
 } from "@/app/donate/logic";
 import type { CryptoChain, PaymentMethod, SponsorInfo, TokenPaymentMethod } from "@/app/donate/types";
 import { SupportTierButton, type SupportBenefit } from "./SupportTierButton";
 import { getLocalizedSponsorName } from "./DonorAvatar";
+import { isWalletConnectConfigured } from "@/lib/appkit/config";
 
 type PaymentOption = { value: PaymentMethod; label: string; type: "crypto" | "fiat" };
-
-const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "";
 
 const ContributionSupportSection = () => {
   const t = useTranslations("contribution");
@@ -52,12 +44,12 @@ const ContributionSupportSection = () => {
   const [selectedChain, setSelectedChain] = useState<CryptoChain>("ethereum");
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("ETH");
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
-  const [signClient, setSignClient] = useState<SignClient | null>(null);
-  const [walletConnectSession, setWalletConnectSession] = useState<SessionTypes.Struct | null>(null);
-  const [walletConnectUri, setWalletConnectUri] = useState<string>("");
-  const [walletConnectLoading, setWalletConnectLoading] = useState(false);
-  const [walletConnectErrorKey, setWalletConnectErrorKey] = useState<string | null>(null);
   const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
+  const { address: connectedAddress } = useAccount();
+  const connectedChainIdFromHook = useChainId();
+  const { sendTransactionAsync, isPending: isSendingTransaction } = useSendTransaction();
+  const { switchChainAsync } = useSwitchChain();
+  const [, setWalletStatusMessage] = useState<string | null>(null);
 
   const premiumTierDonors = useMemo(() => PREMIUM_SPONSORS, []);
   const sponsorTierDonors = useMemo(() => CORPORATE_SPONSORS, []);
@@ -233,49 +225,19 @@ const ContributionSupportSection = () => {
 
   const isWalletConnectEligible = !isFiatJPY && (selectedMethod === "ETH" || Boolean(selectedTokenContract));
   const targetChainId = CHAIN_ID_MAP[selectedChain] ?? CHAIN_ID_MAP.ethereum;
-  const targetChainIdString = String(targetChainId);
-  const targetChainIdHex = toHexChainId(targetChainId);
-  const targetNamespace = `eip155:${targetChainIdString}`;
+  const connectedChainId = connectedChainIdFromHook ?? null;
+  const walletConnectAddressForTarget = connectedAddress ?? null;
+  const walletConnectSupportsTargetChain = connectedChainId === targetChainId;
+  const isWalletConnected = Boolean(connectedAddress);
 
-  const walletConnectAccounts = useMemo(() => {
-    if (!walletConnectSession) {
-      return [] as string[];
+  useEffect(() => {
+    if (isWalletConnected && walletConnectSupportsTargetChain) {
+      setWalletStatusMessage(null);
     }
-    return walletConnectSession.namespaces.eip155?.accounts ?? [];
-  }, [walletConnectSession]);
+  }, [isWalletConnected, walletConnectSupportsTargetChain]);
 
-  const walletConnectAccountForTarget = useMemo(
-    () => walletConnectAccounts.find((account) => account.startsWith(`${targetNamespace}:`)) ?? null,
-    [walletConnectAccounts, targetNamespace]
-  );
-
-  const walletConnectPrimaryAccount = walletConnectAccounts[0] ?? null;
-
-  const walletConnectAddressForTarget = useMemo(() => {
-    if (!walletConnectAccountForTarget) return null;
-    const parts = walletConnectAccountForTarget.split(":");
-    return parts[2] ?? null;
-  }, [walletConnectAccountForTarget]);
-
-  const walletConnectPrimaryAddress = useMemo(() => {
-    if (!walletConnectPrimaryAccount) return null;
-    const parts = walletConnectPrimaryAccount.split(":");
-    return parts[2] ?? null;
-  }, [walletConnectPrimaryAccount]);
-
-  const walletConnectSupportsTargetChain = Boolean(walletConnectAccountForTarget);
-
-  const walletConnectErrorMessages: Record<string, string> = {
-    wcUnavailable: t("supportSection.wcUnavailable"),
-    wcInitError: t("supportSection.wcInitError"),
-    wcConnectError: t("supportSection.wcConnectError"),
-  };
-  const walletConnectError = walletConnectErrorKey ? walletConnectErrorMessages[walletConnectErrorKey] ?? null : null;
-
-  const isStepOneComplete = isWalletConnectEligible
-    ? Boolean(walletConnectSession && walletConnectSupportsTargetChain && walletConnectAddressForTarget)
-    : true;
-  const canSendDonation = !isWalletConnectEligible || isStepOneComplete;
+  const isStepOneComplete = isWalletConnectEligible ? isWalletConnected && walletConnectSupportsTargetChain : true;
+  const canSendDonation = !isWalletConnectEligible || (isStepOneComplete && isWalletConnectConfigured && !isSendingTransaction);
   const isStepOneSkipped = isFiatJPY;
   const stepOneStatusLabel = isStepOneSkipped ? stepStatusSkipped : isStepOneComplete ? stepStatusComplete : stepStatusPending;
   const stepTwoStatusLabel = canSendDonation ? stepStatusReady : stepStatusAction;
@@ -283,156 +245,63 @@ const ContributionSupportSection = () => {
   const stepTwoStatusClass = canSendDonation ? "text-emerald-600" : "text-amber-600";
   const donateButtonLabel = isFiatJPY ? supportCompleteCta : supportDonateCta;
 
-  useEffect(() => {
-    if (signClient) {
-      return;
-    }
-    if (!walletConnectProjectId) {
-      setWalletConnectErrorKey("wcUnavailable");
-      return undefined;
-    }
-    let cancelled = false;
-    (async () => {
+  const requestSwitchChain = useCallback(
+    async (chainId: number, chainLabel: string) => {
+      setWalletStatusMessage(null);
+      if (!switchChainAsync) {
+        setWalletStatusMessage(
+          t("supportSection.wcSwitchHint", {
+            chain: chainLabel,
+          })
+        );
+        return false;
+      }
       try {
-        const client = await SignClient.init({
-          projectId: walletConnectProjectId,
-          relayUrl: WALLETCONNECT_RELAY_URL,
-          metadata: WALLETCONNECT_METADATA,
-        });
-        if (!cancelled) {
-          setWalletConnectErrorKey(null);
-          setSignClient(client);
-        }
+        await switchChainAsync({ chainId });
+        setWalletStatusMessage(null);
+        return true;
       } catch (error) {
         console.error(error);
-        if (!cancelled) {
-          setWalletConnectErrorKey("wcInitError");
+        if (isUserRejectedRequest(error)) {
+          setWalletStatusMessage(t("supportSection.wcRequestRejected"));
+        } else {
+          setWalletStatusMessage(t("supportSection.wcConnectError"));
         }
+        return false;
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [signClient]);
+    },
+    [switchChainAsync, t]
+  );
 
   useEffect(() => {
-    if (!signClient) return;
-
-    const handleDelete = (event: SignClientTypes.EventArguments["session_delete"]) => {
-      setWalletConnectSession((prev) => (prev?.topic === event.topic ? null : prev));
-      setWalletConnectUri("");
-    };
-
-    const handleUpdate = (event: SignClientTypes.EventArguments["session_update"]) => {
-      setWalletConnectSession((prev) => {
-        if (!prev || prev.topic !== event.topic) {
-          return prev;
-        }
-        return { ...prev, namespaces: event.params.namespaces };
-      });
-    };
-
-    signClient.on("session_delete", handleDelete);
-    signClient.on("session_update", handleUpdate);
-
-    return () => {
-      signClient.off("session_delete", handleDelete);
-      signClient.off("session_update", handleUpdate);
-    };
-  }, [signClient]);
-
-  const startWalletConnect = useCallback(async () => {
-    if (!signClient || !isWalletConnectEligible || walletConnectLoading) {
-      return;
-    }
-    setWalletConnectLoading(true);
-    setWalletConnectErrorKey(null);
-    try {
-      if (walletConnectSession) {
-        await signClient.disconnect({
-          topic: walletConnectSession.topic,
-          reason: { code: 6000, message: "Session replaced" },
-        });
-        setWalletConnectSession(null);
-      }
-      const { uri, approval } = await signClient.connect({
-        requiredNamespaces: {
-          eip155: {
-            chains: [targetNamespace],
-            methods: [...WALLETCONNECT_METHODS],
-            events: [...WALLETCONNECT_EVENTS],
-          },
-        },
-      });
-      if (uri) {
-        setWalletConnectUri(uri);
-      }
-      const session = await approval();
-      setWalletConnectSession(session);
-      setWalletConnectUri("");
-    } catch (error) {
-      console.error(error);
-      setWalletConnectErrorKey("wcConnectError");
-    } finally {
-      setWalletConnectLoading(false);
-    }
-  }, [signClient, isWalletConnectEligible, walletConnectLoading, walletConnectSession, targetNamespace]);
-
-  useEffect(() => {
-    if (!signClient || !isWalletConnectEligible) {
-      return;
-    }
-    const hasActiveSession = Boolean(walletConnectSession);
-    if (!hasActiveSession && !walletConnectUri && !walletConnectLoading) {
-      void startWalletConnect();
-    }
-  }, [signClient, isWalletConnectEligible, walletConnectSession, walletConnectUri, walletConnectLoading, startWalletConnect]);
-
-  useEffect(() => {
-    if (!isWalletConnectEligible) {
-      setWalletConnectErrorKey(null);
-    }
-    if (!isWalletConnectEligible && walletConnectSession && signClient) {
-      signClient
-        .disconnect({ topic: walletConnectSession.topic, reason: { code: 6001, message: "Donation method changed" } })
-        .catch((error) => console.error(error));
-      setWalletConnectSession(null);
-      setWalletConnectUri("");
-    }
-  }, [isWalletConnectEligible, signClient, walletConnectSession]);
-
-  const resetWalletConnect = useCallback(async () => {
-    setWalletConnectErrorKey(null);
-    setWalletConnectUri("");
-    if (walletConnectSession && signClient) {
-      try {
-        await signClient.disconnect({
-          topic: walletConnectSession.topic,
-          reason: { code: 6002, message: "Reset by user" },
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    setWalletConnectSession(null);
-    if (isWalletConnectEligible) {
-      void startWalletConnect();
-    }
-  }, [isWalletConnectEligible, signClient, startWalletConnect, walletConnectSession]);
+    setWalletStatusMessage(null);
+  }, [connectedAddress, connectedChainId, isWalletConnectEligible, selectedChain, selectedMethod]);
 
   const handleMethodChange = useCallback((method: PaymentMethod) => {
     setSelectedMethod(method);
     setSelectedAmountIndex(0);
   }, []);
 
+  const getAppKitModal = () => (typeof window !== "undefined" ? window.__NYX_APPKIT_MODAL__ : undefined);
+
   const handleChainSelect = useCallback(
-    (index: number) => {
+    async (index: number) => {
       const target = availableCryptoChains[index]?.value;
-      if (target) {
-        setSelectedChain(target);
+      if (!target) {
+        return;
+      }
+      const previousChain = selectedChain;
+      setSelectedChain(target);
+      const desiredChainId = CHAIN_ID_MAP[target] ?? CHAIN_ID_MAP.ethereum;
+      const desiredChainLabel = availableCryptoChains[index]?.label ?? "";
+      if (isWalletConnected && connectedChainId !== desiredChainId) {
+        const switched = await requestSwitchChain(desiredChainId, desiredChainLabel);
+        if (!switched) {
+          setSelectedChain(previousChain);
+        }
       }
     },
-    [availableCryptoChains]
+    [availableCryptoChains, connectedChainId, isWalletConnected, requestSwitchChain, selectedChain]
   );
 
   const handleTierClick = useCallback(
@@ -449,31 +318,46 @@ const ContributionSupportSection = () => {
     [handleMethodChange]
   );
 
+  const handleOpenWalletModal = useCallback(async () => {
+    if (!isWalletConnectConfigured) {
+      alert(t("supportSection.wcNeedsProject"));
+      return;
+    }
+    const modal = getAppKitModal();
+    if (!modal) {
+      alert(t("supportSection.wcConnectError"));
+      return;
+    }
+    try {
+      const view = isWalletConnected ? "Account" : "Connect";
+      await modal.open({ view, namespace: "eip155" });
+    } catch (error) {
+      console.error(error);
+      alert(t("supportSection.wcConnectError"));
+    }
+  }, [isWalletConnected, t]);
+
   const handlePayment = useCallback(async () => {
     if (isWalletConnectEligible) {
-      if (!walletConnectProjectId) {
+      if (!isWalletConnectConfigured) {
         alert(t("supportSection.wcNeedsProject"));
         return;
       }
-      if (!signClient) {
-        alert(t("supportSection.wcInitPending"));
-        return;
-      }
-      if (!walletConnectSession) {
+      if (!connectedAddress) {
+        setWalletStatusMessage(t("supportSection.wcConnectPrompt"));
         alert(t("supportSection.wcConnectPrompt"));
-        void startWalletConnect();
         return;
       }
-      if (!walletConnectAddressForTarget) {
-        alert(
-          t("supportSection.wcChainMismatch", {
-            chain: availableCryptoChains[safeChainIndex]?.label ?? "",
-          })
-        );
-        return;
+      if (!walletConnectSupportsTargetChain) {
+        const chainLabel = availableCryptoChains[safeChainIndex]?.label ?? "";
+        const switched = await requestSwitchChain(targetChainId, chainLabel);
+        if (!switched) {
+          return;
+        }
       }
       try {
-        const txParams = (() => {
+        setWalletStatusMessage(t("supportSection.wcRequestSent"));
+        const txHash = await (async () => {
           if (isTokenPayment) {
             if (!selectedTokenContract) {
               throw new Error("Token contract unavailable for selected chain.");
@@ -482,32 +366,27 @@ const ContributionSupportSection = () => {
             if (baseUnits === BigInt(0)) {
               throw new Error("Amount must be greater than zero.");
             }
-            return {
-              from: walletConnectAddressForTarget,
-              to: selectedTokenContract,
-              value: "0x0",
-              gas: TOKEN_TRANSFER_GAS_HEX,
-              chainId: targetChainIdHex,
-              data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits),
-            } as const;
+          return sendTransactionAsync({
+            account: connectedAddress,
+            chainId: targetChainId,
+            to: selectedTokenContract as `0x${string}`,
+            value: BigInt(0),
+            gas: BigInt(TOKEN_TRANSFER_GAS_HEX),
+            data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits) as `0x${string}`,
+          });
+        }
+          const weiValue = toWei(currentEthAmount);
+          if (weiValue === BigInt(0)) {
+            throw new Error("Amount must be greater than zero.");
           }
-          return {
-            from: walletConnectAddressForTarget,
-            to: DONATION_ADDRESS,
-            value: toHexWei(currentEthAmount),
-            gas: DEFAULT_GAS_HEX,
-            chainId: targetChainIdHex,
-            data: "0x",
-          } as const;
+          return sendTransactionAsync({
+            account: connectedAddress,
+            chainId: targetChainId,
+            to: DONATION_ADDRESS as `0x${string}`,
+            value: weiValue,
+            gas: BigInt(DEFAULT_GAS_HEX),
+          });
         })();
-        const txHash = await signClient.request({
-          topic: walletConnectSession.topic,
-          chainId: targetNamespace,
-          request: {
-            method: "eth_sendTransaction",
-            params: [txParams],
-          },
-        });
         const params = new URLSearchParams();
         params.set("amount", currentAmount.toString());
         params.set("displayAmount", formattedAmount);
@@ -515,11 +394,8 @@ const ContributionSupportSection = () => {
         if (!isFiatJPY) {
           params.set("chain", selectedChain);
         }
-        const donorAddress = walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "";
-        if (donorAddress) {
-          params.set("address", donorAddress);
-        }
-        if (typeof txHash === "string" && txHash) {
+        params.set("address", connectedAddress);
+        if (txHash) {
           params.set("txHash", txHash);
         }
         const query = params.toString();
@@ -527,9 +403,11 @@ const ContributionSupportSection = () => {
       } catch (error) {
         console.error(error);
         if (isUserRejectedRequest(error)) {
+          setWalletStatusMessage(t("supportSection.wcRequestRejected"));
           alert(t("supportSection.wcRequestRejected"));
         } else {
           const message = error instanceof Error ? error.message : String(error);
+          setWalletStatusMessage(t("supportSection.wcRequestError"));
           alert(`${t("supportSection.wcRequestError")}\n${message}`);
         }
       }
@@ -546,26 +424,25 @@ const ContributionSupportSection = () => {
     router.push(`/thankyou-donation${query ? `?${query}` : ""}`);
   }, [
     availableCryptoChains,
+    connectedAddress,
     currentAmount,
     currentEthAmount,
     formattedAmount,
     isFiatJPY,
     isWalletConnectEligible,
     isTokenPayment,
+    requestSwitchChain,
     router,
     safeChainIndex,
-    signClient,
-    startWalletConnect,
-    t,
-    targetNamespace,
-    targetChainIdHex,
-    selectedTokenContract,
-    selectedTokenDecimals,
     selectedChain,
     selectedMethod,
-    walletConnectPrimaryAddress,
-    walletConnectAddressForTarget,
-    walletConnectSession,
+    selectedTokenContract,
+    selectedTokenDecimals,
+    sendTransactionAsync,
+    setWalletStatusMessage,
+    t,
+    targetChainId,
+    walletConnectSupportsTargetChain,
   ]);
 
   const getDisplayAmount = () => formattedAmount;
@@ -677,7 +554,9 @@ const ContributionSupportSection = () => {
                         <button
                           type="button"
                           key={`chain-${chain.value}`}
-                          onClick={() => handleChainSelect(index)}
+                          onClick={() => {
+                            void handleChainSelect(index);
+                          }}
                           className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition ${
                             isActive ? "bg-emerald-500 text-white" : "bg-white border border-border text-muted-foreground hover:bg-muted/60"
                           }`}
@@ -708,32 +587,37 @@ const ContributionSupportSection = () => {
               <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
               {isWalletConnectEligible ? (
                 <div className="space-y-4">
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => void resetWalletConnect()}
-                      disabled={walletConnectLoading || (!walletConnectSession && !walletConnectUri)}
-                      className="text-muted-foreground hover:underline inline-flex items-center gap-1 text-xs disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      <RefreshCcw className="w-3 h-3" /> {t("supportSection.wcReset")}
-                    </button>
-                  </div>
-                  {walletConnectError && <p className="text-xs text-red-600">{walletConnectError}</p>}
-                  {walletConnectUri && (
-                    <div className="flex justify-center">
-                      <div className="rounded-lg bg-white p-4 shadow-sm">
-                        <QRCode value={walletConnectUri} size={168} bgColor="#ffffff" fgColor="#111827" style={{ height: "168px", width: "168px" }} />
-                      </div>
-                    </div>
-                  )}
-                  {!walletConnectUri && walletConnectLoading && <p className="text-xs text-muted-foreground">{t("supportSection.wcWaiting")}</p>}
-                  {walletConnectSession && (
-                    <div className="space-y-2 text-xs text-muted-foreground">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void handleOpenWalletModal();
+                    }}
+                    disabled={!isWalletConnectConfigured}
+                    className="w-full h-14 md:h-16 rounded-lg bg-emerald-500 text-white text-base font-semibold shadow-sm transition hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isWalletConnected ? (
+                      <span className="flex flex-col items-center gap-1 text-sm md:text-base">
+                        <span className="flex items-center gap-2">
+                          <CheckCircle2 className="w-5 h-5" /> {t("supportSection.wcConnected")}
+                        </span>
+                        <span className="font-mono text-xs md:text-sm text-white/90">
+                          {shortenAddress(walletConnectAddressForTarget ?? connectedAddress ?? "") || "—"}
+                          {availableCryptoChains[safeChainIndex]?.label
+                            ? ` · ${availableCryptoChains[safeChainIndex]?.label ?? ""}`
+                            : ""}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2">
+                        <Wallet className="w-5 h-5" /> {t("supportSection.wcTitle")}
+                      </span>
+                    )}
+                  </button>
+                  {isWalletConnected && (
+                    <div className="space-y-2 rounded-lg border border-border bg-white/60 p-4 text-xs text-muted-foreground">
                       <div className="flex items-center justify-between">
                         <span className="font-medium">{t("supportSection.wcConnected")}</span>
-                        <span className="font-mono text-foreground/90">
-                          {shortenAddress(walletConnectAddressForTarget ?? walletConnectPrimaryAddress ?? "") || "—"}
-                        </span>
+                        <span className="font-mono text-foreground/90">{shortenAddress(walletConnectAddressForTarget ?? connectedAddress ?? "") || "—"}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="font-medium">{supportChainLabel}</span>
@@ -743,13 +627,6 @@ const ContributionSupportSection = () => {
                         <span className="font-medium">{supportAmountLabel}</span>
                         <span>{formattedAmount}</span>
                       </div>
-                      {!walletConnectSupportsTargetChain && (
-                        <p className="text-amber-600">
-                          {t("supportSection.wcSwitchHint", {
-                            chain: availableCryptoChains[safeChainIndex]?.label ?? "",
-                          })}
-                        </p>
-                      )}
                     </div>
                   )}
                 </div>
@@ -812,7 +689,7 @@ const ContributionSupportSection = () => {
                 disabled={!canSendDonation}
                 className="relative z-10 w-full h-12 bg-gray-700 text-white rounded-md font-medium shadow-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
               >
-                <Heart className="w-4 h-4" /> {donateButtonLabel} {getDisplayAmount()}
+                <Heart className="w-4 h-4" /> {isSendingTransaction ? t("supportSection.wcWaiting") : donateButtonLabel} {getDisplayAmount()}
               </button>
               <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-xs text-muted-foreground leading-relaxed">
                 {walletConnectFallbackNote}

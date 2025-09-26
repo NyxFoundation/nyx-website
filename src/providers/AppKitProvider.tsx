@@ -34,7 +34,6 @@ if (typeof window !== "undefined" && !window.__NYX_APPKIT_MODAL__) {
     },
     themeMode: "light",
     allowUnsupportedChain: true,
-    isNewChainsStale: false,
   });
 }
 

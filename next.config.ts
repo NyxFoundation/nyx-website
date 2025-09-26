@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
     config.resolve = config.resolve ?? {};
     config.resolve.alias = config.resolve.alias ?? {};
     config.resolve.alias["pino-pretty"] = path.join(__dirname, "src/lib/stubs/pino-pretty.js");
+    config.resolve.alias["@react-native-async-storage/async-storage"] = path.join(
+      __dirname,
+      "src/lib/asyncStorageStub.ts"
+    );
 
     return config;
   },

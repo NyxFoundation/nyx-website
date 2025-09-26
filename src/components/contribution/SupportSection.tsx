@@ -370,7 +370,7 @@ const ContributionSupportSection = () => {
             account: connectedAddress,
             chainId: targetChainId,
             to: selectedTokenContract as `0x${string}`,
-            value: 0n,
+            value: BigInt(0),
             gas: BigInt(TOKEN_TRANSFER_GAS_HEX),
             data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits) as `0x${string}`,
           });

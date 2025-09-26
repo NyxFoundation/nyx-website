@@ -1,5 +1,6 @@
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { arbitrum, base, mainnet, optimism } from "@reown/appkit/networks";
+import type { AppKitNetwork } from "@reown/appkit/networks";
 import { cookieStorage, createStorage } from "wagmi";
 
 export const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "";
@@ -8,7 +9,10 @@ export const appKitProjectId = walletConnectProjectId || "demo";
 
 export const isWalletConnectConfigured = Boolean(walletConnectProjectId) || process.env.NODE_ENV !== "production";
 
-export const appKitNetworks = [mainnet, arbitrum, optimism, base];
+export const appKitNetworks = [mainnet, arbitrum, optimism, base] as unknown as [
+  AppKitNetwork,
+  ...AppKitNetwork[]
+];
 
 export const appKitMetadata = {
   name: "Nyx Foundation",

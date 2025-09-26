@@ -49,8 +49,8 @@ export const ERC20_METADATA: Record<
     contracts: {
       ethereum: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       optimism: "0x0b2c639c533813f4aa9d7837caf62653d097ff85",
-      arbitrum: "0xAf88d065e77c8cC2239327C5EDb3A432268e5831",
-      base: "0x833589fCD6eDb6E08f4c7c32D4f71b54bDa02913",
+      arbitrum: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      base: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     },
   },
   USDT: {

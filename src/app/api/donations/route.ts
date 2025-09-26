@@ -1,8 +1,20 @@
 import { NextResponse } from "next/server";
 
 import { createDonationSubmission } from "@/lib/notion-donations";
+import type { DonationSubmission } from "@/lib/notion-donations";
 
 const getValue = (value: FormDataEntryValue | null) => (typeof value === "string" ? value.trim() : "");
+
+const ALLOWED_TSHIRT_SIZES = new Set<NonNullable<DonationSubmission["tshirtSize"]>>(["S", "M", "L", "XL"]);
+
+const normalizeTshirtSize = (value: string): DonationSubmission["tshirtSize"] => {
+  if (!value) {
+    return null;
+  }
+
+  const upper = value.toUpperCase() as NonNullable<DonationSubmission["tshirtSize"]>;
+  return ALLOWED_TSHIRT_SIZES.has(upper) ? upper : null;
+};
 
 export async function POST(request: Request) {
   try {
@@ -14,7 +26,7 @@ export async function POST(request: Request) {
     const currencyRaw = getValue(formData.get("currency"));
     const icon = getValue(formData.get("icon"));
     const physicalAddress = getValue(formData.get("physicalAddress"));
-    const tshirtSize = getValue(formData.get("tshirtSize"));
+    const tshirtSize = normalizeTshirtSize(getValue(formData.get("tshirtSize")));
     const urlRaw = getValue(formData.get("url"));
 
     if (!name) {
@@ -30,7 +42,7 @@ export async function POST(request: Request) {
       name,
       address: address || null,
       physicalAddress: physicalAddress || null,
-      tshirtSize: tshirtSize || null,
+      tshirtSize,
       amount: amount || null,
       currency: currencyRaw ? currencyRaw.toUpperCase() : null,
       icon: icon || null,

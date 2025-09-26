@@ -21,7 +21,7 @@ const ContributionSupportersSection = () => {
     <section className="mb-28 md:mb-36">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold md:whitespace-nowrap">{supportersHeading}</h2>
+          <h2 className="text-xl md:text-3xl font-bold md:whitespace-nowrap">{supportersHeading}</h2>
         </div>
         <div className="rounded-xl px-6 py-12 md:px-14 md:py-14 bg-white shadow-sm ring-1 ring-gray-100">
           <div className="grid grid-cols-1 gap-12 md:gap-14">

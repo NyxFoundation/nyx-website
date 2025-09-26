@@ -18,6 +18,8 @@ const notion = new Client({
 export interface DonationSubmission {
   name: string;
   address?: string | null;
+  physicalAddress?: string | null;
+  tshirtSize?: "S" | "M" | "L" | "XL" | null;
   amount?: string | null;
   currency?: string | null;
   icon?: string | null;
@@ -44,12 +46,14 @@ const truncate = (value: string, maxLength: number) => {
 };
 
 export async function createDonationSubmission(submission: DonationSubmission) {
-  const { name, address, amount, currency, icon, url } = submission;
+  const { name, address, physicalAddress, tshirtSize, amount, currency, icon, url } = submission;
 
   const amountNumber = parseAmount(amount);
   const amountValue = amountNumber ?? null;
   const currencyText = currency ? truncate(currency, 2000) : null;
   const iconUrl = icon && /^https?:\/\//i.test(icon) ? icon : null;
+  const physicalAddressText = physicalAddress ? truncate(physicalAddress, 2000) : null;
+  const tshirtText = tshirtSize ?? null;
 
   const properties = {
     Name: {
@@ -71,6 +75,24 @@ export async function createDonationSubmission(submission: DonationSubmission) {
             },
           ]
         : [],
+    },
+    "Physical Address": {
+      rich_text: physicalAddressText
+        ? [
+            {
+              text: {
+                content: physicalAddressText,
+              },
+            },
+          ]
+        : [],
+    },
+    TShirtSize: {
+      select: tshirtText
+        ? {
+            name: tshirtText,
+          }
+        : null,
     },
     Amount: {
       number: amountValue,

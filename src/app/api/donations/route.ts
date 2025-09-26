@@ -13,6 +13,8 @@ export async function POST(request: Request) {
     const amount = getValue(formData.get("amount"));
     const currencyRaw = getValue(formData.get("currency"));
     const icon = getValue(formData.get("icon"));
+    const physicalAddress = getValue(formData.get("physicalAddress"));
+    const tshirtSize = getValue(formData.get("tshirtSize"));
     const urlRaw = getValue(formData.get("url"));
 
     if (!name) {
@@ -27,6 +29,8 @@ export async function POST(request: Request) {
     await createDonationSubmission({
       name,
       address: address || null,
+      physicalAddress: physicalAddress || null,
+      tshirtSize: tshirtSize || null,
       amount: amount || null,
       currency: currencyRaw ? currencyRaw.toUpperCase() : null,
       icon: icon || null,

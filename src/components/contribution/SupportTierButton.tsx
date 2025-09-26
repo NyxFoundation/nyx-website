@@ -115,7 +115,7 @@ export function SupportTierButton({
         isActive
           ? cn(
               style.activeRing,
-              "scale-[1.02] ring-offset-4 ring-offset-background brightness-105 saturate-110 border-[5px] border-black",
+              "scale-[1.02] ring-offset-4 ring-offset-background brightness-105 saturate-110 border-2 border-black",
             )
           : "ring-0 border opacity-85 hover:opacity-100",
       )}

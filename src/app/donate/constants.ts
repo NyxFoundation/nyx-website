@@ -151,24 +151,24 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
 export const CORPORATE_SPONSORS: SponsorInfo[] = [
   {
+    names: { default: "Hiro Shimo", ja: "志茂 博" },
+    logo: "/sponsors/shimo.jpg",
+  },
+  {
     names: { default: "Ethereum Foundation", ja: "イーサリアム財団" },
     logo: "/sponsors/ef.jpg",
   },
   {
-    names: { default: "Geodework", ja: "ジオデワーク" },
+    names: { default: "Geode Labs", ja: "Geode Labs" },
     logo: "/sponsors/geodework.jpg",
   },
   {
-    names: { default: "GuildQB", ja: "ギルドQB" },
+    names: { default: "GuildQB", ja: "GuildQB" },
     logo: "/sponsors/guildqb.png",
   },
   {
     names: { default: "KIRIFUDA Inc.", ja: "キリフダ株式会社" },
     logo: "/sponsors/kirifuda.jpg",
-  },
-  {
-    names: { default: "Hiro Shimo", ja: "志茂 博" },
-    logo: "/sponsors/shimo.jpg",
   },
   {
     names: { default: "chikeo", ja: "ちけみーくん" },
@@ -188,7 +188,7 @@ export const PREMIUM_SPONSORS: SponsorInfo[] = [];
 
 export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
   {
-    names: { default: "DeSci Tokyo", ja: "デサイ東京" },
+    names: { default: "DeSci Tokyo", ja: "DeSci Tokyo" },
     logo: "/sponsors/desci.jpg",
   },
 ];

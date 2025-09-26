@@ -63,15 +63,16 @@
         "heading": "Ethereum as trustworthy social infrastructure",
         "imageAlt": "Ethereum as trustworthy social infrastructure",
         "body": [
-          "Alignment between specs and implementations, predictable state transitions and value transfers, and third-party verifiability—these are the conditions for a trustworthy social infrastructure.",
-          "On such a foundation, smart contracts don’t rely on specific intermediaries: they codify promises and keep them verifiably. Excessive intermediation shrinks, inefficiencies from market dominance are curbed, and barriers to entry drop. As a result, anyone, anywhere can experiment, compose, and scale new value under fair rules—and we contribute to building that foundation."
+          "Through open research and development, we are moving Ethereum closer to becoming trustworthy social infrastructure.",
+          "By trustworthy social infrastructure we mean a base layer where state transitions and value transfers execute trustlessly and remain verifiable by third parties. The result is less excessive intermediation, lower barriers to entry, and a world where anyone can explore, combine, and scale new value under fair rules. We are committed to building that foundation."
         ]
       },
       {
         "heading": "Why we do this",
         "imageAlt": "Our team and work",
         "body": [
-          "Ethereum is a meritocratic arena where background—education, ethnicity, age, affiliation—matters less than proven skill and outcomes. Open discussion and review, public implementations, and permissionless contribution define the culture. We are a small, young team drawn to that ethos, focused on better implementations and sound verification for the benefit of both users and developers."
+          "Ethereum is an ecosystem that evaluates people by outcomes regardless of education, ethnicity, age, or affiliation. We are a small, focused group of young researchers and engineers aligned with that value.",
+          "We steadily ship verifiable results through open processes to deliver value to users, researchers, and builders."
         ]
       }
     ],
@@ -221,12 +222,16 @@
       "description": "Answers to common donation questions",
       "items": [
         {
-          "question": "Is Nyx Foundation a nonprofit?",
+          "question": "Does Nyx Foundation have legal entity status?",
           "answer": "Yes. Nyx Foundation is a non-profit general incorporated association in Japan. We do not distribute profits; any surplus is allocated as funding for research, formal verification, and community contributions."
         },
         {
           "question": "How is my donation used?",
-          "answer": "We fund research and formal verification, vulnerability research and fixes, applied work on MEV and mechanism design, and the operational base. Even small PRs and single proofs help prevent incidents over time and raise reliability."
+          "answer": "We allocate donations to research and formal verification, vulnerability investigations and fixes, applied work on MEV and mechanism design, and operating the Research House. Even small PRs or single proofs help prevent incidents over time and raise reliability."
+        },
+        {
+          "question": "When will the thank-you T-shirt arrive and how is it delivered?",
+          "answer": "We ship it to the address you provide after your donation as soon as manufacturing is complete."
         },
         {
           "question": "Can I get a receipt?",
@@ -258,7 +263,7 @@
       "useCasesHeading": "Where your support goes",
       "benefitsPremiumHeading": "Premium Sponsor",
       "premiumAvailability": "Limited to 3 slots",
-      "sponsorAvailability": "Limited to 15 slots",
+      "sponsorAvailability": "Limited to 12 slots",
       "benefitsSponsorHeading": "Sponsor",
       "benefitsSupporterHeading": "Supporter",
       "benefitsPremium": [
@@ -397,7 +402,7 @@
       "icon": "Icon",
       "iconPlaceholder": "Add your icon URL",
       "wallet": "Wallet",
-      "share": "Share your support with #NyxFoundation"
+      "share": "Share your support with #NyxFoundation (updating name and icon above refreshes the banner)"
     },
     "summary": {
       "heading": "Donation summary",
@@ -415,7 +420,12 @@
       "iconLabel": "Icon URL",
       "iconHint": "Paste an image URL (optional).",
       "amountLabel": "Donation amount",
-      "addressLabel": "Wallet address / Sender name",
+      "addressLabel": "Wallet address or bank sender name",
+      "physicalAddressLabel": "Shipping address for the T-shirt",
+      "physicalAddressPlaceholder": "Apartment, street, city, postal code",
+      "physicalAddressNote": "If you prefer not to share an address, you can pick up your T-shirt at our base in Bunkyo, Tokyo. Please contact us to arrange a pickup time.",
+      "tshirtLabel": "T-shirt size",
+      "tshirtPlaceholder": "Select a size",
       "urlLabel": "Social link",
       "urlPlaceholder": "https://twitter.com/",
       "submit": "Submit",

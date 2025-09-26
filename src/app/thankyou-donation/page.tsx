@@ -24,6 +24,8 @@ export default function ThankYouDonationPage() {
   const [iconUrl, setIconUrl] = useState("");
   const [amountInput, setAmountInput] = useState(displayAmount || rawAmount);
   const [walletInput, setWalletInput] = useState(wallet);
+  const [physicalAddress, setPhysicalAddress] = useState("");
+  const [tshirtSize, setTshirtSize] = useState<"S" | "M" | "L" | "XL" | "">("");
   const [urlInput, setUrlInput] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,6 +72,8 @@ export default function ThankYouDonationPage() {
       if (bannerIconUrl) {
         formData.set("icon", bannerIconUrl);
       }
+      formData.set("physicalAddress", physicalAddress.trim());
+      formData.set("tshirtSize", tshirtSize);
       formData.set("url", urlInput.trim());
 
       const response = await fetch("/api/donations", {
@@ -272,6 +276,40 @@ export default function ThankYouDonationPage() {
                       onChange={(event) => setWalletInput(event.target.value)}
                       className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 font-mono"
                     />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <label htmlFor="donor-tshirt-size" className="text-sm font-medium text-foreground">
+                      {t("form.tshirtLabel")}
+                    </label>
+                    <select
+                      id="donor-tshirt-size"
+                      value={tshirtSize}
+                      onChange={(event) => setTshirtSize(event.target.value as typeof tshirtSize)}
+                      className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    >
+                      <option value="">{t("form.tshirtPlaceholder")}</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="donor-physical-address" className="text-sm font-medium text-foreground">
+                      {t("form.physicalAddressLabel")}
+                    </label>
+                    <textarea
+                      id="donor-physical-address"
+                      value={physicalAddress}
+                      onChange={(event) => setPhysicalAddress(event.target.value)}
+                      placeholder={t("form.physicalAddressPlaceholder")}
+                      rows={3}
+                      className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    <p className="text-xs text-muted-foreground leading-relaxed">{t("form.physicalAddressNote")}</p>
                   </div>
                 </div>
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useAccount, useChainId, useSendTransaction, useSwitchChain } from "wagmi";
-import { CheckCircle2, Circle, Copy, Heart, Users } from "lucide-react";
+import { CheckCircle2, Circle, Copy, Heart, Users, Wallet } from "lucide-react";
 
 import {
   CHAIN_ID_MAP,
@@ -49,7 +49,7 @@ const ContributionSupportSection = () => {
   const connectedChainIdFromHook = useChainId();
   const { sendTransactionAsync, isPending: isSendingTransaction } = useSendTransaction();
   const { switchChainAsync } = useSwitchChain();
-  const [walletStatusMessage, setWalletStatusMessage] = useState<string | null>(null);
+  const [, setWalletStatusMessage] = useState<string | null>(null);
 
   const premiumTierDonors = useMemo(() => PREMIUM_SPONSORS, []);
   const sponsorTierDonors = useMemo(() => CORPORATE_SPONSORS, []);
@@ -230,30 +230,6 @@ const ContributionSupportSection = () => {
   const walletConnectSupportsTargetChain = connectedChainId === targetChainId;
   const isWalletConnected = Boolean(connectedAddress);
 
-  const walletConnectError = useMemo(() => {
-    if (!isWalletConnectConfigured && isWalletConnectEligible) {
-      return t("supportSection.wcNeedsProject");
-    }
-    if (walletStatusMessage) {
-      return walletStatusMessage;
-    }
-    if (isWalletConnectEligible && isWalletConnected && !walletConnectSupportsTargetChain) {
-      return t("supportSection.wcSwitchHint", {
-        chain: availableCryptoChains[safeChainIndex]?.label ?? "",
-      });
-    }
-    return null;
-  }, [
-    availableCryptoChains,
-    isWalletConnectEligible,
-    isWalletConnectConfigured,
-    isWalletConnected,
-    safeChainIndex,
-    t,
-    walletStatusMessage,
-    walletConnectSupportsTargetChain,
-  ]);
-
   useEffect(() => {
     if (isWalletConnected && walletConnectSupportsTargetChain) {
       setWalletStatusMessage(null);
@@ -306,20 +282,26 @@ const ContributionSupportSection = () => {
     setSelectedAmountIndex(0);
   }, []);
 
+  const getAppKitModal = () => (typeof window !== "undefined" ? window.__NYX_APPKIT_MODAL__ : undefined);
+
   const handleChainSelect = useCallback(
     async (index: number) => {
       const target = availableCryptoChains[index]?.value;
       if (!target) {
         return;
       }
+      const previousChain = selectedChain;
       setSelectedChain(target);
       const desiredChainId = CHAIN_ID_MAP[target] ?? CHAIN_ID_MAP.ethereum;
       const desiredChainLabel = availableCryptoChains[index]?.label ?? "";
       if (isWalletConnected && connectedChainId !== desiredChainId) {
-        await requestSwitchChain(desiredChainId, desiredChainLabel);
+        const switched = await requestSwitchChain(desiredChainId, desiredChainLabel);
+        if (!switched) {
+          setSelectedChain(previousChain);
+        }
       }
     },
-    [availableCryptoChains, connectedChainId, isWalletConnected, requestSwitchChain]
+    [availableCryptoChains, connectedChainId, isWalletConnected, requestSwitchChain, selectedChain]
   );
 
   const handleTierClick = useCallback(
@@ -336,6 +318,25 @@ const ContributionSupportSection = () => {
     [handleMethodChange]
   );
 
+  const handleOpenWalletModal = useCallback(async () => {
+    if (!isWalletConnectConfigured) {
+      alert(t("supportSection.wcNeedsProject"));
+      return;
+    }
+    const modal = getAppKitModal();
+    if (!modal) {
+      alert(t("supportSection.wcConnectError"));
+      return;
+    }
+    try {
+      const view = isWalletConnected ? "Account" : "Connect";
+      await modal.open({ view, namespace: "eip155" });
+    } catch (error) {
+      console.error(error);
+      alert(t("supportSection.wcConnectError"));
+    }
+  }, [isWalletConnected, t]);
+
   const handlePayment = useCallback(async () => {
     if (isWalletConnectEligible) {
       if (!isWalletConnectConfigured) {
@@ -348,7 +349,8 @@ const ContributionSupportSection = () => {
         return;
       }
       if (!walletConnectSupportsTargetChain) {
-        const switched = await requestSwitchChain(targetChainId, availableCryptoChains[safeChainIndex]?.label ?? "");
+        const chainLabel = availableCryptoChains[safeChainIndex]?.label ?? "";
+        const switched = await requestSwitchChain(targetChainId, chainLabel);
         if (!switched) {
           return;
         }
@@ -421,16 +423,17 @@ const ContributionSupportSection = () => {
     const query = params.toString();
     router.push(`/thankyou-donation${query ? `?${query}` : ""}`);
   }, [
+    availableCryptoChains,
     connectedAddress,
     currentAmount,
     currentEthAmount,
     formattedAmount,
-    requestSwitchChain,
     isFiatJPY,
-    isWalletConnectConfigured,
     isWalletConnectEligible,
     isTokenPayment,
+    requestSwitchChain,
     router,
+    safeChainIndex,
     selectedChain,
     selectedMethod,
     selectedTokenContract,
@@ -584,20 +587,32 @@ const ContributionSupportSection = () => {
               <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepOneFiatDescription : stepOneDescription}</p>
               {isWalletConnectEligible ? (
                 <div className="space-y-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div className="space-y-1">
-                      <p className="text-xs font-medium text-muted-foreground">{t("supportSection.wcTitle")}</p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{t("supportSection.wcDescription")}</p>
-                    </div>
-                    <appkit-button
-                      label={isWalletConnected ? t("supportSection.wcConnected") : t("supportSection.wcTitle")}
-                      size="lg"
-                      balance="hide"
-                      variant="fill"
-                      disabled={!isWalletConnectConfigured}
-                    />
-                  </div>
-                  {walletConnectError && <p className="text-xs text-red-600">{walletConnectError}</p>}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void handleOpenWalletModal();
+                    }}
+                    disabled={!isWalletConnectConfigured}
+                    className="w-full h-14 md:h-16 rounded-lg bg-emerald-500 text-white text-base font-semibold shadow-sm transition hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isWalletConnected ? (
+                      <span className="flex flex-col items-center gap-1 text-sm md:text-base">
+                        <span className="flex items-center gap-2">
+                          <CheckCircle2 className="w-5 h-5" /> {t("supportSection.wcConnected")}
+                        </span>
+                        <span className="font-mono text-xs md:text-sm text-white/90">
+                          {shortenAddress(walletConnectAddressForTarget ?? connectedAddress ?? "") || "—"}
+                          {availableCryptoChains[safeChainIndex]?.label
+                            ? ` · ${availableCryptoChains[safeChainIndex]?.label ?? ""}`
+                            : ""}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2">
+                        <Wallet className="w-5 h-5" /> {t("supportSection.wcTitle")}
+                      </span>
+                    )}
+                  </button>
                   {isWalletConnected && (
                     <div className="space-y-2 rounded-lg border border-border bg-white/60 p-4 text-xs text-muted-foreground">
                       <div className="flex items-center justify-between">

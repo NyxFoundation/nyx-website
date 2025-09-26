@@ -33,6 +33,8 @@ if (typeof window !== "undefined" && !window.__NYX_APPKIT_MODAL__) {
       swaps: false,
     },
     themeMode: "light",
+    allowUnsupportedChain: true,
+    isNewChainsStale: false,
   });
 }
 

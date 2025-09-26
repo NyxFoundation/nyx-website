@@ -1,0 +1,6 @@
+- `npm run dev` – start Next.js dev server on port 3000.
+- `npm run build` & `npm start` – production build and serve.
+- `npm run lint` – run ESLint per project rules.
+- `npm run smoke` – Playwright smoke tests (chromium, tagged @smoke).
+- `npm run check:hc` – scripted healthcheck against localhost:3000.
+- `npm run dev:up` – helper script to bootstrap dev environment (per scripts/dev_up.mjs).

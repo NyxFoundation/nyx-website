@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useAccount, useChainId, useSendTransaction, useSwitchChain } from "wagmi";
+import { useAccount, useChainId, usePublicClient, useSendTransaction, useSwitchChain } from "wagmi";
 import { CheckCircle2, Circle, Copy, Heart, Users, Wallet } from "lucide-react";
 
 import {
@@ -33,6 +33,7 @@ import type { CryptoChain, PaymentMethod, SponsorInfo, TokenPaymentMethod } from
 import { SupportTierButton, type SupportBenefit } from "./SupportTierButton";
 import { getLocalizedSponsorName } from "./DonorAvatar";
 import { isWalletConnectConfigured } from "@/lib/appkit/config";
+import { BaseError, type Address } from "viem";
 
 type PaymentOption = { value: PaymentMethod; label: string; type: "crypto" | "fiat" };
 
@@ -45,7 +46,11 @@ const ContributionSupportSection = () => {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("ETH");
   const [selectedAmountIndex, setSelectedAmountIndex] = useState(0);
   const [activeTier, setActiveTier] = useState<keyof typeof SUPPORT_TIER_ETH_AMOUNTS | null>(null);
-  const { address: connectedAddress } = useAccount();
+  const {
+    address: connectedAddress,
+    isConnected: isAccountConnected,
+    status: accountStatus,
+  } = useAccount();
   const connectedChainIdFromHook = useChainId();
   const { sendTransactionAsync, isPending: isSendingTransaction } = useSendTransaction();
   const { switchChainAsync } = useSwitchChain();
@@ -225,10 +230,32 @@ const ContributionSupportSection = () => {
 
   const isWalletConnectEligible = !isFiatJPY && (selectedMethod === "ETH" || Boolean(selectedTokenContract));
   const targetChainId = CHAIN_ID_MAP[selectedChain] ?? CHAIN_ID_MAP.ethereum;
+  const publicClient = usePublicClient({ chainId: targetChainId });
+  const getReadableError = useCallback(
+    (error: unknown) => {
+      if (!error) {
+        return "";
+      }
+      if (typeof error === "string") {
+        return error;
+      }
+      if (error instanceof BaseError) {
+        const shortMessage = error.shortMessage?.trim();
+        const causeMessage = error.cause instanceof BaseError ? error.cause.shortMessage : error.cause instanceof Error ? error.cause.message : undefined;
+        return (shortMessage || causeMessage || "").trim();
+      }
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return "";
+    },
+    []
+  );
   const connectedChainId = connectedChainIdFromHook ?? null;
   const walletConnectAddressForTarget = connectedAddress ?? null;
   const walletConnectSupportsTargetChain = connectedChainId === targetChainId;
-  const isWalletConnected = Boolean(connectedAddress);
+  const isWalletConnecting = accountStatus === "connecting" || accountStatus === "reconnecting";
+  const isWalletConnected = Boolean(connectedAddress) && Boolean(isAccountConnected);
 
   useEffect(() => {
     if (isWalletConnected && walletConnectSupportsTargetChain) {
@@ -244,6 +271,41 @@ const ContributionSupportSection = () => {
   const stepOneStatusClass = isStepOneSkipped ? "text-muted-foreground" : isStepOneComplete ? "text-emerald-600" : "text-muted-foreground";
   const stepTwoStatusClass = canSendDonation ? "text-emerald-600" : "text-amber-600";
   const donateButtonLabel = isFiatJPY ? supportCompleteCta : supportDonateCta;
+
+  const { stepTwoHelperText, stepTwoHelperTone } = useMemo(() => {
+    if (!isWalletConnectEligible) {
+      return { stepTwoHelperText: null as string | null, stepTwoHelperTone: "muted" as const };
+    }
+    if (!isWalletConnected) {
+      if (isWalletConnecting) {
+        return { stepTwoHelperText: t("supportSection.wcConnecting"), stepTwoHelperTone: "muted" as const };
+      }
+      return { stepTwoHelperText: t("supportSection.wcConnectPrompt"), stepTwoHelperTone: "warning" as const };
+    }
+    if (!walletConnectSupportsTargetChain) {
+      const chainLabel = availableCryptoChains[safeChainIndex]?.label ?? "";
+      return {
+        stepTwoHelperText: t("supportSection.wcSwitchHint", { chain: chainLabel }),
+        stepTwoHelperTone: "warning" as const,
+      };
+    }
+    if (!isWalletConnectConfigured) {
+      return { stepTwoHelperText: t("supportSection.wcNeedsProject"), stepTwoHelperTone: "warning" as const };
+    }
+    if (isSendingTransaction) {
+      return { stepTwoHelperText: t("supportSection.wcWaiting"), stepTwoHelperTone: "muted" as const };
+    }
+    return { stepTwoHelperText: null as string | null, stepTwoHelperTone: "muted" as const };
+  }, [
+    availableCryptoChains,
+    isSendingTransaction,
+    isWalletConnectEligible,
+    isWalletConnected,
+    isWalletConnecting,
+    safeChainIndex,
+    t,
+    walletConnectSupportsTargetChain,
+  ]);
 
   const requestSwitchChain = useCallback(
     async (chainId: number, chainLabel: string) => {
@@ -343,9 +405,12 @@ const ContributionSupportSection = () => {
         alert(t("supportSection.wcNeedsProject"));
         return;
       }
-      if (!connectedAddress) {
-        setWalletStatusMessage(t("supportSection.wcConnectPrompt"));
-        alert(t("supportSection.wcConnectPrompt"));
+      if (!isWalletConnected || !connectedAddress) {
+        const prompt = isWalletConnecting
+          ? t("supportSection.wcConnecting")
+          : t("supportSection.wcConnectPrompt");
+        setWalletStatusMessage(prompt);
+        alert(prompt);
         return;
       }
       if (!walletConnectSupportsTargetChain) {
@@ -356,37 +421,90 @@ const ContributionSupportSection = () => {
         }
       }
       try {
-        setWalletStatusMessage(t("supportSection.wcRequestSent"));
-        const txHash = await (async () => {
-          if (isTokenPayment) {
-            if (!selectedTokenContract) {
-              throw new Error("Token contract unavailable for selected chain.");
-            }
-            const baseUnits = toBaseUnits(currentAmount, selectedTokenDecimals);
-            if (baseUnits === BigInt(0)) {
-              throw new Error("Amount must be greater than zero.");
-            }
-          return sendTransactionAsync({
-            account: connectedAddress,
-            chainId: targetChainId,
-            to: selectedTokenContract as `0x${string}`,
-            value: BigInt(0),
-            gas: BigInt(TOKEN_TRANSFER_GAS_HEX),
-            data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits) as `0x${string}`,
-          });
-        }
-          const weiValue = toWei(currentEthAmount);
-          if (weiValue === BigInt(0)) {
+        const account = connectedAddress as Address;
+        const tokenContract = selectedTokenContract as Address | null;
+        const baseUnits = isTokenPayment ? toBaseUnits(currentAmount, selectedTokenDecimals) : null;
+        if (isTokenPayment) {
+          if (!tokenContract) {
+            throw new Error("Token contract unavailable for selected chain.");
+          }
+          if (baseUnits === null || baseUnits === BigInt(0)) {
             throw new Error("Amount must be greater than zero.");
           }
+        }
+        const weiValue = !isTokenPayment ? toWei(currentEthAmount) : null;
+        if (!isTokenPayment && (weiValue === null || weiValue === BigInt(0))) {
+          throw new Error("Amount must be greater than zero.");
+        }
+
+        if (publicClient) {
+          try {
+            if (isTokenPayment && tokenContract && baseUnits) {
+              await publicClient.estimateGas({
+                account,
+                to: tokenContract,
+                data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits) as `0x${string}`,
+                value: BigInt(0),
+              });
+            } else if (!isTokenPayment && weiValue !== null) {
+              await publicClient.estimateGas({
+                account,
+                to: DONATION_ADDRESS as Address,
+                value: weiValue,
+              });
+            }
+          } catch (simulationError) {
+            console.error(simulationError);
+            const readable = getReadableError(simulationError) || t("supportSection.wcRequestError");
+            const message = t("supportSection.wcSimulationFailed", { message: readable });
+            setWalletStatusMessage(message);
+            alert(message);
+            return;
+          }
+        }
+
+        setWalletStatusMessage(t("supportSection.wcRequestSent"));
+        const txHash = await (async () => {
+          if (isTokenPayment && tokenContract && baseUnits) {
+            return sendTransactionAsync({
+              account,
+              chainId: targetChainId,
+              to: tokenContract,
+              value: BigInt(0),
+              gas: BigInt(TOKEN_TRANSFER_GAS_HEX),
+              data: encodeErc20Transfer(DONATION_ADDRESS, baseUnits) as `0x${string}`,
+            });
+          }
           return sendTransactionAsync({
-            account: connectedAddress,
+            account,
             chainId: targetChainId,
-            to: DONATION_ADDRESS as `0x${string}`,
-            value: weiValue,
+            to: DONATION_ADDRESS as Address,
+            value: weiValue ?? BigInt(0),
             gas: BigInt(DEFAULT_GAS_HEX),
           });
         })();
+
+        if (publicClient) {
+          try {
+            setWalletStatusMessage(t("supportSection.wcAwaitingConfirmation"));
+            const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+            if (receipt.status !== "success") {
+              throw new Error(
+                t("supportSection.wcTxFailed", {
+                  message: receipt.status === "reverted" ? t("supportSection.wcTxReverted") : receipt.status,
+                })
+              );
+            }
+          } catch (confirmationError) {
+            console.error(confirmationError);
+            const readable = getReadableError(confirmationError) || t("supportSection.wcTxFailedNoDetails");
+            const message = t("supportSection.wcTxFailed", { message: readable });
+            setWalletStatusMessage(message);
+            alert(message);
+            return;
+          }
+        }
+
         const params = new URLSearchParams();
         params.set("amount", currentAmount.toString());
         params.set("displayAmount", formattedAmount);
@@ -406,9 +524,11 @@ const ContributionSupportSection = () => {
           setWalletStatusMessage(t("supportSection.wcRequestRejected"));
           alert(t("supportSection.wcRequestRejected"));
         } else {
-          const message = error instanceof Error ? error.message : String(error);
-          setWalletStatusMessage(t("supportSection.wcRequestError"));
-          alert(`${t("supportSection.wcRequestError")}\n${message}`);
+          const fallback = t("supportSection.wcRequestError");
+          const readable = getReadableError(error);
+          const combined = readable ? `${fallback}\n${readable}` : fallback;
+          setWalletStatusMessage(readable || fallback);
+          alert(combined);
         }
       }
       return;
@@ -431,6 +551,10 @@ const ContributionSupportSection = () => {
     isFiatJPY,
     isWalletConnectEligible,
     isTokenPayment,
+    isWalletConnected,
+    isWalletConnecting,
+    getReadableError,
+    publicClient,
     requestSwitchChain,
     router,
     safeChainIndex,
@@ -651,8 +775,14 @@ const ContributionSupportSection = () => {
                 </div>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">{isFiatJPY ? stepTwoFiatDescription : stepTwoDescription}</p>
-              {isWalletConnectEligible && !canSendDonation && (
-                <p className="text-xs text-amber-600">{t("supportSection.wcConnectPrompt")}</p>
+              {stepTwoHelperText && (
+                <p
+                  className={`text-xs leading-relaxed ${
+                    stepTwoHelperTone === "warning" ? "text-amber-600" : "text-muted-foreground"
+                  }`}
+                >
+                  {stepTwoHelperText}
+                </p>
               )}
 
               {isFiatJPY && (

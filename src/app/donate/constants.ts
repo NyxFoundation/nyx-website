@@ -179,6 +179,10 @@ export const CORPORATE_SPONSORS: SponsorInfo[] = [
     logo: "/sponsors/kiminorijapan.jpg",
   },
   {
+    names: { default: "Nakaba Nishigawa", ja: "Nakaba Nishigawa" },
+    logo: "/sponsors/nakaba.png",
+  },
+  {
     names: { default: "Anonymous", ja: "匿名希望" },
     logo: null,
   },
@@ -191,4 +195,66 @@ export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
     names: { default: "DeSci Tokyo", ja: "DeSci Tokyo" },
     logo: "/sponsors/desci.jpg",
   },
+  {
+    names: { default: "HARUKI", ja: "HARUKI" },
+    logo: "/sponsors/haruki.png",
+  },
+  {
+    names: { default: "Shiba", ja: "柴" },
+    logo: "/sponsors/shiba.png",
+  },
+
+  {
+    names: { default: "kyo", ja: "kyo" },
+    logo: "/sponsors/kyo.png",
+  },
+  {
+    names: { default: "GURΞ", ja: "GURΞ" },
+    logo: "/sponsors/gure.png",
+  },
+  {
+    names: { default: "Amedama", ja: "Amedama" },
+    logo: "/sponsors/amedama.png",
+  },
+  {
+    names: { default: "ZaK", ja: "ZaK" },
+    logo: "/sponsors/zak.png",
+  },
+  {
+    names: { default: "mameta", ja: "mameta" },
+    logo: "/sponsors/mameta.png",
+  },
+  {
+    names: { default: "飯田夏生", ja: "飯田夏生" },
+    logo: "/sponsors/jaxon.png",
+  },
+  {
+    names: { default: "Yoshitaka Okayama", ja: "Yoshitaka Okayama" },
+    logo: "/sponsors/okayama.png",
+  },
+  {
+    names: { default: "aramaki", ja: "あらまき" },
+    logo: "/sponsors/aramaki.png",
+  },
+  {
+    names: { default: "Mikihiro Ono", ja: "Mikihiro Ono" },
+    logo: "/sponsors/miki.png",
+  },
+
+  {
+    names: { default: "kinshicho", ja: "錦糸町" },
+    logo: "/sponsors/kinshicho.png",
+  },
+  {
+    names: { default: "Data Trust Ltd.", ja: "データトラスト株式会社" },
+    logo: "/sponsors/datatrust.png",
+  },
+  {
+    names: { default: "pacy", ja: "pacy" },
+    logo: "/sponsors/pacy.png",
+  },
+  {
+    names: { default: "Anonymous x 5", ja: "匿名希望 x 5" },
+    logo: null,
+  }
 ];

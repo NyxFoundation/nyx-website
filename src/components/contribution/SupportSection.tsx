@@ -341,7 +341,6 @@ const ContributionSupportSection = () => {
 
   const handleMethodChange = useCallback((method: PaymentMethod) => {
     setSelectedMethod(method);
-    setSelectedAmountIndex(0);
   }, []);
 
   const getAppKitModal = () => (typeof window !== "undefined" ? window.__NYX_APPKIT_MODAL__ : undefined);

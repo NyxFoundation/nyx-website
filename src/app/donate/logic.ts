@@ -1,4 +1,4 @@
-import { ETH_TO_JPY, ETH_TO_USD, NUMBER_LOCALE_MAP } from "./constants";
+import { FIXED_AMOUNTS, NUMBER_LOCALE_MAP } from "./constants";
 import type { PaymentMethod } from "./types";
 
 const WEI_FACTOR = BigInt("1000000000000000000");
@@ -71,17 +71,24 @@ export const shortenAddress = (address: string) => {
 };
 
 export const convertMethodAmountToEth = (amount: number, method: PaymentMethod) => {
-  switch (method) {
-    case "JPY":
-      return amount / ETH_TO_JPY;
-    case "ETH":
-      return amount;
-    case "USDC":
-    case "USDT":
-    case "DAI":
-    default:
-      return amount / ETH_TO_USD;
+  const ethTiers = FIXED_AMOUNTS.ETH ?? [];
+  const methodTiers = FIXED_AMOUNTS[method] ?? [];
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return 0;
   }
+  if (!ethTiers.length || !methodTiers.length) {
+    return 0;
+  }
+
+  // FIXED_AMOUNTS[method] 内のどの tier かを特定し、その同じインデックスの ETH tier を返す
+  const index = methodTiers.findIndex((tierAmount) => Math.abs(tierAmount - amount) < 1e-9);
+  if (index >= 0 && index < ethTiers.length) {
+    return ethTiers[index];
+  }
+
+  // 想定外の金額の場合は 0 ETH 扱い（FIXED_AMOUNTS 由来のみを許可）
+  return 0;
 };
 
 export const formatMethodAmount = (amount: number, method: PaymentMethod, locale: string) => {

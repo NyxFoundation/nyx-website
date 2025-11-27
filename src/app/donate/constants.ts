@@ -110,7 +110,7 @@ export const PILLAR_METADATA: Record<string, PillarMetadata> = {
 };
 
 export const FIXED_AMOUNTS: Record<PaymentMethod, readonly number[]> = {
-  ETH: [0.15, 1.5, 7.5],
+  ETH: [0.2, 2.0, 8.0],
   USDC: [600, 6_000, 30_000],
   USDT: [600, 6_000, 30_000],
   DAI: [600, 6_000, 30_000],
@@ -118,22 +118,16 @@ export const FIXED_AMOUNTS: Record<PaymentMethod, readonly number[]> = {
 };
 
 export const SUPPORT_TIER_ETH_AMOUNTS = {
-  supporter: 0.15,
-  sponsor: 1.5,
-  premium: 7.5,
+  supporter: FIXED_AMOUNTS.ETH[0],
+  sponsor: FIXED_AMOUNTS.ETH[1],
+  premium: FIXED_AMOUNTS.ETH[2],
 } as const;
 
 export const TIER_AMOUNT_BADGES = {
-  supporter: "0.15 ETH+",
-  sponsor: "1.5 ETH+",
-  premium: "7.5 ETH+",
+  supporter: FIXED_AMOUNTS.ETH[0].toString() + " ETH+",
+  sponsor: FIXED_AMOUNTS.ETH[1].toString() + " ETH+",
+  premium: FIXED_AMOUNTS.ETH[2].toString() + " ETH+",
 } as const;
-
-export const ETH_TO_USD = 4500;
-
-export const USD_TO_JPY = 145;
-
-export const ETH_TO_JPY = ETH_TO_USD * USD_TO_JPY;
 
 export const NUMBER_LOCALE_MAP: Record<string, string> = {
   ja: "en-US",
@@ -150,10 +144,6 @@ export const TEAM_MEMBERS: TeamMember[] = [
 ];
 
 export const CORPORATE_SPONSORS: SponsorInfo[] = [
-  {
-    names: { default: "Hiro Shimo", ja: "志茂 博" },
-    logo: "/sponsors/shimo.jpg",
-  },
   {
     names: { default: "Ethereum Foundation", ja: "イーサリアム財団" },
     logo: "/sponsors/ef.jpg",
@@ -183,12 +173,17 @@ export const CORPORATE_SPONSORS: SponsorInfo[] = [
     logo: "/sponsors/nakaba.png",
   },
   {
-    names: { default: "Anonymous", ja: "匿名希望" },
+    names: { default: "Anonymous x 2", ja: "匿名希望 x 2" },
     logo: null,
   },
 ];
 
-export const PREMIUM_SPONSORS: SponsorInfo[] = [];
+export const PREMIUM_SPONSORS: SponsorInfo[] = [
+  {
+    names: { default: "Hiro Shimo", ja: "志茂 博" },
+    logo: "/sponsors/shimo.jpg",
+  },
+];
 
 export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
   {
@@ -254,7 +249,11 @@ export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
     logo: "/sponsors/pacy.png",
   },
   {
-    names: { default: "Anonymous x 5", ja: "匿名希望 x 5" },
+    names: { default: "Yuho Matsumoto", ja: "松本ゆうほ" },
+    logo: "/sponsors/yuho.png",
+  },
+  {
+    names: { default: "Anonymous x 6", ja: "匿名希望 x 6" },
     logo: null,
   }
 ];

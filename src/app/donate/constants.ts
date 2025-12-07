@@ -173,7 +173,7 @@ export const CORPORATE_SPONSORS: SponsorInfo[] = [
     logo: "/sponsors/nakaba.png",
   },
   {
-    names: { default: "Anonymous x 2", ja: "匿名希望 x 2" },
+    names: { default: "Anonymous x 2", ja: "匿名 x 2" },
     logo: null,
   },
 ];
@@ -183,6 +183,10 @@ export const PREMIUM_SPONSORS: SponsorInfo[] = [
     names: { default: "Hiro Shimo", ja: "志茂 博" },
     logo: "/sponsors/shimo.jpg",
   },
+  {
+    names: { default: "Anonymous", ja: "匿名" },
+    logo: null,
+  }
 ];
 
 export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
@@ -253,7 +257,7 @@ export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
     logo: "/sponsors/yuho.png",
   },
   {
-    names: { default: "Anonymous x 6", ja: "匿名希望 x 6" },
+    names: { default: "Anonymous x 6", ja: "匿名 x 6" },
     logo: null,
   }
 ];

@@ -1,18 +1,5 @@
 import { NextResponse } from "next/server";
-import { Client } from "@notionhq/client";
-
-const getEnvOrThrow = (name: string): string => {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`${name} is not defined`);
-  }
-  return value;
-};
-
-const notionToken = getEnvOrThrow("NOTION_TOKEN");
-const contactDatabaseId = getEnvOrThrow("NOTION_CONTACT_DATABASE_ID");
-
-const notion = new Client({ auth: notionToken });
+import { sendDiscordNotification } from "@/lib/discord";
 
 function getStringValue(value: FormDataEntryValue | null): string {
   return typeof value === "string" ? value.trim() : "";
@@ -34,34 +21,20 @@ export async function POST(request: Request) {
       );
     }
 
-    await notion.pages.create({
-      parent: { database_id: contactDatabaseId },
-      properties: {
-        Name: {
-          title: [
-            {
-              text: {
-                content: name,
-              },
-            },
+    await sendDiscordNotification({
+      embeds: [
+        {
+          title: "📬 New Contact Form Submission",
+          color: 0x3b82f6, // Blue
+          fields: [
+            { name: "Name", value: name, inline: true },
+            { name: "Email", value: email, inline: true },
+            { name: "Social", value: social || "N/A", inline: true },
+            { name: "Content", value: content },
           ],
+          timestamp: new Date().toISOString(),
         },
-        "Email Address": {
-          email,
-        },
-        "Social Media": {
-          url: social || null,
-        },
-        Content: {
-          rich_text: [
-            {
-              text: {
-                content,
-              },
-            },
-          ],
-        },
-      },
+      ],
     });
 
     return NextResponse.json({ success: true });

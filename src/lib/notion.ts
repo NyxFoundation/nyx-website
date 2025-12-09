@@ -257,47 +257,69 @@ export async function getMembers(): Promise<TeamMember[]> {
 
 
 
-    return response.results
-      .filter((page): page is PageObjectResponse => "properties" in page)
-      .map((page) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const properties = page.properties as any;
+    const membersWithBlocks = await Promise.all(
+      response.results
+        .filter((page): page is PageObjectResponse => "properties" in page)
+        .map(async (page) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const properties = page.properties as any;
 
-        // Debug logging to help identify schema mismatches
-        if (!properties.Name || !properties.Person) {
-          console.warn(`[getMembers] Missing required properties for page ${page.id}. Keys found: ${Object.keys(properties).join(", ")}`);
-        }
-
-        // Debug: Print properties for the first member to verify keys
-        const keys = Object.keys(properties);
-        const bio = String(getPropertyValue(properties.bio) || "");
-        const bioEn = String(getPropertyValue(properties.bio_eng) || "");
-
-        console.log(`[getMembers Debug] Name: ${String(getPropertyValue(properties.Name))}, Keys: ${keys.join(", ")}`);
-        console.log(`[getMembers Debug] Extracted - bio: ${bio.substring(0, 20)}..., bioEn: ${bioEn.substring(0, 20)}...`);
-
-        // Handle icon which can be 'emoji', 'file', or 'external'
-        let avatarUrl: string | null = null;
-        if (page.icon) {
-          if (page.icon.type === "emoji") {
-            // Not supported for avatar URL logic directly, return null or handle differently
-          } else if (page.icon.type === "file") {
-            avatarUrl = page.icon.file.url;
-          } else if (page.icon.type === "external") {
-            avatarUrl = page.icon.external.url;
+          // Debug logging to help identify schema mismatches
+          if (!properties.Name || !properties.Person) {
+            console.warn(`[getMembers] Missing required properties for page ${page.id}. Keys found: ${Object.keys(properties).join(", ")}`);
           }
-        }
 
-        return {
-          id: page.id,
-          name: String(getPropertyValue(properties.Name) || ""), // Title property
-          role: String(getPropertyValue(properties.Person) || ""), // Assuming 'Person' maps to 'Role' for now, or text field
-          avatar: avatarUrl,
-          bio: String(getPropertyValue(properties.bio) || ""),
-          bioEn: String(getPropertyValue(properties.bio_eng) || ""),
-          url: String(getPropertyValue(properties.URL) || "") || null,
-        };
-      });
+          // Debug: Print properties for the first member to verify keys
+          const keys = Object.keys(properties);
+          const bio = String(getPropertyValue(properties.bio) || "");
+          const bioEn = String(getPropertyValue(properties.bio_eng) || "");
+
+          // console.log(`[getMembers Debug] Name: ${String(getPropertyValue(properties.Name))}, Keys: ${keys.join(", ")}`);
+          // console.log(`[getMembers Debug] Extracted - bio: ${bio.substring(0, 20)}..., bioEn: ${bioEn.substring(0, 20)}...`);
+
+          // Handle icon which can be 'emoji', 'file', or 'external'
+          let avatarUrl: string | null = null;
+
+          // Strategy: Try to find an image in the page content first (as requested)
+          // Fallback to page icon if no content image is found
+          try {
+            const blocks = await getPageBlocks(page.id);
+            const imageBlock = blocks.find((block) => block.type === 'image') as any; // Cast to any to access image properties easily
+            if (imageBlock) {
+              if (imageBlock.image.type === 'file') {
+                avatarUrl = imageBlock.image.file.url;
+              } else if (imageBlock.image.type === 'external') {
+                avatarUrl = imageBlock.image.external.url;
+              }
+            }
+          } catch (e) {
+            console.error(`Error fetching blocks for member ${page.id}`, e);
+          }
+
+          // If no content image, try page icon
+          if (!avatarUrl && page.icon) {
+            if (page.icon.type === "emoji") {
+              // Not supported for avatar URL logic directly
+            } else if (page.icon.type === "file") {
+              avatarUrl = page.icon.file.url;
+            } else if (page.icon.type === "external") {
+              avatarUrl = page.icon.external.url;
+            }
+          }
+
+          return {
+            id: page.id,
+            name: String(getPropertyValue(properties.Name) || ""), // Title property
+            role: String(getPropertyValue(properties.Person) || ""), // Assuming 'Person' maps to 'Role' for now, or text field
+            avatar: avatarUrl,
+            bio: String(getPropertyValue(properties.bio) || ""),
+            bioEn: String(getPropertyValue(properties.bio_eng) || ""),
+            url: String(getPropertyValue(properties.URL) || "") || null,
+          };
+        })
+    );
+
+    return membersWithBlocks;
   } catch (error) {
     console.error("Error fetching members:", error);
     return [];

@@ -37,12 +37,15 @@ export const metadata: Metadata = {
   },
 };
 
-const DonatePage = () => {
+import { getMembers } from "@/lib/notion";
+
+const DonatePage = async () => {
+  const members = await getMembers();
   return (
     <div className="min-h-screen px-6 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
       <div className="mx-auto w-full max-w-6xl">
         <ContributionHeroSection />
-        <ContributionTeamSection />
+        <ContributionTeamSection members={members} showAchievements={true} />
         <ContributionPillarsSection />
         <ContributionSupportersSection />
         <ContributionSupportSection />

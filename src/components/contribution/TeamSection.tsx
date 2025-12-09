@@ -3,16 +3,18 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
-import { TEAM_MEMBERS } from "@/app/donate/constants";
-import type { TeamMember, TeamSectionContent } from "@/app/donate/types";
+
+import type { TeamSectionContent } from "@/app/donate/types";
+import { type TeamMember } from "@/lib/notion";
 
 type NewsLinkMap = Record<string, { href: string; external: boolean }>;
 
-const ContributionTeamSection = () => {
+const ContributionTeamSection = ({ members, showAchievements = true }: { members: TeamMember[], showAchievements?: boolean }) => {
   const t = useTranslations("contribution");
   const tCommon = useTranslations("common");
+  const locale = useLocale();
 
   const teamSectionRaw = t.raw("teamSection");
   const teamSectionContent =
@@ -60,11 +62,11 @@ const ContributionTeamSection = () => {
       <section className="bg-muted/50 rounded-2xl px-6 py-12 md:px-14 md:py-14 mb-28 md:mb-36">
         <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
           <h3 className="text-2xl md:text-3xl font-bold text-center md:whitespace-nowrap">{heading}</h3>
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-            <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
+          <div className={`grid ${showAchievements ? 'md:grid-cols-2' : 'grid-cols-1'} gap-4 md:gap-6`}>
+            <div className={`rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100 ${!showAchievements ? 'max-w-4xl mx-auto w-full' : ''}`}>
               <h4 className="font-semibold mb-3">{teamHeading}</h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {TEAM_MEMBERS.map((member) => (
+                {members.map((member) => (
                   <button
                     key={member.id}
                     onClick={() => setSelectedMember(member)}
@@ -88,34 +90,36 @@ const ContributionTeamSection = () => {
                 ))}
               </div>
             </div>
-            <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
-              <h4 className="font-semibold mb-3">{updatesHeading}</h4>
-              <div className="space-y-2">
-                {updates.slice(0, 5).map((title, index) => {
-                  const mapped = newsMap[title];
-                  const href = mapped?.href || "/news";
-                  const isExternal = mapped?.external;
-                  return (
-                    <div key={`${title}-${index}`} className="py-2 border-b last:border-b-0">
-                      {isExternal ? (
-                        <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
-                          {title}
-                        </a>
-                      ) : (
-                        <Link href={href} className="text-sm font-medium hover:underline">
-                          {title}
-                        </Link>
-                      )}
-                    </div>
-                  );
-                })}
+            {showAchievements && (
+              <div className="rounded-xl p-5 bg-white/90 shadow-sm ring-1 ring-gray-100">
+                <h4 className="font-semibold mb-3">{updatesHeading}</h4>
+                <div className="space-y-2">
+                  {updates.slice(0, 5).map((title, index) => {
+                    const mapped = newsMap[title];
+                    const href = mapped?.href || "/news";
+                    const isExternal = mapped?.external;
+                    return (
+                      <div key={`${title}-${index}`} className="py-2 border-b last:border-b-0">
+                        {isExternal ? (
+                          <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:underline">
+                            {title}
+                          </a>
+                        ) : (
+                          <Link href={href} className="text-sm font-medium hover:underline">
+                            {title}
+                          </Link>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-4">
+                  <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
+                    {viewAll}
+                  </Link>
+                </div>
               </div>
-              <div className="mt-4">
-                <Link href="/news" className="inline-flex items-center h-10 px-4 border border-border rounded-md hover:bg-muted/50">
-                  {viewAll}
-                </Link>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -151,7 +155,9 @@ const ContributionTeamSection = () => {
               </button>
             </div>
             <div className="p-5">
-              <p className="text-sm leading-relaxed text-foreground/80">{selectedMember.bio || profileFallback}</p>
+              <p className="text-sm leading-relaxed text-foreground/80">
+                {(locale === 'en' && selectedMember.bioEn) ? selectedMember.bioEn : (selectedMember.bio || profileFallback)}
+              </p>
             </div>
           </div>
         </div>

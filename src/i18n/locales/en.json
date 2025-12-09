@@ -1,9 +1,9 @@
 {
   "nav": {
     "publications": "Publication",
+    "projects": "Projects",
     "member": "Member",
     "contribution": "Donate",
-    "news": "News",
     "job": "Job",
     "language": "Language",
     "contact": "Contact",
@@ -15,7 +15,7 @@
     "title": "Nyx Foundation",
     "subtitle": "Build a Verifiable Future for Open Innovation",
     "btnPublications": "Publications",
-    "btnNews": "News",
+    "btnProjects": "Projects",
     "contact": "Contact"
   },
   "activity": {

@@ -15,10 +15,10 @@ export function Header() {
   type NavItem = { href: string; label: string; external?: boolean };
 
   const navItems: NavItem[] = [
+    { href: "/projects", label: t("projects") },
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
     { href: "/donate", label: t("contribution") },
-    { href: "/news", label: t("news") },
   ];
 
   // モバイルメニューが開いているときはスクロールを防ぐ

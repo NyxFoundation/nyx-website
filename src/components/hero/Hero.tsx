@@ -47,7 +47,7 @@ export function Hero() {
               {t("btnPublications")}
             </Link>
             <Link
-              href="/news"
+              href="/projects"
               className={cn(
                 "inline-flex items-center justify-center rounded-md",
                 "px-6 py-2.5 text-base font-medium",
@@ -56,7 +56,7 @@ export function Hero() {
                 "focus:outline-none focus:ring-2 focus:ring-offset-2"
               )}
             >
-              {t("btnNews")}
+              {t("btnProjects")}
             </Link>
 
             {/* Contact Link */}

@@ -1,9 +1,9 @@
 {
   "nav": {
     "publications": "出版物",
+    "projects": "プロジェクト",
     "member": "メンバー",
     "contribution": "寄付",
-    "news": "ニュース",
     "job": "採用",
     "language": "言語",
     "contact": "お問い合わせ",
@@ -15,7 +15,7 @@
     "title": "Nyx Foundation",
     "subtitle": "オープンイノベーションのための検証可能な未来を築く",
     "btnPublications": "出版物",
-    "btnNews": "ニュース",
+    "btnProjects": "プロジェクト",
     "contact": "お問い合わせ"
   },
   "activity": {

@@ -11,7 +11,7 @@ if (!process.env.NOTION_DATABASE_ID) {
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
-  timeoutMs: 60000,
+  timeoutMs: 120000,
 });
 
 export interface NotionPage {
@@ -33,6 +33,7 @@ export interface TeamMember {
   avatar: string | null;
   bio: string;
   bioEn: string;
+  url: string | null;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -292,6 +293,7 @@ export async function getMembers(): Promise<TeamMember[]> {
           avatar: avatarUrl,
           bio: String(getPropertyValue(properties.bio) || ""),
           bioEn: String(getPropertyValue(properties.bio_eng) || ""),
+          url: String(getPropertyValue(properties.URL) || "") || null,
         };
       });
   } catch (error) {

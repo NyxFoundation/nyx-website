@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 
 
@@ -145,6 +146,17 @@ const ContributionTeamSection = ({ members, showAchievements = true }: { members
                 <div>
                   <div className="font-semibold">{selectedMember.name}</div>
                   <div className="text-xs text-muted-foreground">{selectedMember.role}</div>
+                  {selectedMember.url && (
+                    <a
+                      href={selectedMember.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 flex w-fit items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground hover:underline"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                      <span className="truncate max-w-[200px]">{selectedMember.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</span>
+                    </a>
+                  )}
                 </div>
               </div>
               <button

@@ -15,7 +15,7 @@ export default async function Home() {
     <>
       <Hero />
 
-      <section className="container mx-auto max-w-4xl px-4 -mt-8 relative z-10 mb-12">
+      <section className="container mx-auto max-w-6xl px-8 md:px-12 lg:px-16 py-12 mb-12">
         <NewsTable newsItems={newsItems} />
       </section>
 

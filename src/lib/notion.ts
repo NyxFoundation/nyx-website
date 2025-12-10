@@ -1,5 +1,5 @@
 import { Client } from "@notionhq/client";
-import { PageObjectResponse, BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { PageObjectResponse, BlockObjectResponse, ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 if (!process.env.NOTION_TOKEN) {
   throw new Error("NOTION_TOKEN is not defined");
@@ -61,7 +61,7 @@ function getPropertyValue(property: Record<string, any> | undefined): unknown {
       if (!fileObj) return null;
       return fileObj.file?.url || fileObj.external?.url || null;
     case "people":
-      return property.people.map((p: any) => p.name).join(", ");
+      return property.people.map((p: { name?: string | null }) => p.name).join(", ");
     default:
       return "";
   }
@@ -269,14 +269,6 @@ export async function getMembers(): Promise<TeamMember[]> {
             console.warn(`[getMembers] Missing required properties for page ${page.id}. Keys found: ${Object.keys(properties).join(", ")}`);
           }
 
-          // Debug: Print properties for the first member to verify keys
-          const keys = Object.keys(properties);
-          const bio = String(getPropertyValue(properties.bio) || "");
-          const bioEn = String(getPropertyValue(properties.bio_eng) || "");
-
-          // console.log(`[getMembers Debug] Name: ${String(getPropertyValue(properties.Name))}, Keys: ${keys.join(", ")}`);
-          // console.log(`[getMembers Debug] Extracted - bio: ${bio.substring(0, 20)}..., bioEn: ${bioEn.substring(0, 20)}...`);
-
           // Handle icon which can be 'emoji', 'file', or 'external'
           let avatarUrl: string | null = null;
 
@@ -284,7 +276,7 @@ export async function getMembers(): Promise<TeamMember[]> {
           // Fallback to page icon if no content image is found
           try {
             const blocks = await getPageBlocks(page.id);
-            const imageBlock = blocks.find((block) => block.type === 'image') as any; // Cast to any to access image properties easily
+            const imageBlock = blocks.find((block) => block.type === 'image') as ImageBlockObjectResponse | undefined;
             if (imageBlock) {
               if (imageBlock.image.type === 'file') {
                 avatarUrl = imageBlock.image.file.url;

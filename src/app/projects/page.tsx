@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { getProjects } from "@/lib/notion";
 import { Users } from "lucide-react";
+import Image from "next/image";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60;
@@ -32,11 +33,13 @@ export default async function ProjectsPage() {
                                 className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col"
                             >
                                 {project.coverImage && (
-                                    <div className="h-48 w-full overflow-hidden bg-muted">
-                                        <img
+                                    <div className="h-48 w-full overflow-hidden bg-muted relative">
+                                        <Image
                                             src={project.coverImage}
                                             alt={name}
-                                            className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+                                            fill
+                                            className="object-cover transition-transform hover:scale-105 duration-500"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                     </div>
                                 )}

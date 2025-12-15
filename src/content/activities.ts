@@ -47,9 +47,9 @@ export const activitiesText: ActivityText[] = [
     },
     description: {
       en:
-        "Using mathematical methods to prove the correctness and security of smart contracts, protocols, and cryptographic algorithms.",
+        "Using mathematical methods to prove the correctness and security of cryptographic protocols and smart contracts.",
       ja:
-        "数学的手法を用いてスマートコントラクト、プロトコル、暗号アルゴリズムの正確性と安全性を証明します。",
+        "数学的手法を用いて暗号プロトコルやスマートコントラクトの正確性と安全性を証明します。",
     },
   },
   {
@@ -163,14 +163,14 @@ export const activitiesDetails: Record<string, ActivityDetailItem[]> = {
   ],
   verification: [
     {
-      image: "/math.png",
+      image: "/scis-fv-agent-paper.png",
       title: {
-        en: "Coming soon",
-        ja: "近日公開予定",
+        en: "Automation of Lean-Based Formal Verification Using AI Agents",
+        ja: "AIエージェントによるLean形式検証の自動化",
       },
       description: {
-        en: "",
-        ja: "",
+        en: "We automated the Lean-based formal verification of cryptographic protocols using AI agents and partially proved the security of post-quantum cryptography, which will be adopted in Ethereum.",
+        ja: "AIエージェントを活用して暗号プロトコルのLean形式検証を自動化し、Ethereumで採用予定である耐量子暗号の一部安全性を形式証明しました。",
       },
     },
   ],

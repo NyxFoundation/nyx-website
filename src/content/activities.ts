@@ -10,6 +10,7 @@ export type ActivityDetailItem = {
   image: string; // path under public/
   title: Record<LocaleKey, string>;
   description: Record<LocaleKey, string>;
+  link?: string; // optional external link
 };
 
 export const activitiesText: ActivityText[] = [
@@ -117,6 +118,50 @@ export const activitiesDetails: Record<string, ActivityDetailItem[]> = {
   ],
   whitehat: [
     {
+      image: "/activity/ethereum.png",
+      title: {
+        en: "Fusaka Audit Contest",
+        ja: "Fusaka監査コンテスト",
+      },
+      description: {
+        en: "Reported 17 vulnerabilities in the Ethereum Fusaka audit contest, ranked 6th overall, and won 3.8 million yen in prize money.",
+        ja: "イーサリアムFusaka監査コンテストで17件の脆弱性を報告し、全体で第6位に入賞し、380万円の賞金を獲得しました。",
+      },
+    },
+    {
+      image: "/activity/nimbus.png",
+      title: {
+        en: "Nimbus",
+        ja: "Nimbus",
+      },
+      description: {
+        en: "Reported a vulnerability related to Blob processing in the Ethereum client 'Nimbus'.",
+        ja: "イーサリアムクライアント「Nimbus」のBlob処理に関わる脆弱性を報告しました。",
+      },
+    },
+    {
+      image: "/activity/erigon.png",
+      title: {
+        en: "Erigon",
+        ja: "Erigon",
+      },
+      description: {
+        en: "Reported an OOM vulnerability in the Ethereum client 'Erigon'.",
+        ja: "イーサリアムクライアント「Erigon」のOOM脆弱性を報告しました。",
+      },
+    },
+    {
+      image: "/activity/sp1.png",
+      title: {
+        en: "SP1 zkVM",
+        ja: "SP1 zkVM",
+      },
+      description: {
+        en: "Reported a vulnerability related to the semantics of RISC-V instructions in SP1 zkVM.",
+        ja: "SP1 zkVMのRISC-V命令のセマンティックに関わる脆弱性を報告しました。",
+      },
+    },
+    {
       image: "/activity/reth.png",
       title: {
         en: "Reth",
@@ -185,6 +230,7 @@ export const activitiesDetails: Record<string, ActivityDetailItem[]> = {
         en: "We publish educational videos on Ethereum on our official Nyx YouTube channel.",
         ja: "Nyx公式YouTubeチャンネルでイーサリアムに関する勉強会の動画を公開しています。",
       },
+      link: "https://www.youtube.com/@Nyx.Foundation",
     },
     {
       image: "/activity/zktokyo.png",
@@ -196,6 +242,7 @@ export const activitiesDetails: Record<string, ActivityDetailItem[]> = {
         en: "We organize the periodic event 'ZK Tokyo' focused on zero-knowledge proofs and the educational program 'ZK Core Program' for implementing zero-knowledge proofs.",
         ja: "不定期でゼロ知識証明に関するイベント「ZK Tokyo」やゼロ知識証明実装に関する教育プログラム「ZK Core Program」を運営しています。",
       },
+      link: "https://www.youtube.com/@zk-tokyo",
     },
   ],
   house: [
@@ -219,5 +266,6 @@ export function getActivityDetails(id: string, locale: LocaleKey) {
     image: it.image,
     title: it.title[locale],
     description: it.description[locale],
+    link: it.link,
   }));
 }

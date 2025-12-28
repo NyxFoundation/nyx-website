@@ -173,6 +173,10 @@ export const CORPORATE_SPONSORS: SponsorInfo[] = [
     logo: "/sponsors/nakaba.png",
   },
   {
+    names: { default: "Katomasa", ja: "Katomasa" },
+    logo: "/sponsors/katomasa.png",
+  },
+  {
     names: { default: "Anonymous x 2", ja: "匿名 x 2" },
     logo: null,
   },
@@ -255,6 +259,10 @@ export const INDIVIDUAL_SUPPORTERS: SponsorInfo[] = [
   {
     names: { default: "Yuho Matsumoto", ja: "松本ゆうほ" },
     logo: "/sponsors/yuho.png",
+  },
+  {
+    names: { default: "vvinyll", ja: "ビニール" },
+    logo: "/sponsors/vvinyll.png",
   },
   {
     names: { default: "Anonymous x 6", ja: "匿名 x 6" },

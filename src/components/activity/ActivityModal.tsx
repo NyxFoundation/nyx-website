@@ -69,7 +69,18 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
                   </div>
                   <div className="flex flex-col flex-1 min-w-0">
                     <h4 className="font-semibold text-xl mb-2">
-                      {item.title}
+                      {item.link ? (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline text-blue-600"
+                        >
+                          {item.title}
+                        </a>
+                      ) : (
+                        item.title
+                      )}
                     </h4>
                     <p className="text-[15px] md:text-base text-muted-foreground">
                       {item.description}

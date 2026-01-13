@@ -8,7 +8,7 @@ import { ArticleDetailSkeleton } from "@/components/ui/Skeleton";
 import { NewsContent } from "./NewsContent";
 
 // ISR: Revalidate every 3 hours
-export const revalidate = 3 * 60 * 60;
+export const revalidate = 10800;
 
 export async function generateMetadata({
   params,

@@ -5,7 +5,7 @@ import { ProjectsGridSkeleton } from "@/components/ui/Skeleton";
 import { ProjectsGrid } from "./ProjectsGrid";
 
 // ISR: Revalidate every 3 hours
-export const revalidate = 3 * 60 * 60;
+export const revalidate = 10800;
 
 export const metadata: Metadata = {
   title: "Projects | Nyx Foundation",

@@ -50,12 +50,13 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo - 左側 */}
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center" prefetch={true}>
               <Image
                 src="/icon.svg"
                 alt="Nyx Foundation"
                 width={32}
                 height={32}
+                priority
                 className="w-7 h-7 md:w-8 md:h-8"
               />
             </Link>
@@ -77,6 +78,7 @@ export function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    prefetch={true}
                     className="text-sm font-medium transition-colors hover:text-muted-foreground"
                   >
                     {item.label}
@@ -153,6 +155,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={true}
                   onClick={() => setIsOpen(false)}
                   className="text-base font-medium py-2 px-3 rounded-md transition-colors hover:bg-muted"
                 >

@@ -1,6 +1,7 @@
 import { getProjects } from "@/lib/notion";
 import { Users } from "lucide-react";
 import Image from "next/image";
+import { BLUR_DATA_URL } from "@/lib/image";
 
 export async function ProjectsGrid({ isJa }: { isJa: boolean }) {
   const projects = await getProjects();
@@ -32,6 +33,8 @@ export async function ProjectsGrid({ isJa }: { isJa: boolean }) {
                   src={project.coverImage}
                   alt={name}
                   fill
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                   className="object-cover transition-transform hover:scale-105 duration-500"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />

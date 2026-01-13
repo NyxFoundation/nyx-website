@@ -64,6 +64,7 @@ export async function NewsTable({ newsItems }: NewsTableProps) {
                                             ) : (
                                                 <Link
                                                     href={href}
+                                                    prefetch={true}
                                                     className="flex items-center gap-2 group-hover:text-primary transition-colors"
                                                 >
                                                     {title}

@@ -3,12 +3,20 @@ import { Suspense } from "react";
 import { getLocale } from "next-intl/server";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { getNewsItem } from "@/lib/notion";
+import { getNewsItem, getNews } from "@/lib/notion";
 import { ArticleDetailSkeleton } from "@/components/ui/Skeleton";
 import { NewsContent } from "./NewsContent";
 
 // ISR: Revalidate every 3 hours
 export const revalidate = 10800;
+
+// Generate static pages at build time
+export async function generateStaticParams() {
+  const news = await getNews();
+  return news
+    .filter((item) => !item.redirectTo) // Only internal pages
+    .map((item) => ({ slug: item.slug }));
+}
 
 export async function generateMetadata({
   params,

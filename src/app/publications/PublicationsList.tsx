@@ -79,6 +79,7 @@ export async function PublicationsList({ locale }: { locale: string }) {
             ) : (
               <Link
                 href={href}
+                prefetch={true}
                 className="block group"
               >
                 {content}

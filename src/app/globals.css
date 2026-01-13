@@ -45,6 +45,30 @@ a:hover {
   }
 }
 
+/* Shimmer animation for skeleton loading */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    #e8e8e8 20%,
+    #f0f0f0 40%,
+    #e8e8e8 60%,
+    var(--muted) 80%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
 /* Twitter embed styles */
 [data-theme="light"] {
   --tweet-bg-color: white;

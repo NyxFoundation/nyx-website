@@ -1,5 +1,6 @@
 import { Client } from "@notionhq/client";
 import { PageObjectResponse, BlockObjectResponse, ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { unstable_cache } from "next/cache";
 
 if (!process.env.NOTION_TOKEN) {
   throw new Error("NOTION_TOKEN is not defined");
@@ -91,7 +92,10 @@ export async function getPageBlocks(pageId: string): Promise<BlockObjectResponse
   }
 }
 
-export async function getPublications(): Promise<NotionPage[]> {
+// Cache duration in seconds (3 hours)
+const CACHE_REVALIDATE = 3 * 60 * 60;
+
+async function _getPublications(): Promise<NotionPage[]> {
   try {
     const response = await notion.databases.query({
       database_id: process.env.NOTION_DATABASE_ID!,
@@ -142,19 +146,82 @@ export async function getPublications(): Promise<NotionPage[]> {
   }
 }
 
-export async function getPublication(slug: string): Promise<NotionPage | null> {
-  const publications = await getPublications();
-  const publication = publications.find((pub) => pub.slug === slug);
+export const getPublications = unstable_cache(
+  _getPublications,
+  ["publications"],
+  { revalidate: CACHE_REVALIDATE, tags: ["publications"] }
+);
 
-  if (publication && !publication.redirectTo) {
-    // Fetch page content if not a redirect
-    publication.blocks = await getPageBlocks(publication.id);
+async function _getPublication(slug: string): Promise<NotionPage | null> {
+  try {
+    // Direct query by slug for better performance
+    const response = await notion.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID!,
+      filter: {
+        and: [
+          {
+            property: "Published",
+            checkbox: {
+              equals: true,
+            },
+          },
+          {
+            property: "Type",
+            select: {
+              equals: "Publication",
+            },
+          },
+          {
+            property: "Slug",
+            rich_text: {
+              equals: slug,
+            },
+          },
+        ],
+      },
+    });
+
+    const page = response.results[0];
+    if (!page || !("properties" in page)) {
+      return null;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const properties = page.properties as any;
+
+    const publication: NotionPage = {
+      id: page.id,
+      slug: String(getPropertyValue(properties.Slug) || page.id),
+      title: String(getPropertyValue(properties.Title) || ""),
+      titleEn: String(getPropertyValue(properties.Title_EN) || getPropertyValue(properties.Title) || ""),
+      date: String(getPropertyValue(properties.Date) || ""),
+      labels: Array.isArray(getPropertyValue(properties.Label)) ? getPropertyValue(properties.Label) as string[] : [],
+      redirectTo: getPropertyValue(properties.RedirectTo) ? String(getPropertyValue(properties.RedirectTo)) : undefined,
+      type: "Publication" as const,
+    };
+
+    if (!publication.redirectTo) {
+      // Fetch page content if not a redirect
+      publication.blocks = await getPageBlocks(publication.id);
+    }
+
+    return publication;
+  } catch (error) {
+    console.error("Error fetching publication by slug:", error);
+    return null;
   }
-
-  return publication || null;
 }
 
-export async function getNews(): Promise<NotionPage[]> {
+export async function getPublication(slug: string): Promise<NotionPage | null> {
+  const cachedFn = unstable_cache(
+    () => _getPublication(slug),
+    [`publication-${slug}`],
+    { revalidate: CACHE_REVALIDATE, tags: ["publications", `publication-${slug}`] }
+  );
+  return cachedFn();
+}
+
+async function _getNews(): Promise<NotionPage[]> {
   try {
     const response = await notion.databases.query({
       database_id: process.env.NOTION_DATABASE_ID!,
@@ -205,24 +272,80 @@ export async function getNews(): Promise<NotionPage[]> {
   }
 }
 
-export async function getNewsItem(slug: string): Promise<NotionPage | null> {
-  const news = await getNews();
-  console.log(`Looking for news with slug: ${slug}`);
-  console.log(`Available news items:`, news.map(n => ({ slug: n.slug, id: n.id })));
+export const getNews = unstable_cache(
+  _getNews,
+  ["news"],
+  { revalidate: CACHE_REVALIDATE, tags: ["news"] }
+);
 
-  const newsItem = news.find((item) => item.slug === slug);
+async function _getNewsItem(slug: string): Promise<NotionPage | null> {
+  try {
+    // Direct query by slug for better performance
+    const response = await notion.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID!,
+      filter: {
+        and: [
+          {
+            property: "Published",
+            checkbox: {
+              equals: true,
+            },
+          },
+          {
+            property: "Type",
+            select: {
+              equals: "News",
+            },
+          },
+          {
+            property: "Slug",
+            rich_text: {
+              equals: slug,
+            },
+          },
+        ],
+      },
+    });
 
-  if (!newsItem) {
-    console.log(`News item with slug ${slug} not found`);
+    const page = response.results[0];
+    if (!page || !("properties" in page)) {
+      console.log(`News item with slug ${slug} not found`);
+      return null;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const properties = page.properties as any;
+
+    const newsItem: NotionPage = {
+      id: page.id,
+      slug: String(getPropertyValue(properties.Slug) || page.id),
+      title: String(getPropertyValue(properties.Title) || ""),
+      titleEn: String(getPropertyValue(properties.Title_EN) || getPropertyValue(properties.Title) || ""),
+      date: String(getPropertyValue(properties.Date) || ""),
+      labels: Array.isArray(getPropertyValue(properties.Label)) ? getPropertyValue(properties.Label) as string[] : [],
+      redirectTo: getPropertyValue(properties.RedirectTo) ? String(getPropertyValue(properties.RedirectTo)) : undefined,
+      type: "News" as const,
+    };
+
+    if (!newsItem.redirectTo) {
+      // Fetch page content if not a redirect
+      newsItem.blocks = await getPageBlocks(newsItem.id);
+    }
+
+    return newsItem;
+  } catch (error) {
+    console.error("Error fetching news item by slug:", error);
     return null;
   }
+}
 
-  if (newsItem && !newsItem.redirectTo) {
-    // Fetch page content if not a redirect
-    newsItem.blocks = await getPageBlocks(newsItem.id);
-  }
-
-  return newsItem;
+export async function getNewsItem(slug: string): Promise<NotionPage | null> {
+  const cachedFn = unstable_cache(
+    () => _getNewsItem(slug),
+    [`news-${slug}`],
+    { revalidate: CACHE_REVALIDATE, tags: ["news", `news-${slug}`] }
+  );
+  return cachedFn();
 }
 
 // Get page record map for react-notion-x
@@ -238,7 +361,7 @@ export async function getPageRecordMap(pageId: string) {
   }
 }
 
-export async function getMembers(): Promise<TeamMember[]> {
+async function _getMembers(): Promise<TeamMember[]> {
   if (!process.env.NOTION_MEMBER_DATABASE_ID) {
     console.error("NOTION_MEMBER_DATABASE_ID is not defined");
     return [];
@@ -254,8 +377,6 @@ export async function getMembers(): Promise<TeamMember[]> {
         },
       ],
     });
-
-
 
     const membersWithBlocks = await Promise.all(
       response.results
@@ -318,6 +439,12 @@ export async function getMembers(): Promise<TeamMember[]> {
   }
 }
 
+export const getMembers = unstable_cache(
+  _getMembers,
+  ["members"],
+  { revalidate: CACHE_REVALIDATE, tags: ["members"] }
+);
+
 export interface Project {
   id: string;
   name: string;
@@ -328,7 +455,7 @@ export interface Project {
   coverImage: string | null;
 }
 
-export async function getProjects(): Promise<Project[]> {
+async function _getProjects(): Promise<Project[]> {
   if (!process.env.NOTION_PROJECTS_DATABASE_ID) {
     console.error("NOTION_PROJECTS_DATABASE_ID is not defined");
     return [];
@@ -357,9 +484,6 @@ export async function getProjects(): Promise<Project[]> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const properties = page.properties as any;
 
-        // Debugging for Projects
-        console.log(`[getProjects Match] ${page.id}: Keys: ${Object.keys(properties).join(", ")}`);
-
         // Try to get cover image
         let coverImage = null;
         if (page.cover) {
@@ -385,3 +509,9 @@ export async function getProjects(): Promise<Project[]> {
     return [];
   }
 }
+
+export const getProjects = unstable_cache(
+  _getProjects,
+  ["projects"],
+  { revalidate: CACHE_REVALIDATE, tags: ["projects"] }
+);

@@ -1,14 +1,14 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { getLocale } from "next-intl/server";
-import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { Calendar, Tag, ArrowLeft } from "lucide-react";
-import { getNewsItem, getPageBlocks } from "@/lib/notion";
-import { NotionBlockRenderer } from "@/components/NotionBlockRenderer";
+import { ArrowLeft } from "lucide-react";
+import { getNewsItem } from "@/lib/notion";
+import { ArticleDetailSkeleton } from "@/components/ui/Skeleton";
+import { NewsContent } from "./NewsContent";
 
-// Dynamic rendering for news pages
-export const dynamic = 'force-dynamic';
-export const revalidate = 60; // Revalidate every 60 seconds
+// ISR: Revalidate every 3 hours
+export const revalidate = 3 * 60 * 60;
 
 export async function generateMetadata({
   params,
@@ -53,73 +53,20 @@ export default async function NewsDetailPage({
   const locale = await getLocale();
   const isJa = locale === "ja";
 
-  const news = await getNewsItem(slug);
-
-  if (!news) {
-    notFound();
-  }
-
-  // Handle redirect
-  if (news.redirectTo) {
-    redirect(news.redirectTo);
-  }
-
-  // Get the full page content from Notion
-  const blocks = await getPageBlocks(news.id);
-
-  if (!blocks || blocks.length === 0) {
-    notFound();
-  }
-
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-4xl">
         <Link
-          href="/news"
+          href="/"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          {isJa ? "ニュース一覧に戻る" : "Back to News"}
+          {isJa ? "ホームに戻る" : "Back to Home"}
         </Link>
 
-        <article>
-          <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              {isJa ? news.title : news.titleEn}
-            </h1>
-
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
-              {news.date && (
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {new Date(news.date).toLocaleDateString(locale, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-              )}
-            </div>
-
-            {news.labels.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                {news.labels.map((label) => (
-                  <span
-                    key={label}
-                    className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full"
-                  >
-                    <Tag className="w-3 h-3" />
-                    {label}
-                  </span>
-                ))}
-              </div>
-            )}
-          </header>
-
-          <section className="mb-8">
-            <NotionBlockRenderer blocks={blocks} />
-          </section>
-        </article>
+        <Suspense fallback={<ArticleDetailSkeleton />}>
+          <NewsContent slug={slug} locale={locale} />
+        </Suspense>
       </div>
     </div>
   );

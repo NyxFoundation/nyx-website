@@ -5,9 +5,6 @@ import ContributionSupportersSection from "@/components/contribution/SupportersS
 import { NewsTableSkeleton } from "@/components/ui/Skeleton";
 import { NewsSection } from "./NewsSection";
 
-// ISR: Revalidate every 3 hours
-export const revalidate = 10800;
-
 export default function Home() {
   return (
     <>

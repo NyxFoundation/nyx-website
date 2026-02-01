@@ -1,0 +1,98 @@
+[
+  {
+    "id": "266d05af-0d5a-8086-857a-e8fb7f93064a",
+    "slug": "who-win-liquidity-provision",
+    "title": "Who wins liquidity provision and how? Evidence from the Uniswap Protocol",
+    "titleEn": "Who wins liquidity provision and how? Evidence from the Uniswap Protocol",
+    "date": "2025-09-06",
+    "labels": [
+      "blog"
+    ],
+    "redirectTo": "https://mirror.xyz/0xA3DB621697fBC0dA0b16160eb8E201E1a763D2c1/SI9A-eRE8g7gy0oDbqChl1mOm6JwBriimDq29VE4O58",
+    "type": "Publication"
+  },
+  {
+    "id": "252d05af-0d5a-808b-a5ef-f4f5ff404f5c",
+    "slug": "unpredictable-randao",
+    "title": "Unpredictable RANDAO",
+    "titleEn": "Unpredictable RANDAO",
+    "date": "2025-06-25",
+    "labels": [
+      "etheresearch"
+    ],
+    "redirectTo": "https://ethresear.ch/t/unpredictable-randao/22666",
+    "type": "Publication"
+  },
+  {
+    "id": "259d05af-0d5a-8001-bcb3-d70eed90478f",
+    "slug": "The-God-Protocols",
+    "title": "Ethereum with iO is God Protocols",
+    "titleEn": "Ethereum with iO is God Protocols",
+    "date": "2025-04-02",
+    "labels": [
+      "blog"
+    ],
+    "redirectTo": "https://titaniaresear.ch/ethereum-with-io-is-god-protocols",
+    "type": "Publication"
+  },
+  {
+    "id": "252d05af-0d5a-80f6-ada3-ec8259d93095",
+    "slug": "efficient-zkvm",
+    "title": "Challenges and Prospects for efficient zkVM",
+    "titleEn": "Challenges and Prospects for efficient zkVM",
+    "date": "2025-01-06",
+    "labels": [
+      "paper"
+    ],
+    "redirectTo": "https://fenbushicapital.medium.com/benchmarking-zkvms-current-state-and-prospects-ba859b44f560",
+    "type": "Publication"
+  },
+  {
+    "id": "259d05af-0d5a-80e8-be21-d277f1dd1bb3",
+    "slug": "Multilateral-Trade-Credit",
+    "title": "Multilateral Trade Credit Set-off in MPC via Graph Anonymization and Network Simplex",
+    "titleEn": "Multilateral Trade Credit Set-off in MPC via Graph Anonymization and Network Simplex",
+    "date": "2024-11-29",
+    "labels": [
+      "paper"
+    ],
+    "redirectTo": "https://eprint.iacr.org/2024/2037",
+    "type": "Publication"
+  },
+  {
+    "id": "259d05af-0d5a-803a-8bc5-da93af460d96",
+    "slug": "Dynamic-Finalization-Considering-51%-Attacks",
+    "title": "Dynamic Finalization Considering 51% Attacks",
+    "titleEn": "Dynamic Finalization Considering 51% Attacks",
+    "date": "2024-11-13",
+    "labels": [
+      "etheresearch"
+    ],
+    "redirectTo": "https://ethresear.ch/t/dynamic-finalization-considering-51-attacks/21112",
+    "type": "Publication"
+  },
+  {
+    "id": "259d05af-0d5a-809f-8406-f534df522cd6",
+    "slug": "Minimum-Mean-Cycle",
+    "title": "A Note On Securely Finding Minimum Mean Cycle",
+    "titleEn": "A Note On Securely Finding Minimum Mean Cycle",
+    "date": "2024-07-15",
+    "labels": [
+      "etheresearch"
+    ],
+    "redirectTo": "https://ethresear.ch/t/a-note-on-securely-finding-minimum-mean-cycle/20073",
+    "type": "Publication"
+  },
+  {
+    "id": "259d05af-0d5a-804b-bb1e-fe2c65bc0b72",
+    "slug": "Frequent-Batch-Auction",
+    "title": "Frequent Batch Auction on SUAVE",
+    "titleEn": "Frequent Batch Auction on SUAVE",
+    "date": "2024-02-03",
+    "labels": [
+      "Flashbots"
+    ],
+    "redirectTo": "https://collective.flashbots.net/t/frequent-batch-auction-on-suave/3104",
+    "type": "Publication"
+  }
+]

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
@@ -8,11 +8,20 @@ import { useTranslations, useLocale } from "next-intl";
 
 
 import type { TeamSectionContent } from "@/app/donate/types";
-import { type TeamMember } from "@/lib/notion";
+import { type TeamMember, type NotionPage } from "@/lib/notion";
 
+type NewsLinkItem = Pick<NotionPage, "title" | "titleEn" | "slug" | "redirectTo">;
 type NewsLinkMap = Record<string, { href: string; external: boolean }>;
 
-const ContributionTeamSection = ({ members, showAchievements = true }: { members: TeamMember[], showAchievements?: boolean }) => {
+const ContributionTeamSection = ({
+  members,
+  newsItems = [],
+  showAchievements = true,
+}: {
+  members: TeamMember[];
+  newsItems?: NewsLinkItem[];
+  showAchievements?: boolean;
+}) => {
   const t = useTranslations("contribution");
   const tCommon = useTranslations("common");
   const locale = useLocale();
@@ -24,33 +33,21 @@ const ContributionTeamSection = ({ members, showAchievements = true }: { members
       : null;
 
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
-  const [newsMap, setNewsMap] = useState<NewsLinkMap>({});
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/test-notion")
-      .then((res) => res.json())
-      .then((data) => {
-        if (cancelled || !data?.news) return;
-        const countsJa: Record<string, number> = {};
-        const countsEn: Record<string, number> = {};
-        for (const item of data.news) {
-          countsJa[item.title] = (countsJa[item.title] || 0) + 1;
-          countsEn[item.titleEn] = (countsEn[item.titleEn] || 0) + 1;
-        }
-        const map: NewsLinkMap = {};
-        for (const item of data.news) {
-          const href = item.redirectTo || `/news/${item.slug}`;
-          if (countsJa[item.title] === 1) map[item.title] = { href, external: Boolean(item.redirectTo) };
-          if (countsEn[item.titleEn] === 1) map[item.titleEn] = { href, external: Boolean(item.redirectTo) };
-        }
-        setNewsMap(map);
-      })
-      .catch(() => void 0);
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const newsMap = useMemo<NewsLinkMap>(() => {
+    const countsJa: Record<string, number> = {};
+    const countsEn: Record<string, number> = {};
+    for (const item of newsItems) {
+      countsJa[item.title] = (countsJa[item.title] || 0) + 1;
+      countsEn[item.titleEn] = (countsEn[item.titleEn] || 0) + 1;
+    }
+    const map: NewsLinkMap = {};
+    for (const item of newsItems) {
+      const href = item.redirectTo || `/news/${item.slug}`;
+      if (countsJa[item.title] === 1) map[item.title] = { href, external: Boolean(item.redirectTo) };
+      if (countsEn[item.titleEn] === 1) map[item.titleEn] = { href, external: Boolean(item.redirectTo) };
+    }
+    return map;
+  }, [newsItems]);
 
   if (!teamSectionContent) {
     return null;

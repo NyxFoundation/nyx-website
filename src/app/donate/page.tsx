@@ -37,15 +37,21 @@ export const metadata: Metadata = {
   },
 };
 
-import { getMembers } from "@/lib/notion";
+import { getMembers, getNews } from "@/lib/notion";
 
 const DonatePage = async () => {
   const members = await getMembers();
+  const newsItems = (await getNews()).map((item) => ({
+    title: item.title,
+    titleEn: item.titleEn,
+    slug: item.slug,
+    redirectTo: item.redirectTo,
+  }));
   return (
     <div className="min-h-screen px-6 md:px-8 pt-10 md:pt-12 pb-24 md:pb-32">
       <div className="mx-auto w-full max-w-6xl">
         <ContributionHeroSection />
-        <ContributionTeamSection members={members} showAchievements={true} />
+        <ContributionTeamSection members={members} newsItems={newsItems} showAchievements={true} />
         <ContributionPillarsSection />
         <ContributionSupportersSection />
         <ContributionSupportSection />

@@ -4,9 +4,6 @@ import { getLocale } from "next-intl/server";
 import { PublicationsListSkeleton } from "@/components/ui/Skeleton";
 import { PublicationsList } from "./PublicationsList";
 
-// ISR: Revalidate every 3 hours
-export const revalidate = 10800;
-
 export const metadata: Metadata = {
   title: "Publications | Nyx Foundation",
   description: "Research papers and publications from Nyx Foundation",

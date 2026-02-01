@@ -7,9 +7,6 @@ import { getNewsItem, getNews } from "@/lib/notion";
 import { ArticleDetailSkeleton } from "@/components/ui/Skeleton";
 import { NewsContent } from "./NewsContent";
 
-// ISR: Revalidate every 3 hours
-export const revalidate = 10800;
-
 // Generate static pages at build time
 export async function generateStaticParams() {
   const news = await getNews();

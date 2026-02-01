@@ -4,9 +4,6 @@ import { getLocale } from "next-intl/server";
 import { ProjectsGridSkeleton } from "@/components/ui/Skeleton";
 import { ProjectsGrid } from "./ProjectsGrid";
 
-// ISR: Revalidate every 3 hours
-export const revalidate = 10800;
-
 export const metadata: Metadata = {
   title: "Projects | Nyx Foundation",
   description: "Ongoing projects by Nyx Foundation",

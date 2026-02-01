@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Youtube } from "lucide-react";
 
-export function Footer() {
-  const t = useTranslations("nav");
-  const tHero = useTranslations("hero");
+export async function Footer() {
+  const t = await getTranslations("nav");
+  const tHero = await getTranslations("hero");
   const currentYear = new Date().getFullYear();
 
   return (

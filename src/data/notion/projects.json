@@ -1,0 +1,56 @@
+[
+  {
+    "id": "298d05af-0d5a-8076-b889-e60c6d45e87d",
+    "name": "leanMultisig開発",
+    "nameEn": "leanMultisig Development",
+    "description": "イーサリアム財団が開発しているleanConsensusのためのzkVMレポジトリ「leanMultisig」へ実装貢献を行う。",
+    "descriptionEn": "Contribute implementation to the leanMultisig zkVM repository for leanConsensus, developed by the Ethereum Foundation.",
+    "leader": "adust ",
+    "coverImage": null
+  },
+  {
+    "id": "29ad05af-0d5a-8039-880e-c2bc7e7fbb75",
+    "name": "プライベートメンプールのMEV分析",
+    "nameEn": "MEV Analysis in Private Mempool",
+    "description": "プライベートMempoolでJIT Liquidityやサンドイッチ攻撃等のMEVがどれだけ発生し、エコシステムにどのような影響を与えているのか分析を行う。",
+    "descriptionEn": "Analyze how much MEV, such as JIT Liquidity and sandwich attacks, occurs in the private mempool and what impact it has on the ecosystem.",
+    "leader": "0xCassiopeia",
+    "coverImage": null
+  },
+  {
+    "id": "298d05af-0d5a-8024-9b1a-cbe015b8d3c6",
+    "name": "ホワイトハッキングの自動化",
+    "nameEn": "Automating White-hat Hacking",
+    "description": "仕様駆動型のAIエージェントを構築し、イーサリアムクライアント実装の脆弱性を未然に検知する。",
+    "descriptionEn": "Build specification-driven AI agents to proactively detect vulnerabilities in Ethereum client implementations.",
+    "leader": "gohan",
+    "coverImage": null
+  },
+  {
+    "id": "298d05af-0d5a-801e-b993-feffb6d256e2",
+    "name": "価格参照契約",
+    "nameEn": "Price-Referenced Contracts",
+    "description": "現実世界の契約とそれにかかる自然状態の記述・偶発事象の予見・裁判による執行をスマートコントラクトと予測市場を用いて自動化する理論を構築する。",
+    "descriptionEn": "Develop a theory to automate real-world contracts and their associated natural state descriptions, unforeseen event predictions, and judicial enforcement using smart contracts and prediction markets.",
+    "leader": "vita",
+    "coverImage": null
+  },
+  {
+    "id": "298d05af-0d5a-8047-98f3-d80b60c87e51",
+    "name": "暗号形式検証のAI自動化",
+    "nameEn": "AI-Automated Cryptographic Formal Verification",
+    "description": "暗号プロトコルのLean定理証明を自動生成するAIエージェントを構築する。",
+    "descriptionEn": "Build an AI agent that automatically generates Lean theorem proofs for cryptographic protocols.",
+    "leader": "banri",
+    "coverImage": null
+  },
+  {
+    "id": "28bd05af-0d5a-8097-9374-cec3fd422d95",
+    "name": "流動性供給分析ダッシュボード",
+    "nameEn": "Liquidity Provider Analysis Dashboard",
+    "description": "流動性供給者ごとの損益を分析するダッシュボードを開発する",
+    "descriptionEn": "Develop a dashboard to analyze profits and losses by liquidity provider",
+    "leader": "0xCassiopeia",
+    "coverImage": null
+  }
+]

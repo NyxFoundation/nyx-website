@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function Hero() {
-  const t = useTranslations("hero");
+export async function Hero() {
+  const t = await getTranslations("hero");
 
   return (
     <section

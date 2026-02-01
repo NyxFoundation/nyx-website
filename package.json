@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "fetch:db": "node scripts/fetch-notion-data.mjs",
     "check:hc": "bash scripts/healthcheck.sh http://localhost:3000 'Nyx Foundation'",
     "smoke": "playwright test --config=playwright.config.ts --project=chromium --grep @smoke"
   },
@@ -54,6 +55,7 @@
     "playwright": "^1.54.2",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "sharp": "^0.34.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

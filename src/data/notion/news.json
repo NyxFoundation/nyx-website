@@ -1,0 +1,1986 @@
+[
+  {
+    "id": "2d5d05af-0d5a-802d-a3a7-dc719a37574a",
+    "slug": "fusaka-vulnerabilities",
+    "title": "イーサリアムの脆弱性を17件発見、監査コンテストの報告件数で世界1位を獲得しました",
+    "titleEn": "17 vulnerabilities discovered in Ethereum, ranking first in the world for number of reports in an audit contest",
+    "date": "2025-12-24",
+    "labels": [],
+    "redirectTo": "https://prtimes.jp/main/html/rd/p/000000006.000170100.html",
+    "type": "News"
+  },
+  {
+    "id": "2d5d05af-0d5a-800f-b15c-da49d3ea2745",
+    "slug": "akiyoshi-sannnai",
+    "title": "京都大学 特定准教授 三内顕義氏がNyx Foundationに参画しました",
+    "titleEn": "Dr. Akiyoshi Sannai, Associate Professor at Kyoto University, joins the Nyx Foundation",
+    "date": "2025-12-23",
+    "labels": [],
+    "redirectTo": "https://prtimes.jp/main/html/rd/p/000000004.000170100.html",
+    "type": "News"
+  },
+  {
+    "id": "2d5d05af-0d5a-8079-9e4b-ccb91ac7d314",
+    "slug": "professor-matsuo",
+    "title": "ジョージタウン大学松尾教授・IIJ須賀氏を交えたイーサリアム研究集会報告",
+    "titleEn": "Report on the Ethereum Research Meeting with Professor Matsuo of Georgetown University and Mr. Suga of IIJ",
+    "date": "2025-12-16",
+    "labels": [],
+    "redirectTo": "https://note.com/nyxfoundation/n/nb0b117e3b8f0",
+    "type": "News"
+  },
+  {
+    "id": "2a2d05af-0d5a-8040-8ecd-f71f660e0b48",
+    "slug": "automating-lean-verification",
+    "title": "AIエージェントで暗号プロトコルのLean形式検証を自動化しました",
+    "titleEn": "Automating Lean Verification of Cryptographic Protocols with AI Agents",
+    "date": "2025-11-04",
+    "labels": [],
+    "redirectTo": "https://prtimes.jp/main/html/rd/p/000000005.000170100.html",
+    "type": "News"
+  },
+  {
+    "id": "2a2d05af-0d5a-80e5-aa22-eb0f03cee7eb",
+    "slug": "japan-block-chain-association",
+    "title": "日本ブロックチェーン協会の勉強会で登壇しました",
+    "titleEn": "Gave a talk at a Japan Blockchain Association",
+    "date": "2025-11-01",
+    "labels": [],
+    "redirectTo": "https://x.com/grandchildrice/status/1984495158315139235",
+    "type": "News"
+  },
+  {
+    "id": "280d05af-0d5a-8075-a40f-e66a1bf92c03",
+    "slug": "implementation-of-lean-consensus",
+    "title": "lean Consensusの実装に貢献しました\n",
+    "titleEn": " Contributed to the implementation of lean Consensus.",
+    "date": "2025-10-30",
+    "labels": [],
+    "redirectTo": "https://github.com/leanEthereum/leanMultisig/pull/41",
+    "type": "News"
+  },
+  {
+    "id": "2efd05af-0d5a-80d3-9260-cc4e01672734",
+    "slug": "wrote-a-note",
+    "title": "各メンバーがnoteを書きました",
+    "titleEn": "Each member wrote a note",
+    "date": "2025-10-06",
+    "labels": [],
+    "redirectTo": "https://x.com/keccak255/status/1975188572308410398?s=20",
+    "type": "News"
+  },
+  {
+    "id": "280d05af-0d5a-80b4-8e87-cc694bc3b046",
+    "slug": "established-corporation",
+    "title": "法人を設立しました",
+    "titleEn": "Established a corporation",
+    "date": "2025-09-29",
+    "labels": [],
+    "redirectTo": "https://prtimes.jp/main/html/rd/p/000000003.000170100.html",
+    "type": "News"
+  },
+  {
+    "id": "280d05af-0d5a-8083-9879-ffe48bb6b219",
+    "slug": "tsl-formal-verification",
+    "title": "TSLの形式検証を行いました",
+    "titleEn": "Completed half of the formal verification process for TSL",
+    "date": "2025-09-28",
+    "labels": [],
+    "redirectTo": "https://github.com/NyxFoundation/tsl-formal-verification",
+    "type": "News"
+  },
+  {
+    "id": "270d05af-0d5a-801b-8cd5-de55f5c104a4",
+    "slug": "pq-interop",
+    "title": "ケンブリッジ大学で行われるワークショップ「PQ Interop」 に招待されました",
+    "titleEn": "Invited to attend the PQ Interop workshop at Cambridge University",
+    "date": "2025-09-16",
+    "labels": [],
+    "redirectTo": "https://x.com/NyxFoundation/status/1968176334615839009",
+    "type": "News"
+  },
+  {
+    "id": "270d05af-0d5a-8027-80d4-d0ffe435577f",
+    "slug": "pq-signature-time-reduced",
+    "title": "ポスト量子署名の署名時間を30%、検証時間を40%短縮に成功しました",
+    "titleEn": "Post-quantum signature time reduced by 30% and verification time by 40%",
+    "date": "2025-09-15",
+    "labels": [],
+    "redirectTo": "https://github.com/b-wagn/hash-sig/pull/81",
+    "type": "News"
+  },
+  {
+    "id": "270d05af-0d5a-800a-8b72-eede764152f9",
+    "slug": "eth-tokyo-presentation",
+    "title": "ETH Tokyoで登壇しました",
+    "titleEn": "Gave a talk at ETH Tokyo",
+    "date": "2025-09-13",
+    "labels": [],
+    "redirectTo": "https://x.com/grandchildrice/status/1967548634402320473",
+    "type": "News"
+  },
+  {
+    "id": "270d05af-0d5a-801e-b508-d17be831c388",
+    "slug": "zk-tokyo-presentation",
+    "title": "ZK Tokyoで登壇しました",
+    "titleEn": "Gave a presentation to at ZK Tokyo",
+    "date": "2025-09-13",
+    "labels": [],
+    "redirectTo": "https://www.youtube.com/playlist?app=desktop&list=PLvKRWMWw-Dsa4BGplLe1YYgRpiio72FgY",
+    "type": "News"
+  },
+  {
+    "id": "270d05af-0d5a-805f-b6d7-da2944b046b5",
+    "slug": "liquidity-provision ",
+    "title": "【Youtube対談】データから見るDeFi流動性提供のすべて",
+    "titleEn": "Everything about DeFi liquidity provision from a data perspective",
+    "date": "2025-09-13",
+    "labels": [],
+    "redirectTo": "https://www.youtube.com/live/XR9IHtMaiHI?feature=share",
+    "type": "News"
+  },
+  {
+    "id": "266d05af-0d5a-80da-8526-cf8adea49b44",
+    "slug": "leanConsunsus-call",
+    "title": "leanConsensusに参加しました",
+    "titleEn": "Participated in the leanConsensus call",
+    "date": "2025-09-06",
+    "labels": [],
+    "redirectTo": "https://www.youtube.com/watch?v=hAIp_JHrr4I",
+    "type": "News"
+  },
+  {
+    "id": "268d05af-0d5a-803b-aa30-f3b8347399b9",
+    "slug": "eth-tokyo",
+    "title": "ETH Tokyoに登壇決定しました",
+    "titleEn": "Announced to speak at ETH Tokyo",
+    "date": "2025-09-05",
+    "labels": [],
+    "redirectTo": "https://x.com/NyxFoundation/status/1963786833877463308",
+    "type": "News"
+  },
+  {
+    "id": "268d05af-0d5a-80eb-90d9-f144de6a3a4f",
+    "slug": "el-contribution",
+    "title": "実行クライアントに貢献しました",
+    "titleEn": "Contributed to execution client",
+    "date": "2025-09-02",
+    "labels": [],
+    "redirectTo": "https://x.com/grandchildrice/status/1962777752521843166",
+    "type": "News"
+  },
+  {
+    "id": "259d05af-0d5a-8078-b9a3-f8ad88fe4ce6",
+    "slug": "geth-announcement",
+    "title": "Gethに貢献しました",
+    "titleEn": "Contributed to Geth, one of the most widely used at ethereum",
+    "date": "2025-08-20",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://x.com/grandchildrice/status/1957916200228515905",
+    "type": "News"
+  },
+  {
+    "id": "253d05af-0d5a-80c2-990c-c1e41a76ffc6",
+    "slug": "pq-signature",
+    "title": "lean Consensusにおける耐量子署名のスキームを実装しました",
+    "titleEn": "Implemented a post-quantum signature in the lean Consensus",
+    "date": "2025-08-18",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://github.com/adust09/xmss-hypercube",
+    "type": "News"
+  },
+  {
+    "id": "252d05af-0d5a-8030-a9dc-c5ee851ddf51",
+    "slug": "prediction-society",
+    "title": "お金をかけない予測市場アプリ「予測社会」をローンチしました",
+    "titleEn": "Launched a prediction market 'Prediction Society' that doesn't require any money",
+    "date": "2025-08-15",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://x.com/PredSocial/status/1956232666858316025",
+    "type": "News"
+  },
+  {
+    "id": "259d05af-0d5a-809d-a164-c7352f792175",
+    "slug": " joint-research-1 ",
+    "title": "香港科技大学ビジネススクール経済学部助理教授の川口康平氏と共同研究を開始しました\n\n",
+    "titleEn": "Begun joint research with Kohei Kawaguchi, Assistant Professor of Economics at the Hong Kong University of Science and Technology Business School",
+    "date": "2025-08-07",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://x.com/NyxFoundation/status/1953338293824757930",
+    "type": "News"
+  },
+  {
+    "id": "252d05af-0d5a-8094-abb7-e903b49f5011",
+    "slug": "252d05af-0d5a-8094-abb7-e903b49f5011",
+    "title": "東京大学寄付講座とイベントを開きました",
+    "titleEn": "Held an event with the  Endowed Chair for Blockchain Innovation, the University of Tokyo",
+    "date": "2025-07-30",
+    "labels": [
+      "Event"
+    ],
+    "redirectTo": "https://lu.ma/g64yev2s",
+    "type": "News"
+  },
+  {
+    "id": "252d05af-0d5a-80e3-829a-fba8f933d55f",
+    "slug": "tldr-fellowship",
+    "title": "コロンビアビジネススクールで論文を発表しました",
+    "titleEn": "Presented paper at Columbia Business School",
+    "date": "2025-05-15",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://x.com/thelatestindefi/status/1900573217460285629",
+    "type": "News"
+  },
+  {
+    "id": "250d05af-0d5a-8175-a279-cb001c381579",
+    "slug": "sponsor-001",
+    "title": "Uzumakiスポンサーの発表",
+    "titleEn": "Uzumaki Sponsors Announcement",
+    "date": "2025-04-23",
+    "labels": [
+      "announcement"
+    ],
+    "type": "News",
+    "blocks": [
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8186-a808-caa5e08ae394",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "私たちの活動を支えてくださっている10名のスポンサー様に、心より感謝申し上げます。皆様のご支援のおかげで、Uzumakiは運営することができております。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "私たちの活動を支えてくださっている10名のスポンサー様に、心より感謝申し上げます。皆様のご支援のおかげで、Uzumakiは運営することができております。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8191-93b7-cc5f8b14579c",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8191-93b7-cc5f8b14579c.png",
+            "expiry_time": "2026-02-01T03:52:07.619Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81c8-9f8c-c7c28d8599fa",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-818e-9183-f97b8753994f",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "以下ではスポンサーのご紹介をさせていただきます。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "以下ではスポンサーのご紹介をさせていただきます。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8119-bbcc-c094d6e68e89",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8186-bab3-dc5644d9f034",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Ethereum Foundation",
+                "link": {
+                  "url": "https://x.com/EF_ESP"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Ethereum Foundation",
+              "href": "https://x.com/EF_ESP"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-819e-a5f2-d22f287652f2",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-819e-a5f2-d22f287652f2.png",
+            "expiry_time": "2026-02-01T03:52:07.936Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8120-8d6e-d1612b153229",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Ethereum Foundation（EF）が運営する支援プログラムで、オープンソースかつパブリックグッド志向のプロジェクトに資金面・非資金面の両方からサポートを提供します。EF内部では「資金配分の対外窓口」という位置づけで、開発者ツール、基盤インフラ、暗号研究、コミュニティ育成といったEthereum の“土台”を強くする活動を重点的に支援します。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Ethereum Foundation（EF）が運営する支援プログラムで、オープンソースかつパブリックグッド志向のプロジェクトに資金面・非資金面の両方からサポートを提供します。EF内部では「資金配分の対外窓口」という位置づけで、開発者ツール、基盤インフラ、暗号研究、コミュニティ育成といったEthereum の“土台”を強くする活動を重点的に支援します。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8133-97af-df762380e642",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8153-8f34-d31f1aae0b40",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Geodework",
+                "link": {
+                  "url": "https://geodework.com/about"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Geodework",
+              "href": "https://geodework.com/about"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81fc-843a-c77740e33966",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-16T01:27:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81fc-843a-c77740e33966.png",
+            "expiry_time": "2026-02-01T03:52:08.154Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-817a-a29e-dfc372d95648",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Ethereum FoundationからスピンアウトしたGeodeworkは、グローバルなEthereumエコシステムの開発、ひいてはより良いインターネットの構築に専念するエコシステムプロダクトスタジオですGeodeworkは、教育およびコミュニティインフラのための製品やツールを開発し、助成金の提供を促進し、グローバルなEthereumエコ開発の活動を支援します。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Ethereum FoundationからスピンアウトしたGeodeworkは、グローバルなEthereumエコシステムの開発、ひいてはより良いインターネットの構築に専念するエコシステムプロダクトスタジオですGeodeworkは、教育およびコミュニティインフラのための製品やツールを開発し、助成金の提供を促進し、グローバルなEthereumエコ開発の活動を支援します。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81b5-8033-c0ab4a5f3ee6",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-813e-b015-fadf13ae1e30",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Polygon",
+                "link": {
+                  "url": "https://x.com/0xPolygon"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Polygon",
+              "href": "https://x.com/0xPolygon"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81e8-96a6-cb71633d342a",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81e8-96a6-cb71633d342a.png",
+            "expiry_time": "2026-02-01T03:52:08.365Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8118-99e1-e82a74c841d7",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Polygonは、Ethereumと互換性のあるブロックチェーンのスケーリングソリューションを提供するプロジェクトです。高速かつ低コストな取引を可能にし、開発者が分散型アプリケーション（dApps）を容易に構築できる環境を提供します。セキュリティと拡張性を兼ね備えたPolygonは、Web3の未来を支える重要なインフラとして注目されています。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Polygonは、Ethereumと互換性のあるブロックチェーンのスケーリングソリューションを提供するプロジェクトです。高速かつ低コストな取引を可能にし、開発者が分散型アプリケーション（dApps）を容易に構築できる環境を提供します。セキュリティと拡張性を兼ね備えたPolygonは、Web3の未来を支える重要なインフラとして注目されています。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8153-8144-e4c7c22946a2",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81a6-964d-e8681ba0bbd2",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "GuildQB",
+                "link": {
+                  "url": "https://x.com/GuildQB"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "GuildQB",
+              "href": "https://x.com/GuildQB"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8140-b63e-c3c9559214e6",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8140-b63e-c3c9559214e6.png",
+            "expiry_time": "2026-02-01T03:52:08.613Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8103-ae0f-ec89e6cedc7b",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "GuildQB",
+                "link": {
+                  "url": "https://guildqb.com/"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "GuildQB",
+              "href": "https://guildqb.com/"
+            },
+            {
+              "type": "text",
+              "text": {
+                "content": "は、ブロックチェーン技術を活用したWeb3ゲームの新しい体験を提供するプラットフォームです。ユーザー主導のDAO（分散型自律組織）によって運営されるコミュニティで、国内最大級の規模を誇ります。プレイヤーがゲームを通じて暗号資産やNFTを獲得できる環境を整え、革新的なゲーム体験を創出することをミッションとしています。独自NFT「KISARAGI」やトークン「GQB」を軸に、ゲーム・NFT・コミュニティが連携するエコシステムを形成しており、今後は複数のゲームとコミュニティを横断した新しい次元の連携を目指しています。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "は、ブロックチェーン技術を活用したWeb3ゲームの新しい体験を提供するプラットフォームです。ユーザー主導のDAO（分散型自律組織）によって運営されるコミュニティで、国内最大級の規模を誇ります。プレイヤーがゲームを通じて暗号資産やNFTを獲得できる環境を整え、革新的なゲーム体験を創出することをミッションとしています。独自NFT「KISARAGI」やトークン「GQB」を軸に、ゲーム・NFT・コミュニティが連携するエコシステムを形成しており、今後は複数のゲームとコミュニティを横断した新しい次元の連携を目指しています。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-818c-8b43-e49d6f3ece07",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81d1-bc70-c9df7af650fe",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "キリフダ株式会社",
+                "link": {
+                  "url": "https://x.com/kirifuda_io"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "キリフダ株式会社",
+              "href": "https://x.com/kirifuda_io"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-813b-aecc-efc2a8a05e80",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-813b-aecc-efc2a8a05e80.png",
+            "expiry_time": "2026-02-01T03:52:08.836Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-818d-834b-d0a4ae267f11",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "キリフダ株式会社",
+                "link": {
+                  "url": "https://kirifuda.io/"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "キリフダ株式会社",
+              "href": "https://kirifuda.io/"
+            },
+            {
+              "type": "text",
+              "text": {
+                "content": "は、web3／ブロックチェーンを事業戦略に取り込みたい事業者を、様々な検討フェーズから漸次推進でサポートする総合コンサルティング会社です。ブロックチェーンやWeb3技術を活用した事業開発支援から、システム設計・開発、運用まで、上流工程から実行・改善までをワンストップでサポートいたします。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "は、web3／ブロックチェーンを事業戦略に取り込みたい事業者を、様々な検討フェーズから漸次推進でサポートする総合コンサルティング会社です。ブロックチェーンやWeb3技術を活用した事業開発支援から、システム設計・開発、運用まで、上流工程から実行・改善までをワンストップでサポートいたします。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81e8-80f0-db1abb67c127",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "過去ご支援いたしましたクライアント様の業種は、以下のように幅広でございます。 不動産／エネルギー／メーカー／交通・鉄道／ メディア／スポーツ／金融・保険／エンタメ／通信／小売・商社\n事業内容にご興味がある企業様は、どうぞお気軽にお問い合わせください。\n",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "過去ご支援いたしましたクライアント様の業種は、以下のように幅広でございます。 不動産／エネルギー／メーカー／交通・鉄道／ メディア／スポーツ／金融・保険／エンタメ／通信／小売・商社\n事業内容にご興味がある企業様は、どうぞお気軽にお問い合わせください。\n",
+              "href": null
+            },
+            {
+              "type": "text",
+              "text": {
+                "content": "https://kirifuda.io/contact",
+                "link": {
+                  "url": "https://kirifuda.io/contact"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "https://kirifuda.io/contact",
+              "href": "https://kirifuda.io/contact"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8189-9cd0-d0100db6f7a8",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81db-8612-d58e80226467",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Decentralized Science (DeSci) Tokyo",
+                "link": {
+                  "url": "https://x.com/DeSciTokyo"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Decentralized Science (DeSci) Tokyo",
+              "href": "https://x.com/DeSciTokyo"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81c8-967d-cffcb51b01ab",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81c8-967d-cffcb51b01ab.png",
+            "expiry_time": "2026-02-01T03:52:09.075Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81fb-81a8-f5aba8411686",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "DeSci Tokyoは、分散型科学を通して人類の知識の限界を押し広げます。分散型科学を支援するボランティア団体です。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "DeSci Tokyoは、分散型科学を通して人類の知識の限界を押し広げます。分散型科学を支援するボランティア団体です。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8131-af85-f99128ad58cc",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81d4-83f9-c1757b245f20",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "チケ男",
+                "link": {
+                  "url": "https://x.com/dd_TicketMe"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "チケ男",
+              "href": "https://x.com/dd_TicketMe"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81b4-9b7f-c1b3c1be62fb",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81b4-9b7f-c1b3c1be62fb.png",
+            "expiry_time": "2026-02-01T03:52:09.467Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-818f-b366-f396c2972d5a",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "I'm developing and running Japan’s largest NFT ticket platform. If you’re interested in teaming up, feel free to reach out!! → X (@dd_TicketMe)",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "I'm developing and running Japan’s largest NFT ticket platform. If you’re interested in teaming up, feel free to reach out!! → X (@dd_TicketMe)",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-819f-b521-c5253300ad09",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "日本で一番大きいNFTチケット販売サービスの開発と運営をしているので、一緒にやれることがあったら連絡してください！！→X(@dd_TicketMe)",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "日本で一番大きいNFTチケット販売サービスの開発と運営をしているので、一緒にやれることがあったら連絡してください！！→X(@dd_TicketMe)",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81e4-bba6-ffa908cee718",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8129-9b0a-c9135b6151e5",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "KIMINORI JAPAN",
+                "link": {
+                  "url": "https://x.com/curry_tokyo"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "KIMINORI JAPAN",
+              "href": "https://x.com/curry_tokyo"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8191-aff4-c291c7954f19",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8191-aff4-c291c7954f19.png",
+            "expiry_time": "2026-02-01T03:52:09.848Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8129-b870-e32e85b86a7e",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8123-b239-e72dd45512d8",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Hiro Shimo",
+                "link": {
+                  "url": "https://x.com/hiroshi_shimo"
+                }
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "Hiro Shimo",
+              "href": "https://x.com/hiroshi_shimo"
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8151-b19e-c5dfc6e231e0",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "image",
+        "image": {
+          "type": "file",
+          "file": {
+            "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8151-b19e-c5dfc6e231e0.png",
+            "expiry_time": "2026-02-01T03:52:10.091Z"
+          },
+          "caption": []
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-810c-844e-e1f0b1b05363",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "\n老舗ブロックチェーン/Web3開発/コンサル/人材紹介企業の代表。2014年から日本人初のEthereum技術者で上場企業子会社を含むブロックチェーン企業3社でCTO。ビジネス支援で100件以上の実績とノウハウでブロックチェーン/Web3ビジネスを支援。SES:Web3案件・フリーランス人材紹介。採用拡大中。",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "\n老舗ブロックチェーン/Web3開発/コンサル/人材紹介企業の代表。2014年から日本人初のEthereum技術者で上場企業子会社を含むブロックチェーン企業3社でCTO。ビジネス支援で100件以上の実績とノウハウでブロックチェーン/Web3ビジネスを支援。SES:Web3案件・フリーランス人材紹介。採用拡大中。",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-814e-8111-eb4cd1ce6c25",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81c7-a904-d58d2f7c3912",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "匿名希望さん",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "匿名希望さん",
+              "href": null
+            }
+          ],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-81fa-940f-ffa5f3091468",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      },
+      {
+        "object": "block",
+        "id": "250d05af-0d5a-8178-b594-f71ed95c3654",
+        "parent": {
+          "type": "page_id",
+          "page_id": "250d05af-0d5a-8175-a279-cb001c381579"
+        },
+        "created_time": "2025-08-15T20:39:00.000Z",
+        "last_edited_time": "2025-08-15T20:39:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+        },
+        "has_children": false,
+        "archived": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        }
+      }
+    ]
+  },
+  {
+    "id": "252d05af-0d5a-80b6-9a4c-f09ef5df97c1",
+    "slug": "zkproof7",
+    "title": "ZKProof7国際ワークショップにアクセプトされました",
+    "titleEn": "Paper has been accepted on ZKProof7 workshop",
+    "date": "2025-02-11",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://m.youtube.com/live/LMLfA1N5Has",
+    "type": "News"
+  },
+  {
+    "id": "252d05af-0d5a-80d3-b9c8-e110b9bdfa36",
+    "slug": "scis2025",
+    "title": "SCIS2025という学会にアクセプトされました",
+    "titleEn": "Presented paper at conference SCIS2025",
+    "date": "2025-01-06",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://www.iwsec.org/scis/2025/program.html",
+    "type": "News"
+  },
+  {
+    "id": "259d05af-0d5a-80a4-8ce0-c9b0e3288ad4",
+    "slug": "across-relayer-template",
+    "title": "Across Fillerのテンプレートを公開しました",
+    "titleEn": "Released the Across filler template",
+    "date": "2025-01-02",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://github.com/NyxFoundation/across-relayer-template",
+    "type": "News"
+  },
+  {
+    "id": "259d05af-0d5a-80b9-8236-f0b5f763e2c6",
+    "slug": "uniswapx-filler-template",
+    "title": "UniswapX FIlerのテンプレートを公開しました",
+    "titleEn": "Released the UniswapX filler template",
+    "date": "2025-01-01",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://github.com/NyxFoundation/uniswapx-filler-template",
+    "type": "News"
+  }
+]

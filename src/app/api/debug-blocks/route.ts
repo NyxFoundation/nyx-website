@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
-import { Client } from "@notionhq/client";
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-});
+import { getPageBlocks } from "@/lib/notion";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -15,11 +11,7 @@ export async function GET(request: Request) {
   }
   
   try {
-    const response = await notion.blocks.children.list({
-      block_id: pageId,
-    });
-    
-    const blocks = response.results;
+    const blocks = await getPageBlocks(pageId);
     
     // Debug: Show the structure of blocks, especially looking for equation types
     const debugInfo = blocks
@@ -52,7 +44,7 @@ export async function GET(request: Request) {
       success: true,
       pageId,
       blocksCount: blocks.length,
-      blocks: debugInfo
+      blocks: debugInfo,
     });
   } catch (error) {
     console.error("Error debugging blocks:", error);

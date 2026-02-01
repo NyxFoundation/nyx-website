@@ -1,0 +1,74 @@
+[
+  {
+    "id": "29ad05af-0d5a-800c-b78b-eb5019b1a787",
+    "name": "Masato Kamba",
+    "role": "gohan",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-800c-b78b-eb5019b1a787.png",
+    "bio": "2018年よりSwift/AI/インフラのエンジニア経験を経て2020年に音楽テックスタートアップを起業。その後は閉業して研究の道へ進み、2025年に早稲田大学で暗号プロトコルの修士課程取得。国際学会ZKProof7で論文発表、イーサリアム財団との共同研究などを経験。主な研究内容はzkVM, MPC, Verifiable Credentials。現在はNyx Foundationを共同創業し、イーサリアムクライアント実装バグを報告するホワイトハット活動に従事。",
+    "bioEn": "After gaining engineering experience in Swift, AI, and infrastructure starting in 2018, founded a music-tech startup in 2020. Subsequently closed the business to pursue research, earning a master's degree in cryptographic protocols from Waseda University in 2025. Published papers at the international conference ZKProof7 and conducted joint research with the Ethereum Foundation. Primary research areas include zkVM, MPC, and Verifiable Credentials. Currently co-founded Nyx Foundation and engaged in white hat activities reporting bugs in Ethereum client implementations.",
+    "url": "https://x.com/grandchildrice"
+  },
+  {
+    "id": "29ad05af-0d5a-80fe-a0d9-cc61ac3b4d1c",
+    "name": "Banri Yanahama",
+    "role": "banri",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-80fe-a0d9-cc61ac3b4d1c.png",
+    "bio": "京都大学大学院理学研究科を卒業し、DeNAでインフラエンジニア、AVILEN(AIスタートアップ)でAIエンジニアを経たのちいくつかのブロックチェーン系プロジェクトにPM、リードエンジニアとして参画。 その後エンジニアとして主にDeFi系プロジェクトに従事、現在はNyx Foundationのリサーチャーとして形式検証、耐量子暗号、LLMエージェントの研究に携わっている。",
+    "bioEn": "After graduating from the Graduate School of Science at Kyoto University, I worked as an infrastructure engineer at DeNA and an AI engineer at AVILEN (an AI startup). I then participated in several blockchain projects as a project manager and lead engineer. Subsequently, I primarily worked as an engineer on DeFi projects. Currently, I am a researcher at the Nyx Foundation, engaged in research on formal verification, post-quantum cryptography, and LLM agents.",
+    "url": "https://x.com/banr1_"
+  },
+  {
+    "id": "29ad05af-0d5a-805b-8aa0-c78bad67f2d3",
+    "name": "Koshi Ota",
+    "role": "0xCassiopeia",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-805b-8aa0-c78bad67f2d3.png",
+    "bio": "東京大学大学院経済学研究科修士課程在学、Nyx Foundationのリサーチャー兼データサイエンティストとして、主にapplicationにおけるMEVの研究を行っている。",
+    "bioEn": "Currently enrolled in the Master's program at the Graduate School of Economics, The University of Tokyo, and working as a researcher and data scientist at Nyx Foundation, primarily conducting research on MEV in applications.",
+    "url": "https://x.com/0xAlphaist"
+  },
+  {
+    "id": "29ad05af-0d5a-8046-a4b1-df834c6e6897",
+    "name": "Ippei Torigoe",
+    "role": "vita",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-8046-a4b1-df834c6e6897.png",
+    "bio": "Nyx Foundation共同創業者、制度経済の研究を行っている。過去にはEFから研究助成金を受け、PBSやRANDAOに関する研究を発表。現在は契約理論に関する研究を主導している。",
+    "bioEn": "Co-founder of Nyx Foundation. He previously received a research grant from EF and published research on PBS and RANDAO. He is currently leading research on contract theory.",
+    "url": "https://x.com/keccak255"
+  },
+  {
+    "id": "29ad05af-0d5a-805c-abf4-ceda40a6bc13",
+    "name": "Shouki Tsuda",
+    "role": "adust ",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-805c-abf4-ceda40a6bc13.png",
+    "bio": "九州工業大学を卒業後、楽天グループ株式会社にソフトウェアエンジニアとして入社。その後、Ethereum L2の開発やConfidential Layerの構築をリードした。Nyx Foundationに参画後はゼロ知識証明の研究開発やEthereumの耐量子移行の支援を行っている。",
+    "bioEn": "After graduating from Kyushu Institute of Technology, I joined Rakuten Group, Inc. as a software engineer. I subsequently led the development of Ethereum Layer 2 solutions and the construction of the Confidential Layer. Since joining the Nyx Foundation, I have been engaged in zero-knowledge proof research and development, as well as supporting Ethereum's transition to quantum-resistant systems.",
+    "url": "https://x.com/adust09"
+  },
+  {
+    "id": "29ad05af-0d5a-8000-8e95-ec2d6fa86aef",
+    "name": "Tomoki Adachi",
+    "role": "Tomoki Adachi",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-8000-8e95-ec2d6fa86aef.png",
+    "bio": "名古屋大学法学部卒業、現在はFutabaのCTOとしてクロスチェーンのプロダクトを開発する傍ら、Nyx Foundationでエンジニアとして携わっている。",
+    "bioEn": "Graduated from Nagoya University's Faculty of Law. Currently serves as CTO at Futaba, developing cross-chain products, while also working as an engineer at the Nyx Foundation.",
+    "url": "https://x.com/adachi_tomoki3"
+  },
+  {
+    "id": "29ad05af-0d5a-80c1-823f-e68983c8f9c8",
+    "name": "Hiroshi Tei",
+    "role": "Hiroshi Tei",
+    "avatar": "/notion-assets/members/29ad05af-0d5a-80c1-823f-e68983c8f9c8.png",
+    "bio": "東京大学大学院経済学研究科修士卒業　現在は株式会社メルカリでソフトウェアエンジニアとして働きながら、Nyx Foundationにリサーチャーとして携わっている。",
+    "bioEn": "Graduated with a Master's degree from the Graduate School of Economics, The University of Tokyo. Currently working as a software engineer at Mercari, Inc. while also serving as a researcher at the Nyx Foundation.",
+    "url": "https://x.com/164zheng"
+  },
+  {
+    "id": "2a3d05af-0d5a-8016-9a3f-d7e8e272dfaa",
+    "name": "Akiyoshi Sannai",
+    "role": "三内顕義",
+    "avatar": "/notion-assets/members/2a3d05af-0d5a-8016-9a3f-d7e8e272dfaa.png",
+    "bio": "京都大学特定准教授。生成AIと定理証明支援系 Lean を協調させる新手法「Prover Agent」を開発。",
+    "bioEn": "Associate Professor at Kyoto University. Developed “Prover Agent,” a novel method that coordinates generative AI with the theorem proving support system Lean.",
+    "url": "https://scholar.google.com/citations?user=BIyXx5QAAAAJ&hl=ja"
+  }
+]

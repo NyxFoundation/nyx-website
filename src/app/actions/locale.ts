@@ -1,7 +1,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
 
 export async function setLocale(locale: "ja" | "en") {
   const cookieStore = await cookies();
@@ -12,5 +11,4 @@ export async function setLocale(locale: "ja" | "en") {
     secure: process.env.NODE_ENV === "production",
   });
   
-  revalidatePath("/");
 }

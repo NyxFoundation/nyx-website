@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import { Client } from "@notionhq/client";
-
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-});
+import { getPageBlocks } from "@/lib/notion";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,17 +10,14 @@ export async function GET(request: Request) {
   }
   
   try {
-    // Test fetching blocks directly from Notion API
-    const blocks = await notion.blocks.children.list({
-      block_id: pageId,
-    });
-    
+    const blocks = await getPageBlocks(pageId);
+
     return NextResponse.json({
       success: true,
       pageId,
-      cleanPageId: pageId.replace(/-/g, ''),
-      blocksCount: blocks.results.length,
-      hasBlocks: blocks.results.length > 0
+      cleanPageId: pageId.replace(/-/g, ""),
+      blocksCount: blocks.length,
+      hasBlocks: blocks.length > 0,
     });
   } catch (error) {
     console.error("Error testing page:", error);

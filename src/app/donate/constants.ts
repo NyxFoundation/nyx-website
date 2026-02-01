@@ -7,7 +7,6 @@ import type {
   PillarMetadata,
   SponsorInfo,
   StoryLayout,
-  TeamMember,
   TokenPaymentMethod,
 } from "./types";
 
@@ -43,7 +42,6 @@ type DonateData = {
   >;
   fixedAmounts: Record<PaymentMethod, readonly number[]>;
   numberLocaleMap: Record<string, string>;
-  teamMembers: TeamMember[];
   sponsors: {
     corporate: SponsorInfo[];
     premium: SponsorInfo[];
@@ -107,8 +105,6 @@ export const TIER_AMOUNT_BADGES = {
 } as const;
 
 export const NUMBER_LOCALE_MAP: Record<string, string> = typedDonateData.numberLocaleMap;
-
-export const TEAM_MEMBERS: TeamMember[] = typedDonateData.teamMembers;
 
 export const CORPORATE_SPONSORS: SponsorInfo[] = typedDonateData.sponsors.corporate;
 

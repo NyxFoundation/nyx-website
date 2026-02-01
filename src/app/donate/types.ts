@@ -20,14 +20,6 @@ export type StoryLayout = {
   wrapperSpacingClass: string;
 };
 
-export type TeamMember = {
-  id: string;
-  name: string;
-  role: string;
-  avatar?: string;
-  bio?: string;
-};
-
 export type TeamSectionContent = {
   heading: string;
   teamHeading: string;

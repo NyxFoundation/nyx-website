@@ -370,7 +370,7 @@
       "wcTxFailedNoDetails": "Transaction failed before confirmation.",
       "wcTxReverted": "Transaction was reverted on-chain.",
       "wcDisabled": "WalletConnect is available only for ETH donations.",
-      "wcFallbackNote": "If WalletConnect isn't working, please send to <address>0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a</address> and let us know via the <contactLink>contact form</contactLink>.",
+      "wcFallbackNote": "If WalletConnect isn't working, please send to <address>0x0BC9f668939F817DFF0Bb552BdF42cfdB1321430</address> and let us know via the <contactLink>contact form</contactLink>.",
       "wcSwitchHint": "Switch your wallet to {chain} before sending the transaction.",
       "paymentOptions": {
         "ETH": "ETH",

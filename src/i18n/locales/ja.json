@@ -370,7 +370,7 @@
       "wcTxFailedNoDetails": "トランザクションは確定前に失敗しました。",
       "wcTxReverted": "トランザクションがチェーン上でリバートされました。",
       "wcDisabled": "WalletConnectはETHでの寄付のみ対応しています。",
-      "wcFallbackNote": "もしWalletConnectが上手く行かない場合は<address>0xa1a8d76a0044ce9d8aef7c5279111a3029f58a6a</address>へ送金し、<contactLink>お問い合わせ</contactLink>から送金したことをお知らせください。",
+      "wcFallbackNote": "もしWalletConnectが上手く行かない場合は<address>0x0BC9f668939F817DFF0Bb552BdF42cfdB1321430</address>へ送金し、<contactLink>お問い合わせ</contactLink>から送金したことをお知らせください。",
       "wcSwitchHint": "ウォレット側で {chain} に切り替えてから実行してください。",
       "paymentOptions": {
         "ETH": "ETH",

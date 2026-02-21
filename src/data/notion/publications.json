@@ -1,5 +1,25 @@
 [
   {
+    "id": "305d05af-0d5a-80fa-9991-f52266506d90",
+    "slug": "speca",
+    "title": "SPECA: Specification-to-Checklist Agentic Auditing for Multi-Implementation Systems — A Case Study on Ethereum Clients",
+    "titleEn": "SPECA: Specification-to-Checklist Agentic Auditing for Multi-Implementation Systems — A Case Study on Ethereum Clients",
+    "date": "2026-02-16",
+    "labels": [],
+    "redirectTo": "https://arxiv.org/pdf/2602.07513v2",
+    "type": "Publication"
+  },
+  {
+    "id": "305d05af-0d5a-80b1-86d8-f37c35a72868",
+    "slug": "public-and-private-jit",
+    "title": "Mapping Public and Private JIT Liquidity Dynamics in Ethereum's Builder Ecosystem",
+    "titleEn": "Mapping Public and Private JIT Liquidity Dynamics in Ethereum's Builder Ecosystem",
+    "date": "2026-02-12",
+    "labels": [],
+    "redirectTo": "https://fc26.ifca.ai/defi/papers/jit-liquidity-ethereum-builders.pdf",
+    "type": "Publication"
+  },
+  {
     "id": "266d05af-0d5a-8086-857a-e8fb7f93064a",
     "slug": "who-win-liquidity-provision",
     "title": "Who wins liquidity provision and how? Evidence from the Uniswap Protocol",

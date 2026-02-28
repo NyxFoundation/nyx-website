@@ -18,6 +18,15 @@
     "coverImage": null
   },
   {
+    "id": "29ad05af-0d5a-8039-880e-c2bc7e7fbb75",
+    "name": "プライベートメンプールのMEV分析",
+    "nameEn": "MEV Analysis in Private Mempool",
+    "description": "プライベートMempoolでJIT Liquidityやサンドイッチ攻撃等のMEVがどれだけ発生し、エコシステムにどのような影響を与えているのか分析を行う。",
+    "descriptionEn": "Analyze how much MEV, such as JIT Liquidity and sandwich attacks, occurs in the private mempool and what impact it has on the ecosystem.",
+    "leader": "0xCassiopeia",
+    "coverImage": null
+  },
+  {
     "id": "298d05af-0d5a-8024-9b1a-cbe015b8d3c6",
     "name": "ホワイトハッキングの自動化",
     "nameEn": "Automating White-hat Hacking",

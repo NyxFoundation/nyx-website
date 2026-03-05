@@ -184,16 +184,42 @@ export const NotionBlockRenderer: FC<NotionBlockRendererProps> = ({ blocks }) =>
           </details>
         );
 
-      case "table":
+      case "table": {
+        const children = (block as BlockObjectResponse & { children?: BlockObjectResponse[] }).children ?? [];
+        const hasColumnHeader = block.table.has_column_header;
+        const hasRowHeader = block.table.has_row_header;
         return (
           <div key={key} className="my-6 overflow-x-auto">
-            <table className="min-w-full border-collapse border border-gray-300">
-              <tbody>
-                {/* Table rows would be rendered here - need child blocks */}
-              </tbody>
+            <table className="min-w-full border-collapse border border-gray-200">
+              {children.map((row, rowIndex) => {
+                if (row.type !== "table_row") return null;
+                const cells = row.table_row.cells;
+                const isHeaderRow = hasColumnHeader && rowIndex === 0;
+                const Tag = isHeaderRow ? "thead" : "tbody";
+                const CellTag = isHeaderRow ? "th" : "td";
+                return (
+                  <Tag key={row.id}>
+                    <tr>
+                      {cells.map((cell: RichTextItemResponse[], cellIndex: number) => {
+                        const isHeaderCell = isHeaderRow || (hasRowHeader && cellIndex === 0);
+                        const ActualCellTag = isHeaderCell ? "th" : CellTag;
+                        return (
+                          <ActualCellTag
+                            key={cellIndex}
+                            className={`border border-gray-200 px-4 py-2 text-sm ${isHeaderCell ? "bg-gray-50 font-semibold" : ""}`}
+                          >
+                            {renderRichText(cell)}
+                          </ActualCellTag>
+                        );
+                      })}
+                    </tr>
+                  </Tag>
+                );
+              })}
             </table>
           </div>
         );
+      }
 
       case "video":
         const videoUrl = block.video.type === 'external'

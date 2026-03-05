@@ -99,6 +99,13 @@ async function listAllBlocks(blockId) {
     cursor = response.next_cursor || undefined;
   }
 
+  // Fetch children for blocks that have them (e.g. table rows)
+  for (const block of blocks) {
+    if ("has_children" in block && block.has_children) {
+      block.children = await listAllBlocks(block.id);
+    }
+  }
+
   return blocks;
 }
 

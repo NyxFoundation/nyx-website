@@ -32,7 +32,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/319d05af-0d5a-80e7-bcdf-c019868b4516/31ad05af-0d5a-8098-a1fa-ce028cf1c0e5.png",
-            "expiry_time": "2026-03-05T06:29:31.217Z"
+            "expiry_time": "2026-03-05T06:43:34.900Z"
           },
           "caption": []
         }
@@ -1183,7 +1183,7 @@
               "block_id": "35ed05af-0d5a-8370-af35-811d5ff1700c"
             },
             "created_time": "2026-03-05T05:02:00.000Z",
-            "last_edited_time": "2026-03-05T05:02:00.000Z",
+            "last_edited_time": "2026-03-05T06:42:00.000Z",
             "created_by": {
               "object": "user",
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
@@ -1221,7 +1221,7 @@
                   {
                     "type": "text",
                     "text": {
-                      "content": "Slack",
+                      "content": "Notion / Slack / Telegram / Messenger",
                       "link": null
                     },
                     "annotations": {
@@ -1232,7 +1232,7 @@
                       "code": false,
                       "color": "default"
                     },
-                    "plain_text": "Slack",
+                    "plain_text": "Notion / Slack / Telegram / Messenger",
                     "href": null
                   }
                 ]

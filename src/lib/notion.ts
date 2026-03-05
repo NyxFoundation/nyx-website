@@ -36,6 +36,15 @@ export interface Project {
   coverImage: string | null;
 }
 
+export interface OpenPosition {
+  id: string;
+  title: string;
+  titleEn: string;
+  slug: string;
+  status: string;
+  blocks?: BlockObjectResponse[];
+}
+
 async function readJsonFile<T>(fileName: string, fallback: T): Promise<T> {
   const filePath = path.join(DATA_DIR, fileName);
   try {
@@ -55,6 +64,7 @@ export const getPublications = () => readJsonFile<NotionPage[]>("publications.js
 export const getNews = () => readJsonFile<NotionPage[]>("news.json", []);
 export const getMembers = () => readJsonFile<TeamMember[]>("members.json", []);
 export const getProjects = () => readJsonFile<Project[]>("projects.json", []);
+export const getOpenPositions = () => readJsonFile<OpenPosition[]>("open-positions.json", []);
 
 export async function getPublication(slug: string): Promise<NotionPage | null> {
   const publications = await getPublications();
@@ -64,6 +74,11 @@ export async function getPublication(slug: string): Promise<NotionPage | null> {
 export async function getNewsItem(slug: string): Promise<NotionPage | null> {
   const news = await getNews();
   return news.find((item) => item.slug === slug) ?? null;
+}
+
+export async function getOpenPosition(slug: string): Promise<OpenPosition | null> {
+  const positions = await getOpenPositions();
+  return positions.find((pos) => pos.slug === slug) ?? null;
 }
 
 export async function getPageBlocks(pageId: string): Promise<BlockObjectResponse[]> {

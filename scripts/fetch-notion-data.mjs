@@ -23,6 +23,7 @@ const notion = new Client({
 const MAIN_DB = requireEnv("NOTION_DATABASE_ID");
 const MEMBERS_DB = requireEnv("NOTION_MEMBER_DATABASE_ID");
 const PROJECTS_DB = requireEnv("NOTION_PROJECTS_DATABASE_ID");
+const OPEN_POSITION_DB = requireEnv("NOTION_OPEN_POSITION_DATABASE_ID");
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getPropertyValue(property) {
@@ -282,6 +283,49 @@ async function fetchProjects() {
   return projects;
 }
 
+async function fetchOpenPositions() {
+  const response = await notion.databases.query({
+    database_id: OPEN_POSITION_DB,
+    filter: {
+      property: "Status",
+      select: { equals: "募集中" },
+    },
+    sorts: [
+      {
+        timestamp: "created_time",
+        direction: "descending",
+      },
+    ],
+  });
+
+  const positions = [];
+
+  for (const page of response.results) {
+    if (!("properties" in page)) continue;
+    const properties = page.properties;
+
+    const titleEn = String(getPropertyValue(properties.Title_EN) || "");
+    const slug = titleEn
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    const blocks = await listAllBlocks(page.id);
+    const localizedBlocks = await localizeBlocks(blocks, page.id);
+
+    positions.push({
+      id: page.id,
+      title: String(getPropertyValue(properties.Title) || ""),
+      titleEn,
+      slug,
+      status: String(getPropertyValue(properties.Status) || ""),
+      blocks: localizedBlocks,
+    });
+  }
+
+  return positions;
+}
+
 async function writeJson(fileName, data) {
   await fs.mkdir(DATA_DIR, { recursive: true });
   const filePath = path.join(DATA_DIR, fileName);
@@ -289,22 +333,25 @@ async function writeJson(fileName, data) {
 }
 
 async function main() {
-  const [publications, news, members, projects] = await Promise.all([
+  const [publications, news, members, projects, openPositions] = await Promise.all([
     fetchContentPages("Publication"),
     fetchContentPages("News"),
     fetchMembers(),
     fetchProjects(),
+    fetchOpenPositions(),
   ]);
 
   await writeJson("publications.json", publications);
   await writeJson("news.json", news);
   await writeJson("members.json", members);
   await writeJson("projects.json", projects);
+  await writeJson("open-positions.json", openPositions);
 
   console.log(`publications: ${publications.length}`);
   console.log(`news: ${news.length}`);
   console.log(`members: ${members.length}`);
   console.log(`projects: ${projects.length}`);
+  console.log(`openPositions: ${openPositions.length}`);
 }
 
 main().catch((error) => {

@@ -18,6 +18,7 @@ export function Header() {
     { href: "/projects", label: t("projects") },
     { href: "/publications", label: t("publications") },
     { href: "/member", label: t("member") },
+    { href: "/recruit", label: t("job") },
     { href: "/donate", label: t("contribution") },
   ];
 

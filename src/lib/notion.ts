@@ -42,6 +42,7 @@ export interface OpenPosition {
   titleEn: string;
   slug: string;
   status: string;
+  thumbnail: string | null;
   blocks?: BlockObjectResponse[];
 }
 

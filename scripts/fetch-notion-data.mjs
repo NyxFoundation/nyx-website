@@ -320,12 +320,25 @@ async function fetchOpenPositions() {
     const blocks = await listAllBlocks(page.id);
     const localizedBlocks = await localizeBlocks(blocks, page.id);
 
+    // Extract thumbnail from first image block
+    let thumbnail = null;
+    const firstImageBlock = localizedBlocks.find(
+      (b) => "type" in b && b.type === "image"
+    );
+    if (firstImageBlock && firstImageBlock.type === "image") {
+      thumbnail =
+        firstImageBlock.image.type === "file"
+          ? firstImageBlock.image.file.url
+          : firstImageBlock.image.external?.url || null;
+    }
+
     positions.push({
       id: page.id,
       title: String(getPropertyValue(properties.Title) || ""),
       titleEn,
       slug,
       status: String(getPropertyValue(properties.Status) || ""),
+      thumbnail,
       blocks: localizedBlocks,
     });
   }

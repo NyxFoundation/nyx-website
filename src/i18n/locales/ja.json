@@ -387,6 +387,33 @@
       }
     }
   },
+  "recruit": {
+    "heroTitle": "あなたもNyx Foundationの\n一員になりませんか",
+    "heroSubtitle": "オープンイノベーションのための検証可能な未来を、一緒に築きましょう。",
+    "openPositions": "募集中のポジション",
+    "noPositions": "現在募集中のポジションはありません。",
+    "viewDetails": "詳細を見る →",
+    "backToRecruit": "採用情報に戻る",
+    "applyForThis": "この仕事に応募する"
+  },
+  "apply": {
+    "title": "応募フォーム",
+    "description": "以下のフォームに必要事項をご記入ください。",
+    "backToRecruit": "採用情報に戻る",
+    "position": "応募ポジション",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "social": "SNSアカウント（任意）",
+    "motivation": "志望動機",
+    "experience": "経験・スキルセット",
+    "remarks": "備考（任意）",
+    "submit": "応募する",
+    "submitting": "送信中...",
+    "successTitle": "ご応募ありがとうございます",
+    "successDescription": "内容を確認の上、折り返しご連絡いたします。",
+    "errorMessage": "送信に失敗しました。",
+    "errorDetail": "詳細: {message}"
+  },
   "thankYouDonation": {
     "title": "おめでとうございます！！",
     "subtitle": "寄付が完了しました。",

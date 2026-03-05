@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getOpenPosition, getOpenPositions } from "@/lib/notion";
@@ -26,19 +26,23 @@ export async function generateMetadata({
     };
   }
 
+  const title = `${position.title} | Nyx Foundation`;
+  const description = `Open position at Nyx Foundation: ${position.titleEn}`;
+  const ogImage = position.thumbnail || "/ogp.png";
+
   return {
-    title: `${position.titleEn} | Recruit | Nyx Foundation`,
-    description: `Open position at Nyx Foundation: ${position.titleEn}`,
+    title,
+    description,
     openGraph: {
-      title: `${position.titleEn} | Recruit | Nyx Foundation`,
-      description: `Open position at Nyx Foundation: ${position.titleEn}`,
-      images: ["/ogp.png"],
+      title,
+      description,
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${position.titleEn} | Recruit | Nyx Foundation`,
-      description: `Open position at Nyx Foundation: ${position.titleEn}`,
-      images: ["/ogp.png"],
+      title,
+      description,
+      images: [ogImage],
     },
   };
 }
@@ -50,7 +54,7 @@ export default async function RecruitDetailPage({
 }) {
   const { slug } = await params;
   const locale = await getLocale();
-  const isJa = locale === "ja";
+  const t = await getTranslations("recruit");
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -60,7 +64,7 @@ export default async function RecruitDetailPage({
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          {isJa ? "採用情報に戻る" : "Back to Recruit"}
+          {t("backToRecruit")}
         </Link>
 
         <Suspense fallback={<ArticleDetailSkeleton />}>

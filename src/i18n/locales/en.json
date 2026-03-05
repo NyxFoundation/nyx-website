@@ -387,6 +387,33 @@
       }
     }
   },
+  "recruit": {
+    "heroTitle": "Join Nyx Foundation",
+    "heroSubtitle": "Build a verifiable future for open innovation, together.",
+    "openPositions": "Open Positions",
+    "noPositions": "No open positions at this time.",
+    "viewDetails": "View details →",
+    "backToRecruit": "Back to Recruit",
+    "applyForThis": "Apply for this position"
+  },
+  "apply": {
+    "title": "Application Form",
+    "description": "Please fill out the form below.",
+    "backToRecruit": "Back to Recruit",
+    "position": "Position",
+    "name": "Name",
+    "email": "Email",
+    "social": "Social account (optional)",
+    "motivation": "Motivation",
+    "experience": "Experience & Skills",
+    "remarks": "Remarks (optional)",
+    "submit": "Submit Application",
+    "submitting": "Sending...",
+    "successTitle": "Thank you for your application",
+    "successDescription": "We will review your application and get back to you.",
+    "errorMessage": "Failed to submit.",
+    "errorDetail": "Details: {message}"
+  },
   "thankYouDonation": {
     "title": "Congratulations!!",
     "subtitle": "Donation completed.",

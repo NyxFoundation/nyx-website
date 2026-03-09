@@ -174,10 +174,10 @@
       "bankTransfer": {
         "title": "銀行振込",
         "description": "日本国内の銀行口座への振込",
-        "bankName": "PayPay銀行",
-        "branchName": "かわせみ支店（007）",
-        "accountNumber": "普通 7551963",
-        "accountName": "ツツミマサト",
+        "bankName": "三井住友銀行",
+        "branchName": "トランクNORTH支店（403）",
+        "accountNumber": "403-普通-0365802",
+        "accountName": "一般社団法人 Nyx Foundation",
         "corporateNote": "法人様からのご寄付については、kingmasatojames@gmail.comまでお問い合わせください。"
       },
       "thankYouNote": "ご寄付いただいた際は、感謝の気持ちを込めてツイートさせていただきます："
@@ -240,7 +240,7 @@
         },
         {
           "question": "日本円で銀行振込できますか？",
-          "answer": "PayPay銀行 かわせみ支店(007) 普通 7551963 ツツミマサト へお振込みください。名義や金額の確認のため、必要に応じてメールでご連絡差し上げます。"
+          "answer": "三井住友銀行 トランクNORTH支店 403-普通-0365802 一般社団法人 Nyx Foundation へお振込みください。名義や金額の確認のため、必要に応じてメールでご連絡差し上げます。"
         },
         {
           "question": "法人での寄付や協賛は可能ですか？",

@@ -174,10 +174,10 @@
       "bankTransfer": {
         "title": "Bank Transfer",
         "description": "Domestic bank transfer in Japan",
-        "bankName": "PayPay Bank",
-        "branchName": "Kawasemi Branch (007)",
-        "accountNumber": "Regular 7551963",
-        "accountName": "TSUTSUMI MASATO",
+        "bankName": "Sumitomo Mitsui Banking Corporation",
+        "branchName": "Trunk NORTH Branch (403)",
+        "accountNumber": "403-Ordinary-0365802",
+        "accountName": "Nyx Foundation (General Incorporated Association)",
         "corporateNote": "For corporate donations, please contact us at kingmasatojames@gmail.com."
       },
       "thankYouNote": "When you donate, we'll thank you with a tweet like this:"
@@ -240,7 +240,7 @@
         },
         {
           "question": "Can I donate in JPY via bank transfer?",
-          "answer": "Please transfer to PayPay Bank, Kawasemi branch (007), ordinary 7551963, name: TSUTSUMI MASATO. We may email you to confirm the payer name and amount if needed."
+          "answer": "Please transfer to Sumitomo Mitsui Banking Corporation, Trunk NORTH Branch (403), ordinary 0365802, name: Nyx Foundation (General Incorporated Association). We may email you to confirm the payer name and amount if needed."
         },
         {
           "question": "Can companies sponsor or donate?",

@@ -9,15 +9,6 @@
     "coverImage": null
   },
   {
-    "id": "303d05af-0d5a-8090-b586-c2ad05bdc4fd",
-    "name": "Nanto Lab",
-    "nameEn": "Nanto Lab",
-    "description": "富山県南砺市にコンピュータサイエンスの研究所「Nanto」を建設する。",
-    "descriptionEn": "A computer science research institute named “Nanto” will be constructed in Nanto City, Toyama Prefecture.",
-    "leader": "vita",
-    "coverImage": null
-  },
-  {
     "id": "29ad05af-0d5a-8039-880e-c2bc7e7fbb75",
     "name": "プライベートメンプールのMEV分析",
     "nameEn": "MEV Analysis in Private Mempool",

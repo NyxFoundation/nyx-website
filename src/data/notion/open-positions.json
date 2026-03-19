@@ -25,17 +25,17 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "image",
         "image": {
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/319d05af-0d5a-80e7-bcdf-c019868b4516/31ad05af-0d5a-8098-a1fa-ce028cf1c0e5.png",
-            "expiry_time": "2026-03-05T06:43:34.900Z"
+            "expiry_time": "2026-03-19T08:31:42.290Z"
           },
           "caption": []
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -55,7 +55,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -80,7 +79,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -100,7 +100,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "paragraph",
         "paragraph": {
@@ -124,7 +123,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -144,7 +144,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -185,7 +184,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -205,7 +205,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -246,7 +245,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -266,7 +266,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -307,7 +306,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -327,7 +327,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -368,7 +367,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -388,7 +388,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -429,7 +428,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -449,7 +449,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -490,7 +489,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -510,7 +510,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -551,7 +550,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -571,7 +571,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -596,7 +595,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -616,7 +616,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -640,7 +639,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -660,7 +660,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -684,7 +683,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -704,7 +704,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -728,7 +727,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -748,7 +748,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -772,7 +771,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -792,7 +792,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -817,7 +816,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -837,7 +837,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -861,7 +860,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -881,7 +881,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -905,7 +904,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -925,7 +925,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -949,7 +948,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -969,7 +969,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -993,7 +992,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1013,7 +1013,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1037,7 +1036,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1057,7 +1057,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -1082,7 +1081,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1102,7 +1102,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": true,
-        "archived": false,
         "in_trash": false,
         "type": "table",
         "table": {
@@ -1110,6 +1109,7 @@
           "has_column_header": true,
           "has_row_header": false
         },
+        "archived": false,
         "children": [
           {
             "object": "block",
@@ -1129,7 +1129,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -1173,7 +1172,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -1193,7 +1193,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -1237,7 +1236,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -1257,7 +1257,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -1301,7 +1300,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -1321,7 +1321,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -1365,7 +1364,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -1385,7 +1385,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -1429,7 +1428,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -1449,7 +1449,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -1493,7 +1492,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           }
         ]
       },
@@ -1515,7 +1515,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -1540,7 +1539,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1560,7 +1560,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1584,7 +1583,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1604,7 +1604,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1628,7 +1627,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1648,7 +1648,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1672,7 +1671,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1692,7 +1692,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1716,7 +1715,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1736,7 +1736,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1760,7 +1759,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1780,7 +1780,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -1805,7 +1804,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1825,7 +1825,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "paragraph",
         "paragraph": {
@@ -1849,7 +1848,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1869,7 +1869,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "paragraph",
         "paragraph": {
@@ -1893,7 +1892,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1913,7 +1913,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1937,7 +1936,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -1957,7 +1957,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -1981,7 +1980,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2001,7 +2001,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -2025,7 +2024,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2045,7 +2045,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -2069,7 +2068,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2089,7 +2089,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "paragraph",
         "paragraph": {
@@ -2113,7 +2112,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2133,7 +2133,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -2157,7 +2156,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2177,7 +2177,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "paragraph",
         "paragraph": {
@@ -2201,7 +2200,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2221,7 +2221,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "bulleted_list_item",
         "bulleted_list_item": {
@@ -2245,7 +2244,8 @@
             }
           ],
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2265,7 +2265,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "heading_2",
         "heading_2": {
@@ -2290,7 +2289,8 @@
           ],
           "is_toggleable": false,
           "color": "default"
-        }
+        },
+        "archived": false
       },
       {
         "object": "block",
@@ -2310,7 +2310,6 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": true,
-        "archived": false,
         "in_trash": false,
         "type": "table",
         "table": {
@@ -2318,6 +2317,7 @@
           "has_column_header": true,
           "has_row_header": false
         },
+        "archived": false,
         "children": [
           {
             "object": "block",
@@ -2337,7 +2337,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -2381,7 +2380,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -2401,7 +2401,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -2445,7 +2444,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -2465,7 +2465,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -2509,7 +2508,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -2529,7 +2529,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -2573,7 +2572,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -2593,7 +2593,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -2637,7 +2636,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           },
           {
             "object": "block",
@@ -2657,7 +2657,6 @@
               "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
             },
             "has_children": false,
-            "archived": false,
             "in_trash": false,
             "type": "table_row",
             "table_row": {
@@ -2701,7 +2700,8 @@
                   }
                 ]
               ]
-            }
+            },
+            "archived": false
           }
         ]
       },
@@ -2723,13 +2723,39 @@
           "id": "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
         },
         "has_children": false,
-        "archived": false,
         "in_trash": false,
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
           "color": "default"
-        }
+        },
+        "archived": false
+      },
+      {
+        "object": "block",
+        "id": "327d05af-0d5a-8084-94dd-c491e1d89701",
+        "parent": {
+          "type": "page_id",
+          "page_id": "319d05af-0d5a-80e7-bcdf-c019868b4516"
+        },
+        "created_time": "2026-03-18T06:54:00.000Z",
+        "last_edited_time": "2026-03-18T06:54:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "f2bb1105-5c2e-454c-9863-5c245dacf039"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "f2bb1105-5c2e-454c-9863-5c245dacf039"
+        },
+        "has_children": false,
+        "in_trash": false,
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [],
+          "color": "default"
+        },
+        "archived": false
       }
     ]
   }

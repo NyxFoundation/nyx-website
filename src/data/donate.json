@@ -326,6 +326,13 @@
       },
       {
         "names": {
+          "default": "Intmax",
+          "ja": "Intmax"
+        },
+        "logo": "/sponsors/intmax.jpg"
+      },
+      {
+        "names": {
           "default": "Yukishige Nakajo",
           "ja": "中城元臣"
         },

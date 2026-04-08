@@ -1,5 +1,29 @@
 [
   {
+    "id": "33bd05af-0d5a-806d-8fd4-d38fde0ef46d",
+    "slug": "verity-announcement",
+    "title": "Ethereum次世代クライアント「Verity」の開発を開始",
+    "titleEn": "Development of Verity, the next-generation Ethereum client, has begun.",
+    "date": "2026-04-07",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://prtimes.jp/main/html/rd/p/000000009.000170100.html",
+    "type": "News"
+  },
+  {
+    "id": "33bd05af-0d5a-80f1-91b9-f2987150c0ea",
+    "slug": "nanto-joint-press-conference",
+    "title": "南砺市長の田中幹夫氏と共同記者会見を開きました",
+    "titleEn": "Held a joint press conference with Nanto City Mayor Mikio Tanaka",
+    "date": "2026-03-16",
+    "labels": [
+      "announcement"
+    ],
+    "redirectTo": "https://www.city.nanto.toyama.jp/6977.html",
+    "type": "News"
+  },
+  {
     "id": "315d05af-0d5a-80f4-b6d9-f38b7dd5fc6b",
     "slug": "nanto",
     "title": "富山県南砺市に研究所「Nanto」建設構想を発表",
@@ -312,6 +336,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -340,7 +365,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8191-93b7-cc5f8b14579c.png",
-            "expiry_time": "2026-03-19T08:31:39.862Z"
+            "expiry_time": "2026-04-08T03:46:45.781Z"
           },
           "caption": []
         },
@@ -368,6 +393,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -412,6 +438,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -438,6 +465,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -484,6 +512,7 @@
               "href": "https://x.com/EF_ESP"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -512,7 +541,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-819e-a5f2-d22f287652f2.png",
-            "expiry_time": "2026-03-19T08:31:40.064Z"
+            "expiry_time": "2026-04-08T03:46:45.918Z"
           },
           "caption": []
         },
@@ -558,6 +587,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -584,6 +614,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -630,6 +661,7 @@
               "href": "https://geodework.com/about"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -658,7 +690,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81fc-843a-c77740e33966.png",
-            "expiry_time": "2026-03-19T08:31:40.256Z"
+            "expiry_time": "2026-04-08T03:46:45.996Z"
           },
           "caption": []
         },
@@ -704,6 +736,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -730,6 +763,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -776,6 +810,7 @@
               "href": "https://x.com/0xPolygon"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -804,7 +839,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81e8-96a6-cb71633d342a.png",
-            "expiry_time": "2026-03-19T08:31:40.470Z"
+            "expiry_time": "2026-04-08T03:46:46.098Z"
           },
           "caption": []
         },
@@ -850,6 +885,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -876,6 +912,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -922,6 +959,7 @@
               "href": "https://x.com/GuildQB"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -950,7 +988,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8140-b63e-c3c9559214e6.png",
-            "expiry_time": "2026-03-19T08:31:40.717Z"
+            "expiry_time": "2026-04-08T03:46:46.254Z"
           },
           "caption": []
         },
@@ -1015,6 +1053,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1041,6 +1080,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1087,6 +1127,7 @@
               "href": "https://x.com/kirifuda_io"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1115,7 +1156,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-813b-aecc-efc2a8a05e80.png",
-            "expiry_time": "2026-03-19T08:31:40.911Z"
+            "expiry_time": "2026-04-08T03:46:46.358Z"
           },
           "caption": []
         },
@@ -1180,6 +1221,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1243,6 +1285,7 @@
               "href": "https://kirifuda.io/contact"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1269,6 +1312,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1315,6 +1359,7 @@
               "href": "https://x.com/DeSciTokyo"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1343,7 +1388,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81c8-967d-cffcb51b01ab.png",
-            "expiry_time": "2026-03-19T08:31:41.086Z"
+            "expiry_time": "2026-04-08T03:46:46.484Z"
           },
           "caption": []
         },
@@ -1389,6 +1434,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1415,6 +1461,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1461,6 +1508,7 @@
               "href": "https://x.com/dd_TicketMe"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1489,7 +1537,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81b4-9b7f-c1b3c1be62fb.png",
-            "expiry_time": "2026-03-19T08:31:41.273Z"
+            "expiry_time": "2026-04-08T03:46:46.604Z"
           },
           "caption": []
         },
@@ -1535,6 +1583,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1579,6 +1628,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1605,6 +1655,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1651,6 +1702,7 @@
               "href": "https://x.com/curry_tokyo"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1679,7 +1731,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8191-aff4-c291c7954f19.png",
-            "expiry_time": "2026-03-19T08:31:41.434Z"
+            "expiry_time": "2026-04-08T03:46:46.801Z"
           },
           "caption": []
         },
@@ -1707,6 +1759,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1753,6 +1806,7 @@
               "href": "https://x.com/hiroshi_shimo"
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1781,7 +1835,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8151-b19e-c5dfc6e231e0.png",
-            "expiry_time": "2026-03-19T08:31:41.697Z"
+            "expiry_time": "2026-04-08T03:46:46.995Z"
           },
           "caption": []
         },
@@ -1827,6 +1881,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1853,6 +1908,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1897,6 +1953,7 @@
               "href": null
             }
           ],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1923,6 +1980,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false
@@ -1949,6 +2007,7 @@
         "type": "paragraph",
         "paragraph": {
           "rich_text": [],
+          "icon": null,
           "color": "default"
         },
         "archived": false

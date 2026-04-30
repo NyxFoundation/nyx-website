@@ -6,16 +6,12 @@
   "scripts": {
     "dev": "next dev --turbopack -p 3000",
     "dev:up": "node scripts/dev_up.mjs",
-    "build": "opennextjs-cloudflare build",
-    "build:next": "next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "fetch:db": "node scripts/fetch-notion-data.mjs",
     "check:hc": "bash scripts/healthcheck.sh http://localhost:3000 'Nyx Foundation'",
-    "smoke": "playwright test --config=playwright.config.ts --project=chromium --grep @smoke",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "smoke": "playwright test --config=playwright.config.ts --project=chromium --grep @smoke"
   },
   "dependencies": {
     "@notionhq/client": "^4.0.2",
@@ -47,7 +43,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@opennextjs/cloudflare": "^1.19.4",
     "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.11",
@@ -63,8 +58,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "sharp": "^0.34.1",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.86.0"
+    "typescript": "^5"
   },
   "overrides": {
     "defu": "^6.1.7",

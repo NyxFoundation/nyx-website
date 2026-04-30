@@ -8,12 +8,15 @@ const getEnvOrThrow = (name: string): string => {
     return value;
 };
 
-const notionToken = getEnvOrThrow("NOTION_TOKEN");
-const donationDatabaseId = getEnvOrThrow("NOTION_DONATIONS_DATABASE_ID");
+let cachedNotion: Client | null = null;
+const getNotion = (): Client => {
+    if (!cachedNotion) {
+        cachedNotion = new Client({ auth: getEnvOrThrow("NOTION_TOKEN") });
+    }
+    return cachedNotion;
+};
 
-const notion = new Client({
-    auth: notionToken,
-});
+const getDonationDatabaseId = () => getEnvOrThrow("NOTION_DONATIONS_DATABASE_ID");
 
 export interface DonationSubmission {
     name: string;
@@ -33,8 +36,8 @@ export async function findDonationByTxHash(txHash: string): Promise<boolean> {
     const trimmed = txHash.trim();
     if (!trimmed) return false;
     try {
-        const result = await notion.databases.query({
-            database_id: donationDatabaseId,
+        const result = await getNotion().databases.query({
+            database_id: getDonationDatabaseId(),
             filter: {
                 property: "TxHash",
                 rich_text: { equals: trimmed },
@@ -164,9 +167,11 @@ export async function createDonationSubmission(submission: DonationSubmission) {
 
     const propertiesWithOptional = { ...baseProperties, ...optionalProperties };
 
+    const notion = getNotion();
+    const databaseId = getDonationDatabaseId();
     try {
         await notion.pages.create({
-            parent: { database_id: donationDatabaseId },
+            parent: { database_id: databaseId },
             properties: propertiesWithOptional as Parameters<typeof notion.pages.create>[0]["properties"],
         });
     } catch (error) {
@@ -176,7 +181,7 @@ export async function createDonationSubmission(submission: DonationSubmission) {
                 error,
             );
             await notion.pages.create({
-                parent: { database_id: donationDatabaseId },
+                parent: { database_id: databaseId },
                 properties: baseProperties as Parameters<typeof notion.pages.create>[0]["properties"],
             });
         } else {

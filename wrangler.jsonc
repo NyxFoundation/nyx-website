@@ -1,0 +1,25 @@
+/**
+ * Cloudflare Worker config for the Next.js app, built with @opennextjs/cloudflare.
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nyx-website",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-09-23",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "SITE_URL": "https://nyx.foundation",
+    "NEXT_PUBLIC_SITE_URL": "https://nyx.foundation",
+    "NEXT_PUBLIC_DEFAULT_LOCALE": "ja",
+    "NEXT_PUBLIC_SUPPORTED_LOCALES": "ja,en",
+    "NEXT_PUBLIC_DEFAULT_TIME_ZONE": "Asia/Tokyo"
+  }
+}

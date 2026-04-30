@@ -1,4 +1,0 @@
-- TypeScript with React 19 App Router; prefer functional components.
-- Styling via Tailwind utility classes; shadcn/ui (Radix) patterns for UI primitives.
-- ESLint + Prettier enforced; follow existing naming (camelCase for vars/hooks, PascalCase for components).
-- Internationalisation handled via next-intl; client components marked with `'use client'` when needed.

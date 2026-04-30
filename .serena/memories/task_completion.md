@@ -1,1 +1,0 @@
-Before handing off changes: run `npm run lint`; execute targeted tests if behaviour changes (e.g., `npm run smoke`); ensure TypeScript builds (`npm run build`) when feasible; document any environment or migration steps for the user.

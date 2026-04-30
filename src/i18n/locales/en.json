@@ -13,35 +13,44 @@
   },
   "hero": {
     "title": "Nyx Foundation",
+    "tagline": "A research foundation securing Ethereum through formal verification and AI",
     "subtitle": "Build a Verifiable Future for Open Innovation",
-    "btnPublications": "Publications",
     "btnProjects": "Projects",
     "contact": "Contact"
   },
-  "activity": {
-    "title": "Activity",
-    "items": {
-      "research": {
-        "title": "Research",
-        "description": "We conduct cutting-edge research and development in distributed systems and cryptographic technologies. Our work spans from fundamental research to implementation in blockchain, zero-knowledge proofs, and multi-party computation."
-      },
-      "whitehat": {
-        "title": "Whitehat Hacking",
-        "description": "Contributing to the improvement of digital infrastructure security through discovery and responsible disclosure of security vulnerabilities. We participate in bug bounty programs and conduct independent vulnerability research."
-      },
-      "verification": {
-        "title": "Formal Verification",
-        "description": "Using mathematical methods to prove the correctness and security of smart contracts, protocols, and cryptographic algorithms."
-      },
-      "education": {
-        "title": "Education",
-        "description": "Committed to nurturing the next generation of researchers and engineers. We share cutting-edge technical knowledge through workshops, seminars, and online courses."
-      },
-      "house": {
-        "title": "House",
-        "description": "Operating a community space for researchers and innovators. We provide a physical hub for idea exchange, collaboration, and experimentation."
-      }
-    }
+  "newsSection": {
+    "eyebrow": "News",
+    "heading": "Latest activity",
+    "body": "Talks, acceptances, announcements, and fundraising — scroll the table for the full list."
+  },
+  "houseSection": {
+    "eyebrow": "Research Houses",
+    "heading": "Where research and life share a building",
+    "body": "Nyx Foundation operates physical research houses in two locations — places where researchers and engineers discuss, build, and experiment together, and can stay overnight when work calls for it.",
+    "imageAlt": "Nyx Foundation research house",
+    "locationTokyoLabel": "Tokyo",
+    "locationTokyo": "Hongo, Bunkyo-ku — main office and research house",
+    "locationNantoLabel": "Nanto Lab",
+    "locationNanto": "Nanto City, Toyama — construction plan announced, joint press conference with the city held"
+  },
+  "educationSection": {
+    "eyebrow": "Education & Sharing",
+    "heading": "Cultivating the next generation",
+    "body": "Through talks, public conversations, YouTube content, and official workshops, we open our research outputs to both academia and industry.",
+    "youtubeTitle": "Nyx Foundation on YouTube",
+    "youtubeBody": "Research talks, public conversations, and explainer videos covering DeFi liquidity, formal verification, Ethereum clients, and more.",
+    "merkleJapanTitle": "Merkle Japan",
+    "merkleJapanBody": "We help operate Merkle Japan, a community for cutting-edge cryptography research including zero-knowledge proofs and secure multi-party computation."
+  },
+  "projectShowcase": {
+    "heading": "Research Projects",
+    "subheading": "Members build projects driven by their own curiosity, advancing Ethereum through research.",
+    "viewProject": "View project",
+    "viewAll": "View all projects",
+    "relatedNews": "Related news",
+    "noRelatedNews": "No related news yet.",
+    "viewMoreNews": "View more news",
+    "leadLabel": "Lead"
   },
   "common": {
     "readMore": "Read More",
@@ -178,7 +187,7 @@
         "branchName": "Trunk NORTH Branch (403)",
         "accountNumber": "403-Ordinary-0365802",
         "accountName": "Nyx Foundation (General Incorporated Association)",
-        "corporateNote": "For corporate donations, please contact us at kingmasatojames@gmail.com."
+        "corporateNote": "For corporate donations, please contact us at contact@nyx.foundation."
       },
       "thankYouNote": "When you donate, we'll thank you with a tweet like this:"
     },

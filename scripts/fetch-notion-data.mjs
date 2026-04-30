@@ -51,9 +51,17 @@ function getPropertyValue(property) {
     }
     case "people":
       return property.people.map((p) => p.name).join(", ");
+    case "relation":
+      return property.relation.map((r) => r.id);
     default:
       return "";
   }
+}
+
+// Extract Notion user IDs from a `people` property (returns []).
+function getPeopleUserIds(property) {
+  if (!property || property.type !== "people") return [];
+  return property.people.map((p) => p.id).filter(Boolean);
 }
 
 async function ensureDir(filePath) {
@@ -140,7 +148,7 @@ async function localizeBlocks(blocks, pageId) {
   return localized;
 }
 
-async function fetchContentPages(type) {
+async function fetchContentPages(type, projectIdToSlug = new Map()) {
   const response = await notion.databases.query({
     database_id: MAIN_DB,
     filter: {
@@ -169,6 +177,24 @@ async function fetchContentPages(type) {
     if (!("properties" in page)) continue;
     const properties = page.properties;
 
+    // Resolve project relation. Try several common property names — the
+    // editor may have used Japanese or English, with or without the "DB" suffix.
+    const projectRelationProp =
+      properties["プロジェクトDB"] ||
+      properties["プロジェクト"] ||
+      properties.Projects ||
+      properties.Project ||
+      properties.ProjectDB ||
+      // Last resort: scan all properties for the first relation type.
+      Object.values(properties).find((p) => p?.type === "relation") ||
+      null;
+    const projectIds = projectRelationProp?.type === "relation"
+      ? projectRelationProp.relation.map((r) => r.id)
+      : [];
+    const projectSlugs = projectIds
+      .map((id) => projectIdToSlug.get(id))
+      .filter(Boolean);
+
     const redirectTo = getPropertyValue(properties.RedirectTo);
     const item = {
       id: page.id,
@@ -179,6 +205,7 @@ async function fetchContentPages(type) {
       labels: Array.isArray(getPropertyValue(properties.Label)) ? getPropertyValue(properties.Label) : [],
       redirectTo: redirectTo ? String(redirectTo) : undefined,
       type,
+      projects: projectSlugs,
     };
 
     if (!item.redirectTo) {
@@ -232,6 +259,7 @@ async function fetchMembers() {
       id: page.id,
       name: String(getPropertyValue(properties.Name) || ""),
       role: String(getPropertyValue(properties.Person) || ""),
+      personUserIds: getPeopleUserIds(properties.Person),
       avatar,
       bio: String(getPropertyValue(properties.bio) || ""),
       bioEn: String(getPropertyValue(properties.bio_eng) || ""),
@@ -242,12 +270,27 @@ async function fetchMembers() {
   return members;
 }
 
+function slugifyProjectName(nameEn) {
+  return nameEn
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 async function fetchProjects() {
   const response = await notion.databases.query({
     database_id: PROJECTS_DB,
     filter: {
-      property: "HOMEPAGE",
-      checkbox: { equals: true },
+      and: [
+        {
+          property: "HOMEPAGE",
+          checkbox: { equals: true },
+        },
+        {
+          property: "Status",
+          status: { equals: "進行中" },
+        },
+      ],
     },
     sorts: [
       {
@@ -276,13 +319,27 @@ async function fetchProjects() {
       ? await downloadImageToPng(coverUrl, `projects/${page.id}.png`)
       : null;
 
+    const nameEn = String(getPropertyValue(properties.NameEn) || getPropertyValue(properties.Name) || "");
+    const flagship = properties.Flagship?.type === "checkbox"
+      ? Boolean(properties.Flagship.checkbox)
+      : false;
+    const status = properties.Status?.type === "status"
+      ? properties.Status.status?.name ?? ""
+      : properties.Status?.type === "select"
+        ? properties.Status.select?.name ?? ""
+        : "";
+
     projects.push({
       id: page.id,
+      slug: slugifyProjectName(nameEn) || page.id,
       name: String(getPropertyValue(properties.Name) || ""),
-      nameEn: String(getPropertyValue(properties.NameEn) || getPropertyValue(properties.Name) || ""),
+      nameEn,
       description: String(getPropertyValue(properties.Description) || ""),
       descriptionEn: String(getPropertyValue(properties.DescriptionEn) || getPropertyValue(properties.Description) || ""),
       leader: String(getPropertyValue(properties.Leader) || ""),
+      leaderUserIds: getPeopleUserIds(properties.Leader),
+      flagship,
+      status,
       coverImage,
     });
   }
@@ -353,11 +410,15 @@ async function writeJson(fileName, data) {
 }
 
 async function main() {
-  const [publications, news, members, projects, openPositions] = await Promise.all([
-    fetchContentPages("Publication"),
-    fetchContentPages("News"),
+  // Projects must be fetched first so news/publications can resolve
+  // their relation property to project slugs.
+  const projects = await fetchProjects();
+  const projectIdToSlug = new Map(projects.map((p) => [p.id, p.slug]));
+
+  const [publications, news, members, openPositions] = await Promise.all([
+    fetchContentPages("Publication", projectIdToSlug),
+    fetchContentPages("News", projectIdToSlug),
     fetchMembers(),
-    fetchProjects(),
     fetchOpenPositions(),
   ]);
 

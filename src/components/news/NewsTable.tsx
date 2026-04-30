@@ -13,19 +13,7 @@ export async function NewsTable({ newsItems }: NewsTableProps) {
 
     return (
         <div className="w-full border border-border rounded-lg overflow-hidden bg-background">
-            <div className="bg-muted px-4 py-2 border-b border-border flex justify-between items-center">
-                <h3 className="font-semibold text-lg">News</h3>
-                <Link
-                    href="/news" // Keeping this just in case, or maybe we really don't need a full list page anymore? 
-                    // The user said "Newsは/newsページは削除し" (Delete /news page), so maybe no "See all" link to /news.
-                    // But if there are too many, scrolling is requested.
-                    // "テーブルはスクロール式で全ニュース表示するように" -> Display ALL news in scrollable table.
-                    className="text-xs text-muted-foreground hover:text-foreground hidden"
-                >
-                    View All
-                </Link>
-            </div>
-            <div className="max-h-[300px] overflow-y-auto">
+            <div className="max-h-[320px] overflow-y-auto">
                 {newsItems.length === 0 ? (
                     <div className="p-4 text-center text-muted-foreground text-sm">
                         {isJa ? "ニュースはありません。" : "No news available."}

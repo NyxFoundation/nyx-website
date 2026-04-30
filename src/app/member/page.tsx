@@ -4,7 +4,7 @@ import ContributionTeamSection from "@/components/contribution/TeamSection";
 
 export const metadata: Metadata = {
   title: "Members | Nyx Foundation",
-  description: "Meet the team building the verifyable future at Nyx Foundation.",
+  description: "Meet the team building the verifiable future at Nyx Foundation.",
 };
 
 const MemberPage = async () => {

@@ -75,6 +75,12 @@ export default function ThankYouDonationPage() {
       formData.set("physicalAddress", physicalAddress.trim());
       formData.set("tshirtSize", tshirtSize);
       formData.set("url", urlInput.trim());
+      if (txHash) {
+        formData.set("txHash", txHash);
+      }
+      if (chain) {
+        formData.set("chain", chain);
+      }
 
       const response = await fetch("/api/donations", {
         method: "POST",

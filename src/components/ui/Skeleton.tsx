@@ -76,9 +76,6 @@ export function ArticleDetailSkeleton() {
 export function NewsTableSkeleton() {
   return (
     <div className="w-full border border-border rounded-lg overflow-hidden bg-background">
-      <div className="bg-muted px-4 py-2 border-b border-border">
-        <Skeleton className="h-5 w-16" />
-      </div>
       <div className="p-4 space-y-3">
         {[...Array(5)].map((_, i) => (
           <div key={i} className="flex gap-4 items-center">

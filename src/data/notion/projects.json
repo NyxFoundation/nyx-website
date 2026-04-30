@@ -1,92 +1,122 @@
 [
   {
     "id": "2d1d05af-0d5a-80bf-a929-dcc8c094d658",
+    "slug": "economic-simulations-driven-by-ai-agents",
     "name": "AIエージェント駆動型の経済シミュレーション",
     "nameEn": "Economic Simulations driven by AI Agents",
     "description": "ユーザーがコンペ形式で提出したAIエージェント同士で、どのような経済活動が営まれるか観察する。",
     "descriptionEn": "Observe what economic activities unfold among AI agents submitted by users in a competition format.",
-    "leader": "SannaiAkiyoshi",
+    "leader": "三内顕義",
+    "leaderUserIds": [
+      "10d44983-d169-4e6d-9222-7fba710011e7"
+    ],
+    "flagship": false,
+    "status": "進行中",
     "coverImage": null
   },
   {
-    "id": "298d05af-0d5a-8076-b889-e60c6d45e87d",
-    "name": "leanMultisig開発",
-    "nameEn": "leanMultisig Development",
-    "description": "イーサリアム財団が開発しているleanConsensusのためのzkVMレポジトリ「leanMultisig」へ実装貢献を行う。",
-    "descriptionEn": "Contribute implementation to the leanMultisig zkVM repository for leanConsensus, developed by the Ethereum Foundation.",
-    "leader": "adust ",
+    "id": "352d05af-0d5a-809b-8e7b-c93d00f7c6a3",
+    "slug": "defi-analysis",
+    "name": "DeFi分析",
+    "nameEn": "DeFi Analysis",
+    "description": "本プロジェクトでは、DeFiの特性を活かし、流動性供給における取引コストやPnLの分解、トレーダー間の公平性、市場効率と参加者構成の関係などを定量的に分析する。DeFiという「ガラス張りの市場」を顕微鏡として用いることで、既存金融では観測困難だった市場メカニズムの実態を明らかにし、金融市場設計や規制議論、ひいては実社会の経済活動への応用につなげることを目指す。",
+    "descriptionEn": "This project leverages the unique properties of DeFi to quantitatively analyze the decomposition of transaction costs and PnL in liquidity provision, fairness among traders, and the relationship between market efficiency and participant composition. By using DeFi as a \"transparent market\" — a microscope into financial activity — we aim to uncover market mechanisms that have been difficult to observe in traditional finance, and to translate these insights into contributions to financial market design, regulatory discussions, and ultimately the broader real economy.\n",
+    "leader": "0xCassiopeia",
+    "leaderUserIds": [
+      "f2bb1105-5c2e-454c-9863-5c245dacf039"
+    ],
+    "flagship": true,
+    "status": "進行中",
     "coverImage": null
   },
   {
     "id": "303d05af-0d5a-8090-b586-c2ad05bdc4fd",
+    "slug": "nanto-lab",
     "name": "Nanto Lab",
     "nameEn": "Nanto Lab",
     "description": "富山県南砺市にコンピュータサイエンスの研究所「Nanto」を建設する。",
     "descriptionEn": "A computer science research institute named “Nanto” will be constructed in Nanto City, Toyama Prefecture.",
     "leader": "vita",
+    "leaderUserIds": [
+      "3513835d-0d19-495e-ae0a-c9b171b6ac67"
+    ],
+    "flagship": false,
+    "status": "進行中",
     "coverImage": null
   },
   {
     "id": "298d05af-0d5a-8024-9b1a-cbe015b8d3c6",
+    "slug": "speca",
     "name": "SPECA",
     "nameEn": "SPECA",
     "description": "仕様駆動型のAIエージェントを構築し、イーサリアムクライアント実装の脆弱性を未然に検知する。",
     "descriptionEn": "Build specification-driven AI agents to proactively detect vulnerabilities in Ethereum client implementations.",
     "leader": "gohan",
+    "leaderUserIds": [
+      "e36279d1-a601-4e51-ae7d-40deeb09aa0a"
+    ],
+    "flagship": true,
+    "status": "進行中",
     "coverImage": null
   },
   {
     "id": "2e5d05af-0d5a-8052-b740-d3ad55367cd1",
+    "slug": "verity",
     "name": "Verity",
     "nameEn": "Verity",
     "description": "次世代のleanConsensusに向けたzkVM/3Slot Finality/耐量子署名などを備えたイーサリアムクライアントを開発する。",
     "descriptionEn": "Develop an Ethereum client featuring zkVM, 3-slot finality, and quantum-resistant signatures for the next-generation leanConsensus.",
     "leader": "adust ",
+    "leaderUserIds": [
+      "9dc078fe-e2ef-4198-b061-135d7101c242"
+    ],
+    "flagship": true,
+    "status": "進行中",
     "coverImage": null
   },
   {
     "id": "2aed05af-0d5a-805f-83f1-eae88155f601",
+    "slug": "privacy-pool-anonymity-analysis",
     "name": "プライバシープールの匿名性分析",
     "nameEn": "Privacy Pool Anonymity Analysis",
     "description": "プライバシープールにおいて匿名性が落ちる条件を分析する。",
     "descriptionEn": "Analyze the conditions under which anonymity is compromised in privacy pools.",
     "leader": "Tomoki Adachi",
-    "coverImage": null
-  },
-  {
-    "id": "29ad05af-0d5a-8039-880e-c2bc7e7fbb75",
-    "name": "プライベートメンプールのMEV分析",
-    "nameEn": "MEV Analysis in Private Mempool",
-    "description": "プライベートMempoolでJIT Liquidityやサンドイッチ攻撃等のMEVがどれだけ発生し、エコシステムにどのような影響を与えているのか分析を行う。",
-    "descriptionEn": "Analyze how much MEV, such as JIT Liquidity and sandwich attacks, occurs in the private mempool and what impact it has on the ecosystem.",
-    "leader": "0xCassiopeia",
+    "leaderUserIds": [
+      "066b9a4a-0b1e-468c-8370-50384aa81012"
+    ],
+    "flagship": false,
+    "status": "進行中",
     "coverImage": null
   },
   {
     "id": "298d05af-0d5a-801e-b993-feffb6d256e2",
+    "slug": "price-referenced-contracts",
     "name": "価格参照契約",
     "nameEn": "Price-Referenced Contracts",
     "description": "現実世界の契約とそれにかかる自然状態の記述・偶発事象の予見・裁判による執行をスマートコントラクトと予測市場を用いて自動化する理論を構築する。",
     "descriptionEn": "Develop a theory to automate real-world contracts and their associated natural state descriptions, unforeseen event predictions, and judicial enforcement using smart contracts and prediction markets.",
     "leader": "vita",
+    "leaderUserIds": [
+      "3513835d-0d19-495e-ae0a-c9b171b6ac67"
+    ],
+    "flagship": false,
+    "status": "進行中",
     "coverImage": null
   },
   {
     "id": "298d05af-0d5a-8047-98f3-d80b60c87e51",
+    "slug": "ai-automated-cryptographic-formal-verification",
     "name": "暗号形式検証のAI自動化",
     "nameEn": "AI-Automated Cryptographic Formal Verification",
     "description": "暗号プロトコルのLean定理証明を自動生成するAIエージェントを構築する。",
     "descriptionEn": "Build an AI agent that automatically generates Lean theorem proofs for cryptographic protocols.",
     "leader": "Banri Yanahama / 柳浜 万里",
-    "coverImage": null
-  },
-  {
-    "id": "28bd05af-0d5a-8097-9374-cec3fd422d95",
-    "name": "流動性供給分析ダッシュボード",
-    "nameEn": "Liquidity Provider Analysis Dashboard",
-    "description": "流動性供給者ごとの損益を分析するダッシュボードを開発する",
-    "descriptionEn": "Develop a dashboard to analyze profits and losses by liquidity provider",
-    "leader": "0xCassiopeia",
+    "leaderUserIds": [
+      "408ec330-4a76-4cfd-b583-d9965d5aeed2"
+    ],
+    "flagship": true,
+    "status": "進行中",
     "coverImage": null
   }
 ]

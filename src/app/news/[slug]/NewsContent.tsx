@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { Calendar, Tag } from "lucide-react";
-import { getNewsItem, getPageBlocks } from "@/lib/notion";
+import { ArrowRight, Calendar, Tag } from "lucide-react";
+import { getNewsItem, getPageBlocks, getProjects } from "@/lib/notion";
 import { NotionBlockRenderer } from "@/components/NotionBlockRenderer";
 
 export async function NewsContent({
@@ -28,6 +29,10 @@ export async function NewsContent({
   if (!blocks || blocks.length === 0) {
     notFound();
   }
+
+  const relatedProjects = (news.projects ?? []).length > 0
+    ? (await getProjects()).filter((p) => news.projects?.includes(p.slug))
+    : [];
 
   return (
     <article>
@@ -67,6 +72,26 @@ export async function NewsContent({
       <section className="mb-8">
         <NotionBlockRenderer blocks={blocks} />
       </section>
+
+      {relatedProjects.length > 0 && (
+        <section className="mt-12 border-t border-border pt-8">
+          <h2 className="text-lg font-semibold mb-3">
+            {isJa ? "関連プロジェクト" : "Related projects"}
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {relatedProjects.map((project) => (
+              <Link
+                key={project.id}
+                href="/projects"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/20 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted/40"
+              >
+                {isJa ? project.name : project.nameEn}
+                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
   );
 }

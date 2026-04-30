@@ -7,7 +7,10 @@
     "date": "2026-02-16",
     "labels": [],
     "redirectTo": "https://arxiv.org/pdf/2602.07513v2",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": [
+      "speca"
+    ]
   },
   {
     "id": "305d05af-0d5a-80b1-86d8-f37c35a72868",
@@ -17,7 +20,10 @@
     "date": "2026-02-12",
     "labels": [],
     "redirectTo": "https://fc26.ifca.ai/defi/papers/jit-liquidity-ethereum-builders.pdf",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": [
+      "defi-analysis"
+    ]
   },
   {
     "id": "266d05af-0d5a-8086-857a-e8fb7f93064a",
@@ -29,7 +35,10 @@
       "blog"
     ],
     "redirectTo": "https://mirror.xyz/0xA3DB621697fBC0dA0b16160eb8E201E1a763D2c1/SI9A-eRE8g7gy0oDbqChl1mOm6JwBriimDq29VE4O58",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": [
+      "defi-analysis"
+    ]
   },
   {
     "id": "252d05af-0d5a-808b-a5ef-f4f5ff404f5c",
@@ -41,7 +50,8 @@
       "etheresearch"
     ],
     "redirectTo": "https://ethresear.ch/t/unpredictable-randao/22666",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-8001-bcb3-d70eed90478f",
@@ -53,7 +63,8 @@
       "blog"
     ],
     "redirectTo": "https://titaniaresear.ch/ethereum-with-io-is-god-protocols",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   },
   {
     "id": "252d05af-0d5a-80f6-ada3-ec8259d93095",
@@ -65,7 +76,8 @@
       "paper"
     ],
     "redirectTo": "https://fenbushicapital.medium.com/benchmarking-zkvms-current-state-and-prospects-ba859b44f560",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-80e8-be21-d277f1dd1bb3",
@@ -77,7 +89,8 @@
       "paper"
     ],
     "redirectTo": "https://eprint.iacr.org/2024/2037",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-803a-8bc5-da93af460d96",
@@ -89,7 +102,8 @@
       "etheresearch"
     ],
     "redirectTo": "https://ethresear.ch/t/dynamic-finalization-considering-51-attacks/21112",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-809f-8406-f534df522cd6",
@@ -101,7 +115,8 @@
       "etheresearch"
     ],
     "redirectTo": "https://ethresear.ch/t/a-note-on-securely-finding-minimum-mean-cycle/20073",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-804b-bb1e-fe2c65bc0b72",
@@ -113,6 +128,7 @@
       "Flashbots"
     ],
     "redirectTo": "https://collective.flashbots.net/t/frequent-batch-auction-on-suave/3104",
-    "type": "Publication"
+    "type": "Publication",
+    "projects": []
   }
 ]

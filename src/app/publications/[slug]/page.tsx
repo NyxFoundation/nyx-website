@@ -29,12 +29,16 @@ export async function generateMetadata({
     };
   }
 
+  const description = publication.titleEn
+    ? `Research publication: ${publication.titleEn}`
+    : `Research publication from Nyx Foundation`;
+
   return {
     title: `${publication.titleEn} | Nyx Foundation`,
-    description: `Research publication from Nyx Foundation`,
+    description,
     openGraph: {
       title: `${publication.titleEn} | Nyx Foundation`,
-      description: `Research publication from Nyx Foundation`,
+      description,
       images: ["/ogp.png"],
       type: "article",
       publishedTime: publication.date,
@@ -43,7 +47,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: `${publication.titleEn} | Nyx Foundation`,
-      description: `Research publication from Nyx Foundation`,
+      description,
       images: ["/ogp.png"],
     },
   };

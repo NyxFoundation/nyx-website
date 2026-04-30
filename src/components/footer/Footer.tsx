@@ -53,14 +53,9 @@ export async function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://www.notion.so/grandchildrice/Nyx-Foundation-Job-251d05af0d5a805ca9c4e75f40cb5b81"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
+                    <Link href="/recruit" className="text-muted-foreground hover:text-foreground transition-colors">
                       {t("job")}
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">

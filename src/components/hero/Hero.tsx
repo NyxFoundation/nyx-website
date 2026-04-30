@@ -19,31 +19,24 @@ export async function Hero() {
       <div className="absolute inset-0 bg-white/86.5" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto">
-        <div className="text-left space-y-8">
+        <div className="text-left space-y-6">
           {/* Title */}
           <h1 className="max-w-md text-5xl md:text-7xl font-bold tracking-tight">
             {t("title")}
           </h1>
 
-          {/* Subtitle */}
-          <p className="max-w-[360px] text-xl md:text-2xl text-muted-foreground max-w-3xl leading-relaxed">
+          {/* Tagline — 一文の組織定義 */}
+          <p className="max-w-3xl text-2xl md:text-3xl font-semibold leading-snug text-foreground">
+            {t("tagline")}
+          </p>
+
+          {/* Subtitle — ビジョンステートメント */}
+          <p className="max-w-3xl text-base md:text-lg text-muted-foreground leading-relaxed">
             {t("subtitle")}
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-row gap-x-4 gap-y-6 items-center flex-wrap pt-4">
-            <Link
-              href="/publications"
-              className={cn(
-                "inline-flex items-center justify-center rounded-md",
-                "px-6 py-2.5 text-base font-medium",
-                "border border-border bg-background",
-                "transition-colors hover:bg-muted",
-                "focus:outline-none focus:ring-2 focus:ring-offset-2"
-              )}
-            >
-              {t("btnPublications")}
-            </Link>
             <Link
               href="/projects"
               className={cn(

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 import { sendDiscordNotification } from "@/lib/discord";
+import { isHoneypotTriggered } from "@/lib/spam-protection";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 function getStringValue(value: FormDataEntryValue | null): string {
   return typeof value === "string" ? value.trim() : "";
@@ -8,7 +10,21 @@ function getStringValue(value: FormDataEntryValue | null): string {
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const limit = rateLimit(ip, 5, 60);
+    if (!limit.ok) {
+      return NextResponse.json(
+        { success: false, error: "Too many requests" },
+        { status: 429 }
+      );
+    }
+
     const formData = await request.formData();
+
+    if (isHoneypotTriggered(formData)) {
+      // Pretend success so bots don't learn they were rejected.
+      return NextResponse.json({ success: true });
+    }
 
     const position = getStringValue(formData.get("position"));
     const name = getStringValue(formData.get("name"));

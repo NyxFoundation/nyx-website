@@ -85,6 +85,27 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ResearchOrganization",
+  name: "Nyx Foundation",
+  alternateName: "一般社団法人 Nyx Foundation",
+  url: siteOrigin,
+  logo: new URL("/icon.svg", siteOrigin).toString(),
+  description: "A research foundation securing Ethereum through formal verification and AI.",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "JP",
+    addressRegion: "Tokyo",
+    addressLocality: "Bunkyo-ku",
+  },
+  sameAs: [
+    "https://x.com/NyxFoundation",
+    "https://github.com/NyxFoundation",
+    "https://www.youtube.com/@Nyx.Foundation",
+  ],
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -98,6 +119,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={`${bizUDPMincho.variable} ${notoSerifJP.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+      </head>
       <body className="antialiased font-serif">
         <GoogleAnalytics />
         <AppKitProvider cookies={cookieHeader}>

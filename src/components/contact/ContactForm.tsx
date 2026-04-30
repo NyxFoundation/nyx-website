@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { HONEYPOT_FIELD } from "@/lib/spam-protection";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -45,6 +46,15 @@ export function ContactForm({ isJa }: ContactFormProps) {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
+      {/* Honeypot — must remain empty */}
+      <input
+        type="text"
+        name={HONEYPOT_FIELD}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] w-px h-px overflow-hidden"
+      />
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
           {isJa ? "お名前" : "Name"}

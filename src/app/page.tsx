@@ -1,8 +1,8 @@
-import { Suspense } from "react";
 import { Hero } from "@/components/hero/Hero";
-import { ActivityGrid } from "@/components/activity/ActivityGrid";
 import ContributionSupportersSection from "@/components/contribution/SupportersSection";
-import { NewsTableSkeleton } from "@/components/ui/Skeleton";
+import { ProjectShowcase } from "@/components/projects/ProjectShowcase";
+import { HouseSection } from "@/components/sections/HouseSection";
+import { EducationSection } from "@/components/sections/EducationSection";
 import { NewsSection } from "./NewsSection";
 
 export default function Home() {
@@ -10,13 +10,14 @@ export default function Home() {
     <>
       <Hero />
 
-      <section className="container mx-auto max-w-6xl px-8 md:px-12 lg:px-16 py-12 mb-12">
-        <Suspense fallback={<NewsTableSkeleton />}>
-          <NewsSection />
-        </Suspense>
-      </section>
+      <ProjectShowcase />
 
-      <ActivityGrid />
+      <HouseSection />
+
+      <EducationSection />
+
+      <NewsSection />
+
       <ContributionSupportersSection />
     </>
   );

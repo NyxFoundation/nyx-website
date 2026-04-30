@@ -9,7 +9,10 @@
       "announcement"
     ],
     "redirectTo": "https://prtimes.jp/main/html/rd/p/000000009.000170100.html",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "verity"
+    ]
   },
   {
     "id": "33bd05af-0d5a-80f1-91b9-f2987150c0ea",
@@ -21,7 +24,10 @@
       "announcement"
     ],
     "redirectTo": "https://www.city.nanto.toyama.jp/6977.html",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "nanto-lab"
+    ]
   },
   {
     "id": "315d05af-0d5a-80f4-b6d9-f38b7dd5fc6b",
@@ -31,7 +37,10 @@
     "date": "2026-02-27",
     "labels": [],
     "redirectTo": "https://prtimes.jp/main/html/rd/p/000000008.000170100.html",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "nanto-lab"
+    ]
   },
   {
     "id": "303d05af-0d5a-80ef-8f4c-c7729780d850",
@@ -41,7 +50,8 @@
     "date": "2026-02-10",
     "labels": [],
     "redirectTo": "https://note.com/nyxfoundation/n/nf29f93fde8a2",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "2d5d05af-0d5a-802d-a3a7-dc719a37574a",
@@ -51,7 +61,10 @@
     "date": "2025-12-24",
     "labels": [],
     "redirectTo": "https://prtimes.jp/main/html/rd/p/000000006.000170100.html",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "speca"
+    ]
   },
   {
     "id": "2d5d05af-0d5a-800f-b15c-da49d3ea2745",
@@ -61,7 +74,10 @@
     "date": "2025-12-23",
     "labels": [],
     "redirectTo": "https://prtimes.jp/main/html/rd/p/000000004.000170100.html",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "economic-simulations-driven-by-ai-agents"
+    ]
   },
   {
     "id": "2d5d05af-0d5a-8079-9e4b-ccb91ac7d314",
@@ -71,7 +87,8 @@
     "date": "2025-12-16",
     "labels": [],
     "redirectTo": "https://note.com/nyxfoundation/n/nb0b117e3b8f0",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "2a2d05af-0d5a-8040-8ecd-f71f660e0b48",
@@ -81,7 +98,10 @@
     "date": "2025-11-04",
     "labels": [],
     "redirectTo": "https://prtimes.jp/main/html/rd/p/000000005.000170100.html",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "ai-automated-cryptographic-formal-verification"
+    ]
   },
   {
     "id": "2a2d05af-0d5a-80e5-aa22-eb0f03cee7eb",
@@ -91,7 +111,8 @@
     "date": "2025-11-01",
     "labels": [],
     "redirectTo": "https://x.com/grandchildrice/status/1984495158315139235",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "280d05af-0d5a-8075-a40f-e66a1bf92c03",
@@ -101,7 +122,10 @@
     "date": "2025-10-30",
     "labels": [],
     "redirectTo": "https://github.com/leanEthereum/leanMultisig/pull/41",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "verity"
+    ]
   },
   {
     "id": "2efd05af-0d5a-80d3-9260-cc4e01672734",
@@ -111,7 +135,8 @@
     "date": "2025-10-06",
     "labels": [],
     "redirectTo": "https://x.com/keccak255/status/1975188572308410398?s=20",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "280d05af-0d5a-80b4-8e87-cc694bc3b046",
@@ -121,7 +146,8 @@
     "date": "2025-09-29",
     "labels": [],
     "redirectTo": "https://prtimes.jp/main/html/rd/p/000000003.000170100.html",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "280d05af-0d5a-8083-9879-ffe48bb6b219",
@@ -131,7 +157,10 @@
     "date": "2025-09-28",
     "labels": [],
     "redirectTo": "https://github.com/NyxFoundation/tsl-formal-verification",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "ai-automated-cryptographic-formal-verification"
+    ]
   },
   {
     "id": "270d05af-0d5a-801b-8cd5-de55f5c104a4",
@@ -141,7 +170,11 @@
     "date": "2025-09-16",
     "labels": [],
     "redirectTo": "https://x.com/NyxFoundation/status/1968176334615839009",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "ai-automated-cryptographic-formal-verification",
+      "verity"
+    ]
   },
   {
     "id": "270d05af-0d5a-8027-80d4-d0ffe435577f",
@@ -151,7 +184,10 @@
     "date": "2025-09-15",
     "labels": [],
     "redirectTo": "https://github.com/b-wagn/hash-sig/pull/81",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "verity"
+    ]
   },
   {
     "id": "270d05af-0d5a-800a-8b72-eede764152f9",
@@ -161,7 +197,8 @@
     "date": "2025-09-13",
     "labels": [],
     "redirectTo": "https://x.com/grandchildrice/status/1967548634402320473",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "270d05af-0d5a-801e-b508-d17be831c388",
@@ -171,7 +208,8 @@
     "date": "2025-09-13",
     "labels": [],
     "redirectTo": "https://www.youtube.com/playlist?app=desktop&list=PLvKRWMWw-Dsa4BGplLe1YYgRpiio72FgY",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "270d05af-0d5a-805f-b6d7-da2944b046b5",
@@ -181,7 +219,10 @@
     "date": "2025-09-13",
     "labels": [],
     "redirectTo": "https://www.youtube.com/live/XR9IHtMaiHI?feature=share",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "defi-analysis"
+    ]
   },
   {
     "id": "266d05af-0d5a-80da-8526-cf8adea49b44",
@@ -191,7 +232,11 @@
     "date": "2025-09-06",
     "labels": [],
     "redirectTo": "https://www.youtube.com/watch?v=hAIp_JHrr4I",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "verity",
+      "ai-automated-cryptographic-formal-verification"
+    ]
   },
   {
     "id": "268d05af-0d5a-803b-aa30-f3b8347399b9",
@@ -201,7 +246,8 @@
     "date": "2025-09-05",
     "labels": [],
     "redirectTo": "https://x.com/NyxFoundation/status/1963786833877463308",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "268d05af-0d5a-80eb-90d9-f144de6a3a4f",
@@ -211,7 +257,10 @@
     "date": "2025-09-02",
     "labels": [],
     "redirectTo": "https://x.com/grandchildrice/status/1962777752521843166",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "speca"
+    ]
   },
   {
     "id": "259d05af-0d5a-8078-b9a3-f8ad88fe4ce6",
@@ -223,7 +272,10 @@
       "announcement"
     ],
     "redirectTo": "https://x.com/grandchildrice/status/1957916200228515905",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "speca"
+    ]
   },
   {
     "id": "253d05af-0d5a-80c2-990c-c1e41a76ffc6",
@@ -235,7 +287,10 @@
       "announcement"
     ],
     "redirectTo": "https://github.com/adust09/xmss-hypercube",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "verity"
+    ]
   },
   {
     "id": "252d05af-0d5a-8030-a9dc-c5ee851ddf51",
@@ -247,7 +302,8 @@
       "announcement"
     ],
     "redirectTo": "https://x.com/PredSocial/status/1956232666858316025",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-809d-a164-c7352f792175",
@@ -259,7 +315,10 @@
       "announcement"
     ],
     "redirectTo": "https://x.com/NyxFoundation/status/1953338293824757930",
-    "type": "News"
+    "type": "News",
+    "projects": [
+      "defi-analysis"
+    ]
   },
   {
     "id": "252d05af-0d5a-8094-abb7-e903b49f5011",
@@ -271,7 +330,8 @@
       "Event"
     ],
     "redirectTo": "https://lu.ma/g64yev2s",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "252d05af-0d5a-80e3-829a-fba8f933d55f",
@@ -283,7 +343,8 @@
       "announcement"
     ],
     "redirectTo": "https://x.com/thelatestindefi/status/1900573217460285629",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "250d05af-0d5a-8175-a279-cb001c381579",
@@ -295,6 +356,7 @@
       "announcement"
     ],
     "type": "News",
+    "projects": [],
     "blocks": [
       {
         "object": "block",
@@ -365,7 +427,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8191-93b7-cc5f8b14579c.png",
-            "expiry_time": "2026-04-30T00:30:20.922Z"
+            "expiry_time": "2026-04-30T03:45:12.438Z"
           },
           "caption": []
         },
@@ -541,7 +603,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-819e-a5f2-d22f287652f2.png",
-            "expiry_time": "2026-04-30T00:30:21.139Z"
+            "expiry_time": "2026-04-30T03:45:12.687Z"
           },
           "caption": []
         },
@@ -690,7 +752,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81fc-843a-c77740e33966.png",
-            "expiry_time": "2026-04-30T00:30:21.326Z"
+            "expiry_time": "2026-04-30T03:45:12.868Z"
           },
           "caption": []
         },
@@ -839,7 +901,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81e8-96a6-cb71633d342a.png",
-            "expiry_time": "2026-04-30T00:30:21.502Z"
+            "expiry_time": "2026-04-30T03:45:13.077Z"
           },
           "caption": []
         },
@@ -988,7 +1050,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8140-b63e-c3c9559214e6.png",
-            "expiry_time": "2026-04-30T00:30:21.675Z"
+            "expiry_time": "2026-04-30T03:45:13.301Z"
           },
           "caption": []
         },
@@ -1156,7 +1218,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-813b-aecc-efc2a8a05e80.png",
-            "expiry_time": "2026-04-30T00:30:21.926Z"
+            "expiry_time": "2026-04-30T03:45:13.524Z"
           },
           "caption": []
         },
@@ -1388,7 +1450,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81c8-967d-cffcb51b01ab.png",
-            "expiry_time": "2026-04-30T00:30:22.096Z"
+            "expiry_time": "2026-04-30T03:45:13.773Z"
           },
           "caption": []
         },
@@ -1537,7 +1599,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-81b4-9b7f-c1b3c1be62fb.png",
-            "expiry_time": "2026-04-30T00:30:22.393Z"
+            "expiry_time": "2026-04-30T03:45:13.996Z"
           },
           "caption": []
         },
@@ -1731,7 +1793,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8191-aff4-c291c7954f19.png",
-            "expiry_time": "2026-04-30T00:30:22.548Z"
+            "expiry_time": "2026-04-30T03:45:14.229Z"
           },
           "caption": []
         },
@@ -1835,7 +1897,7 @@
           "type": "file",
           "file": {
             "url": "/notion-assets/blocks/250d05af-0d5a-8175-a279-cb001c381579/250d05af-0d5a-8151-b19e-c5dfc6e231e0.png",
-            "expiry_time": "2026-04-30T00:30:22.793Z"
+            "expiry_time": "2026-04-30T03:45:14.534Z"
           },
           "caption": []
         },
@@ -2024,7 +2086,8 @@
       "announcement"
     ],
     "redirectTo": "https://m.youtube.com/live/LMLfA1N5Has",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "252d05af-0d5a-80d3-b9c8-e110b9bdfa36",
@@ -2036,7 +2099,8 @@
       "announcement"
     ],
     "redirectTo": "https://www.iwsec.org/scis/2025/program.html",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-80a4-8ce0-c9b0e3288ad4",
@@ -2048,7 +2112,8 @@
       "announcement"
     ],
     "redirectTo": "https://github.com/NyxFoundation/across-relayer-template",
-    "type": "News"
+    "type": "News",
+    "projects": []
   },
   {
     "id": "259d05af-0d5a-80b9-8236-f0b5f763e2c6",
@@ -2060,6 +2125,7 @@
       "announcement"
     ],
     "redirectTo": "https://github.com/NyxFoundation/uniswapx-filler-template",
-    "type": "News"
+    "type": "News",
+    "projects": []
   }
 ]

@@ -8,7 +8,7 @@ test.describe('smoke @smoke', () => {
     await expect(page.locator('h1:has-text("Nyx Foundation")')).toBeVisible()
     // ヘッダーナビゲーションの確認
     await expect(page.locator('header').getByRole('link', { name: 'Publication' })).toBeVisible()
-    await expect(page.locator('header').getByRole('link', { name: 'News' })).toBeVisible()
+    await expect(page.locator('header').getByRole('link', { name: 'Projects' })).toBeVisible()
   })
 
   test('header navigation exists', async ({ page }) => {
@@ -18,9 +18,9 @@ test.describe('smoke @smoke', () => {
     // ナビゲーションリンクが存在することを確認（ヘッダー内のリンクを指定）
     const header = page.locator('header')
     await expect(header.getByRole('link', { name: 'Publication' })).toBeVisible()
+    await expect(header.getByRole('link', { name: 'Projects' })).toBeVisible()
     await expect(header.getByRole('link', { name: 'Member' })).toBeVisible()
-    await expect(header.getByRole('link', { name: 'Support' })).toBeVisible()
-    await expect(header.getByRole('link', { name: 'News' })).toBeVisible()
+    await expect(header.getByRole('link', { name: 'Donate' })).toBeVisible()
     await expect(header.getByRole('link', { name: 'Job' })).toBeVisible()
   })
 
@@ -35,10 +35,10 @@ test.describe('smoke @smoke', () => {
     await page.goto(base)
     // Heroセクションのコンテンツを確認（main内のみ）
     const main = page.locator('main')
-    await expect(main.getByText('Building humanity\'s coordination space securely for open innovation')).toBeVisible()
+    await expect(main.getByText('Build a Verifiable Future for Open Innovation')).toBeVisible()
     // mainセクション内のリンクを指定
     await expect(main.getByRole('link', { name: 'Publications' })).toBeVisible()
-    await expect(main.getByRole('link', { name: 'News' })).toBeVisible()
-    await expect(page.locator('text=Contact →')).toBeVisible()
+    await expect(main.getByRole('link', { name: 'Projects' })).toBeVisible()
+    await expect(page.locator('text=Contact')).toBeVisible()
   })
 })

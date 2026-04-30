@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev --turbopack -p 3000",
     "dev:up": "node scripts/dev_up.mjs",
-    "build": "next build",
+    "build": "opennextjs-cloudflare build",
+    "build:next": "next build",
     "start": "next start",
     "lint": "next lint",
     "fetch:db": "node scripts/fetch-notion-data.mjs",

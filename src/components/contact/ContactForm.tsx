@@ -12,11 +12,13 @@ interface ContactFormProps {
 export function ContactForm({ isJa }: ContactFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [agreed, setAgreed] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (status === "loading") return;
+    if (!agreed) return;
 
     setStatus("loading");
     setErrorMessage("");
@@ -110,10 +112,30 @@ export function ContactForm({ isJa }: ContactFormProps) {
         ></textarea>
       </div>
 
+      <div className="rounded-md border border-border bg-muted/30 p-3">
+        <label htmlFor="not-sales" className="flex items-start gap-2 text-sm">
+          <input
+            type="checkbox"
+            id="not-sales"
+            name="notSales"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            className="mt-1 h-4 w-4 shrink-0 rounded border-border accent-foreground"
+            required
+            aria-required="true"
+          />
+          <span className="text-muted-foreground">
+            {isJa
+              ? "本問い合わせはマーケティング・PR・営業・採用支援等の営業連絡ではないことに同意します。"
+              : "I confirm that this inquiry is not a sales/marketing, PR, or recruiting solicitation."}
+          </span>
+        </label>
+      </div>
+
       <button
         type="submit"
-        disabled={status === "loading"}
-        className="w-full px-4 py-2 bg-foreground text-background rounded-md hover:bg-opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground disabled:opacity-70"
+        disabled={status === "loading" || !agreed}
+        className="w-full px-4 py-2 bg-foreground text-background rounded-md hover:bg-opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {status === "loading"
           ? isJa ? "送信中..." : "Sending..."

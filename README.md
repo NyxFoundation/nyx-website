@@ -4,8 +4,7 @@ The official website for Nyx Foundation.
 
 ## Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- [Bun](https://bun.sh/) 1.3+
 
 ## Setup
 
@@ -17,7 +16,7 @@ The official website for Nyx Foundation.
 
 2.  Install dependencies:
     ```bash
-    npm install
+    bun install
     ```
 
 3.  Set up environment variables:
@@ -28,7 +27,7 @@ The official website for Nyx Foundation.
 
 4.  Run the development server:
     ```bash
-    npm run dev
+    bun run dev
     ```
 
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

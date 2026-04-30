@@ -8,7 +8,7 @@ const run = (cmd, args, opts={}) => new Promise((resolve, reject) => {
 
 try {
   await run('bash', ['scripts/killport.sh', '3000'])
-  const dev = spawn('npm', ['run', 'dev'], { stdio: 'inherit' })
+  const dev = spawn('bun', ['run', 'dev'], { stdio: 'inherit' })
   // 待機: Next.js の起動猶予
   await sleep(4000)
   await run('bash', ['scripts/healthcheck.sh', 'http://localhost:3000', 'Nyx Foundation'])

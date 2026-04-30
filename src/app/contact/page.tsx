@@ -71,7 +71,18 @@ export default async function ContactPage() {
             <h2 className="text-2xl font-semibold mb-6">
               {isJa ? "お問い合わせフォーム" : "Contact Form"}
             </h2>
-            
+
+            <div className="mb-6 rounded-md border border-amber-500/40 bg-amber-50/60 p-4 text-sm text-amber-900 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-100">
+              <p className="font-medium mb-1">
+                {isJa ? "営業ご連絡について" : "Notice on solicitations"}
+              </p>
+              <p>
+                {isJa
+                  ? "マーケティング・PR・営業・採用支援等の営業連絡はお断りしております。該当するご連絡には返信いたしかねますので、あらかじめご了承ください。"
+                  : "We do not accept marketing, PR, sales, or recruiting solicitations. We will not respond to such inquiries."}
+              </p>
+            </div>
+
             <ContactForm isJa={isJa} />
 
             <p className="mt-4 text-sm text-muted-foreground">

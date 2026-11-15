@@ -8,12 +8,23 @@ const getEnvOrThrow = (name: string): string => {
     return value;
 };
 
-const notionToken = getEnvOrThrow("NOTION_TOKEN");
-const donationDatabaseId = getEnvOrThrow("NOTION_DONATIONS_DATABASE_ID");
+type NotionContext = { notion: Client; databaseId: string };
+let notionContext: NotionContext | null = null;
 
-const notion = new Client({
-    auth: notionToken,
-});
+// Lazily initialized so that importing this module does not throw at build time
+// when Notion env vars are absent (Next.js evaluates route modules while
+// collecting page data).
+function getNotionContext(): NotionContext {
+    if (!notionContext) {
+        notionContext = {
+            notion: new Client({
+                auth: getEnvOrThrow("NOTION_TOKEN"),
+            }),
+            databaseId: getEnvOrThrow("NOTION_DONATIONS_DATABASE_ID"),
+        };
+    }
+    return notionContext;
+}
 
 export interface DonationSubmission {
     name: string;
@@ -46,6 +57,7 @@ const truncate = (value: string, maxLength: number) => {
 };
 
 export async function createDonationSubmission(submission: DonationSubmission) {
+    const { notion, databaseId } = getNotionContext();
     const { name, address, physicalAddress, tshirtSize, amount, currency, icon, url } = submission;
 
     const amountNumber = parseAmount(amount);
@@ -118,7 +130,7 @@ export async function createDonationSubmission(submission: DonationSubmission) {
 
     await notion.pages.create({
         parent: {
-            database_id: donationDatabaseId,
+            database_id: databaseId,
         },
         properties: properties as Parameters<typeof notion.pages.create>[0]["properties"],
     });

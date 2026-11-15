@@ -56,7 +56,7 @@ export async function NewsTable({ newsItems }: NewsTableProps) {
                                                     href={href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="flex items-center gap-2 group-hover:text-primary transition-colors"
+                                                    className="flex items-center gap-2 group-hover:text-foreground transition-colors"
                                                 >
                                                     {title}
                                                     <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
@@ -65,7 +65,7 @@ export async function NewsTable({ newsItems }: NewsTableProps) {
                                                 <Link
                                                     href={href}
                                                     prefetch={true}
-                                                    className="flex items-center gap-2 group-hover:text-primary transition-colors"
+                                                    className="flex items-center gap-2 group-hover:text-foreground transition-colors"
                                                 >
                                                     {title}
                                                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />

@@ -34,7 +34,7 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
   return (
     <Dialog.Root open={true} onOpenChange={onClose}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/50 animate-in fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/50 animate-fade-in" />
         <Dialog.Content
           className={cn(
             "fixed left-[50%] top-[50%] z-50",
@@ -42,7 +42,7 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
             "w-[92vw] sm:w-[90vw] max-w-3xl lg:max-w-5xl max-h-[85vh]",
             "translate-x-[-50%] translate-y-[-50%]",
             "bg-white border border-border rounded-lg shadow-lg",
-            "animate-in fade-in-0 zoom-in-95",
+            "animate-fade-in",
             "overflow-y-auto"
           )}
         >
@@ -97,7 +97,7 @@ export function ActivityModal({ activityId, onClose }: ActivityModalProps) {
                     "inline-flex items-center justify-center",
                     "px-4 py-2 text-sm font-medium",
                     "bg-foreground text-background rounded-md",
-                    "hover:bg-opacity-90 transition-colors",
+                    "hover:bg-foreground/90 transition-colors",
                     "focus:outline-none focus:ring-2 focus:ring-offset-2"
                   )}
                 >

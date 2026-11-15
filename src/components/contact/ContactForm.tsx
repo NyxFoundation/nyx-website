@@ -103,7 +103,7 @@ export function ContactForm({ isJa }: ContactFormProps) {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full px-4 py-2 bg-foreground text-background rounded-md hover:bg-opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground disabled:opacity-70"
+        className="w-full px-4 py-2 bg-foreground text-background rounded-md hover:bg-foreground/90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground disabled:opacity-70"
       >
         {status === "loading"
           ? isJa ? "送信中..." : "Sending..."
